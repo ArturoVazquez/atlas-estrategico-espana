@@ -1,0 +1,581 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "nuclear",
+    "schema_version": "1.6.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "nuclear:almaraz-i",
+      "geometry": { "type": "Point", "coordinates": [-5.6947, 39.80768] },
+      "properties": {
+        "slug": "almaraz-i",
+        "nombre": "Almaraz I",
+        "categoria": "en_operacion",
+        "descripcion": "Primer grupo de la central de Almaraz, en la orilla del embalse de Arrocampo. Es el reactor con la autorización de explotación más próxima a expirar de todo el parque español.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Central Nuclear de Almaraz» (Construcción/instalación abierta) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "grupo": "I",
+        "municipio": "Almaraz",
+        "provincia": "Cáceres",
+        "potencia_mw": 1049.4,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f1",
+        "tecnologia": "PWR",
+        "tecnologia__v": "confirmado",
+        "tecnologia__f": "f1",
+        "titulares": [
+          "Iberdrola Generación Nuclear, S.A. (52,7 %)",
+          "ENDESA Generación, S.A. (36,0 %)",
+          "Naturgy Energy Group, S.A. (11,3 %)"
+        ],
+        "titulares__v": "confirmado",
+        "titulares__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "autorizacion_hasta": "2027-11-01",
+        "autorizacion_hasta__v": "confirmado",
+        "autorizacion_hasta__f": "f2",
+        "claves": [
+          {
+            "k": "Prórroga solicitada hasta 2030",
+            "v": "Los titulares pidieron a MITECO en octubre de 2025 seguir operando hasta junio de 2030, y en julio de 2026 el CSN informó favorablemente con condiciones. La resolución del ministerio NO consta: mientras no exista, lo autorizado sigue siendo el 1 de noviembre de 2027",
+            "verif": "no_verificado",
+            "fuente": "f4"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "MITECO — Centrales nucleares en España: potencia, tecnología, titulares y emplazamiento",
+            "fecha": "2026-08-06",
+            "url": "https://www.miteco.gob.es/es/energia/nuclear/centrales/espana.html",
+            "archivo": "fuentes/2026-08-06_miteco_centrales-nucleares-en-espana.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/773/2020, de 23 de julio, por la que se concede la renovación de la autorización de explotación de la Central Nuclear de Almaraz, Unidades I y II (BOE núm. 212, de 6 de agosto de 2020)",
+            "fecha": "2020-08-06",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-9328",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-773-2020-almaraz-i-y-ii.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Central Nuclear de Almaraz»",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Central+Nuclear+de+Almaraz",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-nuclear.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "hueco",
+            "titulo": "La resolución de MITECO sobre la prórroga de Almaraz, y el informe del CSN de julio de 2026 en que se apoya: pendientes de localizar y archivar. Hasta entonces la prórroga no toca ninguna fecha de esta ficha."
+          },
+          {
+            "id": "f5",
+            "tipo": "hueco",
+            "titulo": "El Protocolo de intenciones de 2019 entre Enresa y los titulares, que fija el calendario de cierre acordado. Es un acuerdo privado y no se ha localizado ningún documento oficial publicado que lo recoja, así que `cierre_acordado` se deja vacío en vez de rellenarlo con la fecha que circula en prensa."
+          }
+        ],
+        "nota": "La orden del BOE fija la validez «hasta el 1 de noviembre de 2027 para la Unidad I, y hasta el 31 de octubre de 2028 para la Unidad II»: dos fechas distintas para dos reactores que comparten emplazamiento, y la razón de que este atlas tenga un registro por grupo y no por central. Ambos comparten coordenada porque no hay fuente que sitúe cada edificio por separado. `cierre_acordado` queda VACÍO a propósito: el calendario de 2019 que todo el mundo cita procede de un protocolo privado del que no se ha localizado documento público (f5)."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "nuclear:almaraz-ii",
+      "geometry": { "type": "Point", "coordinates": [-5.6947, 39.80768] },
+      "properties": {
+        "slug": "almaraz-ii",
+        "nombre": "Almaraz II",
+        "categoria": "en_operacion",
+        "descripcion": "Segundo grupo de la central de Almaraz, gemelo del primero y con un año más de autorización.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Central Nuclear de Almaraz» (Construcción/instalación abierta) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "grupo": "II",
+        "municipio": "Almaraz",
+        "provincia": "Cáceres",
+        "potencia_mw": 1044.5,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f1",
+        "tecnologia": "PWR",
+        "tecnologia__v": "confirmado",
+        "tecnologia__f": "f1",
+        "titulares": [
+          "Iberdrola Generación Nuclear, S.A. (52,7 %)",
+          "ENDESA Generación, S.A. (36,0 %)",
+          "Naturgy Energy Group, S.A. (11,3 %)"
+        ],
+        "titulares__v": "confirmado",
+        "titulares__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "autorizacion_hasta": "2028-10-31",
+        "autorizacion_hasta__v": "confirmado",
+        "autorizacion_hasta__f": "f2",
+        "claves": [
+          {
+            "k": "Prórroga solicitada hasta 2030",
+            "v": "La solicitud de los titulares y el informe favorable del CSN de julio de 2026 alcanzan a los dos grupos de Almaraz. Sin resolución de MITECO, lo autorizado para este sigue siendo el 31 de octubre de 2028",
+            "verif": "no_verificado",
+            "fuente": "f4"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "MITECO — Centrales nucleares en España: potencia, tecnología, titulares y emplazamiento",
+            "fecha": "2026-08-06",
+            "url": "https://www.miteco.gob.es/es/energia/nuclear/centrales/espana.html",
+            "archivo": "fuentes/2026-08-06_miteco_centrales-nucleares-en-espana.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/773/2020, de 23 de julio, por la que se concede la renovación de la autorización de explotación de la Central Nuclear de Almaraz, Unidades I y II (BOE núm. 212, de 6 de agosto de 2020)",
+            "fecha": "2020-08-06",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-9328",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-773-2020-almaraz-i-y-ii.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Central Nuclear de Almaraz»",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Central+Nuclear+de+Almaraz",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-nuclear.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "hueco",
+            "titulo": "La resolución de MITECO sobre la prórroga de Almaraz, y el informe del CSN de julio de 2026 en que se apoya: pendientes de localizar y archivar."
+          },
+          {
+            "id": "f5",
+            "tipo": "hueco",
+            "titulo": "El Protocolo de intenciones de 2019 entre Enresa y los titulares, que fija el calendario de cierre acordado: acuerdo privado, sin documento público localizado."
+          }
+        ],
+        "nota": "Comparte coordenada y ficha técnica con Almaraz I, y no comparte la fecha: la misma orden les da validez distinta, un año de diferencia. Es exactamente por esto que el contrato pide un registro por reactor."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "nuclear:asco-i",
+      "geometry": { "type": "Point", "coordinates": [0.56848, 41.2005] },
+      "properties": {
+        "slug": "asco-i",
+        "nombre": "Ascó I",
+        "categoria": "en_operacion",
+        "descripcion": "Primer grupo de la central de Ascó, en la orilla derecha del Ebro. Su orden de renovación es la única del parque que llama a la fecha de expiración «fecha de cese definitivo de explotación».",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Central Nuclear d'Ascó» (Edificación) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "grupo": "I",
+        "nombre_oficial": "Central Nuclear Ascó I",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f2",
+        "municipio": "Ascó",
+        "provincia": "Tarragona",
+        "potencia_mw": 1032.5,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f1",
+        "tecnologia": "PWR",
+        "tecnologia__v": "confirmado",
+        "tecnologia__f": "f1",
+        "titulares": ["Endesa Generación, S.A. (100 %)"],
+        "titulares__v": "confirmado",
+        "titulares__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "autorizacion_hasta": "2030-10-01",
+        "autorizacion_hasta__v": "confirmado",
+        "autorizacion_hasta__f": "f2",
+        "cierre_acordado": "2030-10-01",
+        "cierre_acordado__v": "confirmado",
+        "cierre_acordado__f": "f2",
+        "claves": [
+          {
+            "k": "El CSN publica una fecha un día posterior",
+            "v": "La ficha de Ascó del CSN dice que la renovación llega «hasta el 2 de octubre de 2030»; la orden del BOE dice el 1 de octubre. Se registra la de la orden, que es el instrumento, y se deja constancia de la discrepancia",
+            "verif": "no_verificado",
+            "fuente": "f4"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "MITECO — Centrales nucleares en España: potencia, tecnología, titulares y emplazamiento",
+            "fecha": "2026-08-06",
+            "url": "https://www.miteco.gob.es/es/energia/nuclear/centrales/espana.html",
+            "archivo": "fuentes/2026-08-06_miteco_centrales-nucleares-en-espana.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/1084/2021, de 27 de septiembre, por la que se concede la renovación de la autorización de explotación de la Central Nuclear Ascó I (BOE núm. 240, de 7 de octubre de 2021)",
+            "fecha": "2021-10-07",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-16335",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-1084-2021-asco-i.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Central Nuclear d'Ascó»",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?bbox=0.40,41.10,0.75,41.30",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-nuclear.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "hueco",
+            "titulo": "La discrepancia de un día entre la ficha del CSN y la orden del BOE: sin explicación localizada. No cambia el dato publicado, pero queda dicha."
+          }
+        ],
+        "nota": "Es el único reactor cuyo `cierre_acordado` puede ir confirmado, y por una razón concreta: su propia orden de renovación llama a la fecha de expiración «fecha de cese definitivo de explotación». En los demás, el calendario acordado vive en un protocolo privado de 2019 sin documento público."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "nuclear:asco-ii",
+      "geometry": { "type": "Point", "coordinates": [0.56848, 41.2005] },
+      "properties": {
+        "slug": "asco-ii",
+        "nombre": "Ascó II",
+        "categoria": "en_operacion",
+        "descripcion": "Segundo grupo de la central de Ascó, con dos titulares donde el primero tiene uno solo.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Central Nuclear d'Ascó» (Edificación) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "grupo": "II",
+        "nombre_oficial": "Central Nuclear Ascó II",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f2",
+        "municipio": "Ascó",
+        "provincia": "Tarragona",
+        "potencia_mw": 1027.21,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f1",
+        "tecnologia": "PWR",
+        "tecnologia__v": "confirmado",
+        "tecnologia__f": "f1",
+        "titulares": [
+          "Endesa Generación, S.A. (85 %)",
+          "Iberdrola Generación Nuclear, S.A. (15 %)"
+        ],
+        "titulares__v": "confirmado",
+        "titulares__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "autorizacion_hasta": "2031-10-01",
+        "autorizacion_hasta__v": "parcial",
+        "autorizacion_hasta__f": "f2",
+        "claves": [
+          {
+            "k": "La fecha es una derivación, no una cita",
+            "v": "La orden no da fecha de expiración: dice que la autorización «producirá efectos a partir del día 2 de octubre de 2021 y tendrá una validez de diez años». El 2031-10-01 es aritmética sobre ese texto, y por eso el campo va como parcial y no como confirmado",
+            "verif": "confirmado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "MITECO — Centrales nucleares en España: potencia, tecnología, titulares y emplazamiento",
+            "fecha": "2026-08-06",
+            "url": "https://www.miteco.gob.es/es/energia/nuclear/centrales/espana.html",
+            "archivo": "fuentes/2026-08-06_miteco_centrales-nucleares-en-espana.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/1085/2021, de 27 de septiembre, por la que se concede la renovación de la autorización de explotación de la Central Nuclear Ascó II (BOE núm. 240, de 7 de octubre de 2021)",
+            "fecha": "2021-10-07",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-16336",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-1085-2021-asco-ii.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Central Nuclear d'Ascó»",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?bbox=0.40,41.10,0.75,41.30",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-nuclear.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "hueco",
+            "titulo": "El Protocolo de intenciones de 2019 entre Enresa y los titulares: acuerdo privado, sin documento público localizado. Por eso `cierre_acordado` va vacío."
+          }
+        ],
+        "nota": "El día exacto de expiración no está escrito en ninguna parte: la orden cuenta diez años desde el 2 de octubre de 2021 y no dice si el último día es el 1 o el 2 de octubre de 2031. Se publica el 1 y se marca `parcial`, porque una derivación aritmética no es una cita."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "nuclear:cofrentes",
+      "geometry": { "type": "Point", "coordinates": [-1.05078, 39.21393] },
+      "properties": {
+        "slug": "cofrentes",
+        "nombre": "Cofrentes",
+        "categoria": "en_operacion",
+        "descripcion": "El único reactor de agua en ebullición del parque español, en la confluencia del Júcar y el Cabriel.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Central Nuclear de Cofrentes» (Edificación) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "grupo": "Cofrentes",
+        "municipio": "Cofrentes",
+        "provincia": "Valencia",
+        "potencia_mw": 1092.02,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f1",
+        "tecnologia": "BWR",
+        "tecnologia__v": "confirmado",
+        "tecnologia__f": "f1",
+        "titulares": ["Iberdrola Generación Nuclear, S.A. (100 %)"],
+        "titulares__v": "confirmado",
+        "titulares__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "autorizacion_hasta": "2030-11-30",
+        "autorizacion_hasta__v": "confirmado",
+        "autorizacion_hasta__f": "f2",
+        "cierre_acordado": "2030-11-30",
+        "cierre_acordado__v": "confirmado",
+        "cierre_acordado__f": "f2",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "MITECO — Centrales nucleares en España: potencia, tecnología, titulares y emplazamiento",
+            "fecha": "2026-08-06",
+            "url": "https://www.miteco.gob.es/es/energia/nuclear/centrales/espana.html",
+            "archivo": "fuentes/2026-08-06_miteco_centrales-nucleares-en-espana.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/308/2021, de 17 de marzo, por la que se concede la renovación de la autorización de explotación de la Central Nuclear de Cofrentes (BOE núm. 77, de 31 de marzo de 2021)",
+            "fecha": "2021-03-31",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5109",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-308-2021-cofrentes.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Central Nuclear de Cofrentes»",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Central+Nuclear+de+Cofrentes",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-nuclear.json"
+          }
+        ],
+        "nota": "El registro más limpio de la capa, y el único «confirmado» global: su orden dice literalmente «tendrá validez hasta el 30 de noviembre de 2030, que será la fecha de cese definitivo de explotación» — con lo que un solo documento sostiene a la vez lo autorizado y lo acordado, y no queda ningún hueco que declarar."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "nuclear:vandellos-ii",
+      "geometry": { "type": "Point", "coordinates": [0.86548, 40.95148] },
+      "properties": {
+        "slug": "vandellos-ii",
+        "nombre": "Vandellós II",
+        "categoria": "en_operacion",
+        "descripcion": "A pie de Mediterráneo, junto a los restos de Vandellós I, cerrada en 1989 y en desmantelamiento desde entonces.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Central Nuclear Vandellòs II» (Edificación) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "grupo": "II",
+        "municipio": "Vandellòs i l'Hospitalet de l'Infant",
+        "provincia": "Tarragona",
+        "potencia_mw": 1087.14,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f1",
+        "tecnologia": "PWR",
+        "tecnologia__v": "confirmado",
+        "tecnologia__f": "f1",
+        "titulares": [
+          "Endesa Generación, S.A. (72 %)",
+          "Iberdrola Generación Nuclear, S.A. (28 %)"
+        ],
+        "titulares__v": "confirmado",
+        "titulares__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "autorizacion_hasta": "2030-07-26",
+        "autorizacion_hasta__v": "parcial",
+        "autorizacion_hasta__f": "f2",
+        "claves": [
+          {
+            "k": "La fecha es una derivación, no una cita",
+            "v": "La orden dice que la autorización «producirá efectos a partir del día 27 de julio de 2020 y tendrá una validez de diez años», sin fecha de expiración escrita. El 2030-07-26 es aritmética sobre ese texto",
+            "verif": "confirmado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "MITECO — Centrales nucleares en España: potencia, tecnología, titulares y emplazamiento",
+            "fecha": "2026-08-06",
+            "url": "https://www.miteco.gob.es/es/energia/nuclear/centrales/espana.html",
+            "archivo": "fuentes/2026-08-06_miteco_centrales-nucleares-en-espana.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/774/2020, de 23 de julio, por la que se concede la renovación de la autorización de explotación de la Central Nuclear de Vandellós II (BOE núm. 212, de 6 de agosto de 2020)",
+            "fecha": "2020-08-06",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-9329",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-774-2020-vandellos-ii.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Central Nuclear Vandellòs II»",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?bbox=0.70,40.85,1.05,41.05",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-nuclear.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "hueco",
+            "titulo": "El Protocolo de intenciones de 2019 entre Enresa y los titulares: acuerdo privado, sin documento público localizado. Por eso `cierre_acordado` va vacío."
+          }
+        ],
+        "nota": "Es el registro que mejor explica por qué esta capa tiene dos campos de fecha: la autorización vigente se agota en 2030 y el calendario que se cita en todas partes lo cierra en 2035. Con un solo campo habría que elegir cuál enseñar. El atlas enseña lo que está documentado —la autorización— y declara que lo otro no tiene documento público."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "nuclear:trillo-i",
+      "geometry": { "type": "Point", "coordinates": [-2.6239, 40.70129] },
+      "properties": {
+        "slug": "trillo-i",
+        "nombre": "Trillo",
+        "categoria": "en_operacion",
+        "descripcion": "El reactor más joven del parque, en el alto Tajo, y el de titularidad más repartida: cuatro sociedades.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Central Nuclear de Trillo I» (Construcción/instalación abierta) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "grupo": "I",
+        "nombre_oficial": "Central Nuclear Trillo I",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f2",
+        "municipio": "Trillo",
+        "provincia": "Guadalajara",
+        "potencia_mw": 1066.0,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f1",
+        "tecnologia": "PWR",
+        "tecnologia__v": "confirmado",
+        "tecnologia__f": "f1",
+        "titulares": [
+          "Iberdrola Generación Nuclear, S.A. (49 %)",
+          "Naturgy Energy Group, S.A. (34,5 %)",
+          "EDP HC Energía, S.A. (15,5 %)",
+          "Endesa Generación, S.A. (1 %)"
+        ],
+        "titulares__v": "confirmado",
+        "titulares__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "autorizacion_hasta": "2034-11-16",
+        "autorizacion_hasta__v": "parcial",
+        "autorizacion_hasta__f": "f2",
+        "claves": [
+          {
+            "k": "La fecha es una derivación, no una cita",
+            "v": "La orden dice que la autorización «producirá efectos a partir del día 17 de noviembre de 2024 y tendrá una validez de diez años», sin fecha de expiración escrita. El 2034-11-16 es aritmética sobre ese texto",
+            "verif": "confirmado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "MITECO — Centrales nucleares en España: potencia, tecnología, titulares y emplazamiento",
+            "fecha": "2026-08-06",
+            "url": "https://www.miteco.gob.es/es/energia/nuclear/centrales/espana.html",
+            "archivo": "fuentes/2026-08-06_miteco_centrales-nucleares-en-espana.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/1269/2024, de 11 de noviembre, por la que se concede la renovación de la autorización de explotación de la Central Nuclear Trillo I (BOE núm. 275, de 14 de noviembre de 2024)",
+            "fecha": "2024-11-14",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-23735",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-1269-2024-trillo-i.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Central Nuclear de Trillo I»",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?bbox=-2.80,40.60,-2.45,40.80",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-nuclear.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "hueco",
+            "titulo": "El Protocolo de intenciones de 2019 entre Enresa y los titulares: acuerdo privado, sin documento público localizado. Por eso `cierre_acordado` va vacío."
+          }
+        ],
+        "nota": "La orden del BOE lo llama «Central Nuclear Trillo I», y el Nomenclátor del IGN también: el «I» está en el nombre aunque nunca haya existido un Trillo II. Su autorización se renovó en noviembre de 2024, la más reciente del parque."
+      }
+    }
+  ]
+}
