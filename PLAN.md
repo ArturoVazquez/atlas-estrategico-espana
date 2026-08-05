@@ -44,15 +44,30 @@ comprueba que falle **por la regla violada y por ninguna otra**.
 > de Montevives, que la demo fundía en uno), 3 fuentes primarias archivadas, CI
 > en verde. El detalle de lo corregido está en `CHANGELOG-DATOS.md`.
 >
-> **Lo que queda a deber, y es lo grande:** la **geometría**. Los 11 puntos son
-> `geo_precision: municipio` con `geo_fuente` diciendo que son aproximación
-> **sin fuente cartográfica primaria**. Hasta sustituirlos por el catastro
-> minero o el Nomenclátor del IGN, ninguna coordenada de esta capa sirve para
-> medir — y el mapa no debe sugerir lo contrario.
+> ~~**Lo que queda a deber, y es lo grande:** la **geometría**.~~ **SALDADA el
+> 2026-08-05**, release `datos-v2026.08.1`. Ocho de los once puntos son ya
+> `paraje` con coordenada del Nomenclátor del IGN, fuente archivada y
+> `geo_fuente__f` — seis con doble ancla, corroborados por el catastro minero.
+> Los once se comprobaron por punto-en-polígono contra los límites del IGN.
+> Contrato a 1.3.0, con **R9** poniéndole diente: una precisión que promete
+> cartografía tiene que citarla. Detalle en `CHANGELOG-DATOS.md`.
 >
-> **Matamulas sigue siendo un hueco entero:** falta la resolución de la Junta,
-> la sentencia del TSJ de Castilla-La Mancha y el estado del recurso de casación
-> ante el Tribunal Supremo.
+> **Lo que la geometría dejó abierto, que no es poco:**
+> - **Tres registros siguen en `municipio`**, ahora con el porqué documentado:
+>   `circular` (planta industrial, sin derecho minero ni topónimo), `el-moto`
+>   (957 topónimos barridos, ninguno dice «Moto») y `las-cruces`.
+> - **`las-cruces` tiene un conflicto de municipio** y por eso bajó a `parcial`:
+>   el topónimo del IGN cae en Guillena y la concesión toca Salteras, pero la
+>   ficha dice Gerena y ese campo nunca tuvo fuente. Hace falta la autorización
+>   ambiental o la resolución de la Junta con los términos afectados.
+> - **Tres promotores donde la ficha y el catastro no coinciden** (`montevives`,
+>   `el-moto`, `mina-doade`) y los permisos de `matamulas` figurando caducados.
+>   Levantados con fuente delante, sin resolver.
+>
+> **Matamulas sigue siendo un hueco entero** en lo documental: falta la
+> resolución de la Junta, la sentencia del TSJ de Castilla-La Mancha y el estado
+> del recurso de casación ante el Tribunal Supremo. Sus dos fuentes primarias
+> nuevas son de geometría y de existencia del permiso; no sustituyen al expediente.
 
 ### Lo que decía la fase
 
@@ -90,6 +105,14 @@ cartografía de otra liga, y añadir una capa de prueba no toca código de panel
 - **Nuclear**: los 7 reactores con calendario de cierre; fuentes CSN/MITECO.
 - Dominios minerales: primer ascenso de una mancha ilustrativa a cartografía
   de fuente primaria (candidata: Faja Pirítica, IGME).
+- **Punto → polígono en `minerales-proyectos`** (menor de capa, §8: mismo `id`).
+  El catastro minero da el perímetro del derecho y ya está descargado y
+  entendido — CRS resuelto, derechos multiparte detectados. Es el único camino a
+  `geo_precision: exacta`, que §6.6 declara inalcanzable mientras la capa sea de
+  puntos. Arrastra el manifiesto a `geometria: mixta` y obliga al visor de F2 a
+  pintar las dos cosas: por eso no se hizo en F1.
+- **R8 gana su diente** aquí: necesita `minerales-dominios` para poder
+  comprobarse, y es la única regla del contrato sin implementar.
 
 **Hecho cuando:** las tres capas validan con su esquema propio y ninguna ficha
 publicada contiene prensa sosteniendo un confirmado.
