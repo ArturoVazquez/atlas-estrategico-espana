@@ -80,20 +80,38 @@ comprueba que falle **por la regla violada y por ninguna otra**.
 **Hecho cuando:** la colección valida en CI, cada `confirmado` tiene primaria
 archivada, y los huecos existen como huecos, no como rellenos.
 
-## F2 · Visor MapLibre (el salto de potencia)
+## F2 · Visor MapLibre (el salto de potencia) — CONSTRUIDO, falta el basemap
 
-- MapLibre GL JS; decisión de basemap al empezar la fase (candidatos:
-  Protomaps/PMTiles autoalojado, OpenFreeMap; criterio: coste cero, sin API
-  key, estética sobria personalizable).
-- Portar del prototipo v4: panel de árboles + ramas en gris, filtro de
-  explotación (leyendo el campo `activo` derivado de los datos), fichas y
-  cuadros con la doctrina visual (relleno/discontinuo/hueco), leyenda.
-- Capas desde `datos/` de la release etiquetada. Registro de capas desde el
-  manifiesto (añadir capa = cero código de panel).
-- El vecindario (norte de África incluido) lo da el basemap de serie.
+> **El criterio de hecho de esta fase estaba mal escrito, y se corrige aquí.**
+> Decía «mismo contenido» que la v4. Eso es imposible sin romper la regla
+> primera del proyecto: casi todo el contenido de la v4 —zonas minerales,
+> eólico, solar, cables, disputas— es **ilustrativo y nunca se migró a
+> `datos/`**. Portarlo exigiría inventarlo. F2 entrega el visor entero con la
+> única capa que existe; el contenido es F3.
 
-**Hecho cuando:** la v4 queda obsoleta a ojos de Arturo: mismo contenido,
-cartografía de otra liga, y añadir una capa de prueba no toca código de panel.
+- ~~MapLibre GL JS; decisión de basemap al empezar la fase.~~ **Protomaps
+  PMTiles autoalojado**, por coherencia: un atlas que archiva cada fuente porque
+  las URLs se pudren no puede colgar su mapa base de la buena voluntad de un
+  tercero. Estilo propio en papel y tinta, escrito a mano.
+- ~~Portar del prototipo v4: panel de árboles + ramas en gris, filtro de
+  explotación, fichas, leyenda.~~ Hecho. `activo` se **deriva** de `fase`
+  (§6.5): la v4 lo tenía escrito a mano, que es lo que D3 descartó.
+- ~~Capas desde la release etiquetada. Registro de capas desde el manifiesto.~~
+  Hecho y **probado**: una capa de juguete añadida al manifiesto aparece en su
+  árbol con su punto sin tocar una línea de panel. El build fija la etiqueta
+  (`app/release.json` + `preparar-datos.mjs`), que es §8 cumplido de la única
+  forma honesta en un sitio estático.
+- Los glifos también van autoalojados, y los seis rangos se **midieron**
+  navegando el territorio: entre ellos el árabe y el **tifinagh**, que nadie
+  habría supuesto y que el vecindario del Rif necesita.
+
+**Lo único que queda para cerrar F2, y no lo puede hacer Claude:** generar el
+extracto PMTiles (Iberia + Baleares + Canarias + Magreb, zoom ≤14), subirlo a un
+bucket propio y apuntar `VITE_BASEMAP`. Mientras tanto el visor tira del **bucket
+de demostración de Protomaps**, y lo dice en su propio pie en rojo: publicar así
+contradiría el motivo por el que se decidió autoalojarlo.
+
+**Hecho cuando:** el basemap sea el extracto propio y el pie deje de avisar.
 
 ## F3 · Capas del listón de salida
 
