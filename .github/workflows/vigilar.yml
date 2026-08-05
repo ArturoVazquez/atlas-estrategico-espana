@@ -1,0 +1,42 @@
+name: Vigilar las citas y la caducidad
+
+# La otra mitad de la guardia. `validar.yml` comprueba que un dato esté bien
+# sostenido EL DÍA QUE ENTRA; esto comprueba que lo siga estando. Un registro
+# puede ser impecable en su commit y tener la cita muerta dos años después sin
+# que nadie haya tocado una línea — y precisamente por eso no lo detecta nada
+# que se dispare con un push.
+on:
+  schedule:
+    # Lunes a las 6:15 UTC. Minuto raro a propósito: GitHub encola las tareas en
+    # punto y las retrasa; a y cuarto se ejecutan antes.
+    - cron: '15 6 * * 1'
+  workflow_dispatch:
+
+# Solo lectura, y es una decisión, no un descuido. §7 llegó a decir que esto
+# «abre issue», lo que exigiría `issues: write` en un workflow programado de un
+# repo público. Avisar poniéndose en rojo cuesta cero permisos y GitHub manda el
+# correo igual. Un permiso concedido y olvidado no se nota; su ausencia, sí.
+permissions:
+  contents: read
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Sin dependencias: `vigilar.py` es biblioteca estándar. No se instala
+      # `requirements.txt` porque no le hace falta — y una guardia que se cae
+      # por un fallo de pip no es una guardia.
+      - name: Vigilar
+        run: python pipeline/vigilar.py
+
+# NOTA para quien encuentre esto apagado: GitHub deshabilita los workflows
+# programados de un repositorio sin actividad durante 60 días, y avisa por
+# correo. Si el atlas pasa dos meses quieto, esta guardia deja de correr
+# justamente cuando más falta hace. Se vuelve a encender desde la pestaña
+# Actions, o con un `workflow_dispatch` a mano.

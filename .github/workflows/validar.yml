@@ -46,5 +46,11 @@ jobs:
       - name: Probar el punto-en-polígono de consultar.py (offline)
         run: python pipeline/pruebas/correr-consultar.py
 
+      # Igual con la guardia: lo que se prueba aquí es DÓNDE pone la frontera
+      # entre «muerta» y «no concluyente», que es lo que decide si alguien acaba
+      # apagándola. Las peticiones de verdad las hace vigilar.yml, semanalmente.
+      - name: Probar la frontera de vigilar.py (offline)
+        run: python pipeline/pruebas/correr-vigilar.py
+
       - name: Validar el manifiesto y las capas publicadas
         run: python pipeline/validar.py
