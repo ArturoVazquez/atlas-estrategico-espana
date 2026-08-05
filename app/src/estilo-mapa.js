@@ -30,17 +30,13 @@ const VERDE = "#EDEEE4";
 export function estiloMapa() {
   return {
     version: 8,
-    // DEUDA DECLARADA: los glifos vienen de un tercero.
-    //
-    // MapLibre necesita las tipografías troceadas en .pbf y no puede usar las
-    // del sistema. Estas salen de los assets de Protomaps, así que el mismo
-    // argumento que llevó a autoalojar el basemap aplica aquí y todavía no se
-    // ha aplicado: si ese repositorio se mueve, el mapa se queda sin rótulos.
-    //
-    // Se dice aquí en vez de descubrirse el día que pase. Cerrarlo es volcar la
-    // pila de fuentes en `public/` y apuntar a ella; no se hace ahora porque
-    // son cientos de ficheros por familia y merece su propio paso.
-    glyphs: "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
+    // Los glifos también son nuestros: viven en `public/fuentes-mapa/`. Si los
+    // pidiéramos a un tercero, el mapa se quedaría sin rótulos el día que ese
+    // servidor se mueva — el mismo argumento que llevó a autoalojar el basemap.
+    // Son seis rangos y 570 KB, MEDIDOS navegando el territorio y el vecindario
+    // en vez de elegidos a ojo; el porqué de cada uno está en el README de esa
+    // carpeta, incluido el tifinagh, que nadie habría supuesto.
+    glyphs: "/fuentes-mapa/{fontstack}/{range}.pbf",
     sources: {
       protomaps: {
         type: "vector",
@@ -63,8 +59,21 @@ export function estiloMapa() {
           ["literal", ["forest", "wood", "park", "nature_reserve", "scrub", "grassland", "meadow"]]],
         paint: { "fill-color": VERDE, "fill-opacity": 0.65 } },
 
+      // `water` trae polígonos (lagos, embalses, mar interior) Y líneas (ríos)
+      // en la misma source-layer. Pintarlo todo como relleno dibuja cuñas
+      // absurdas atravesando el mapa: un `fill` sobre una línea cierra el
+      // polígono por donde puede. Van separados, cada uno con su tipo.
       { id: "agua", type: "fill", source: "protomaps", "source-layer": "water",
+        filter: ["==", ["geometry-type"], "Polygon"],
         paint: { "fill-color": AGUA_INT } },
+
+      { id: "rios", type: "line", source: "protomaps", "source-layer": "water",
+        minzoom: 6,
+        filter: ["==", ["geometry-type"], "LineString"],
+        paint: {
+          "line-color": AGUA_INT,
+          "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.4, 14, 2],
+        } },
 
       // El viario, apenas insinuado y solo de cerca: el atlas no es un
       // callejero, y a zoom de país las carreteras solo ensucian. Autovías y
