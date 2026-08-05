@@ -35,3 +35,7 @@ Thumbs.db
 
 # Nota: `fuentes/` SÍ se versiona. Es el archivo documental del contrato
 # (§2: «las URLs se pudren; esto no»). No se ignora nunca.
+
+# Extractos de mapa base generados en local para probar. Pesan cientos de MB y
+# el sitio de produccion los sirve desde almacenamiento propio, no desde el repo.
+app/public/*.pmtiles
