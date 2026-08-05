@@ -2,14 +2,14 @@
   "type": "FeatureCollection",
   "atlas": {
     "capa": "minerales-proyectos",
-    "schema_version": "1.2.0",
+    "schema_version": "1.3.0",
     "verificado_a": "2026-08-05"
   },
   "features": [
     {
       "type": "Feature",
       "id": "minerales-proyectos:aguablanca",
-      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "geometry": { "type": "Point", "coordinates": [-6.1767, 37.9541] },
       "properties": {
         "slug": "aguablanca",
         "nombre": "Aguablanca",
@@ -20,8 +20,10 @@
         "descripcion": "Único yacimiento de níquel magmático explotado en España, en la banda de Ossa-Morena. Cerrado en 2016; la reactivación es el proyecto reconocido por la Comisión.",
         "estado_registro": "vigente",
         "verif": "confirmado",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Aguablanca» (Paraje) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["cobalto", "pgm", "cobre", "niquel"],
@@ -50,9 +52,25 @@
             "fecha": "2025-04-30",
             "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
             "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Aguablanca» (Paraje), código NGBE 4.2.2",
+            "fecha": "2023-07-27",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Aguablanca",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "MITECO — Catastro Minero, reserva definitiva «AGUA BLANCA» nº 272, Río Narcea Recursos S.A., 95 cuadrículas",
+            "fecha": "2026-08-05",
+            "url": "https://geoportal.minetur.gob.es/CatastroMinero/",
+            "archivo": "fuentes/2026-08-05_miteco_catastro-minero-derechos-citados.csv"
           }
         ],
-        "nota": "El anexo del DOUE dice literalmente «proyecto de extracción en curso». «En curso» describe el proyecto, no la producción: por eso `fase` va marcada como no verificada."
+        "nota": "El anexo del DOUE dice literalmente «proyecto de extracción en curso». «En curso» describe el proyecto, no la producción: por eso `fase` va marcada como no verificada. La coordenada sale del topónimo del IGN (f2) y la corrobora el catastro minero (f3), que sitúa ahí la reserva «AGUA BLANCA» a nombre del mismo promotor que reconoce el DOUE."
       }
     },
     {
@@ -119,7 +137,7 @@
     {
       "type": "Feature",
       "id": "minerales-proyectos:las-navas",
-      "geometry": { "type": "Point", "coordinates": [-6.3927, 39.7896] },
+      "geometry": { "type": "Point", "coordinates": [-6.37231, 39.8385] },
       "properties": {
         "slug": "las-navas",
         "nombre": "Las Navas",
@@ -130,8 +148,10 @@
         "descripcion": "Proyecto de litio en las pegmatitas del oeste extremeño, uno de los tres proyectos de litio españoles del entorno CRMA.",
         "estado_registro": "vigente",
         "verif": "confirmado",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Mina las Navas» (Construcción/instalación abierta) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["litio"],
@@ -160,15 +180,23 @@
             "fecha": "2025-04-30",
             "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
             "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Mina las Navas» (Construcción/instalación abierta)",
+            "fecha": "2026-08-05",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Mina+las+Navas",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
           }
         ],
-        "nota": "El anexo lo describe solo como proyecto de extracción, sin procesamiento — al contrario que P6 Metals y Las Cruces, que sí figuran como integrados."
+        "nota": "El anexo lo describe solo como proyecto de extracción, sin procesamiento — al contrario que P6 Metals y Las Cruces, que sí figuran como integrados. La coordenada es la del topónimo «Mina las Navas» del IGN (f2); el catastro minero no devuelve aquí ningún derecho a nombre del promotor, así que la geometría se apoya en una sola fuente."
       }
     },
     {
       "type": "Feature",
       "id": "minerales-proyectos:mina-doade",
-      "geometry": { "type": "Point", "coordinates": [-8.2846, 42.4665] },
+      "geometry": { "type": "Point", "coordinates": [-8.31852, 42.46576] },
       "properties": {
         "slug": "mina-doade",
         "nombre": "Mina Doade",
@@ -179,8 +207,10 @@
         "descripcion": "Litio en las pegmatitas de la dorsal gallega, en el distrito estaño-litio de Ourense.",
         "estado_registro": "vigente",
         "verif": "parcial",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Doade» (Entidad singular) del Nomenclátor Geográfico Básico de España — el lugar que da nombre al proyecto, no la boca de mina; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["litio"],
@@ -221,9 +251,17 @@
             "id": "f2",
             "tipo": "hueco",
             "titulo": "Calendario y capacidad: pendiente de fuente. Circulan como declaración del promotor y no se elevan a dato."
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Doade» (Entidad singular), en Beariz",
+            "fecha": "2026-08-05",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Doade",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
           }
         ],
-        "nota": "La vinculación del promotor con el Grupo Samca, que circula en prensa, no figura en el anexo del DOUE y no se recoge como dato."
+        "nota": "La vinculación del promotor con el Grupo Samca, que circula en prensa, no figura en el anexo del DOUE y no se recoge como dato. La coordenada es la del lugar de Doade (f3), que da nombre al proyecto: es el sitio, no la labor minera, y por eso la precisión es «paraje». El permiso de litio colindante que sí aparece en el catastro minero está a nombre de otra sociedad, así que NO se usa como corroboración."
       }
     },
     {
@@ -278,7 +316,7 @@
     {
       "type": "Feature",
       "id": "minerales-proyectos:p6-metals",
-      "geometry": { "type": "Point", "coordinates": [-6.0491, 39.1836] },
+      "geometry": { "type": "Point", "coordinates": [-6.10629, 39.07752] },
       "properties": {
         "slug": "p6-metals",
         "nombre": "P6 Metals (La Parrilla)",
@@ -289,8 +327,10 @@
         "descripcion": "Reactivación con procesamiento integrado de la mina de wolframio de La Parrilla, en el cinturón wolframífero del oeste.",
         "estado_registro": "vigente",
         "verif": "parcial",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "vértice geodésico «La Parrilla» del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["wolframio"],
@@ -331,9 +371,25 @@
             "id": "f2",
             "tipo": "hueco",
             "titulo": "Porcentaje de la demanda europea: pendiente de fuente. Circula en prensa sin contraste."
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, vértice geodésico «La Parrilla», en Almoharín",
+            "fecha": "2026-08-05",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=La+Parrilla",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "primaria",
+            "titulo": "MITECO — Catastro Minero, concesiones «LA PARRILLA» y «VICTORIA» (nº 7768) y «ADELAIDA» (nº 7766), Iberian Resources Spain S.L., wolframio",
+            "fecha": "2026-08-05",
+            "url": "https://geoportal.minetur.gob.es/CatastroMinero/",
+            "archivo": "fuentes/2026-08-05_miteco_catastro-minero-derechos-citados.csv"
           }
         ],
-        "nota": "El proyecto se llama oficialmente «P6 Metals»; «La Parrilla» es la mina. La demo de referencia los tenía al revés. El anexo reconoce solo wolframio: el estaño que suele citarse con La Parrilla no figura."
+        "nota": "El proyecto se llama oficialmente «P6 Metals»; «La Parrilla» es la mina. La demo de referencia los tenía al revés. El anexo reconoce solo wolframio: el estaño que suele citarse con La Parrilla no figura. La coordenada es la del vértice geodésico del IGN (f3) y la corrobora el catastro (f4), con tres concesiones de wolframio del mismo promotor a menos de dos kilómetros."
       }
     },
     {
@@ -349,9 +405,9 @@
         "categoria": "estrategico_ue",
         "descripcion": "Paso a los sulfuros primarios sobre la mina existente de la Faja Pirítica, con procesamiento integrado.",
         "estado_registro": "vigente",
-        "verif": "confirmado",
+        "verif": "parcial",
         "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria; y el municipio mismo está en duda — ver f2",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["cobre"],
@@ -380,15 +436,20 @@
             "fecha": "2025-04-30",
             "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
             "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "El municipio de este registro está pendiente de fuente. Dice «Gerena» y nunca la tuvo; dos fuentes primarias apuntan a otros términos (ver nota). Hace falta la autorización ambiental o la resolución de la Junta de Andalucía que enumere los términos afectados."
           }
         ],
-        "nota": "El anexo reconoce solo cobre; el zinc, plomo y plata que se citan con el yacimiento no figuran. La titularidad última tampoco: el DOUE nombra a Cobre las Cruces S.A.U. y nada más, así que la matriz no se recoge como dato."
+        "nota": "El anexo reconoce solo cobre; el zinc, plomo y plata que se citan con el yacimiento no figuran. La titularidad última tampoco: el DOUE nombra a Cobre las Cruces S.A.U. y nada más, así que la matriz no se recoge como dato. La pasada de geometría levantó además un problema en el propio `municipio`: el topónimo «Las Cruces» del Nomenclátor del IGN cae en Guillena, y la concesión «LAS CRUCES» de Cobre las Cruces S.A. en el catastro minero es MULTIPARTE y toca Salteras. La ficha dice Gerena, sin fuente. No se elige entre los tres: la geometría se queda en el municipio de partida y el hueco se declara. Por R4, eso baja el registro de «confirmado» a «parcial» — no porque se sepa menos que ayer, sino porque hoy se sabe que hay algo sin resolver."
       }
     },
     {
       "type": "Feature",
       "id": "minerales-proyectos:montevives",
-      "geometry": { "type": "Point", "coordinates": [-3.66, 37.11] },
+      "geometry": { "type": "Point", "coordinates": [-3.69098, 37.10274] },
       "properties": {
         "slug": "montevives",
         "nombre": "Celestina de Montevives",
@@ -396,8 +457,10 @@
         "descripcion": "Yacimiento de celestina de la depresión de Granada. Desde 2012 se recuperan las antiguas escombreras tras tres años de inactividad.",
         "estado_registro": "vigente",
         "verif": "parcial",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación entre Las Gabias y Alhendín, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "vértice geodésico «Montevives» del Nomenclátor Geográfico Básico de España, en Alhendín; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["estroncio"],
@@ -439,15 +502,31 @@
             "id": "f2",
             "tipo": "hueco",
             "titulo": "Singularidad de España en la UE para el estroncio: pendiente de fuente que la sostenga."
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, vértice geodésico «Montevives», en Alhendín",
+            "fecha": "2026-08-05",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Montevives",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "primaria",
+            "titulo": "MITECO — Catastro Minero, concesiones de estroncio «AURORA» (nº 28270), «AMPLIACIÓN A AURORA» (nº 28337) y «COMPLEMENTO» (nº 28570)",
+            "fecha": "2026-08-05",
+            "url": "https://geoportal.minetur.gob.es/CatastroMinero/",
+            "archivo": "fuentes/2026-08-05_miteco_catastro-minero-derechos-citados.csv"
           }
         ],
-        "nota": "La demo de referencia situaba este yacimiento en Escúzar y lo llamaba «Montevive». El IGME lo sitúa en los términos de Gabia la Grande y Alhendín, lo escribe «Montevives», y describe Escúzar como un yacimiento DISTINTO a 7 km, con otro titular. Aquí se separan en dos registros."
+        "nota": "La demo de referencia situaba este yacimiento en Escúzar y lo llamaba «Montevive». El IGME lo sitúa en los términos de Gabia la Grande y Alhendín, lo escribe «Montevives», y describe Escúzar como un yacimiento DISTINTO a 7 km, con otro titular. Aquí se separan en dos registros. La coordenada es la del vértice geodésico del IGN (f3), y a menos de 300 m el catastro sitúa tres concesiones de estroncio (f4). Esas concesiones figuran a nombre de particulares de la familia Fajardo Álvarez, no de Canteras Industriales S.L., que es quien el IGME da como explotador: titular y operador pueden ser distintos, y hoy no está verificado cuál es cuál."
       }
     },
     {
       "type": "Feature",
       "id": "minerales-proyectos:escuzar",
-      "geometry": { "type": "Point", "coordinates": [-3.749, 37.087] },
+      "geometry": { "type": "Point", "coordinates": [-3.80218, 37.0517] },
       "properties": {
         "slug": "escuzar",
         "nombre": "Celestina de Escúzar",
@@ -455,8 +534,10 @@
         "descripcion": "El otro yacimiento de celestina en explotación en España, en la depresión de Granada. Planta de tratamiento en marcha desde 1990.",
         "estado_registro": "vigente",
         "verif": "confirmado",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Minas de Escúzar» (Construcción/instalación abierta) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["estroncio"],
@@ -493,15 +574,31 @@
             "fecha": "2024-02-02",
             "url": "https://web.igme.es/PanoramaMinero/actual/ESTRONCIO%202021.pdf",
             "archivo": "fuentes/2026-08-05_igme_panorama-minero-estroncio-2021.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Minas de Escúzar» (Construcción/instalación abierta)",
+            "fecha": "2026-08-05",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Minas+de+Esc%C3%BAzar",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "MITECO — Catastro Minero, concesiones de estroncio «CARBONERO» y «CARBONERO 2» (nº 29934), «SANTA LUCÍA» (nº 29890) y «TEMPLE» (nº 30009), Solvay Minerales S.A.",
+            "fecha": "2026-08-05",
+            "url": "https://geoportal.minetur.gob.es/CatastroMinero/",
+            "archivo": "fuentes/2026-08-05_miteco_catastro-minero-derechos-citados.csv"
           }
         ],
-        "nota": "Registro NUEVO respecto de la demo de referencia, que fundía este yacimiento con el de Montevives en una sola ficha. Son dos explotaciones, con dos titulares."
+        "nota": "Registro NUEVO respecto de la demo de referencia, que fundía este yacimiento con el de Montevives en una sola ficha. Son dos explotaciones, con dos titulares. La coordenada es la del topónimo «Minas de Escúzar» del IGN (f2) y la corrobora el catastro (f3): la concesión de estroncio «CARBONERO 2» de Solvay Minerales —el promotor que da el IGME— queda a unos 150 m."
       }
     },
     {
       "type": "Feature",
       "id": "minerales-proyectos:sepiolita-madrid",
-      "geometry": { "type": "Point", "coordinates": [-3.6083, 40.4043] },
+      "geometry": { "type": "Point", "coordinates": [-3.59808, 40.4129] },
       "properties": {
         "slug": "sepiolita-madrid",
         "nombre": "Sepiolita de Madrid",
@@ -509,8 +606,10 @@
         "descripcion": "Arcillas especiales de la cuenca del Tajo. La sepiolita se extrae y procesa principalmente en el Grupo Minero Victoria (Madrid) y el Grupo Minero Santa Catalina (Toledo).",
         "estado_registro": "vigente",
         "verif": "parcial",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Sepiolita» (Construcción/instalación abierta) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["sepiolita"],
@@ -558,15 +657,31 @@
             "id": "f2",
             "tipo": "hueco",
             "titulo": "Singularidad de España en la UE y tamaño del yacimiento: pendiente de fuente que las sostenga."
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Sepiolita» (Construcción/instalación abierta), en Madrid",
+            "fecha": "2026-08-05",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Sepiolita",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
+          },
+          {
+            "id": "f4",
+            "tipo": "primaria",
+            "titulo": "MITECO — Catastro Minero, concesiones de sepiolita del grupo «VICTORIA» (nº 2048, 2101, 2103, 2132, 2142, 2259), TOLSA S.A.",
+            "fecha": "2026-08-05",
+            "url": "https://geoportal.minetur.gob.es/CatastroMinero/",
+            "archivo": "fuentes/2026-08-05_miteco_catastro-minero-derechos-citados.csv"
           }
         ],
-        "nota": "La demo de referencia lo titulaba «Sepiolita de Vicálvaro». El informe del IGME no menciona Vicálvaro: habla del Grupo Minero Victoria, en Madrid. El nombre se ajusta a lo que dice la fuente."
+        "nota": "La demo de referencia lo titulaba «Sepiolita de Vicálvaro». El informe del IGME no menciona Vicálvaro: habla del Grupo Minero Victoria, en Madrid. El nombre se ajusta a lo que dice la fuente. La coordenada es la del topónimo «Sepiolita» del IGN (f3), y el catastro (f4) confirma el Grupo Minero Victoria como seis concesiones de sepiolita de TOLSA en ese mismo entorno — el grupo se extiende varios kilómetros, así que el punto lo representa, no lo mide."
       }
     },
     {
       "type": "Feature",
       "id": "minerales-proyectos:matamulas",
-      "geometry": { "type": "Point", "coordinates": [-3.363, 38.638] },
+      "geometry": { "type": "Point", "coordinates": [-3.2633, 38.61987] },
       "properties": {
         "slug": "matamulas",
         "nombre": "Matamulas",
@@ -574,8 +689,10 @@
         "descripcion": "Proyecto de tierras raras sobre arenas con monacita en el Campo de Montiel. Uno de los escasos potenciales europeos en estos elementos, sin desarrollar.",
         "estado_registro": "vigente",
         "verif": "no_verificado",
-        "geo_precision": "municipio",
-        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Cerro de Matamulas» (Montaña) del Nomenclátor Geográfico Básico de España, en Torrenueva; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
         "materias": ["tierras_raras"],
@@ -603,9 +720,25 @@
             "id": "f1",
             "tipo": "hueco",
             "titulo": "Todo este registro está pendiente de fuente primaria: la resolución de la Junta que deniega la autorización, la sentencia del TSJ de Castilla-La Mancha y el estado del recurso de casación ante el Tribunal Supremo."
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Cerro de Matamulas» (Montaña), en Torrenueva",
+            "fecha": "2026-08-05",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Cerro+de+Matamulas",
+            "archivo": "fuentes/2026-08-05_ign_ngbe-toponimos-minerales-proyectos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "MITECO — Catastro Minero, permisos de investigación «MATAMULAS» (nº 12919), «REMATAMULAS» (nº 12920) y «REMATAMULAS-2» (nº 12935, tierras raras), Quantum Minería S.L., los tres CADUCADOS",
+            "fecha": "2026-08-05",
+            "url": "https://geoportal.minetur.gob.es/CatastroMinero/",
+            "archivo": "fuentes/2026-08-05_miteco_catastro-minero-derechos-citados.csv"
           }
         ],
-        "nota": "El yacimiento existe; casi todo lo demás requiere verificación documental. Se publica el hueco, no un relleno. Es el único registro de la capa sin una sola fuente primaria, y por eso el único «no verificado» global: la ficha lo dice antes que nada."
+        "nota": "El yacimiento existe; casi todo lo demás requiere verificación documental. Se publica el hueco, no un relleno, y por eso el registro sigue siendo el único «no verificado» global de la capa: lo que falta es el expediente —resolución, sentencia, casación—, y ninguna de las dos fuentes nuevas lo sustituye. Lo que sí aportan: la coordenada, del topónimo del IGN (f2), y la confirmación de que los permisos existieron a nombre de Quantum Minería, uno de ellos por tierras raras (f3). Ese mismo catastro los da los tres CADUCADOS, dato que no se traslada todavía a `fase`: un permiso caducado no dice por sí solo si el proyecto está parado o cerrado, y esa lectura necesita el expediente que falta."
       }
     }
   ]
