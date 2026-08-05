@@ -1,0 +1,27 @@
+# Finales de línea LF en todo el repo, en cualquier máquina.
+#
+# Esto no es manía: el contrato exige diffs limpios (§4, «evita diffs de ruido»)
+# y toda su trazabilidad depende de que una corrección de un dato se vea como
+# una línea cambiada. Un CRLF colado reescribe el fichero entero y borra esa
+# lectura — justo en los ficheros donde más importa.
+
+* text=auto eol=lf
+
+*.md       text eol=lf
+*.json     text eol=lf
+*.geojson  text eol=lf
+*.py       text eol=lf
+*.html     text eol=lf
+*.css      text eol=lf
+*.js       text eol=lf
+*.yml      text eol=lf
+*.yaml     text eol=lf
+*.txt      text eol=lf
+
+# El archivo documental: binario, jamás se toca.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.zip   binary

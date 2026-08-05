@@ -1,0 +1,122 @@
+{
+  "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
+
+  "_estado": "F0. Ninguna capa tiene datos todavía, así que TODAS van con `en_preparacion: true` y sin `fichero` — es lo que dice la regla del horizonte de §3, y es la verdad. F1 le quita la marca a `minerales-proyectos` y le añade su fichero. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+
+  "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
+
+  "schema_version": "1.1.0",
+  "release": null,
+
+  "capas": [
+    {
+      "id": "minerales-proyectos",
+      "titulo": "Minerales críticos — proyectos",
+      "arbol": "minerales",
+      "grupo": "actividad",
+      "en_preparacion": true
+    },
+    {
+      "id": "minerales-dominios",
+      "titulo": "Dominios minerales",
+      "arbol": "minerales",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+
+    {
+      "id": "recurso-eolico",
+      "titulo": "Recurso eólico",
+      "arbol": "energia",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+    {
+      "id": "recurso-solar",
+      "titulo": "Recurso solar",
+      "arbol": "energia",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+    {
+      "id": "gas-regasificacion",
+      "titulo": "Gas y regasificación",
+      "arbol": "energia",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+    {
+      "id": "nuclear",
+      "titulo": "Nuclear",
+      "arbol": "energia",
+      "grupo": "actividad",
+      "en_preparacion": true
+    },
+    {
+      "id": "red-electrica",
+      "titulo": "Red eléctrica e interconexiones",
+      "arbol": "energia",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+    {
+      "id": "renovable-provincia",
+      "titulo": "Renovable instalada por provincia",
+      "arbol": "energia",
+      "grupo": "actividad",
+      "en_preparacion": true
+    },
+    {
+      "id": "agua-embalsada",
+      "titulo": "Agua embalsada",
+      "arbol": "energia",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+
+    {
+      "id": "cables-submarinos",
+      "titulo": "Cables submarinos",
+      "arbol": "conectividad",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+    {
+      "id": "centros-datos",
+      "titulo": "Centros de datos",
+      "arbol": "conectividad",
+      "grupo": "actividad",
+      "en_preparacion": true
+    },
+    {
+      "id": "h2med",
+      "titulo": "Corredor H2Med",
+      "arbol": "conectividad",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+
+    {
+      "id": "limites-soberania",
+      "titulo": "Límites y soberanía",
+      "arbol": "tablero",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    },
+    {
+      "id": "perte",
+      "titulo": "PERTE en ejecución (acotado)",
+      "arbol": "tablero",
+      "grupo": "actividad",
+      "en_preparacion": true
+    },
+
+    {
+      "id": "idioma",
+      "titulo": "El idioma como activo",
+      "arbol": "intangibles",
+      "grupo": "dotacion",
+      "en_preparacion": true
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación: el visor no reordena ni traduce, lee de aquí.",
+  "schema_version": "1.1.0",
+  "actualizado": "2026-08-05",
+
+  "registro": {
+    "verif": [
+      { "valor": "confirmado", "etiqueta": "Confirmado",
+        "def": "Sostenido por al menos una fuente primaria archivada." },
+      { "valor": "parcial", "etiqueta": "Parcialmente verificado",
+        "def": "Hay fuente, pero no primaria, o cubre solo parte del registro." },
+      { "valor": "no_verificado", "etiqueta": "No verificado",
+        "def": "Registrado con su origen (prensa, anuncio corporativo) sin ascender a hecho." }
+    ],
+    "estado_registro": [
+      { "valor": "vigente", "etiqueta": "Vigente",
+        "def": "El registro describe algo que sigue siendo el caso." },
+      { "valor": "historico", "etiqueta": "Histórico",
+        "def": "Fue cierto y se conserva como memoria. No se borra." },
+      { "valor": "retirado", "etiqueta": "Retirado",
+        "def": "Se publicó y resultó no sostenerse. Queda con su historia en Git." }
+    ],
+    "geo_precision": [
+      { "valor": "exacta", "etiqueta": "Exacta",
+        "def": "Coordenada del objeto, de fuente cartográfica." },
+      { "valor": "paraje", "etiqueta": "Paraje",
+        "def": "El lugar concreto, sin coordenada de fuente primaria." },
+      { "valor": "municipio", "etiqueta": "Centroide municipal",
+        "def": "El municipio, no la ubicación. No sirve para medir distancias." },
+      { "valor": "ilustrativa", "etiqueta": "Ilustrativa",
+        "def": "Dibuja dónde, no cuánto ni de quién. Trazado a mano alzada." }
+    ],
+    "fase": [
+      { "valor": "produccion", "etiqueta": "En producción",
+        "def": "Extrae, produce o presta servicio HOY. Único valor que deriva activo = true (§6.5)." },
+      { "valor": "desarrollo", "etiqueta": "En desarrollo",
+        "def": "Obra, ingeniería o inversión en curso; todavía no produce." },
+      { "valor": "tramitacion", "etiqueta": "En tramitación",
+        "def": "Expediente administrativo abierto; ni obra ni producción." },
+      { "valor": "parado", "etiqueta": "Parado",
+        "def": "Suspendido, denegado o en litigio. Puede reactivarse." },
+      { "valor": "cerrado", "etiqueta": "Cerrado",
+        "def": "Cesó definitivamente. Distinto de `parado`: no se espera vuelta." }
+    ]
+  },
+
+  "fuente": {
+    "tipo": [
+      { "valor": "primaria", "etiqueta": "Fuente primaria", "sostiene_confirmado": true,
+        "def": "Documento oficial: BOE, DOUE, decisión, resolución, registro, estadística oficial." },
+      { "valor": "prensa", "etiqueta": "Prensa", "sostiene_confirmado": false,
+        "def": "Medio de comunicación. Se registra con su origen; no asciende a hecho." },
+      { "valor": "corporativa", "etiqueta": "Fuente corporativa", "sostiene_confirmado": false,
+        "def": "Anuncio, web o comunicado de empresa. Una cifra anunciada no es una cifra medida." },
+      { "valor": "hueco", "etiqueta": "Hueco declarado", "sostiene_confirmado": false,
+        "def": "La fuente que falta, dicha en voz alta. Rellenarlo con verosimilitud es el peor fallo posible del atlas." }
+    ]
+  },
+
+  "manifiesto": {
+    "arbol": [
+      { "valor": "minerales", "etiqueta": "Minerales y materias primas" },
+      { "valor": "energia", "etiqueta": "Energía" },
+      { "valor": "conectividad", "etiqueta": "Conectividad" },
+      { "valor": "tablero", "etiqueta": "El tablero" },
+      { "valor": "intangibles", "etiqueta": "Intangibles" }
+    ],
+    "grupo": [
+      { "valor": "dotacion", "etiqueta": "Lo que tiene",
+        "def": "El territorio y su recurso: existe con independencia de que alguien lo trabaje." },
+      { "valor": "actividad", "etiqueta": "Lo que se trabaja",
+        "def": "Proyectos, obras y explotaciones: alguien los sostiene y pueden acabarse." }
+    ],
+    "ambito": [
+      { "valor": "espana", "etiqueta": "España",
+        "def": "Por defecto. La geometría se valida contra el recuadro del territorio, Canarias incluidas." },
+      { "valor": "mundo", "etiqueta": "Mundo",
+        "def": "La capa desborda el territorio (p. ej. el idioma). Solo se valida el rango legal de WGS84." }
+    ],
+    "registro": [
+      { "valor": "verificado", "etiqueta": "Verificada",
+        "def": "Fichas con la doctrina completa: fuente, fecha y estado por campo." },
+      { "valor": "ilustrativo", "etiqueta": "Ilustrativa",
+        "def": "Dibuja dónde, no cuánto ni de quién. Sin `__v` por campo; toda su geometría es ilustrativa." },
+      { "valor": "analisis", "etiqueta": "Análisis",
+        "def": "Investigación u opinión, SELLADA COMO TAL y enlazada al hilo donde se defiende. Nunca se presenta como hecho." }
+    ],
+    "geometria": [
+      { "valor": "puntos", "etiqueta": "Puntos" },
+      { "valor": "poligonos", "etiqueta": "Polígonos" },
+      { "valor": "lineas", "etiqueta": "Líneas" },
+      { "valor": "mixta", "etiqueta": "Mixta" }
+    ]
+  },
+
+  "categoria": {
+    "minerales-proyectos": [
+      { "valor": "estrategico_ue", "etiqueta": "Proyecto Estratégico UE (CRMA)" },
+      { "valor": "produccion_singular", "etiqueta": "Producción singular en la UE" },
+      { "valor": "en_disputa", "etiqueta": "Yacimiento en disputa" }
+    ],
+    "minerales-dominios": [
+      { "valor": "activo", "etiqueta": "Producción activa" },
+      { "valor": "historico", "etiqueta": "Distrito histórico" },
+      { "valor": "desarrollo", "etiqueta": "En desarrollo" },
+      { "valor": "disputa", "etiqueta": "En disputa" },
+      { "valor": "mixto", "etiqueta": "Activo y en desarrollo" }
+    ],
+    "cables-submarinos": [
+      { "valor": "aterrizaje", "etiqueta": "Punto de aterrizaje" },
+      { "valor": "trazado", "etiqueta": "Trazado" }
+    ],
+    "recurso-eolico": [
+      { "valor": "zona", "etiqueta": "Zona de recurso" }
+    ],
+    "recurso-solar": [
+      { "valor": "zona", "etiqueta": "Zona de recurso" }
+    ]
+  }
+}
