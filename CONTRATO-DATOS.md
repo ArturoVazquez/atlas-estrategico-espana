@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.3.0 · **Fecha:** 2026-08-05
+**Versión del contrato:** 1.4.0 · **Fecha:** 2026-08-05
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -59,7 +59,8 @@ atlas-estrategico-espana/
 ├── pipeline/
 │   ├── esquemas/              ← JSON Schema: nucleo.schema.json + uno por capa
 │   ├── pruebas/               ← fixtures: uno válido y al menos uno por regla de §6.4
-│   ├── validar.py             ← esquema + reglas de doctrina (§7)
+│   ├── validar.py             ← esquema + reglas de doctrina (§7), corre en CI
+│   ├── consultar.py           ← consulta al IGN y al catastro; contrasta (§6.6)
 │   └── vigilar.py             ← URLs y caducidad (avisa, no escribe) · AÚN NO CONSTRUIDO
 ├── referencia/                ← la demo v4: canon de interacción, no de código
 ├── app/                       ← el visor (consume datos/ por release etiquetada)
@@ -69,7 +70,13 @@ atlas-estrategico-espana/
 
 Reglas de la estructura:
 
-- `datos/` es **curado a mano**; `pipeline/` **valida y vigila, nunca genera datos**.
+- `datos/` es **curado a mano**; `pipeline/` **valida, vigila y consulta, nunca
+  genera datos**. Ninguno de los tres escribe en `datos/`, y **ninguno escribe en
+  `fuentes/`**: archivar una fuente es un acto con criterio —qué se guarda, con
+  qué título, qué sostiene— y lo firma una persona.
+- `.cache/` (ignorado por git) son copias de trabajo que `consultar.py` descarga
+  para no repetir peticiones. **Una copia de trabajo no es una cita**: la cita es
+  el extracto curado de `fuentes/`, con su fecha de captura.
 - Toda fuente citada por URL se **archiva** en `fuentes/` en el momento de la cita.
   `fuentes/` **jamás** entra en `.gitignore`: es la cita.
 - La app **no lee ficheros vivos**: lee la última release etiquetada (§8).
@@ -378,6 +385,18 @@ declarados `confirmado`. Una geometría `exacta`, apoyada en un anuncio
 corporativo y marcada `parcial`, pasaba en verde. R9 mira la precisión declarada,
 que es lo que el mapa va a dibujar.
 
+**El contraste de municipio** *(1.4)*. R9 comprueba que la geometría **cite**;
+no puede comprobar que la coordenada esté **bien**, porque eso exige salir a
+preguntar. Esa parte la hace una persona con `pipeline/consultar.py contraste
+<capa>`, que recorre la capa y comprueba, por punto-en-polígono contra los
+límites administrativos del IGN, que cada coordenada cae en el `municipio` que su
+ficha declara. **No corre en CI** ni bloquea nada: toca la red, y un contrato que
+se cae porque un ministerio está de mantenimiento no es un contrato.
+
+Si un punto y su municipio no cuadran, la salida **no es elegir**: uno de los dos
+datos está mal y no se sabe cuál. Se para, la geometría se queda donde estaba y
+se declara el hueco — que es lo que se hizo con `las-cruces` al abrir esta capa.
+
 ---
 
 ## 7 · Validación — el contrato con dientes
@@ -636,6 +655,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.4.0** | 2026-08-05 | **Aditiva, y sobre todo correctora.** Lo importante no es lo que añade sino lo que **deja de afirmar**: seis lugares de este repo daban por construido `pipeline/vigilar.py` —y su `vigilar.yml`— en presente y sin matizar, incluido el README público. No existen. §7 gana su bloque de estado, redactado como el de R8 en §6.5, y §2, §3 y §12.6 dejan de darlo por hecho. Mientras no exista, **nadie vigila la caducidad de una capa ni la muerte de una URL**, y eso ahora está dicho donde se afirma en vez de descubrirse por su ausencia — que es la regla que §8 se impone a sí mismo. Lo que se añade: `pipeline/consultar.py` en §2 (consulta al IGN y al catastro, contrasta, **nunca escribe**), `.cache/` con su distinción entre copia de trabajo y cita, y en §6.6 el **contraste de municipio**, que es la comprobación que R9 no puede hacer porque exige salir a la red. La regla de estructura pasa a «valida, vigila y consulta; nunca genera datos». |
 | **1.3.0** | 2026-08-05 | **Aditiva.** La geometría entra en la doctrina. `geo_fuente` admite `__v`/`__f` (§5); nuevo §6.6 con la tabla de qué precisión concede cada clase de fuente, el CRS como parte de la cita, y la regla **R9** (§6.4), que exige fuente primaria a toda `geo_precision` de `exacta` o `paraje` — con su implementación en `validar.py` y sus dos fixtures, no declarada y pendiente. §9: `paraje` y `exacta` se redefinen para distinguir la fuente del **nombre del lugar** de la del **objeto**; ningún registro publicado usaba ninguno de los dos, así que no hay nada que migrar. §8: sufijo `.N` para una segunda release en el mismo mes. Salió de la deuda de geometría de F1: once puntos honestos, pero con la única procedencia del atlas que nadie podía comprobar. **§6.6 lleva además una lección aprendida tocando la fuente**, no escribiendo el contrato: un punto representativo no hereda la precisión de su polígono, así que `exacta` es inalcanzable mientras la capa sea de puntos. |
 | **1.2.0** | 2026-08-05 | **Aditiva.** Campo opcional `nombre_oficial` (+`__v`,`__f`) en `minerales-proyectos` (§10). Salió de la propia F1: el nombre oficial del documento que reconoce un proyecto difiere del corriente en cinco de los siete españoles, y sin él la ficha no se puede contrastar contra el DOUE. Ningún consumidor de la 1.1 se rompe: es opcional. |
 | **1.1.0** | 2026-08-05 | **Aditiva.** Manifiesto: `arbol`, `ambito`, `en_preparacion`, `registro: analisis` (§3). Reglas de doctrina numeradas R1–R5 y ampliadas con **R6** (metadato huérfano), **R7** (`activo` no se escribe) y **R8** (dominio que contradice a la mina que contiene, sin diente hasta F3) (§6.4). Nuevo §6.5: el campo derivado `activo` y su tabla de mapeo, cerrando el matiz abierto de D3. Nuevo campo controlado `fase` en `minerales-proyectos` (§10) y su vocabulario (§9). §7: bbox según `ambito`, fechas no futuras, comprobación del manifiesto, y separación explícita entre avisar y bloquear. §11: el ejemplo canónico pasa a **validar de verdad** y es el fixture del CI. |
