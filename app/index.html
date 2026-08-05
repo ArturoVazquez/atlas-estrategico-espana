@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Estratégico de España</title>
+<meta name="description" content="Capa de inteligencia geoespacial sobre los activos estratégicos de España. Cada dato lleva fuente, fecha y estado de verificación.">
+<link rel="stylesheet" href="/src/estilo.css">
+</head>
+<body>
+
+<a class="saltar" href="#mapa">Saltar al mapa</a>
+
+<header>
+  <div class="masthead">
+    <div class="eyebrow">Atlas Estratégico</div>
+    <h1>ESPAÑA <span class="capa" id="capa-titulo">— minerales críticos</span></h1>
+  </div>
+  <div class="stamp">
+    <div class="l2" id="sello-capas">cargando…</div>
+    <span class="sello">DATOS · <b id="sello-release">—</b></span>
+  </div>
+</header>
+
+<div id="mapa" tabindex="-1" role="application" aria-label="Mapa del atlas"></div>
+
+<nav id="capas" aria-label="Capas del atlas"></nav>
+
+<aside id="ficha" aria-hidden="true" aria-label="Ficha del registro">
+  <button class="ficha-cerrar" aria-label="Cerrar ficha">✕ cerrar</button>
+  <div class="ficha-int" id="ficha-contenido"></div>
+</aside>
+
+<div id="leyenda" aria-label="Leyenda"></div>
+
+<footer>
+  <span id="pie-aviso">Cada dato lleva fuente, fecha y estado de verificación. Lo que falta se declara como hueco.</span>
+  <span id="pie-basemap"></span>
+</footer>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

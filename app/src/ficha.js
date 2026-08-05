@@ -1,0 +1,148 @@
+/**
+ * La ficha de un registro: el núcleo del contrato §5 puesto en pantalla.
+ *
+ * Lo que esta ficha tiene que conseguir es que **no se pueda leer un dato sin
+ * ver de qué pie cojea**: su estado de verificación, la fuente que lo sostiene
+ * y, cuando falta, el hueco dicho en voz alta. Por eso los sufijos `__v` y
+ * `__f` (§6.2) no se esconden: se pintan al lado del campo que acompañan.
+ */
+
+import { indexar, rotulo } from "./datos.js";
+import { colorDe } from "./mapa.js";
+
+const escapar = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
+  );
+
+export function crearFicha(vocabularios) {
+  const verif = indexar(vocabularios.registro.verif);
+  const precision = indexar(vocabularios.registro.geo_precision);
+  const fase = indexar(vocabularios.registro.fase);
+  const tipoFuente = indexar(vocabularios.fuente.tipo);
+  const panel = document.getElementById("ficha");
+  const cuerpo = document.getElementById("ficha-contenido");
+
+  const badge = (v) =>
+    v ? `<span class="badge ${escapar(v)}">${escapar(rotulo(verif, v))}</span>` : "";
+
+  /** Un campo con su estado de verificación y la fuente que lo sostiene. */
+  const campo = (k, valor, props, base, fuentes, extra) => {
+    if (valor === undefined || valor === null || valor === "") return "";
+    const v = props[`${base}__v`];
+    const f = props[`${base}__f`];
+    const fuente = fuentes.find((x) => x.id === f);
+    // Si un campo se declara verificado, la ficha DICE con qué. Un estado sin
+    // su fuente al lado es media verdad, y R2 existe justo para impedirlo.
+    const meta = [fuente && `según ${escapar(fuente.titulo)}`, extra]
+      .filter(Boolean)
+      .join(" · ");
+    return (
+      `<div class="campo"><div class="campo-k"><span>${escapar(k)}</span>${badge(v)}</div>` +
+      `<div class="campo-v">${escapar(valor)}</div>` +
+      (meta ? `<div class="campo-meta">${meta}</div>` : "") +
+      `</div>`
+    );
+  };
+
+  function abrir(feature, entrada) {
+    const p = feature.properties || {};
+    const fuentes = p.fuentes || [];
+    const cat = colorDe(p.categoria);
+    const catRotulo = rotulo(
+      indexar(vocabularios.categoria[entrada.id]),
+      p.categoria,
+      p.categoria || ""
+    );
+
+    const lugar = [p.municipio, p.provincia].filter(Boolean).join(" · ");
+    const materias = (p.materias || [])
+      .map((m) => `<span class="materia">${escapar(m)}</span>`)
+      .join("");
+
+    cuerpo.innerHTML = `
+      <div class="ficha-cat" style="color:${cat}"><span class="pastilla" style="background:${cat}"></span>${escapar(catRotulo)}</div>
+      <h3>${escapar(p.nombre)}</h3>
+      ${p.nombre_oficial && p.nombre_oficial !== p.nombre
+        ? `<div class="ficha-oficial">en el documento oficial: ${escapar(p.nombre_oficial)}</div>`
+        : ""}
+      ${lugar ? `<div class="ficha-lugar">${escapar(lugar)}</div>` : ""}
+      ${badge(p.verif)}
+      ${p.descripcion ? `<div class="ficha-desc">${escapar(p.descripcion)}</div>` : ""}
+      ${materias ? `<div class="materias">${materias}</div>` : ""}
+
+      <div class="registro">
+        ${campo("Tipo de proyecto", (p.tipo_proyecto || []).join(" · "), p, "tipo_proyecto", fuentes)}
+        ${campo("Promotor", p.promotor, p, "promotor", fuentes)}
+        ${campo("Fase", rotulo(fase, p.fase, p.fase), p, "fase", fuentes)}
+        ${campo("Estado", p.estado_proyecto, p, "estado_proyecto", fuentes,
+                p.estado_proyecto_fecha ? `dato de ${escapar(p.estado_proyecto_fecha)}` : "")}
+        ${(p.claves || []).map((c) => {
+          const f = fuentes.find((x) => x.id === c.fuente);
+          return `<div class="campo"><div class="campo-k"><span>${escapar(c.k)}</span>${badge(c.verif)}</div>` +
+                 `<div class="campo-v">${escapar(c.v)}</div>` +
+                 (f ? `<div class="campo-meta">según ${escapar(f.titulo)}</div>` : "") + `</div>`;
+        }).join("")}
+        ${precisionGeografica(p, precision, fuentes)}
+      </div>
+
+      <div class="fuentes"><h4>Fuentes</h4>${fuentes.map((f) => pintarFuente(f, tipoFuente)).join("")}</div>
+      ${p.nota ? `<div class="ficha-nota">${escapar(p.nota)}</div>` : ""}`;
+
+    panel.classList.add("abierta");
+    panel.setAttribute("aria-hidden", "false");
+    document.querySelector(".ficha-cerrar")?.focus();
+  }
+
+  function cerrar() {
+    panel.classList.remove("abierta");
+    panel.setAttribute("aria-hidden", "true");
+  }
+
+  document.querySelector(".ficha-cerrar").addEventListener("click", cerrar);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") cerrar();
+  });
+
+  return { abrir, cerrar };
+}
+
+/**
+ * La precisión geográfica, que es lo que impide que el mapa mienta.
+ *
+ * Un punto pintado sobre buena cartografía afirma exactitud aunque la ficha
+ * diga lo contrario, y en un mapa gana lo que se ve (§6.6). Si la ficha no
+ * dice de qué precisión es la coordenada, el visor está afirmando algo que los
+ * datos no sostienen — así que este campo NO es opcional.
+ */
+function precisionGeografica(p, precision, fuentes) {
+  if (!p.geo_precision) return "";
+  const def = precision.get(p.geo_precision);
+  const f = fuentes.find((x) => x.id === p.geo_fuente__f);
+  const meta = [p.geo_fuente, f && `según ${f.titulo}`].filter(Boolean).join(" · ");
+  return (
+    `<div class="campo"><div class="campo-k"><span>Precisión geográfica</span>` +
+    (p.geo_fuente__v ? `<span class="badge ${escapar(p.geo_fuente__v)}">${escapar(p.geo_fuente__v.replace("_", " "))}</span>` : "") +
+    `</div><div class="campo-v">${escapar(def?.etiqueta || p.geo_precision)}` +
+    (def?.def ? ` — ${escapar(def.def)}` : "") +
+    `</div>` +
+    (meta ? `<div class="campo-meta">${escapar(meta)}</div>` : "") +
+    `</div>`
+  );
+}
+
+/** Un hueco se pinta COMO hueco: en cursiva, sin enlace y sin disimulo. */
+function pintarFuente(f, tipoFuente) {
+  if (f.tipo === "hueco") {
+    return `<div class="fuente hueco">${escapar(f.titulo)}</div>`;
+  }
+  const etiqueta = rotulo(tipoFuente, f.tipo, f.tipo);
+  const titulo = f.url
+    ? `<a href="${escapar(f.url)}" target="_blank" rel="noopener">${escapar(f.titulo)}</a>`
+    : escapar(f.titulo);
+  return (
+    `<div class="fuente">${titulo}` +
+    (f.fecha ? ` <span class="f-fecha">· ${escapar(f.fecha)}</span>` : "") +
+    `<span class="f-tipo">${escapar(etiqueta)}</span></div>`
+  );
+}
