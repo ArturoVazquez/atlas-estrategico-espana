@@ -45,7 +45,15 @@ export function crearFicha(vocabularios) {
     );
   };
 
-  function abrir(feature, entrada) {
+  /**
+   * @param {object[]} [vecinos] otros registros en la MISMA coordenada.
+   *
+   * Dos reactores de una central comparten punto porque no hay fuente que sitúe
+   * cada edificio (§6.6). Sin esta lista, el de abajo sería inalcanzable: la
+   * capa tendría siete registros y el visor enseñaría seis, que es una forma
+   * silenciosa de perder un dato.
+   */
+  function abrir(feature, entrada, vecinos = []) {
     const p = feature.properties || {};
     const fuentes = p.fuentes || [];
     const cat = colorDe(p.categoria);
@@ -72,11 +80,7 @@ export function crearFicha(vocabularios) {
       ${materias ? `<div class="materias">${materias}</div>` : ""}
 
       <div class="registro">
-        ${campo("Tipo de proyecto", (p.tipo_proyecto || []).join(" · "), p, "tipo_proyecto", fuentes)}
-        ${campo("Promotor", p.promotor, p, "promotor", fuentes)}
-        ${campo("Fase", rotulo(fase, p.fase, p.fase), p, "fase", fuentes)}
-        ${campo("Estado", p.estado_proyecto, p, "estado_proyecto", fuentes,
-                p.estado_proyecto_fecha ? `dato de ${escapar(p.estado_proyecto_fecha)}` : "")}
+        ${camposDeCapa(p, fuentes, fase, campo)}
         ${(p.claves || []).map((c) => {
           const f = fuentes.find((x) => x.id === c.fuente);
           return `<div class="campo"><div class="campo-k"><span>${escapar(c.k)}</span>${badge(c.verif)}</div>` +
@@ -86,8 +90,19 @@ export function crearFicha(vocabularios) {
         ${precisionGeografica(p, precision, fuentes)}
       </div>
 
+      ${vecinos.length ? `<div class="vecinos"><h4>También en este emplazamiento</h4>${
+        vecinos.map((v) => `<button class="vecino" data-slug="${escapar(v.properties.slug)}">${escapar(v.properties.nombre)}</button>`).join("")
+      }</div>` : ""}
+
       <div class="fuentes"><h4>Fuentes</h4>${fuentes.map((f) => pintarFuente(f, tipoFuente)).join("")}</div>
       ${p.nota ? `<div class="ficha-nota">${escapar(p.nota)}</div>` : ""}`;
+
+    for (const b of cuerpo.querySelectorAll(".vecino")) {
+      b.addEventListener("click", () => {
+        const otro = vecinos.find((v) => v.properties.slug === b.dataset.slug);
+        if (otro) abrir(otro, entrada, [feature, ...vecinos.filter((v) => v !== otro)]);
+      });
+    }
 
     panel.classList.add("abierta");
     panel.setAttribute("aria-hidden", "false");
@@ -105,6 +120,49 @@ export function crearFicha(vocabularios) {
   });
 
   return { abrir, cerrar };
+}
+
+/**
+ * Los campos PROPIOS de la capa, sin saber qué capa es.
+ *
+ * La primera versión de esta ficha listaba a mano «Promotor», «Fase», «Estado»…
+ * —los campos de `minerales-proyectos`— y al llegar la segunda capa no enseñaba
+ * ni la potencia, ni los titulares, ni las fechas de autorización: los datos
+ * estaban cargados y la ficha los ignoraba en silencio. El panel se construía
+ * desde el manifiesto y la ficha no; a medias no vale.
+ *
+ * Ahora se pinta todo lo que no es del núcleo (§5) ni metadato: el contrato pide
+ * que los campos de capa vayan PLANOS en `properties` (§5), y eso es justo lo
+ * que permite recorrerlos sin conocerlos.
+ */
+const NUCLEO = new Set([
+  "slug", "nombre", "nombre_oficial", "categoria", "descripcion", "estado_registro",
+  "verif", "geo_precision", "geo_fuente", "fecha_alta", "fecha_verificacion",
+  "fuentes", "claves", "nota", "debate_url", "municipio", "provincia",
+]);
+
+/** `autorizacion_hasta` → «Autorización hasta». Sin tabla por capa: si hiciera
+ *  falta una, volveríamos a tener código que conoce las capas de antemano. */
+function rotularCampo(clave) {
+  const t = clave.replace(/_/g, " ");
+  return t.charAt(0).toUpperCase() + t.slice(1).replace(/\bmw\b/gi, "(MW)");
+}
+
+function camposDeCapa(p, fuentes, fase, campo) {
+  const salida = [];
+  for (const [clave, valor] of Object.entries(p)) {
+    if (NUCLEO.has(clave) || clave.includes("__")) continue;
+    if (valor === null || valor === undefined || valor === "") continue;
+    // `fase` es el único que se traduce, porque es vocabulario controlado (§6.5).
+    const texto = clave === "fase"
+      ? rotulo(fase, valor, valor)
+      : Array.isArray(valor) ? valor.join(" · ") : String(valor);
+    // Un `_fecha` acompaña al campo anterior: se cuelga de él como metadato.
+    if (clave.endsWith("_fecha")) continue;
+    const extra = p[`${clave}_fecha`] ? `dato de ${p[`${clave}_fecha`]}` : "";
+    salida.push(campo(rotularCampo(clave), texto, p, clave, fuentes, extra));
+  }
+  return salida.join("");
 }
 
 /**

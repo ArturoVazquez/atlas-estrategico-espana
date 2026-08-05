@@ -70,9 +70,20 @@ async function arrancar() {
         // registro original en la colección cargada, que es la que vino de la
         // release y conserva sus tipos.
         mapa.on("click", id, (e) => {
+          const buscar = (s) => capa.coleccion.features.find((f) => f.properties.slug === s);
           const slug = e.features[0]?.properties?.slug;
-          const original = capa.coleccion.features.find((f) => f.properties.slug === slug);
-          if (original) ficha.abrir(original, capa.entrada);
+          const original = buscar(slug);
+          if (!original) return;
+          // Registros que comparten EXACTAMENTE la coordenada: dos reactores de
+          // una misma central. Sin esto, el de abajo no se podría abrir nunca.
+          const [lon, lat] = original.geometry.coordinates;
+          const vecinos = capa.coleccion.features.filter(
+            (f) =>
+              f.properties.slug !== slug &&
+              f.geometry?.coordinates?.[0] === lon &&
+              f.geometry?.coordinates?.[1] === lat
+          );
+          ficha.abrir(original, capa.entrada, vecinos);
         });
         mapa.on("mouseenter", id, () => (mapa.getCanvas().style.cursor = "pointer"));
         mapa.on("mouseleave", id, () => (mapa.getCanvas().style.cursor = ""));
