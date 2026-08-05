@@ -120,7 +120,13 @@ contradiría el motivo por el que se decidió autoalojarlo.
   Viena art. 105; verificar fecha y naturaleza del acuerdo UE–RU sobre
   Gibraltar); zonas sin delimitar según doctrina D5.
 - **Gas y regasificación**: las plantas de GNL con fuente Enagás/CNMC.
-- **Nuclear**: los 7 reactores con calendario de cierre; fuentes CSN/MITECO.
+- ~~**Nuclear**: los 7 reactores con calendario de cierre; fuentes CSN/MITECO.~~
+  **HECHA el 2026-08-06**, release `datos-v2026.08.2`. Un registro por reactor,
+  con dos campos de fecha: lo **autorizado** (orden del BOE) y lo **acordado**
+  (calendario de 2019). Lo segundo resultó no tener documento público —es un
+  protocolo privado— así que va vacío y declarado en cinco de los siete, en vez
+  de rellenarse con la fecha que cita todo el mundo. La prórroga de Almaraz no
+  mueve ninguna fecha mientras MITECO no resuelva.
 - Dominios minerales: primer ascenso de una mancha ilustrativa a cartografía
   de fuente primaria (candidata: Faja Pirítica, IGME).
 - **Punto → polígono en `minerales-proyectos`** (menor de capa, §8: mismo `id`).

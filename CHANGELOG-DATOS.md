@@ -32,6 +32,71 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.2 — Nuclear: siete reactores, y un calendario sin documento
+
+Segunda capa del atlas, y la primera que estrena el mecanismo **sin ser la
+primera**: `nuclear` entró por el manifiesto y apareció en el visor sin tocar
+una línea de código de panel, que era el criterio con el que se cerró F2.
+
+Ocho documentos nuevos en `fuentes/`: las **seis órdenes ministeriales del BOE**
+que renuevan la autorización de explotación de cada central, la ficha de
+**MITECO** con potencia, tecnología y titulares, y los topónimos del **IGN** que
+sostienen la geometría.
+
+### Añadido
+
+- **`nuclear`** — siete registros, uno **por reactor** y no por central:
+  `almaraz-i`, `almaraz-ii`, `asco-i`, `asco-ii`, `cofrentes`, `vandellos-ii` y
+  `trillo-i`. Cada grupo tiene su propia autorización, su fecha y su potencia:
+  son siete hechos, no cinco.
+
+Los dos reactores de un mismo emplazamiento **comparten coordenada**, y se dice
+en la ficha: separarlos exigiría una fuente que sitúe cada edificio y no la hay.
+Los siete pasan el contraste de municipio contra los límites del IGN.
+
+### Huecos
+
+Esta capa es, sobre todo, un inventario de lo que se da por sabido sin documento:
+
+- **El «calendario de cierre de 2019» no tiene fuente pública.** Se cita en todas
+  partes como un hecho —Almaraz 2027 y 2028, Ascó 2030 y 2032, Cofrentes 2030,
+  Vandellós II y Trillo 2035— pero procede de un **Protocolo de intenciones
+  privado** entre Enresa y los titulares, y lo único localizable son notas de
+  prensa. Así que **`cierre_acordado` va vacío en cinco de los siete**, con su
+  hueco declarado, en lugar de rellenarse con la fecha que circula.
+- **Solo dos lo llevan confirmado**, y por una razón concreta: sus propias
+  órdenes llaman a la fecha de expiración «fecha de cese definitivo de
+  explotación». Cofrentes lo dice literalmente y Ascó I también.
+- **Tres órdenes no dan fecha de expiración**: dicen «validez de diez años» desde
+  una fecha. Ascó II, Vandellós II y Trillo I llevan por eso su
+  `autorizacion_hasta` como **`parcial`**, con una clave que reproduce el texto:
+  es aritmética, no es una cita, y ni siquiera consta si el último día es el 1 o
+  el 2 de octubre de 2031.
+- **La prórroga de Almaraz no mueve ninguna fecha.** El CSN informó
+  favorablemente en julio de 2026, pero **MITECO no ha resuelto**: lo autorizado
+  sigue siendo el 1 de noviembre de 2027 para el grupo I y el 31 de octubre de
+  2028 para el II. Queda como clave `no_verificado` con su hueco, y por **R4**
+  eso impide el confirmado global de ambos. El «efecto dominó» sobre Ascó I y
+  Cofrentes que anticipan los titulares es previsión en prensa: no toca nada.
+- **El CSN y el BOE discrepan en un día** sobre Ascó I —2 de octubre de 2030
+  frente al 1—. Se publica la de la orden, que es el instrumento, y la
+  discrepancia queda escrita en la ficha.
+- **Las centrales cerradas quedan fuera de esta tanda**: Garoña (2017),
+  Vandellós I (1989) y Zorita (2006) necesitan su propia pasada de archivo
+  —fecha de cese, estado de desmantelamiento, ENRESA— y meterlas a medias sería
+  peor que no meterlas.
+
+### Contrato
+
+Sube a **1.6.0**. §10 da su apartado a `nuclear` con **dos campos de fecha**
+—`autorizacion_hasta`, de la orden del BOE, y `cierre_acordado`, del calendario—
+porque son hechos distintos y en España no coinciden: Vandellós II está
+autorizado hasta 2030 y su cierre acordado se cita en 2035. Con un solo campo
+habría que elegir cuál es «la» fecha, y quien mire el mapa no sabría cuál ve.
+§9 añade su vocabulario de categoría y §6.5 su fila en la tabla de `activo`.
+
+---
+
 ## datos-v2026.08.1 — La geometría deja de ser una promesa
 
 La release anterior declaró su propia deuda: los once puntos eran aproximación
