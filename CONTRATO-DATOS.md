@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.2.0 · **Fecha:** 2026-08-05
+**Versión del contrato:** 1.3.0 · **Fecha:** 2026-08-05
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -58,7 +58,7 @@ atlas-estrategico-espana/
 │   └── 2026-07-22_ce_lista-crma-1.pdf     (fecha-captura_emisor_titulo.ext)
 ├── pipeline/
 │   ├── esquemas/              ← JSON Schema: nucleo.schema.json + uno por capa
-│   ├── pruebas/               ← fixtures: uno válido y uno por regla de §6.4
+│   ├── pruebas/               ← fixtures: uno válido y al menos uno por regla de §6.4
 │   ├── validar.py             ← esquema + reglas de doctrina (§7)
 │   └── vigilar.py             ← comprobación de URLs y caducidad (avisa, no escribe)
 ├── referencia/                ← la demo v4: canon de interacción, no de código
@@ -182,7 +182,7 @@ anglosajón) se asume y queda anotado aquí.
 | `estado_registro` | enum | ✔ | `vigente` · `historico` · `retirado` |
 | `verif` | enum | ✔ | `confirmado` · `parcial` · `no_verificado` — estado global del registro |
 | `geo_precision` | enum | ✔ | `exacta` · `paraje` · `municipio` · `ilustrativa` |
-| `geo_fuente` | string | – | de dónde sale la geometría (p. ej. `catastro minero`, `mano alzada`) |
+| `geo_fuente` | string | – | de dónde sale la geometría (p. ej. `catastro minero`, `mano alzada`). **(1.3)** admite `__v`/`__f` como cualquier campo sensible — ver §6.6 |
 | `fecha_alta` | fecha ISO | ✔ | cuándo entró el registro en el atlas |
 | `fecha_verificacion` | fecha ISO | ✔ | última pasada de verificación humana |
 | `fuentes` | Fuente[] | ✔ | ver §6; puede contener el hueco explícito |
@@ -265,6 +265,10 @@ error de esquema genérico.
 | **R5** | `registro: ilustrativo` en el manifiesto ⇒ la capa no declara `__v` por campo y toda su geometría es `geo_precision: ilustrativa`; su ficha lo dice. |
 | **R6** *(1.1)* | Todo `__v` y todo `__f` acompañan a un campo que existe, y todo `__f` apunta a un `id` que existe en `fuentes`. Un metadato huérfano es un dato que nadie sostiene. |
 | **R7** *(1.1)* | Ningún fichero de datos contiene el campo `activo`: es **derivado** (§6.5). Escribirlo a mano es la doble fuente de verdad que D3 descartó. |
+| **R9** *(1.3)* | `geo_precision ∈ {exacta, paraje}` ⇒ el registro declara `geo_fuente`, y su `geo_fuente__f` apunta a una fuente `primaria`. Una precisión que promete cartografía tiene que citarla (§6.6). |
+
+**R8 no está en esta tabla** y no es un descuido: es la única regla sin diente
+todavía, y vive con su explicación en §6.5. Esta tabla es lo que el CI comprueba.
 
 R2 y R3 son la misma frontera vista desde los dos lados, y así se validan: R2
 comprueba que el confirmado tiene detrás una primaria; R3, que ninguna prensa o
@@ -327,6 +331,45 @@ la doctrina del proyecto entera en miniatura.
 
 ---
 
+## 6.6 · La precisión de la geometría, y lo que la sostiene *(1.3)*
+
+`geo_precision` es la única declaración del atlas que el mapa puede desmentir él
+solo. Un punto pintado sobre buena cartografía **afirma exactitud aunque la ficha
+diga lo contrario**, y en un mapa gana lo que se ve. Un lector que mide una
+distancia sobre la pantalla no ha leído el campo `geo_fuente`, y no tiene por qué.
+
+Por eso la geometría deja de ser el único dato del atlas cuya procedencia era
+prosa: `geo_fuente` admite `geo_fuente__v` y `geo_fuente__f` como cualquier otro
+campo sensible (§6.2), y la fuente cartográfica entra en `fuentes` con su tipo y
+su copia archivada, igual que la que sostiene un promotor.
+
+**Qué precisión concede cada clase de fuente:**
+
+| Lo que da la fuente | `geo_precision` |
+|---|---|
+| Perímetro o coordenadas **del objeto**: catastro minero, o la resolución que lo autoriza | `exacta` |
+| Topónimo de un nomenclátor oficial: primaria para el **nombre del lugar**, no para el perímetro de la instalación | `paraje` |
+| Nada localizable, o fuente con licencia incompatible (`datos/LICENCIA-DATOS.md`) | `municipio` — se queda ahí, y lo dice |
+| Trazado a mano alzada | `ilustrativa` |
+
+Quedarse en `municipio` es un resultado legítimo: es el hueco del principio 1
+aplicado a la geometría. Lo que no es legítimo es ascender de rango sin que
+ascienda la evidencia — el mismo criterio que gobierna todos los demás campos.
+
+**El CRS es parte de la cita, no un detalle de taller.** Los derechos mineros
+españoles vienen históricamente en **ED50**, y ED50→ETRS89 en la Península
+desplaza del orden de 100-200 m. Una coordenada mal transformada cae fuera de la
+mina **mientras la ficha dice `exacta`**: exactamente la mentira que esta sección
+existe para impedir. `geo_fuente` declara el CRS de origen y la transformación
+aplicada.
+
+**Por qué R9 hace falta**, si ya existían R2 y R3: esas dos solo miran los campos
+declarados `confirmado`. Una geometría `exacta`, apoyada en un anuncio
+corporativo y marcada `parcial`, pasaba en verde. R9 mira la precisión declarada,
+que es lo que el mapa va a dibujar.
+
+---
+
 ## 7 · Validación — el contrato con dientes
 
 `pipeline/validar.py` corre en CI sobre cada PR a `datos/`. La doctrina deja de
@@ -335,7 +378,7 @@ ser prosa y pasa a ser test:
 1. **Esquema:** cada capa valida contra `nucleo.schema.json` + su extensión.
 2. **Identidad:** `slug` únicos por capa; `id` = `capa:slug`; ids nunca
    desaparecen entre releases (solo cambian de `estado_registro`).
-3. **Doctrina:** las reglas **R1–R7** de §6.4, mecánicamente. El mensaje de error
+3. **Doctrina:** las reglas **R1–R7 y R9** de §6.4, mecánicamente. El mensaje de error
    **nombra la regla** (`R3: la fuente f2 es de tipo prensa…`), no describe un
    fallo de esquema: quien lo lee tiene que poder ir al contrato.
 4. **Geometría:** WGS84 plausible, ≤5 decimales, anillos cerrados y orientados
@@ -403,7 +446,8 @@ existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado
 
 - `verif`: `confirmado` · `parcial` · `no_verificado`
 - `estado_registro`: `vigente` · `historico` · `retirado`
-- `geo_precision`: `exacta` · `paraje` · `municipio` · `ilustrativa`
+- `geo_precision`: `exacta` · `paraje` · `municipio` · `ilustrativa` — qué fuente
+  concede cada uno, en §6.6
 - `fuente.tipo`: `primaria` · `prensa` · `corporativa` · `hueco`
 - `fase` *(1.1)*: `produccion` · `desarrollo` · `tramitacion` · `parado` · `cerrado`
 
@@ -528,6 +572,12 @@ localizar fuente primaria del promotor —registro mercantil, catastro minero—
 reescribir el estado. `fase: desarrollo` también queda en `parcial` por lo mismo.
 Un dato solo sube de rango cuando sube su evidencia.)*
 
+*(La geometría va en `municipio`, así que **R9 no le pide fuente cartográfica**:
+el registro no promete una precisión que no tiene. El día que la coordenada salga
+del catastro minero, `geo_precision` sube a `exacta` y con ella llegan
+`geo_fuente__f` y la fuente archivada — las dos cosas a la vez, que es lo que R9
+comprueba.)*
+
 ---
 
 ## 12 · Decisiones de diseño registradas
@@ -550,6 +600,10 @@ Un dato solo sube de rango cuando sube su evidencia.)*
 10. **El horizonte se declara en el manifiesto** *(1.1)* → `en_preparacion`
     convierte «lo que falta» en dato consultable en vez de en una promesa suelta
     en un README (D4).
+11. **La geometría cita como cualquier otro dato** *(1.3)* → `geo_fuente` con
+    `__v`/`__f`, y R9 atándola a la precisión declarada (§6.6). Era el único
+    campo cuya procedencia no se podía comprobar, y el único que el mapa
+    contradice solo con dibujarse.
 
 ---
 
@@ -557,6 +611,7 @@ Un dato solo sube de rango cuando sube su evidencia.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.3.0** | 2026-08-05 | **Aditiva.** La geometría entra en la doctrina. `geo_fuente` admite `__v`/`__f` (§5); nuevo §6.6 con la tabla de qué precisión concede cada clase de fuente, el CRS como parte de la cita, y la regla **R9** (§6.4), que exige fuente primaria a toda `geo_precision` de `exacta` o `paraje` — con su implementación en `validar.py` y sus dos fixtures, no declarada y pendiente. §9: `paraje` y `exacta` se redefinen para distinguir la fuente del **nombre del lugar** de la del **objeto**; ningún registro publicado usaba ninguno de los dos, así que no hay nada que migrar. Salió de la deuda de geometría de F1: once puntos honestos, pero con la única procedencia del atlas que nadie podía comprobar. |
 | **1.2.0** | 2026-08-05 | **Aditiva.** Campo opcional `nombre_oficial` (+`__v`,`__f`) en `minerales-proyectos` (§10). Salió de la propia F1: el nombre oficial del documento que reconoce un proyecto difiere del corriente en cinco de los siete españoles, y sin él la ficha no se puede contrastar contra el DOUE. Ningún consumidor de la 1.1 se rompe: es opcional. |
 | **1.1.0** | 2026-08-05 | **Aditiva.** Manifiesto: `arbol`, `ambito`, `en_preparacion`, `registro: analisis` (§3). Reglas de doctrina numeradas R1–R5 y ampliadas con **R6** (metadato huérfano), **R7** (`activo` no se escribe) y **R8** (dominio que contradice a la mina que contiene, sin diente hasta F3) (§6.4). Nuevo §6.5: el campo derivado `activo` y su tabla de mapeo, cerrando el matiz abierto de D3. Nuevo campo controlado `fase` en `minerales-proyectos` (§10) y su vocabulario (§9). §7: bbox según `ambito`, fechas no futuras, comprobación del manifiesto, y separación explícita entre avisar y bloquear. §11: el ejemplo canónico pasa a **validar de verdad** y es el fixture del CI. |
 | **1.0.0** | 2026-07-22 | Contrato inicial: GeoJSON RFC 7946 WGS84, manifiesto de capas, propiedades planas, campos en español, sufijos `__v`/`__f`, fuentes tipadas, doctrina como validación de CI, releases etiquetadas, nada se borra. |
