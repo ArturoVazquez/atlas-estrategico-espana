@@ -1,0 +1,34 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:prensa-ascendida",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "prensa-ascendida",
+        "nombre": "Prensa ascendida a hecho",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "promotor": "Alguna Sociedad Anónima",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "fuentes": [
+          { "id": "f1", "tipo": "primaria", "titulo": "Documento oficial", "fecha": "2025-03-25" },
+          { "id": "f2", "tipo": "prensa", "titulo": "Reportaje de un diario", "fecha": "2025-03-31" }
+        ],
+        "nota": "VIOLA R3. El confirmado SÍ dice de qué fuente cuelga, y esa fuente es un periódico. Es el fallo silencioso del proyecto: nadie miente, alguien se fía. El arreglo no es reescribir el estado, es localizar el registro mercantil."
+      }
+    }
+  ]
+}

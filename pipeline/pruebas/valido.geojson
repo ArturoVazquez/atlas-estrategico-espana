@@ -1,0 +1,57 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "minerales-proyectos",
+    "schema_version": "1.1.0",
+    "verificado_a": "2026-08-05"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:aguablanca",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "aguablanca",
+        "nombre": "Aguablanca",
+        "categoria": "estrategico_ue",
+        "descripcion": "Reactivación del único yacimiento de níquel explotado en España.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "centroide municipal — pendiente catastro minero",
+        "fecha_alta": "2026-07-22",
+        "fecha_verificacion": "2026-07-22",
+        "materias": ["niquel", "cobre", "cobalto", "pgm"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "promotor": "Río Narcea Recursos",
+        "promotor__v": "parcial",
+        "promotor__f": "f2",
+        "fase": "desarrollo",
+        "fase__v": "parcial",
+        "fase__f": "f1",
+        "estado_proyecto": "Reactivación en curso",
+        "estado_proyecto__v": "parcial",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Comisión Europea — Decisión de la 1ª lista de Proyectos Estratégicos CRMA, con su anexo",
+            "fecha": "2025-03-25"
+          },
+          {
+            "id": "f2",
+            "tipo": "prensa",
+            "titulo": "elEconomista — Quién está detrás de los 7 proyectos",
+            "fecha": "2025-03-31"
+          }
+        ],
+        "nota": "La inclusión en la lista CRMA es un hecho oficial. El promotor y la fase quedan en «parcial»: los sostiene prensa y la decisión general, no una primaria específica de cada campo. Un dato sube de rango cuando sube su evidencia, no cuando conviene."
+      }
+    }
+  ]
+}

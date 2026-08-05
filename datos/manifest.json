@@ -5,6 +5,8 @@
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 
+  "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
+
   "schema_version": "1.1.0",
   "release": null,
 
@@ -14,6 +16,9 @@
       "titulo": "Minerales críticos — proyectos",
       "arbol": "minerales",
       "grupo": "actividad",
+      "geometria": "puntos",
+      "registro": "verificado",
+      "ambito": "espana",
       "en_preparacion": true
     },
     {
@@ -21,6 +26,9 @@
       "titulo": "Dominios minerales",
       "arbol": "minerales",
       "grupo": "dotacion",
+      "geometria": "poligonos",
+      "registro": "ilustrativo",
+      "ambito": "espana",
       "en_preparacion": true
     },
 
@@ -29,6 +37,9 @@
       "titulo": "Recurso eólico",
       "arbol": "energia",
       "grupo": "dotacion",
+      "geometria": "poligonos",
+      "registro": "ilustrativo",
+      "ambito": "espana",
       "en_preparacion": true
     },
     {
@@ -36,6 +47,9 @@
       "titulo": "Recurso solar",
       "arbol": "energia",
       "grupo": "dotacion",
+      "geometria": "poligonos",
+      "registro": "ilustrativo",
+      "ambito": "espana",
       "en_preparacion": true
     },
     {
@@ -79,6 +93,9 @@
       "titulo": "Cables submarinos",
       "arbol": "conectividad",
       "grupo": "dotacion",
+      "geometria": "mixta",
+      "registro": "ilustrativo",
+      "ambito": "espana",
       "en_preparacion": true
     },
     {
@@ -116,6 +133,8 @@
       "titulo": "El idioma como activo",
       "arbol": "intangibles",
       "grupo": "dotacion",
+      "registro": "analisis",
+      "ambito": "mundo",
       "en_preparacion": true
     }
   ]

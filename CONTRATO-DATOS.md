@@ -491,13 +491,11 @@ apartado aquí y su esquema en `pipeline/esquemas/`.)*
     "claves": [],
     "fuentes": [
       { "id": "f1", "tipo": "primaria",
-        "titulo": "Comisión Europea — 1ª lista de Proyectos Estratégicos CRMA",
-        "fecha": "2025-03-25", "url": "https://…",
-        "archivo": "fuentes/2026-07-22_ce_lista-crma-1.pdf" },
+        "titulo": "Comisión Europea — Decisión de la 1ª lista de Proyectos Estratégicos CRMA, con su anexo",
+        "fecha": "2025-03-25" },
       { "id": "f2", "tipo": "prensa",
         "titulo": "elEconomista — Quién está detrás de los 7 proyectos",
-        "fecha": "2025-03-31", "url": "https://…",
-        "archivo": "fuentes/2026-07-22_ee_detras-7-proyectos.pdf" }
+        "fecha": "2025-03-31" }
     ],
     "nota": "La inclusión en la lista CRMA es un hecho oficial.",
     "debate_url": "https://www.eltercioviejo.com/bandera/hac/hilo/…"
@@ -508,6 +506,13 @@ apartado aquí y su esquema en `pipeline/esquemas/`.)*
 **Este ejemplo valida.** Es literalmente el fixture `pipeline/pruebas/valido.geojson`
 que el CI pasa en verde — no una ilustración aproximada. Si el contrato y el
 fixture se separan alguna vez, el error está en el contrato.
+
+*(Las dos fuentes van **sin `url` y sin `archivo`**, y es deliberado: este
+documento no cementa una URL que nadie ha verificado todavía. Localizar la
+decisión de la Comisión **con su anexo** —no la nota de prensa que la resume— y
+archivarla en `fuentes/` es trabajo de la fase F1, que existe exactamente para
+eso. Escribir aquí un enlace plausible mientras tanto sería el fallo que el
+principio 1 prohíbe, cometido en el ejemplo que enseña a no cometerlo.)*
 
 *(Obsérvese `promotor__v: parcial` con `promotor__f: f2`. La fuente f2 es prensa,
 y por **R3** no puede sostener un `confirmado`: elevar ese campo exigiría

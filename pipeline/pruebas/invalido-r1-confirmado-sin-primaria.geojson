@@ -1,0 +1,30 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:sin-primaria",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "sin-primaria",
+        "nombre": "Registro confirmado sobre prensa",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "fuentes": [
+          { "id": "f1", "tipo": "prensa", "titulo": "Reportaje de un diario", "fecha": "2025-03-31" }
+        ],
+        "nota": "VIOLA R1. Se declara confirmado y detrás solo hay un periódico. Es el error más fácil de cometer y el más difícil de detectar leyendo: la ficha se ve completa."
+      }
+    }
+  ]
+}

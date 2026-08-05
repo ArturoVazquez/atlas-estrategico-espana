@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:cita-sin-copia",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "cita-sin-copia",
+        "nombre": "Cita por URL, sin copia archivada",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Documento oficial citado por enlace",
+            "fecha": "2025-03-25",
+            "url": "https://example.org/documento-oficial"
+          }
+        ],
+        "nota": "AVISA por §7.7, y NO bloquea — a propósito. Durante la v1 hay citas que se archivan con retraso, y eso no debe impedir que se corrija un dato que está bien. Este fixture existe para probar que la distinción entre avisar y bloquear funciona de verdad: un validador que solo sabe gritar acaba desactivado."
+      }
+    }
+  ]
+}

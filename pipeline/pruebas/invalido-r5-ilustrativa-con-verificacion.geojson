@@ -1,0 +1,34 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-dominios", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:mancha-con-pretensiones",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[-7.0, 37.4], [-6.0, 37.4], [-6.0, 38.0], [-7.0, 38.0], [-7.0, 37.4]]
+        ]
+      },
+      "properties": {
+        "slug": "mancha-con-pretensiones",
+        "nombre": "Mancha ilustrativa que finge precisión",
+        "categoria": "activo",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "mano alzada",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "caracter": "activo",
+        "caracter__v": "parcial",
+        "caracter__f": "f1",
+        "fuentes": [
+          { "id": "f1", "tipo": "primaria", "titulo": "Documento oficial", "fecha": "2025-03-25" }
+        ],
+        "nota": "VIOLA R5, dos veces. La capa `minerales-dominios` está declarada `ilustrativo` en el manifiesto: un trazado a mano alzada no puede llevar verificación por campo (`caracter__v`) ni declararse `geo_precision: municipio`. Dibuja dónde, no cuánto ni de quién. Es la regla que impide que una mancha bonita se lea como un límite medido."
+      }
+    }
+  ]
+}

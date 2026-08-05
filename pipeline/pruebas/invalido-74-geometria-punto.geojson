@@ -1,0 +1,50 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:lon-lat-del-reves",
+      "geometry": { "type": "Point", "coordinates": [38.0805, -6.2708] },
+      "properties": {
+        "slug": "lon-lat-del-reves",
+        "nombre": "El punto que acabó en el Atlántico Sur",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "fuentes": [{ "id": "f1", "tipo": "primaria", "titulo": "Documento oficial" }],
+        "nota": "VIOLA §7.4. Latitud y longitud intercambiadas — el error más común del mundo GIS, y el más silencioso: el fichero es GeoJSON válido y el punto simplemente aparece en otro hemisferio. El recuadro del territorio lo caza."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:precision-fingida",
+      "geometry": { "type": "Point", "coordinates": [-6.2708123, 38.0805] },
+      "properties": {
+        "slug": "precision-fingida",
+        "nombre": "Siete decimales sobre un centroide municipal",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "fuentes": [{ "id": "f1", "tipo": "primaria", "titulo": "Documento oficial" }],
+        "nota": "VIOLA §7.4. Un centímetro de precisión declarado sobre un dato que es el centro de un municipio. No es solo ruido en el diff: es una afirmación falsa sobre cuánto se sabe."
+      }
+    }
+  ]
+}

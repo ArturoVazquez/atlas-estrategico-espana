@@ -1,0 +1,31 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:hueco-confirmado",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "hueco-confirmado",
+        "nombre": "Confirmado con un agujero dentro",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "fuentes": [
+          { "id": "f1", "tipo": "primaria", "titulo": "Documento oficial", "fecha": "2025-03-25" },
+          { "id": "f2", "tipo": "hueco", "titulo": "Fuente primaria del promotor, pendiente de asignar" }
+        ],
+        "nota": "VIOLA R4. Hay una primaria, así que R1 se cumple — pero el registro también declara un hueco. Reconocer que falta algo y a la vez marcar el conjunto como confirmado es la contradicción que R4 existe para atrapar."
+      }
+    }
+  ]
+}

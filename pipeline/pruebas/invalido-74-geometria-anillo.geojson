@@ -1,0 +1,30 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-dominios", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:anillo-al-reves",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[-7.0, 37.4], [-7.0, 38.0], [-6.0, 38.0], [-6.0, 37.4], [-7.0, 37.4]]
+        ]
+      },
+      "properties": {
+        "slug": "anillo-al-reves",
+        "nombre": "Anillo exterior en sentido horario",
+        "categoria": "activo",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "mano alzada",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "caracter": "activo",
+        "fuentes": [{ "id": "f1", "tipo": "primaria", "titulo": "Documento oficial" }],
+        "nota": "VIOLA §7.4. RFC 7946 pide el anillo exterior en sentido antihorario. Muchos visores lo perdonan y otros pintan el polígono del revés — el hueco relleno y el relleno hueco. Es de esos fallos que se ven en producción y en ningún sitio antes."
+      }
+    }
+  ]
+}

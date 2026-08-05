@@ -1,0 +1,7 @@
+# Dependencias del pipeline. Una sola, y a propósito: el validador debe poder
+# correrse en cualquier máquina con Python y sin ceremonia.
+jsonschema>=4.23
+# `format: date` y `format: uri` de JSON Schema solo se comprueban de verdad con
+# los validadores de formato instalados. Sin esto, el FormatChecker los ignora
+# en silencio — que es la peor forma de no validar algo.
+jsonschema[format]>=4.23

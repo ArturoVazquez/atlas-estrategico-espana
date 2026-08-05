@@ -1,0 +1,34 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:metadato-suelto",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "metadato-suelto",
+        "nombre": "Metadatos que no sostienen nada",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "promotor": "Alguna Sociedad Anónima",
+        "promotor__v": "parcial",
+        "promotor__f": "f9",
+        "titularidad__v": "parcial",
+        "fuentes": [
+          { "id": "f1", "tipo": "primaria", "titulo": "Documento oficial", "fecha": "2025-03-25" }
+        ],
+        "nota": "VIOLA R6, dos veces. `promotor__f` apunta a una fuente «f9» que no existe, y `titularidad__v` verifica un campo `titularidad` que tampoco existe. Los dos son restos de una edición a medias — el fallo típico de renombrar un campo y olvidar sus acompañantes."
+      }
+    }
+  ]
+}

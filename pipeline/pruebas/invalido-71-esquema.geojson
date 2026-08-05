@@ -1,0 +1,28 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:sin-fase",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "sin-fase",
+        "nombre": "Proyecto sin fase declarada",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "estado_proyecto": "Está en marcha, más o menos",
+        "fuentes": [{ "id": "f1", "tipo": "primaria", "titulo": "Documento oficial" }],
+        "nota": "VIOLA §7.1. Falta `fase`, que la extensión de capa exige. Con `estado_proyecto` en prosa parece que el dato está — pero el filtro de explotación tendría que adivinar leyendo castellano, y eso es exactamente lo que §6.5 prohíbe."
+      }
+    }
+  ]
+}

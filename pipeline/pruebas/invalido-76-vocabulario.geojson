@@ -1,0 +1,28 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:fase-inventada",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "fase-inventada",
+        "nombre": "Una fase que nadie acordó",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "casi_casi",
+        "fuentes": [{ "id": "f1", "tipo": "primaria", "titulo": "Documento oficial" }],
+        "nota": "VIOLA §7.6. «casi_casi» describe muy bien la realidad de muchos proyectos mineros y por eso mismo no puede entrar sin decisión: un vocabulario que crece a conveniencia deja de poder filtrarse. Añadir un valor es versión menor de contrato, acto deliberado en vocabularios.json."
+      }
+    }
+  ]
+}

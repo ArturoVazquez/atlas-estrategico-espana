@@ -1,0 +1,32 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-proyectos", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:campo-huerfano",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "campo-huerfano",
+        "nombre": "Campo confirmado sin decir por qué",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["niquel"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "fase": "desarrollo",
+        "promotor": "Alguna Sociedad Anónima",
+        "promotor__v": "confirmado",
+        "fuentes": [
+          { "id": "f1", "tipo": "primaria", "titulo": "Documento oficial", "fecha": "2025-03-25" }
+        ],
+        "nota": "VIOLA R2. El campo `promotor` se marca confirmado y no dice qué fuente lo sostiene: falta `promotor__f`. Hay una primaria en el registro, pero nadie ha dicho que sea ESA la que sostiene ESTE campo."
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "hidrogeno-verde", "schema_version": "1.1.0", "verificado_a": "2026-08-05" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "hidrogeno-verde:una-planta",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "una-planta",
+        "nombre": "Capa que nadie declaró",
+        "categoria": "estrategico_ue",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "fuentes": [{ "id": "f1", "tipo": "primaria", "titulo": "Documento oficial" }],
+        "nota": "VIOLA §7.8. El fichero se declara de una capa que no existe en el manifiesto. Añadir una capa al atlas es añadir su fichero Y su entrada (§3): sin la entrada no tiene árbol, ni grupo, ni ámbito, ni licencia — y el panel no sabría dónde colgarla."
+      }
+    }
+  ]
+}
