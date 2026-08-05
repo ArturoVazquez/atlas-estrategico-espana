@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/limites-soberania.schema.json",
+  "title": "Extensión de capa · limites-soberania",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). La doctrina D5 en forma de esquema: dos campos simétricos, quién administra y quién reclama. El atlas registra que la reclamación existe y quién la sostiene; no dicta veredicto.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "Un punto para un territorio es una CONVENCIÓN, no una medida: lo dice `geo_precision`. El ascenso a polígono exigiría cartografía de límites con licencia comprobada, y va aparte."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["administrado_por", "reclamado_por"],
+            "properties": {
+              "administrado_por": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Quién ejerce la administración HOY. Es un hecho observable, no un juicio sobre el título."
+              },
+              "reclamado_por": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Quién sostiene una reclamación. Obligatorio y simétrico al anterior: si no hubiera reclamación, el registro no estaría en esta capa."
+              },
+              "municipio": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Solo donde exista. Gibraltar no está en un municipio español, y los peñones y Chafarinas tampoco: el campo se omite en vez de inventarse."
+              },
+              "provincia": { "type": "string", "minLength": 1 },
+              "nombre_oficial": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El nombre en el instrumento que lo regula, cuando difiere del corriente."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

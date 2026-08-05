@@ -251,13 +251,24 @@ def mandar_contraste(argv) -> int:
         lon, lat = geom["coordinates"][:2]
         declarado = p.get("municipio", "")
         hallados = municipio(lon, lat)
-        # La ficha admite varios términos («Escúzar y Ventas de Huelma»): basta
-        # con que el municipio real sea uno de ellos.
-        cuadra = any(h.lower() in declarado.lower() for h in hallados)
-        fallos += not cuadra
+
+        if not declarado:
+            # Un registro puede NO tener municipio y estar perfectamente: la capa
+            # del tablero incluye Gibraltar, las plazas de soberanía y Perejil,
+            # que no están en ningún término español. Contarlo como discrepancia
+            # sería inventar un conflicto donde no hay dos datos que comparar —
+            # y un contraste que grita por lo que no puede comprobar acaba
+            # ignorado, que es como se pierde el que sí importa.
+            veredicto = "sin municipio declarado"
+        elif any(h.lower() in declarado.lower() for h in hallados):
+            veredicto = "ok"
+        else:
+            veredicto = "¡REVISAR!"
+            fallos += 1
+
         print(f"  {p.get('slug',''):<20} {p.get('geo_precision',''):<11} "
-              f"{f'[{lon}, {lat}]':<24} {declarado}"
-              f"  →  {hallados}  {'ok' if cuadra else '¡REVISAR!'}")
+              f"{f'[{lon}, {lat}]':<24} {declarado or '—'}"
+              f"  →  {hallados or '—'}  {veredicto}")
 
     print()
     if fallos:

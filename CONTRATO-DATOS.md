@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.6.1 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.7.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -525,6 +525,7 @@ existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado
 
 - *minerales-proyectos*: `estrategico_ue` · `produccion_singular` · `en_disputa`
 - *nuclear* *(1.6)*: `en_operacion` · `en_cese` · `desmantelamiento`
+- *limites-soberania* *(1.7)*: `reclamado_por_espana` · `reclamado_a_espana`
 - *minerales-dominios*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
@@ -579,6 +580,28 @@ reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` 
 > tienen autorizaciones, fechas y potencias distintas: son dos hechos, no uno.
 > Comparten coordenada, y eso se dice — separarlos en el mapa exigiría una
 > fuente que sitúe cada edificio, y no la hay (§6.6).
+
+**limites-soberania** *(1.7)* (`dotacion`, puntos, verificado):
+`administrado_por` (✔; +`__v`,`__f`) · `reclamado_por` (✔; +`__v`,`__f`) ·
+`municipio` · `provincia` · `nombre_oficial` · `claves[]`
+
+> **Los dos campos son la doctrina D5 puesta en datos.** El atlas registra que
+> la reclamación existe y quién la sostiene; **no dicta veredicto**. Por eso hay
+> exactamente dos campos, simétricos: quién **administra** hoy y quién
+> **reclama**. Con esa estructura, Gibraltar (administra el Reino Unido, reclama
+> España) y Ceuta (administra España, reclama Marruecos) se describen igual.
+>
+> Esa simetría no es elegancia: es la garantía de que el atlas no cambia de vara
+> según de quién sea la reclamación. Y por eso `categoria` solo tiene dos
+> valores, que dicen **quién reclama, no quién tiene razón**.
+>
+> **Los instrumentos van en `claves[]`**, uno por afirmación y con su fuente:
+> «España invoca X», «el Reino Unido invoca Y». Así cada posición se lee
+> atribuida a quien la sostiene, y la que no tiene documento se ve como lo que
+> es. Un tratado acredita la posición de una parte, no la razón de nadie.
+>
+> **Nada de esto tiene `fase`**: el tablero figura como «no aplica» en §6.5, así
+> que su `activo` es `null` y el filtro de explotación no lo esconde nunca.
 
 **minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado):
 `materias[]` (✔) · `caracter` (✔, vocabulario) · `distritos[]` · `sym` (etiqueta
@@ -701,6 +724,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.7.0** | 2026-08-06 | **Aditiva.** Entra `limites-soberania` (§10), la capa del tablero, con la doctrina **D5 puesta en datos**: dos campos simétricos —`administrado_por` y `reclamado_por`— con los que Gibraltar y Ceuta se describen con la misma estructura, y una `categoria` de dos valores (§9) que dice **quién reclama, no quién tiene razón**. Los instrumentos que cada parte invoca van en `claves[]`, atribuidos, de modo que una posición sin documento se ve como lo que es. No toca §6.5: el tablero ya figuraba como «no aplica», y esta es la primera capa que ejercita esa rama — su `activo` es `null` y el filtro de explotación no la esconde nunca. |
 | **1.6.1** | 2026-08-06 | **Corrección.** §7.5 da **un día de tolerancia** a la comprobación de fechas futuras. Lo destapó el propio CI al publicar la capa `nuclear`: los registros se fecharon a las 00:47 hora española, y el runner —que corre en **UTC**— aún estaba en el día anterior, así que veía toda la capa fechada en el futuro y bloqueaba. No era un dato mal puesto: era una regla que decía «el futuro» sin decir de quién es el ahora, y una fecha ISO no lleva huso. La comprobación sigue cazando un 2027 escrito donde iba 2017; deja de arbitrar un desfase de dos horas. |
 | **1.6.0** | 2026-08-06 | **Aditiva.** Entra la capa `nuclear` (§10), la primera que estrena el mecanismo sin ser la primera capa del atlas: `grupo`, `potencia_mw`, `tecnologia`, `titulares[]`, `fase` y **dos campos de fecha** —`autorizacion_hasta`, de la orden del BOE, y `cierre_acordado`, del calendario de 2019—, que son hechos distintos y en España no coinciden. Su `categoria` en §9 y su fila en la tabla de `activo` de §6.5, sin la cual un reactor no respondería al filtro de explotación, que es justo la pregunta que sí se le hace. La regla de un registro **por reactor** aunque compartan emplazamiento, y por qué comparten coordenada, queda escrita en §10. |
 | **1.5.0** | 2026-08-05 | **`vigilar.py` existe.** Se retira la declaración de pendiente que puso la 1.4.0: la guardia semanal está construida, con su `vigilar.yml`. §7 se reescribe con lo que la implementación obligó a decidir y a admitir. Decidido: **avisa fallando, no abriendo issues** —eso habría costado permiso de escritura sobre un repositorio público—, y **«muerta» es solo 404 y 410**, porque un vigilante que grita por el 403 anti-bot de un ministerio acaba apagado. Admitido, y esto es lo que más importa: **EUR-Lex y el IGME devuelven 200 para documentos que no existen**. Donde la URL promete formato el engaño se detecta; donde no, **no hay comprobación posible** y la guardia lo imprime cada vez que corre. Con esto el contrato no tiene ninguna pieza sin implementar salvo **R8**, que sigue esperando a `minerales-dominios` (§6.5). |

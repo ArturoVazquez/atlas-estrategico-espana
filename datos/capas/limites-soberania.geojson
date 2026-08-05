@@ -1,0 +1,479 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "limites-soberania",
+    "schema_version": "1.7.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "limites-soberania:gibraltar",
+      "geometry": { "type": "Point", "coordinates": [-5.3536, 36.1408] },
+      "properties": {
+        "slug": "gibraltar",
+        "nombre": "Gibraltar",
+        "categoria": "reclamado_por_espana",
+        "descripcion": "Territorio británico de ultramar en el extremo sur de la península, cedido por el Tratado de Utrecht. Figura en la lista de territorios no autónomos de la ONU.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "punto situado a mano sobre el Peñón: el Nomenclátor del IGN NO nombra Gibraltar (ver f4)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "administrado_por": "Reino Unido",
+        "administrado_por__v": "confirmado",
+        "administrado_por__f": "f1",
+        "reclamado_por": "España",
+        "reclamado_por__v": "confirmado",
+        "reclamado_por__f": "f2",
+        "claves": [
+          {
+            "k": "Lo que España invoca",
+            "v": "Que la cesión del Tratado de Utrecht (1713) alcanza solo a la ciudad, el castillo, el puerto y las defensas, sin jurisdicción territorial; que existe un derecho de retroversión si el Reino Unido se desprende del territorio; y que la doctrina de la ONU sobre Gibraltar es la de la integridad territorial y no la de la libre determinación",
+            "verif": "parcial",
+            "fuente": "f2"
+          },
+          {
+            "k": "El texto de Utrecht, sin archivar",
+            "v": "El artículo X del Tratado de Utrecht es el instrumento que ambas partes citan, y no se ha localizado un texto de emisor autorizado que archivar. Se registra la posición española por su fuente oficial, no el tratado",
+            "verif": "no_verificado",
+            "fuente": "f3"
+          },
+          {
+            "k": "Acuerdo UE–Reino Unido de 2026",
+            "v": "Firmado el 14 de julio de 2026 y en APLICACIÓN PROVISIONAL desde el 15, con la ratificación pendiente. Suprime los controles en la Verja; no altera la posición de ninguna de las partes sobre la soberanía",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "La lista de la ONU, sin archivar",
+            "v": "Gibraltar figura desde los años sesenta en la lista de territorios no autónomos del Comité de los 24. El servidor de la ONU bloquea la descarga automática, así que el documento no se ha podido archivar",
+            "verif": "no_verificado",
+            "fuente": "f5"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2026/1732 del Consejo, de 1 de julio de 2026, relativa a la firma y a la aplicación provisional del Acuerdo respecto a Gibraltar entre la UE y Euratom, por una parte, y el Reino Unido, por otra",
+            "fecha": "2026-07-01",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-81120",
+            "archivo": "fuentes/2026-08-06_doue_decision-2026-1732-acuerdo-gibraltar.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Ministerio de Asuntos Exteriores, UE y Cooperación — posición oficial de España sobre Gibraltar",
+            "fecha": "2026-08-06",
+            "url": "https://www.exteriores.gob.es/es/PoliticaExterior/Paginas/Gibraltar.aspx",
+            "archivo": "fuentes/2026-08-06_maec_posicion-de-espana-sobre-gibraltar.html"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "El texto del Tratado de Utrecht (1713), artículo X, de emisor autorizado: no localizado. Es el instrumento que ambas partes citan y el atlas no lo tiene archivado."
+          },
+          {
+            "id": "f4",
+            "tipo": "hueco",
+            "titulo": "Una coordenada de fuente cartográfica para Gibraltar. El Nomenclátor Geográfico Básico de España no lo nombra: se buscó por etiqueta (tres resultados, todos falsos amigos en Huelva y Badajoz) y por recuadro sobre el Peñón (69 topónimos, ninguno es Gibraltar). El punto está puesto a mano."
+          },
+          {
+            "id": "f5",
+            "tipo": "hueco",
+            "titulo": "La lista de Territorios No Autónomos de la ONU: el servidor devuelve 202 sin contenido a las descargas automáticas y no se ha podido archivar."
+          }
+        ],
+        "nota": "El atlas no dice de quién es Gibraltar. Dice quién lo administra, quién lo reclama y con qué argumentos, cada cosa atribuida a quien la sostiene. Que el nomenclátor oficial español no nombre el territorio es, en sí mismo, un dato del tablero — y la razón de que esta sea la única coordenada ilustrativa de la capa."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "limites-soberania:ceuta",
+      "geometry": { "type": "Point", "coordinates": [-5.30675, 35.8881] },
+      "properties": {
+        "slug": "ceuta",
+        "nombre": "Ceuta",
+        "categoria": "reclamado_a_espana",
+        "descripcion": "Ciudad con estatuto de autonomía en la orilla africana del Estrecho, española desde 1580 y bajo reclamación marroquí.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Ceuta» (Municipio) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "nombre_oficial": "Ciudad de Ceuta",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "administrado_por": "España",
+        "administrado_por__v": "confirmado",
+        "administrado_por__f": "f1",
+        "reclamado_por": "Marruecos",
+        "reclamado_por__v": "no_verificado",
+        "municipio": "Ceuta",
+        "provincia": "Ceuta",
+        "claves": [
+          {
+            "k": "Lo que acredita la administración española",
+            "v": "La Ley Orgánica 1/1995, de 13 de marzo, aprueba su Estatuto de Autonomía y la constituye como Ciudad de Ceuta dentro del Estado español",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "La reclamación marroquí, sin instrumento archivado",
+            "v": "Marruecos sostiene una reclamación sobre Ceuta desde su independencia. No se ha localizado un instrumento oficial marroquí que archivar, así que el campo `reclamado_por` queda sin verificar",
+            "verif": "no_verificado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Ley Orgánica 1/1995, de 13 de marzo, de Estatuto de Autonomía de Ceuta (BOE núm. 62, de 14 de marzo de 1995), texto consolidado",
+            "fecha": "1995-03-14",
+            "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1995-6358",
+            "archivo": "fuentes/2026-08-06_boe_lo-1-1995-estatuto-autonomia-ceuta.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Ceuta» (Municipio)",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Ceuta",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-limites-soberania.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Un instrumento oficial marroquí que formule la reclamación sobre Ceuta: no localizado ni archivado. La reclamación se registra como existente, no como acreditada."
+          }
+        ],
+        "nota": "La estructura es la misma que la de Gibraltar, con los papeles cambiados: un Estado administra y otro reclama. Esa simetría es deliberada — es lo que impide que el atlas cambie de vara según de quién sea la reclamación."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "limites-soberania:melilla",
+      "geometry": { "type": "Point", "coordinates": [-2.93681, 35.29225] },
+      "properties": {
+        "slug": "melilla",
+        "nombre": "Melilla",
+        "categoria": "reclamado_a_espana",
+        "descripcion": "Ciudad con estatuto de autonomía en la costa del Rif, española desde 1497 y bajo reclamación marroquí.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Melilla» (Municipio) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "nombre_oficial": "Ciudad de Melilla",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "administrado_por": "España",
+        "administrado_por__v": "confirmado",
+        "administrado_por__f": "f1",
+        "reclamado_por": "Marruecos",
+        "reclamado_por__v": "no_verificado",
+        "municipio": "Melilla",
+        "provincia": "Melilla",
+        "claves": [
+          {
+            "k": "Lo que acredita la administración española",
+            "v": "La Ley Orgánica 2/1995, de 13 de marzo, aprueba su Estatuto de Autonomía y la constituye como Ciudad de Melilla dentro del Estado español",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "La reclamación marroquí, sin instrumento archivado",
+            "v": "Igual que en Ceuta: la reclamación existe y no se ha localizado un instrumento oficial marroquí que archivar",
+            "verif": "no_verificado",
+            "fuente": "f3"
+          },
+          {
+            "k": "Cuidado con el nombre",
+            "v": "El Nomenclátor del IGN tiene otro «Melilla» en la provincia de Huelva, y es el primero que devuelve la consulta por nombre. La coordenada de esta ficha se eligió por posición, no por orden de resultados",
+            "verif": "confirmado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Ley Orgánica 2/1995, de 13 de marzo, de Estatuto de Autonomía de Melilla (BOE núm. 62, de 14 de marzo de 1995), texto consolidado",
+            "fecha": "1995-03-14",
+            "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1995-6359",
+            "archivo": "fuentes/2026-08-06_boe_lo-2-1995-estatuto-autonomia-melilla.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Melilla» (Municipio)",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Melilla",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-limites-soberania.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Un instrumento oficial marroquí que formule la reclamación sobre Melilla: no localizado ni archivado."
+          }
+        ],
+        "nota": "El homónimo onubense estuvo a punto de colarse: la consulta por nombre lo devuelve primero. Es la clase de error que no da ningún aviso — el dato habría quedado a 400 km, con aspecto de correcto."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "limites-soberania:penon-velez-gomera",
+      "geometry": { "type": "Point", "coordinates": [-4.29949, 35.17206] },
+      "properties": {
+        "slug": "penon-velez-gomera",
+        "nombre": "Peñón de Vélez de la Gomera",
+        "categoria": "reclamado_a_espana",
+        "descripcion": "Plaza de soberanía unida a la costa africana por un istmo de arena, la frontera terrestre más corta del mundo entre dos Estados.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Peñón de Vélez de la Gomera» (Isla) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f1",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "administrado_por": "España",
+        "administrado_por__v": "no_verificado",
+        "reclamado_por": "Marruecos",
+        "reclamado_por__v": "no_verificado",
+        "claves": [
+          {
+            "k": "Sin estatuto propio",
+            "v": "Las plazas de soberanía no tienen estatuto de autonomía como Ceuta y Melilla, y por eso no hay una ley orgánica que citar. Su régimen concreto está pendiente de localizar y archivar",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Peñón de Vélez de la Gomera» (Isla)",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?bbox=-4.36,35.13,-4.24,35.22",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-limites-soberania.json"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "El instrumento que regula el régimen de las plazas de soberanía, y cualquier instrumento marroquí que formule la reclamación: ninguno de los dos localizado. Que el IGN las nombre acredita la geometría, no el título."
+          }
+        ],
+        "nota": "Que el Nomenclátor español la nombre acredita dónde está, no de quién es: son dos afirmaciones distintas y solo la primera tiene fuente. Por eso `administrado_por` va sin verificar aunque parezca obvio."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "limites-soberania:penon-alhucemas",
+      "geometry": { "type": "Point", "coordinates": [-3.88944, 35.21361] },
+      "properties": {
+        "slug": "penon-alhucemas",
+        "nombre": "Peñón de Alhucemas",
+        "categoria": "reclamado_a_espana",
+        "descripcion": "Plaza de soberanía en la bahía de Alhucemas, con los islotes de Mar y de Tierra.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Peñón de Alhucemas» (Isla) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f1",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "administrado_por": "España",
+        "administrado_por__v": "no_verificado",
+        "reclamado_por": "Marruecos",
+        "reclamado_por__v": "no_verificado",
+        "claves": [
+          {
+            "k": "Sin estatuto propio",
+            "v": "Como el resto de plazas de soberanía, no tiene ley orgánica que citar y su régimen está pendiente de archivar",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Peñón de Alhucemas» (Isla)",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Pe%C3%B1%C3%B3n+de+Alhucemas",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-limites-soberania.json"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "El instrumento que regula el régimen de las plazas de soberanía, y cualquier instrumento marroquí que formule la reclamación: ninguno localizado."
+          }
+        ],
+        "nota": "El registro es casi todo hueco, y eso es el dato: de las plazas menores se habla mucho y se documenta poco."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "limites-soberania:islas-chafarinas",
+      "geometry": { "type": "Point", "coordinates": [-2.4304, 35.17653] },
+      "properties": {
+        "slug": "islas-chafarinas",
+        "nombre": "Islas Chafarinas",
+        "categoria": "reclamado_a_espana",
+        "descripcion": "Archipiélago de tres islas frente a la desembocadura del Muluya: Congreso, Isabel II y Rey Francisco.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Islas Chafarinas» (Isla) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f1",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "administrado_por": "España",
+        "administrado_por__v": "no_verificado",
+        "reclamado_por": "Marruecos",
+        "reclamado_por__v": "no_verificado",
+        "claves": [
+          {
+            "k": "Sin estatuto propio",
+            "v": "Como el resto de plazas de soberanía, sin ley orgánica que citar y con su régimen pendiente de archivar",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Islas Chafarinas» (Isla)",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Islas+Chafarinas",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-limites-soberania.json"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "El instrumento que regula el régimen de las plazas de soberanía, y cualquier instrumento marroquí que formule la reclamación: ninguno localizado."
+          }
+        ],
+        "nota": "El punto del Nomenclátor representa el archipiélago entero, no ninguna de las tres islas. Ascender a tres registros exigiría una fuente que las distinga, y no se ha buscado en esta tanda."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "limites-soberania:perejil",
+      "geometry": { "type": "Point", "coordinates": [-5.41905, 35.91333] },
+      "properties": {
+        "slug": "perejil",
+        "nombre": "Isla de Perejil",
+        "categoria": "reclamado_a_espana",
+        "descripcion": "Islote deshabitado frente a la costa marroquí, a pocos kilómetros de Ceuta. En 2002 fue ocupado y desalojado, y desde entonces permanece sin presencia permanente.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Isla del Perejil» (Isla) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f1",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "nombre_oficial": "Isla del Perejil",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "administrado_por": "Sin administración efectiva declarada",
+        "administrado_por__v": "no_verificado",
+        "reclamado_por": "España y Marruecos",
+        "reclamado_por__v": "no_verificado",
+        "claves": [
+          {
+            "k": "No hay instrumento",
+            "v": "Es una situación de hecho: ninguna de las dos partes ha publicado un instrumento que fije el estatuto del islote, y el acuerdo que puso fin a la crisis de 2002 fue una gestión diplomática sin texto localizable",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Isla del Perejil» (Isla)",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?bbox=-5.50,35.85,-5.30,35.98",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-limites-soberania.json"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "Cualquier instrumento que fije el estatuto de la isla, de cualquiera de las dos partes. No existe uno localizable: el registro es, casi entero, el hueco."
+          }
+        ],
+        "nota": "El único registro «no verificado» global de la capa, y con razón: de Perejil lo único documentado es dónde está. Lo demás —quién la administra, con qué título, qué se acordó en 2002— no tiene texto público que citar. La ficha lo dice antes que nada."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "limites-soberania:olivenza",
+      "geometry": { "type": "Point", "coordinates": [-7.10085, 38.68552] },
+      "properties": {
+        "slug": "olivenza",
+        "nombre": "Olivenza",
+        "categoria": "reclamado_por_espana",
+        "descripcion": "Municipio pacense en la orilla izquierda del Guadiana, portugués hasta 1801. Es el único registro de esta capa en el que la reclamación ajena no se ejerce de forma activa.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "topónimo «Olivenza» (Municipio) del Nomenclátor Geográfico Básico de España; ETRS89 sin transformar, que a 5 decimales es WGS84",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f1",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "administrado_por": "España",
+        "administrado_por__v": "no_verificado",
+        "reclamado_por": "Portugal",
+        "reclamado_por__v": "no_verificado",
+        "municipio": "Olivenza",
+        "provincia": "Badajoz",
+        "claves": [
+          {
+            "k": "Los dos instrumentos, ninguno archivado",
+            "v": "España se apoya en el Tratado de Badajoz (1801), que le transfiere la plaza; Portugal, en el artículo 105 del Acta Final del Congreso de Viena (1815), por el que las potencias reconocen la restitución. No se ha localizado texto de emisor autorizado de ninguno de los dos",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Una reclamación que no se ejerce",
+            "v": "A diferencia del resto de la capa, la posición portuguesa no se sostiene hoy de forma activa. Registrarla al mismo nivel que las demás sería exagerarla; omitirla, borrarla",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGN — Nomenclátor Geográfico Básico de España, topónimo «Olivenza» (Municipio)",
+            "fecha": "2026-08-06",
+            "url": "https://api-features.ign.es/collections/namedplace/items?etiqueta=Olivenza",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-limites-soberania.json"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "El Tratado de Badajoz (1801) y el artículo 105 del Acta Final del Congreso de Viena (1815), de emisor autorizado: ninguno localizado. Son los dos instrumentos que se citan y el atlas no tiene copia de ninguno."
+          }
+        ],
+        "nota": "Es el caso que obliga a decir en voz alta lo que hace esta capa: registrar una reclamación no es respaldarla, y no registrarla no la hace desaparecer. Se anota que existe, quién la sostiene, sobre qué texto, y que hoy no se ejerce — cada cosa por separado y ninguna afirmada de más."
+      }
+    }
+  ]
+}
