@@ -47,13 +47,20 @@ DECISIONES.md       el porqué de cada decisión, con lo que se descartó
 PLAN.md             fases de construcción y criterios de hecho
 datos/              las capas (GeoJSON RFC 7946, WGS84) y el manifiesto
 fuentes/            archivo documental de todo lo citado
-pipeline/           validar.py (doctrina como test, corre en CI) y vigilar.py
+pipeline/           validar.py (doctrina como test, corre en CI)
 app/                el visor
 referencia/         la demo v4, canon de interacción
 ```
 
-Los datos son **curación humana con fuente primaria**. El pipeline valida y
-vigila; **nunca genera datos**.
+Los datos son **curación humana con fuente primaria**. El pipeline valida;
+**nunca genera datos**.
+
+> Lo que el contrato describe y **todavía no existe**, dicho aquí para que no se
+> descubra por su ausencia: `pipeline/vigilar.py` —la guardia semanal de URLs
+> muertas y capas caducadas— está diseñado y sin construir (CONTRATO-DATOS.md
+> §7), y la regla **R8** no tendrá diente hasta que exista la capa
+> `minerales-dominios` (§6.5). Son las dos únicas piezas del contrato sin
+> implementar, y las dos lo declaran donde se las menciona.
 
 ## Cómo se corrige un dato
 

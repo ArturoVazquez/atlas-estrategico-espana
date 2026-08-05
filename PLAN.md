@@ -112,7 +112,13 @@ cartografía de otra liga, y añadir una capa de prueba no toca código de panel
   puntos. Arrastra el manifiesto a `geometria: mixta` y obliga al visor de F2 a
   pintar las dos cosas: por eso no se hizo en F1.
 - **R8 gana su diente** aquí: necesita `minerales-dominios` para poder
-  comprobarse, y es la única regla del contrato sin implementar.
+  comprobarse, y es una de las dos piezas del contrato sin implementar.
+- **`vigilar.py` + `vigilar.yml`**, que es la otra. Diseñado en §7 desde la
+  v1.0.0 y nunca construido: caducidad de capa (offline, contra
+  `cadencia_revision_dias`) y URLs muertas (red), semanal, avisando y sin
+  escribir jamás. Entra aquí porque es con tres capas más cuando su ausencia
+  empieza a costar — hoy hay una sola y se revisó ayer. Sus decisiones propias
+  están sin tomar: si abre issue o solo falla, y qué hace ante un 403.
 
 **Hecho cuando:** las tres capas validan con su esquema propio y ninguna ficha
 publicada contiene prensa sosteniendo un confirmado.

@@ -60,10 +60,11 @@ atlas-estrategico-espana/
 │   ├── esquemas/              ← JSON Schema: nucleo.schema.json + uno por capa
 │   ├── pruebas/               ← fixtures: uno válido y al menos uno por regla de §6.4
 │   ├── validar.py             ← esquema + reglas de doctrina (§7)
-│   └── vigilar.py             ← comprobación de URLs y caducidad (avisa, no escribe)
+│   └── vigilar.py             ← URLs y caducidad (avisa, no escribe) · AÚN NO CONSTRUIDO
 ├── referencia/                ← la demo v4: canon de interacción, no de código
 ├── app/                       ← el visor (consume datos/ por release etiquetada)
-└── .github/workflows/         ← validar.yml (cada PR) · vigilar.yml (semanal)
+└── .github/workflows/         ← validar.yml (cada PR y cada push a main)
+                               ← vigilar.yml (semanal) · AÚN NO CONSTRUIDO
 ```
 
 Reglas de la estructura:
@@ -124,7 +125,7 @@ fichero y su entrada aquí. La app construye el panel desde el manifiesto.
 | `ambito` | **(1.1)** `espana` (por defecto si se omite) · `mundo`. Relaja la comprobación de bbox de §7.4: una capa de ámbito mundo no se valida contra el recuadro de España. |
 | `geometria` | `puntos` · `poligonos` · `lineas` · `mixta` |
 | `registro` | `verificado` (fichas con doctrina completa) · `ilustrativo` (dibuja dónde, no cuánto ni de quién) · **(1.1)** `analisis` (investigación u opinión **sellada como tal**, con su `debate_url` al hilo donde se defiende — nunca se presenta como hecho) |
-| `cadencia_revision_dias` | umbral tras el cual la capa se considera caducada; el visor lo muestra, `vigilar.py` avisa |
+| `cadencia_revision_dias` | umbral tras el cual la capa se considera caducada; el visor lo mostrará y `vigilar.py` avisará — **hoy no avisa nadie**, ver §7 |
 | `version` | semver de la **capa**: parche = corrección de valores; menor = registros o campos nuevos; mayor = cambio de esquema |
 | `en_preparacion` | **(1.1)** `true` = rama declarada pero sin datos. **El mapa declara su horizonte** (D4): el panel la pinta en gris, no cargable. Una entrada `en_preparacion` solo exige `id`, `titulo`, `arbol` y `grupo`; el resto de campos se rellenan cuando la capa nace. |
 
@@ -408,8 +409,19 @@ v1 —hay citas que se archivan con retraso—; el resto **bloquea**. `validar.p
 distingue las dos cosas en la salida y solo devuelve código ≠ 0 por las que
 bloquean.
 
-`pipeline/vigilar.py` corre programado (Action semanal): URLs muertas y capas que
-superan su `cadencia_revision_dias` → abre issue. **Avisa; jamás escribe datos.**
+`pipeline/vigilar.py` correrá programado (Action semanal): URLs muertas y capas
+que superan su `cadencia_revision_dias` → abre issue. **Avisará; jamás escribirá
+datos.**
+
+> **Estado de `vigilar.py`: diseñado, NO construido** *(dicho aquí desde la
+> 1.4.0)*. Ni el guion ni su `vigilar.yml` existen todavía. Mientras no existan,
+> **nadie vigila la caducidad de una capa ni la muerte de una URL**: lo único que
+> corre hoy es `validar.py`, y solo comprueba lo que puede leerse del repo sin
+> salir a la red. Se dice aquí por la misma razón que se dijo el estado de R8 en
+> §6.5 — un documento que describe una guardia que no está montada es la clase
+> de garantía falsa que este contrato existe para impedir. Lo que sí funciona
+> desde la 1.4.0: la comprobación 7 de §7 avisa de la fuente **sin archivar**,
+> que es el otro flanco de la misma preocupación.
 
 ---
 
@@ -600,8 +612,9 @@ comprueba.)*
    verificación por campo sin romper el modelo plano.
 4. **Doctrina como validación de CI**, no como prosa → §6.4/§7.
 5. **La app lee releases etiquetadas**, nunca la rama viva.
-6. **`vigilar.py` avisa y jamás escribe** → el criterio humano firma; la máquina
-   instruye (compatible con el futuro pipeline de expedientes).
+6. **`vigilar.py` avisará y jamás escribirá** → el criterio humano firma; la
+   máquina instruye (compatible con el futuro pipeline de expedientes). La
+   decisión sigue en pie; **el guion está sin construir** (§7).
 7. **Nada se borra**: `estado_registro` + historial Git.
 8. **`activo` es derivado, no escrito** *(1.1)* → una sola fuente de verdad (D3).
    Y el campo del que se deriva, `fase`, es **controlado**: un filtro no puede

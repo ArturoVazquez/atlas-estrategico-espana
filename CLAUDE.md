@@ -30,10 +30,12 @@ integración con el foro es editorial (enlaces a hilos), no de código.
   sin cuentas. Vite o similar, lo más simple que funcione.
 - **Datos:** GeoJSON RFC 7946 (WGS84) versionados en `datos/`, según contrato.
 - **Pipeline:** Python en `pipeline/` — `validar.py` (esquema + doctrina, corre
-  en CI) y `vigilar.py` (avisa, JAMÁS escribe datos).
+  en CI). `vigilar.py` (avisa, JAMÁS escribe datos) está **diseñado y sin
+  construir**: no lo des por hecho, va en F3.
 - **Despliegue:** estático (Vercel o Cloudflare Pages) → CNAME
   `atlas.eltercioviejo.com` en Hostinger.
-- **El visor lee releases etiquetadas** (`datos-vAAAA.MM`), nunca la rama viva.
+- **El visor lee releases etiquetadas** (`datos-vAAAA.MM`, con sufijo `.N` si hay
+  más de una en el mes), nunca la rama viva.
 
 ## Reglas de taller (no negociables)
 
