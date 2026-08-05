@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/nucleo.schema.json",
+  "title": "Núcleo común de toda capa del atlas",
+  "description": "CONTRATO-DATOS.md §4 (formato de capa), §5 (núcleo de propiedades) y §6 (fuentes). Se aplica a TODA capa; la extensión por capa se valida aparte, en una segunda pasada, tal y como pide §7.1. NOTA DELIBERADA: este esquema NO enumera los valores de los vocabularios. Los enums viven en datos/vocabularios.json y los comprueba validar.py (§7.6). Repetirlos aquí crearía la doble fuente de verdad que el contrato combate en D3.",
+
+  "type": "object",
+  "required": ["type", "atlas", "features"],
+  "properties": {
+    "type": { "const": "FeatureCollection" },
+    "atlas": {
+      "type": "object",
+      "required": ["capa", "schema_version", "verificado_a"],
+      "properties": {
+        "capa": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "schema_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "verificado_a": { "type": "string", "format": "date" }
+      },
+      "additionalProperties": false
+    },
+    "features": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/feature" }
+    }
+  },
+  "additionalProperties": false,
+
+  "$defs": {
+    "feature": {
+      "type": "object",
+      "required": ["type", "id", "geometry", "properties"],
+      "properties": {
+        "type": { "const": "Feature" },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+:[a-z0-9-]+$",
+          "description": "«<capa>:<slug>». Estable para siempre; nunca se reutiliza (§4)."
+        },
+        "geometry": { "$ref": "#/$defs/geometria" },
+        "bbox": { "type": "array", "items": { "type": "number" } },
+        "properties": { "$ref": "#/$defs/propiedades" }
+      },
+      "additionalProperties": false
+    },
+
+    "geometria": {
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": {
+          "enum": ["Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon"],
+          "description": "RFC 7946. Sin GeometryCollection: no aporta nada aquí y complica todo consumidor."
+        },
+        "coordinates": { "type": "array" }
+      },
+      "additionalProperties": false
+    },
+
+    "propiedades": {
+      "type": "object",
+      "required": [
+        "slug", "nombre", "categoria", "estado_registro", "verif",
+        "geo_precision", "fecha_alta", "fecha_verificacion", "fuentes"
+      ],
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "nombre": { "type": "string", "minLength": 1 },
+        "categoria": { "type": "string" },
+        "descripcion": { "type": "string" },
+        "estado_registro": { "type": "string" },
+        "verif": { "type": "string" },
+        "geo_precision": { "type": "string" },
+        "geo_fuente": { "type": "string" },
+        "fecha_alta": { "type": "string", "format": "date" },
+        "fecha_verificacion": { "type": "string", "format": "date" },
+        "fuentes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/fuente" },
+          "description": "Al menos una. Si no hay ninguna real, la que va es el hueco explícito (tipo: hueco) — el principio 1 del contrato."
+        },
+        "claves": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/clave" }
+        },
+        "nota": { "type": "string" },
+        "debate_url": { "type": "string", "format": "uri" }
+      },
+
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*__v$": {
+          "type": "string",
+          "description": "Estado de verificación de un campo (§6.2). Su valor se comprueba contra el vocabulario `verif`."
+        },
+        "^[a-z][a-z0-9_]*__f$": {
+          "type": "string",
+          "description": "Id de la fuente que sostiene un campo (§6.2). Debe existir en `fuentes` — lo comprueba R6."
+        }
+      },
+
+      "additionalProperties": true,
+      "$comment": "additionalProperties abierto A PROPÓSITO: los campos específicos de capa (§10) van PLANOS aquí y los valida la segunda pasada. La prohibición de `__` fuera de los sufijos reservados no se puede expresar bien en JSON Schema y la comprueba validar.py."
+    },
+
+    "fuente": {
+      "type": "object",
+      "required": ["id", "tipo", "titulo"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^f[0-9]+$" },
+        "tipo": { "type": "string" },
+        "titulo": { "type": "string", "minLength": 1 },
+        "fecha": { "type": "string", "format": "date" },
+        "url": { "type": "string", "format": "uri" },
+        "archivo": {
+          "type": "string",
+          "pattern": "^fuentes/",
+          "description": "Copia archivada al citar. §7.7 comprueba que existe (avisa, no bloquea, durante la v1)."
+        }
+      },
+      "additionalProperties": false,
+      "$comment": "`fecha`, `url` y `archivo` son opcionales porque una fuente `tipo: hueco` no los tiene: es la fuente que falta, dicha en voz alta."
+    },
+
+    "clave": {
+      "type": "object",
+      "required": ["k", "v", "verif"],
+      "properties": {
+        "k": { "type": "string", "minLength": 1 },
+        "v": { "type": "string", "minLength": 1 },
+        "verif": { "type": "string" },
+        "fuente": { "type": "string", "pattern": "^f[0-9]+$" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
