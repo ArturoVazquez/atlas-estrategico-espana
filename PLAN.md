@@ -5,20 +5,38 @@ Flujo: Claude Code propone plan por fase → Arturo revisa → se construye.
 
 ---
 
-## F0 · Esqueleto del repositorio
+## F0 · Esqueleto del repositorio — ✅ HECHA (2026-08-05)
 
-- Estructura según CONTRATO-DATOS.md §2 (`datos/`, `fuentes/`, `pipeline/`,
-  `app/`, CHANGELOG-DATOS.md).
-- `manifest.json` y `vocabularios.json` de arranque (capas del listón de
-  salida; las futuras como `en_preparacion`).
-- JSON Schema: `nucleo.schema.json` + `minerales-proyectos.schema.json`.
-- `pipeline/validar.py` con las reglas de doctrina (§6.4 y §7 del contrato)
-  y GitHub Action que lo corre en cada PR a `datos/`.
-- Redactar CONTRATO-DATOS v1.1 (extensiones de DECISIONES.md D2).
-- ⚠ **Antes del push remoto: resolver D9 (público/privado).**
+- ~~Estructura según CONTRATO-DATOS.md §2~~ + `referencia/`, `pipeline/pruebas/`
+  y `.github/workflows/`, que el §2 no dibujaba y ahora sí.
+- ~~`manifest.json` y `vocabularios.json` de arranque.~~ Las **quince** capas van
+  `en_preparacion`, porque ninguna tiene datos: la regla del horizonte aplicada
+  al propio manifiesto. Los vocabularios llevan **rótulo y definición** por
+  valor, no solo el enum — así el panel de F2 no hereda castellano en el código.
+- ~~JSON Schema: `nucleo` + `minerales-proyectos`.~~ Sin `$ref` entre ficheros:
+  dos pasadas sobre el mismo documento, como pide §7.1. Los enums **no** se
+  repiten en el esquema; se validan contra `vocabularios.json`.
+- ~~`validar.py` + GitHub Action.~~ Corre en PR **y** en push a `main`, y el CI
+  prueba primero el validador y solo después los datos: un validador roto pasa
+  cualquier cosa en verde, y una garantía falsa es peor que ninguna.
+- ~~Redactar CONTRATO-DATOS v1.1.~~ Hecho, con §13 de historial. Cerró además el
+  matiz abierto de D3 y trajo el campo controlado `fase`.
+- ~~⚠ Resolver D9.~~ **Público.** Ver DECISIONES.md D9.
 
-**Hecho cuando:** `validar.py` pasa en verde sobre un fichero de ejemplo y
-falla correctamente ante cada violación de doctrina (probar las 5 reglas).
+**Hecho cuando:** ~~`validar.py` pasa en verde sobre un fichero de ejemplo y
+falla correctamente ante cada violación de doctrina (probar las 5 reglas).~~
+
+**Cumplido, y por encima:** `python pipeline/pruebas/correr.py` → **16 pruebas
+en verde**. Se probaron las cinco reglas pedidas, las dos que la v1.1 añadió
+(R6, R7) y las **siete comprobaciones de §7** que el criterio no exigía —
+estaban escritas y sin ejercitar, y un control que nadie ejercita puede llevar
+meses roto sin que se note. El runner no comprueba que el validador falle:
+comprueba que falle **por la regla violada y por ninguna otra**.
+
+> **Lo único que F0 deja a deber, y está dicho en el contrato:** la regla **R8**
+> (un dominio `desarrollo`/`historico` no puede contener una mina en producción)
+> es normativa desde la v1.1 pero **no tiene diente** hasta que exista la capa
+> `minerales-dominios`, en F3. Es la única regla del contrato sin implementar.
 
 ## F1 · Primera colección real: minerales-proyectos
 

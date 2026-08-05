@@ -65,5 +65,17 @@ comprueba.
   3 singulares + 6 registros del tablero) que se migran al formato canónico en
   la fase F1 del plan. Los trazados de zonas son ilustrativos a mano alzada:
   así deben declararse hasta sustituirse por cartografía de fuente primaria.
-- Decisión PENDIENTE que bloquea el push remoto: repo público vs privado
-  (ver DECISIONES.md).
+- ~~Decisión PENDIENTE que bloquea el push remoto: repo público vs privado.~~
+  **Resuelta el 2026-08-05: público desde el primer commit** (DECISIONES.md D9).
+- **Estado: F0 cerrada** (2026-08-05). El contrato va por la **v1.1.0** y su
+  §13 lleva el historial. `python pipeline/pruebas/correr.py` debe seguir dando
+  16/16 después de cualquier cambio en `pipeline/` o en `datos/`: si baja, el
+  atlas ha perdido lo único que lo separa de la verosimilitud.
+- **Una sola regla del contrato no tiene diente todavía:** R8 (§6.5), que
+  necesita la capa `minerales-dominios` para poder comprobarse. Está declarada
+  como tal en el propio contrato — no es un olvido, y no debe descubrirse por su
+  ausencia.
+- Lo siguiente es **F1**: migrar los diez registros de la demo al formato
+  canónico. Es trabajo de VERIFICACIÓN con fuentes primarias archivadas, no de
+  código: localizar la decisión de la Comisión con su anexo (no la nota de
+  prensa) y resolver o declarar los cuatro huecos.
