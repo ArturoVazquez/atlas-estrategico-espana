@@ -23,7 +23,7 @@ import json
 import re
 import sys
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 try:
@@ -336,8 +336,17 @@ def comprobar_geometria(doc: dict, ambito: str) -> list[Hallazgo]:
 
 
 def comprobar_fechas(doc: dict) -> list[Hallazgo]:
-    """§7.5 · Orden, formato ISO y nada fechado en el futuro."""
-    out, hoy = [], date.today()
+    """§7.5 · Orden, formato ISO y nada fechado en el futuro.
+
+    «El futuro» necesita saber de quién es el ahora, y una fecha ISO no lleva
+    huso. El atlas se cura en España (UTC+1/+2) y el CI corre en UTC: durante un
+    par de horas cada noche, lo que aquí es hoy allí es mañana. Sin margen, un
+    dato fechado correctamente a las 00:47 hace fallar la validación — y pasó.
+
+    Un día de tolerancia. Esta comprobación existe para cazar un 2027 escrito
+    donde iba 2017, no para arbitrar un desfase de dos horas.
+    """
+    out, hoy = [], date.today() + timedelta(days=1)
 
     for f in doc.get("features", []):
         props, donde = f.get("properties", {}), f.get("id", "(sin id)")
