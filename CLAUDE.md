@@ -29,9 +29,12 @@ integración con el foro es editorial (enlaces a hilos), no de código.
 - **Frontend:** estático. MapLibre GL JS + datos GeoJSON. Sin backend, sin BD,
   sin cuentas. Vite o similar, lo más simple que funcione.
 - **Datos:** GeoJSON RFC 7946 (WGS84) versionados en `datos/`, según contrato.
-- **Pipeline:** Python en `pipeline/` — `validar.py` (esquema + doctrina, corre
-  en CI). `vigilar.py` (avisa, JAMÁS escribe datos) está **diseñado y sin
-  construir**: no lo des por hecho, va en F3.
+- **Pipeline:** Python en `pipeline/`, sin dependencias más allá de `jsonschema`
+  — `validar.py` (esquema + doctrina, en CI), `vigilar.py` (guardia semanal de
+  caducidad y URLs; avisa fallando, JAMÁS escribe datos) y `consultar.py`
+  (consulta al IGN y al catastro, y contrasta la geometría contra los municipios;
+  **no corre en CI** porque toca la red). Ninguno escribe en `datos/` ni archiva
+  en `fuentes/`: eso lo firma una persona.
 - **Despliegue:** estático (Vercel o Cloudflare Pages) → CNAME
   `atlas.eltercioviejo.com` en Hostinger.
 - **El visor lee releases etiquetadas** (`datos-vAAAA.MM`, con sufijo `.N` si hay

@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.4.0 · **Fecha:** 2026-08-05
+**Versión del contrato:** 1.5.0 · **Fecha:** 2026-08-05
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -61,11 +61,11 @@ atlas-estrategico-espana/
 │   ├── pruebas/               ← fixtures: uno válido y al menos uno por regla de §6.4
 │   ├── validar.py             ← esquema + reglas de doctrina (§7), corre en CI
 │   ├── consultar.py           ← consulta al IGN y al catastro; contrasta (§6.6)
-│   └── vigilar.py             ← URLs y caducidad (avisa, no escribe) · AÚN NO CONSTRUIDO
+│   └── vigilar.py             ← URLs y caducidad, semanal (avisa, jamás escribe)
 ├── referencia/                ← la demo v4: canon de interacción, no de código
 ├── app/                       ← el visor (consume datos/ por release etiquetada)
 └── .github/workflows/         ← validar.yml (cada PR y cada push a main)
-                               ← vigilar.yml (semanal) · AÚN NO CONSTRUIDO
+                               ← vigilar.yml (semanal, solo lectura)
 ```
 
 Reglas de la estructura:
@@ -132,7 +132,7 @@ fichero y su entrada aquí. La app construye el panel desde el manifiesto.
 | `ambito` | **(1.1)** `espana` (por defecto si se omite) · `mundo`. Relaja la comprobación de bbox de §7.4: una capa de ámbito mundo no se valida contra el recuadro de España. |
 | `geometria` | `puntos` · `poligonos` · `lineas` · `mixta` |
 | `registro` | `verificado` (fichas con doctrina completa) · `ilustrativo` (dibuja dónde, no cuánto ni de quién) · **(1.1)** `analisis` (investigación u opinión **sellada como tal**, con su `debate_url` al hilo donde se defiende — nunca se presenta como hecho) |
-| `cadencia_revision_dias` | umbral tras el cual la capa se considera caducada; el visor lo mostrará y `vigilar.py` avisará — **hoy no avisa nadie**, ver §7 |
+| `cadencia_revision_dias` | umbral tras el cual la capa se considera caducada; `vigilar.py` avisa cada semana (§7) y el visor lo mostrará |
 | `version` | semver de la **capa**: parche = corrección de valores; menor = registros o campos nuevos; mayor = cambio de esquema |
 | `en_preparacion` | **(1.1)** `true` = rama declarada pero sin datos. **El mapa declara su horizonte** (D4): el panel la pinta en gris, no cargable. Una entrada `en_preparacion` solo exige `id`, `titulo`, `arbol` y `grupo`; el resto de campos se rellenan cuando la capa nace. |
 
@@ -428,19 +428,31 @@ v1 —hay citas que se archivan con retraso—; el resto **bloquea**. `validar.p
 distingue las dos cosas en la salida y solo devuelve código ≠ 0 por las que
 bloquean.
 
-`pipeline/vigilar.py` correrá programado (Action semanal): URLs muertas y capas
-que superan su `cadencia_revision_dias` → abre issue. **Avisará; jamás escribirá
-datos.**
+`pipeline/vigilar.py` corre programado (Action semanal, `vigilar.yml`): capas que
+superan su `cadencia_revision_dias` y citas cuya URL ha muerto. **Avisa; jamás
+escribe datos.** *(Construido en la 1.5.0; hasta entonces esta sección describía
+una guardia que no estaba montada, y desde la 1.4.0 lo decía.)*
 
-> **Estado de `vigilar.py`: diseñado, NO construido** *(dicho aquí desde la
-> 1.4.0)*. Ni el guion ni su `vigilar.yml` existen todavía. Mientras no existan,
-> **nadie vigila la caducidad de una capa ni la muerte de una URL**: lo único que
-> corre hoy es `validar.py`, y solo comprueba lo que puede leerse del repo sin
-> salir a la red. Se dice aquí por la misma razón que se dijo el estado de R8 en
-> §6.5 — un documento que describe una guardia que no está montada es la clase
-> de garantía falsa que este contrato existe para impedir. Lo que sí funciona
-> desde la 1.4.0: la comprobación 7 de §7 avisa de la fuente **sin archivar**,
-> que es el otro flanco de la misma preocupación.
+**Avisa fallando, no abriendo issues** *(1.5)*. Abrir issues exigiría dar permiso
+de **escritura** a un workflow programado de un repositorio público, y ponerse en
+rojo consigue el mismo aviso con cero permisos. Un permiso concedido y olvidado
+no se nota; su ausencia, sí.
+
+**Qué cuenta como URL muerta:** solo **404** y **410**. Un 403, un 405, un 429 o
+un 5xx son bloqueos anti-bot y caídas pasajeras; se informan como *no
+concluyente* y **no dan la alarma**. La frontera es estrecha a propósito: un
+vigilante con falsos positivos se apaga, y entonces no vigila nada.
+
+> **Lo que esta guardia NO puede comprobar, y lo dice cada vez que corre.**
+> Medido sobre las fuentes de este atlas: **EUR-Lex y el IGME devuelven HTTP 200
+> para documentos que no existen**, sirviendo una página de error. Donde la URL
+> promete formato —termina en `.pdf`— el engaño se detecta, porque responder
+> `text/html` delata el enlace roto. Donde no lo promete, un *soft-404* es
+> indistinguible del documento y **no hay comprobación**. Por eso `vigilar.py`
+> imprime cuántas citas quedan sin verificar de verdad: un «sin alarmas» que se
+> leyera como «todas las citas siguen vivas» sería la garantía falsa que §8
+> prohíbe. Para esas citas, la garantía es `fuentes/` — y esta es la mejor
+> defensa escrita de por qué ese directorio existe.
 
 ---
 
@@ -631,9 +643,10 @@ comprueba.)*
    verificación por campo sin romper el modelo plano.
 4. **Doctrina como validación de CI**, no como prosa → §6.4/§7.
 5. **La app lee releases etiquetadas**, nunca la rama viva.
-6. **`vigilar.py` avisará y jamás escribirá** → el criterio humano firma; la
-   máquina instruye (compatible con el futuro pipeline de expedientes). La
-   decisión sigue en pie; **el guion está sin construir** (§7).
+6. **`vigilar.py` avisa y jamás escribe** → el criterio humano firma; la máquina
+   instruye (compatible con el futuro pipeline de expedientes). Construido en la
+   1.5.0, y avisa **fallando**: abrir issues habría costado permiso de escritura
+   sobre el repo (§7).
 7. **Nada se borra**: `estado_registro` + historial Git.
 8. **`activo` es derivado, no escrito** *(1.1)* → una sola fuente de verdad (D3).
    Y el campo del que se deriva, `fase`, es **controlado**: un filtro no puede
@@ -655,6 +668,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.5.0** | 2026-08-05 | **`vigilar.py` existe.** Se retira la declaración de pendiente que puso la 1.4.0: la guardia semanal está construida, con su `vigilar.yml`. §7 se reescribe con lo que la implementación obligó a decidir y a admitir. Decidido: **avisa fallando, no abriendo issues** —eso habría costado permiso de escritura sobre un repositorio público—, y **«muerta» es solo 404 y 410**, porque un vigilante que grita por el 403 anti-bot de un ministerio acaba apagado. Admitido, y esto es lo que más importa: **EUR-Lex y el IGME devuelven 200 para documentos que no existen**. Donde la URL promete formato el engaño se detecta; donde no, **no hay comprobación posible** y la guardia lo imprime cada vez que corre. Con esto el contrato no tiene ninguna pieza sin implementar salvo **R8**, que sigue esperando a `minerales-dominios` (§6.5). |
 | **1.4.0** | 2026-08-05 | **Aditiva, y sobre todo correctora.** Lo importante no es lo que añade sino lo que **deja de afirmar**: seis lugares de este repo daban por construido `pipeline/vigilar.py` —y su `vigilar.yml`— en presente y sin matizar, incluido el README público. No existen. §7 gana su bloque de estado, redactado como el de R8 en §6.5, y §2, §3 y §12.6 dejan de darlo por hecho. Mientras no exista, **nadie vigila la caducidad de una capa ni la muerte de una URL**, y eso ahora está dicho donde se afirma en vez de descubrirse por su ausencia — que es la regla que §8 se impone a sí mismo. Lo que se añade: `pipeline/consultar.py` en §2 (consulta al IGN y al catastro, contrasta, **nunca escribe**), `.cache/` con su distinción entre copia de trabajo y cita, y en §6.6 el **contraste de municipio**, que es la comprobación que R9 no puede hacer porque exige salir a la red. La regla de estructura pasa a «valida, vigila y consulta; nunca genera datos». |
 | **1.3.0** | 2026-08-05 | **Aditiva.** La geometría entra en la doctrina. `geo_fuente` admite `__v`/`__f` (§5); nuevo §6.6 con la tabla de qué precisión concede cada clase de fuente, el CRS como parte de la cita, y la regla **R9** (§6.4), que exige fuente primaria a toda `geo_precision` de `exacta` o `paraje` — con su implementación en `validar.py` y sus dos fixtures, no declarada y pendiente. §9: `paraje` y `exacta` se redefinen para distinguir la fuente del **nombre del lugar** de la del **objeto**; ningún registro publicado usaba ninguno de los dos, así que no hay nada que migrar. §8: sufijo `.N` para una segunda release en el mismo mes. Salió de la deuda de geometría de F1: once puntos honestos, pero con la única procedencia del atlas que nadie podía comprobar. **§6.6 lleva además una lección aprendida tocando la fuente**, no escribiendo el contrato: un punto representativo no hereda la precisión de su polígono, así que `exacta` es inalcanzable mientras la capa sea de puntos. |
 | **1.2.0** | 2026-08-05 | **Aditiva.** Campo opcional `nombre_oficial` (+`__v`,`__f`) en `minerales-proyectos` (§10). Salió de la propia F1: el nombre oficial del documento que reconoce un proyecto difiere del corriente en cinco de los siete españoles, y sin él la ficha no se puede contrastar contra el DOUE. Ningún consumidor de la 1.1 se rompe: es opcional. |

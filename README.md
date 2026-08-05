@@ -47,20 +47,26 @@ DECISIONES.md       el porqué de cada decisión, con lo que se descartó
 PLAN.md             fases de construcción y criterios de hecho
 datos/              las capas (GeoJSON RFC 7946, WGS84) y el manifiesto
 fuentes/            archivo documental de todo lo citado
-pipeline/           validar.py (doctrina como test, corre en CI)
+pipeline/           validar.py (doctrina como test, en CI) · vigilar.py (semanal)
+                    consultar.py (consulta al IGN y al catastro; contrasta)
 app/                el visor
 referencia/         la demo v4, canon de interacción
 ```
 
-Los datos son **curación humana con fuente primaria**. El pipeline valida;
-**nunca genera datos**.
+Los datos son **curación humana con fuente primaria**. El pipeline valida, vigila
+y consulta; **nunca genera datos**, y nunca archiva una fuente por su cuenta.
 
-> Lo que el contrato describe y **todavía no existe**, dicho aquí para que no se
-> descubra por su ausencia: `pipeline/vigilar.py` —la guardia semanal de URLs
-> muertas y capas caducadas— está diseñado y sin construir (CONTRATO-DATOS.md
-> §7), y la regla **R8** no tendrá diente hasta que exista la capa
-> `minerales-dominios` (§6.5). Son las dos únicas piezas del contrato sin
-> implementar, y las dos lo declaran donde se las menciona.
+> **Lo que este atlas no puede garantizar, dicho aquí y no en la letra pequeña.**
+> La guardia semanal comprueba que las citas sigan vivas, pero **EUR-Lex y el
+> IGME devuelven «200 OK» para documentos que ya no existen**, sirviendo una
+> página de error. Cuando la URL promete un PDF, el engaño se detecta; cuando no,
+> no hay forma barata de distinguirlo, y `vigilar.py` imprime cuántas citas
+> quedan sin comprobar de verdad. Es la razón entera de que exista `fuentes/`: la
+> copia archivada no depende de que un servidor ajeno siga siendo honesto.
+>
+> Y la única pieza del contrato **sin implementar**: la regla **R8** no tendrá
+> diente hasta que exista la capa `minerales-dominios` (CONTRATO-DATOS.md §6.5).
+> Está declarada como tal para que no se descubra por su ausencia.
 
 ## Cómo se corrige un dato
 
