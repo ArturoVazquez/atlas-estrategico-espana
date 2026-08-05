@@ -1,0 +1,20 @@
+{
+  "name": "atlas-estrategico-espana-visor",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Visor del Atlas Estratégico de España. Lee una release ETIQUETADA de datos/, nunca la rama viva (CONTRATO-DATOS.md §8).",
+  "scripts": {
+    "datos": "node preparar-datos.mjs",
+    "dev": "npm run datos && vite",
+    "build": "npm run datos && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "maplibre-gl": "^5.9.0",
+    "pmtiles": "^4.4.0"
+  },
+  "devDependencies": {
+    "vite": "^7.2.0"
+  }
+}

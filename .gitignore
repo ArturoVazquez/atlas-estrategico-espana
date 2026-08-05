@@ -1,3 +1,12 @@
+# El visor
+app/node_modules/
+app/dist/
+# `app/public/datos/` lo genera `preparar-datos.mjs` desde la ETIQUETA en cada
+# build. Versionarlo sería tener dos copias de los mismos datos y que la
+# segunda se quedara vieja sin que nadie se enterara — justo lo que el contrato
+# combate en todo lo demás. La única copia buena vive en `datos/`.
+app/public/datos/
+
 # Python
 __pycache__/
 *.py[cod]
