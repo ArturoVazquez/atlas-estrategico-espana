@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Despliegue
+.vercel
+.wrangler/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Nota: `fuentes/` SÍ se versiona. Es el archivo documental del contrato
+# (§2: «las URLs se pudren; esto no»). No se ignora nunca.

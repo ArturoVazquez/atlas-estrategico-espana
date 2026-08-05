@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Estratégico de España — demo v2</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<style>
+  :root{
+    --papel:#F1EFE9; --mar:#DCE2E2; --tierra:#FBFAF5; --limite:#D3D0C5; --limite-ccaa:#BCB9AC;
+    --tinta:#26251F; --tinta-suave:#6E6B60; --tinta-tenue:#98948a;
+    --crma:#96361F; --singular:#31614E; --disputa:#9C7A14;
+    --panel:#FBFAF6; --linea:#DAD7CC;
+    --serif: "Charter","Bitstream Charter",Georgia,"Times New Roman",serif;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    --mono: ui-monospace,"SF Mono","Cascadia Mono","Consolas",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--papel);color:var(--tinta);font-family:var(--sans);overflow:hidden}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:20;
+    display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding:14px 22px 10px;
+    background:linear-gradient(var(--papel) 72%, rgba(241,239,233,0));
+    pointer-events:none;
+  }
+  .masthead .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:3px}
+  .masthead h1{font-family:var(--serif);font-weight:normal;font-size:clamp(19px,3vw,27px);letter-spacing:.045em}
+  .masthead h1 .capa{color:var(--tinta-suave);font-style:italic;letter-spacing:.01em}
+  .stamp{text-align:right;flex-shrink:0;font-family:var(--mono);font-size:10.5px;line-height:1.6;color:var(--tinta-suave)}
+  .stamp b{color:var(--tinta);font-weight:600}
+  .stamp .sello{display:inline-block;border:1px solid var(--tinta-suave);border-radius:2px;padding:2px 7px;margin-top:2px;letter-spacing:.08em}
+
+  #mapa{position:fixed;inset:0;cursor:grab}
+  #mapa:active{cursor:grabbing}
+  .provincia{fill:var(--tierra);stroke:none}
+  .limites{fill:none;stroke:var(--limite);stroke-width:.6}
+  .limites-ccaa{fill:none;stroke:var(--limite-ccaa);stroke-width:.75}
+  .costa{fill:none;stroke:#A9A699;stroke-width:1}
+  .inset-caja{fill:var(--mar);stroke:var(--tinta-tenue);stroke-width:.8}
+  .inset-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;fill:var(--tinta-suave)}
+
+  .zona-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;text-anchor:middle;paint-order:stroke;stroke:rgba(251,250,245,.85);stroke-width:2.6px}
+  .cable-linea{fill:none;stroke-linecap:round}
+  .cable-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;fill:#3D4C57;paint-order:stroke;stroke:rgba(251,250,245,.85);stroke-width:2.4px}
+
+  .punto{cursor:pointer}
+  .punto .halo{fill:none;stroke:none}
+  .punto.activo .halo{stroke:var(--tinta);stroke-width:1}
+
+  #tooltip{position:fixed;z-index:30;pointer-events:none;display:none;background:var(--tinta);color:var(--papel);font-family:var(--mono);font-size:11px;line-height:1.5;padding:6px 9px;border-radius:2px;max-width:250px}
+  #tooltip .tt-cat{opacity:.65;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
+
+  /* -------- panel de capas -------- */
+  #capas{
+    position:fixed;left:18px;top:84px;z-index:16;width:252px;
+    background:var(--panel);border:1px solid var(--linea);border-radius:3px;
+    box-shadow:0 1px 4px rgba(38,37,31,.07);
+    max-height:calc(100vh - 150px);overflow-y:auto;
+  }
+  #capas .grupo{padding:12px 15px 10px}
+  #capas .grupo + .grupo{border-top:1px solid var(--linea)}
+  #capas h2{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:3px}
+  #capas .grupo-sub{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--tinta-tenue);margin-bottom:8px}
+  .capa-item{display:flex;align-items:flex-start;gap:9px;margin:7px 0;cursor:pointer;user-select:none}
+  .capa-item input{display:none}
+  .capa-check{
+    flex-shrink:0;width:13px;height:13px;margin-top:2px;border:1.3px solid var(--tinta-suave);
+    border-radius:2px;position:relative;background:var(--papel);
+  }
+  .capa-item input:checked + .capa-check{background:var(--tinta);border-color:var(--tinta)}
+  .capa-item input:checked + .capa-check::after{
+    content:"";position:absolute;inset:2.5px;background:var(--papel);
+    clip-path:polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+  .capa-item:has(input:focus-visible) .capa-check{outline:2px solid var(--tinta);outline-offset:1px}
+  .capa-nombre{font-size:12.5px;line-height:1.35}
+  .capa-tag{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-tenue);display:block;margin-top:1px}
+  #capas .aviso{
+    border-top:1px solid var(--linea);padding:10px 15px 12px;
+    font-family:var(--serif);font-style:italic;font-size:11px;line-height:1.45;color:var(--tinta-suave);
+  }
+  #capas-toggle{display:none}
+
+  /* -------- ficha -------- */
+  #ficha{
+    position:fixed;top:0;right:0;bottom:0;z-index:25;width:min(390px,92vw);
+    background:var(--panel);border-left:1px solid var(--linea);
+    transform:translateX(102%);transition:transform .28s cubic-bezier(.4,0,.2,1);
+    overflow-y:auto;box-shadow:-4px 0 18px rgba(38,37,31,.08);
+  }
+  #ficha.abierta{transform:translateX(0)}
+  .ficha-int{padding:22px 24px 30px}
+  .ficha-cerrar{position:absolute;top:12px;right:14px;border:none;background:none;cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--tinta-suave);padding:6px}
+  .ficha-cerrar:hover,.ficha-cerrar:focus-visible{color:var(--tinta)}
+  .ficha-cat{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+  .ficha-cat .pastilla{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .ficha-int h3{font-family:var(--serif);font-weight:normal;font-size:23px;line-height:1.15;margin-bottom:2px}
+  .ficha-lugar{font-size:12.5px;color:var(--tinta-suave);margin-bottom:14px}
+  .badge{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:2.5px 7px;border-radius:2px;border:1px solid}
+  .badge.confirmado{color:#2c5643;border-color:#2c5643;background:rgba(49,97,78,.07)}
+  .badge.parcial{color:#8a6a0d;border-color:#b1912f;background:rgba(156,122,20,.08);border-style:dashed}
+  .badge.no_verificado{color:#8c3a26;border-color:#b06046;background:rgba(150,54,31,.06);border-style:dashed}
+  .materias{margin:13px 0 4px;display:flex;flex-wrap:wrap;gap:6px}
+  .materia{font-family:var(--mono);font-size:10.5px;padding:3px 8px;border-radius:2px;background:var(--papel);border:1px solid var(--linea)}
+  .registro{margin-top:16px;border-top:1px solid var(--linea)}
+  .campo{padding:11px 0 10px;border-bottom:1px solid var(--linea)}
+  .campo-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .campo-v{font-size:13.5px;line-height:1.5}
+  .campo-meta{font-family:var(--mono);font-size:10px;color:var(--tinta-tenue);margin-top:3px}
+  .fuentes{margin-top:15px}
+  .fuentes h4{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:7px}
+  .fuente{font-size:12px;line-height:1.45;margin-bottom:7px;padding-left:11px;position:relative}
+  .fuente::before{content:"·";position:absolute;left:0;color:var(--tinta-tenue)}
+  .fuente a{color:var(--tinta);text-decoration-color:var(--tinta-tenue);text-underline-offset:2px;word-break:break-word}
+  .fuente .f-fecha{font-family:var(--mono);font-size:10px;color:var(--tinta-tenue)}
+  .fuente.hueco{color:var(--tinta-suave);font-style:italic}
+  .ficha-nota{margin-top:16px;font-family:var(--serif);font-style:italic;font-size:12.5px;line-height:1.5;color:var(--tinta-suave);border-left:2px solid var(--linea);padding-left:11px}
+  .badge.c-activo{color:#2c5643;border-color:#2c5643;background:rgba(49,97,78,.07)}
+  .badge.c-historico{color:#6E6B60;border-color:#8f8c80;background:rgba(110,107,96,.08)}
+  .badge.c-desarrollo{color:#8a6a0d;border-color:#b1912f;background:rgba(156,122,20,.08)}
+  .badge.c-disputa{color:#8c3a26;border-color:#b06046;background:rgba(150,54,31,.06)}
+  .badge.c-mixto{color:#26251F;border-color:#6E6B60;background:rgba(38,37,31,.05)}
+  .zona-desc{font-size:13.5px;line-height:1.55;margin:14px 0 2px}
+  .proy-link{display:flex;align-items:center;gap:8px;font-size:13px;padding:7px 2px;border-bottom:1px solid var(--linea);cursor:pointer}
+  .proy-link:hover{background:rgba(38,37,31,.04)}
+  .proy-link .pl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .proy-link .pl-verif{margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--tinta-tenue);text-transform:uppercase;letter-spacing:.06em}
+
+  /* -------- árboles y filtro -------- */
+  #capas details{border-top:1px solid var(--linea)}
+  #capas details:first-of-type{border-top:none}
+  #capas summary{
+    list-style:none;cursor:pointer;padding:11px 15px 9px;
+    font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--tinta);display:flex;align-items:center;gap:8px;
+  }
+  #capas summary::-webkit-details-marker{display:none}
+  #capas summary::before{content:"▸";font-size:9px;color:var(--tinta-tenue);transition:transform .15s}
+  #capas details[open] summary::before{transform:rotate(90deg)}
+  #capas summary .arbol-tag{margin-left:auto;font-size:8.5px;letter-spacing:.1em;color:var(--tinta-tenue);font-weight:400;border:1px dashed var(--tinta-tenue);border-radius:2px;padding:1px 6px}
+  #capas .ramas{padding:0 15px 11px 27px}
+  .rama-prep{
+    display:flex;align-items:center;gap:9px;margin:7px 0;
+    color:var(--tinta-tenue);font-size:12px;font-style:italic;
+  }
+  .rama-prep::before{content:"";width:13px;height:13px;flex-shrink:0;border:1.3px dashed var(--tinta-tenue);border-radius:2px;opacity:.6}
+  .rama-prep .prep-tag{margin-left:auto;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-style:normal;border:1px dashed var(--tinta-tenue);border-radius:2px;padding:1px 5px;opacity:.8}
+  #filtro{padding:11px 15px 12px;border-bottom:1px solid var(--linea)}
+  #filtro h2{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:7px}
+  .seg{display:flex;border:1px solid var(--tinta-suave);border-radius:2px;overflow:hidden}
+  .seg button{
+    flex:1;border:none;background:var(--papel);color:var(--tinta-suave);cursor:pointer;
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 2px;border-left:1px solid var(--linea);
+  }
+  .seg button:first-child{border-left:none}
+  .seg button.on{background:var(--tinta);color:var(--papel)}
+  #filtro .filtro-nota{margin-top:7px;font-family:var(--serif);font-style:italic;font-size:10.5px;line-height:1.4;color:var(--tinta-tenue)}
+  .disp-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;fill:#5E5470;paint-order:stroke;stroke:rgba(251,250,245,.85);stroke-width:2.4px}
+
+  footer{
+    position:fixed;left:0;right:0;bottom:0;z-index:14;
+    padding:7px 22px;font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:var(--tinta-suave);
+    background:linear-gradient(rgba(241,239,233,0), var(--papel) 55%);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+
+  @media (max-width:760px){
+    #capas{left:12px;right:12px;top:auto;bottom:12px;width:auto;max-height:44vh}
+    #ficha{top:auto;height:62vh;width:100%;border-left:none;border-top:1px solid var(--linea);transform:translateY(103%)}
+    #ficha.abierta{transform:translateY(0)}
+    footer{display:none}
+    .stamp .l2{display:none}
+  }
+  @media (prefers-reduced-motion: reduce){ #ficha{transition:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead">
+    <div class="eyebrow">Demostración de trabajo · v4</div>
+    <h1>ATLAS ESTRATÉGICO DE ESPAÑA <span class="capa">— árboles · filtro de explotación · el tablero</span></h1>
+  </div>
+  <div class="stamp">
+    <div class="l2">4 árboles vivos · 1 reservado · ramas futuras a la vista</div>
+    <span class="sello">DEMO · <b>22·07·2026</b></span>
+  </div>
+</header>
+
+<svg id="mapa" role="img" aria-label="Atlas estratégico de España por capas"></svg>
+<div id="tooltip"></div>
+
+<nav id="capas" aria-label="Capas del atlas"></nav>
+
+<aside id="ficha" aria-hidden="true">
+  <button class="ficha-cerrar" aria-label="Cerrar ficha">✕ cerrar</button>
+  <div class="ficha-int" id="ficha-contenido"></div>
+</aside>
+
+<footer>
+  <span>Geometría: IGN (es-atlas) · capas de dotación: trazado ilustrativo, sin valor cartográfico</span>
+  <span>Solo los registros de «lo que se trabaja» llevan ficha con fuentes</span>
+</footer>
+
+<script>
+const TOPO = {"type":"Topology","bbox":[-18.16118085,27.637723150000003,4.32778473,43.792379568],"transform":{"scale":[0.002249121470147015,0.001615627204520452],"translate":[-18.16118085,27.637723150000003]},"objects":{"provinces":{"type":"GeometryCollection","geometries":[{"type":"Polygon","arcs":[[0,1,2,3,4,5,6]],"id":"02","properties":{"name":"Albacete"}},{"type":"MultiPolygon","arcs":[[[7,-4,8,9]]],"id":"03","properties":{"name":"Alacant/Alicante"}},{"type":"MultiPolygon","arcs":[[[10,11,12]]],"id":"04","properties":{"name":"Almería"}},{"type":"Polygon","arcs":[[13,14,15,16,17,18,19,20]],"id":"05","properties":{"name":"Ávila"}},{"type":"Polygon","arcs":[[21,22,23,24,25,26,27,28,29]],"id":"06","properties":{"name":"Badajoz"}},{"type":"MultiPolygon","arcs":[[[30]],[[31]],[[32]],[[33]],[[34]],[[35]],[[36]]],"id":"07","properties":{"name":"Illes Balears"}},{"type":"MultiPolygon","arcs":[[[37,38,39,40],[41],[42],[43]],[[44]],[[45]]],"id":"08","properties":{"name":"Barcelona"}},{"type":"MultiPolygon","arcs":[[[46,47,48,49,50,51,52,53,54,55,56,57],[58],[59]],[[60]],[[61]],[[62]],[[63]]],"id":"09","properties":{"name":"Burgos"}},{"type":"Polygon","arcs":[[64,65,-21,66,-23]],"id":"10","properties":{"name":"Cáceres"}},{"type":"MultiPolygon","arcs":[[[67,68,69,70,71,72]]],"id":"11","properties":{"name":"Cádiz"}},{"type":"MultiPolygon","arcs":[[[73,74,75,76]]],"id":"12","properties":{"name":"Castelló/Castellón"}},{"type":"MultiPolygon","arcs":[[[77,-27,78,79,-1,80]],[[-25,81]]],"id":"13","properties":{"name":"Ciudad Real"}},{"type":"MultiPolygon","arcs":[[[82]],[[-28,-78,83,84,85,86]]],"id":"14","properties":{"name":"Córdoba"}},{"type":"MultiPolygon","arcs":[[[87,88,89]],[[90]]],"id":"15","properties":{"name":"A Coruña"}},{"type":"Polygon","arcs":[[-80,91,92,93,94,95,96,97,-2]],"id":"16","properties":{"name":"Cuenca"}},{"type":"MultiPolygon","arcs":[[[98,99,-40]],[[-44]],[[100]]],"id":"17","properties":{"name":"Girona"}},{"type":"MultiPolygon","arcs":[[[101,-85,102,-6,103,-11,104]]],"id":"18","properties":{"name":"Granada"}},{"type":"MultiPolygon","arcs":[[[105,106,107,108,-94,109]],[[110]]],"id":"19","properties":{"name":"Guadalajara"}},{"type":"MultiPolygon","arcs":[[[111,112,113,114]]],"id":"20","properties":{"name":"Gipuzkoa"}},{"type":"Polygon","arcs":[[-30,115,-68,116]],"id":"21","properties":{"name":"Huelva"}},{"type":"Polygon","arcs":[[117,118,119,120]],"id":"22","properties":{"name":"Huesca"}},{"type":"Polygon","arcs":[[-81,-7,-103,-84]],"id":"23","properties":{"name":"Jaén"}},{"type":"Polygon","arcs":[[121,122,123,124,125,126,127,128,129],[130]],"id":"24","properties":{"name":"León"}},{"type":"MultiPolygon","arcs":[[[131,-120,132,-99,-39,133],[-46],[-45]],[[-42]]],"id":"25","properties":{"name":"Lleida"}},{"type":"Polygon","arcs":[[-56,134,135,136,137],[-63],[-62]],"id":"26","properties":{"name":"La Rioja"}},{"type":"MultiPolygon","arcs":[[[138,-88,139,140,-122,141]]],"id":"27","properties":{"name":"Lugo"}},{"type":"MultiPolygon","arcs":[[[142,-110,-93,143,-19],[-111]],[[-17,144]]],"id":"28","properties":{"name":"Madrid"}},{"type":"Polygon","arcs":[[-70,145,-86,-102,146]],"id":"29","properties":{"name":"Málaga"}},{"type":"MultiPolygon","arcs":[[[-12,-104,-5,-8,147]]],"id":"30","properties":{"name":"Murcia"}},{"type":"MultiPolygon","arcs":[[[148,-115,149,-118,150,-136]],[[151]],[[152]]],"id":"31","properties":{"name":"Navarra"}},{"type":"Polygon","arcs":[[153,-142,-130,154,155]],"id":"32","properties":{"name":"Ourense"}},{"type":"MultiPolygon","arcs":[[[156,157,-123,-141]]],"id":"33","properties":{"name":"Asturias"}},{"type":"MultiPolygon","arcs":[[[-125,158,-48,159],[-61]],[[-59]],[[-60]],[[-50,160]],[[161]],[[162]]],"id":"34","properties":{"name":"Palencia"}},{"type":"MultiPolygon","arcs":[[[163]],[[164]],[[-89,-139,-154,165]],[[166]]],"id":"36","properties":{"name":"Pontevedra"}},{"type":"Polygon","arcs":[[167,168,-14,-66,169]],"id":"37","properties":{"name":"Salamanca"}},{"type":"MultiPolygon","arcs":[[[-124,-158,170,171,-51,-161,-49,-159],[-163],[-162]],[[172]]],"id":"39","properties":{"name":"Cantabria"}},{"type":"Polygon","arcs":[[173,-58,174,-106,-143,-18,-145,-16]],"id":"40","properties":{"name":"Segovia"}},{"type":"Polygon","arcs":[[-116,-29,-87,-146,-69],[-83]],"id":"41","properties":{"name":"Sevilla"}},{"type":"Polygon","arcs":[[-175,-57,-138,175,-107]],"id":"42","properties":{"name":"Soria"}},{"type":"MultiPolygon","arcs":[[[-75,176,177,-134,-38,178]],[[-43]]],"id":"43","properties":{"name":"Tarragona"}},{"type":"Polygon","arcs":[[-109,179,-177,-74,180,-97,181,-95]],"id":"44","properties":{"name":"Teruel"}},{"type":"Polygon","arcs":[[-24,-67,-20,-144,-92,-79,-26,-82]],"id":"45","properties":{"name":"Toledo"}},{"type":"MultiPolygon","arcs":[[[-3,-98,-181,-77,182,-9]],[[-182,-96]]],"id":"46","properties":{"name":"València/Valencia"}},{"type":"MultiPolygon","arcs":[[[-169,183,-126,-160,-47,-174,-15]],[[-128,184]],[[-131]]],"id":"47","properties":{"name":"Valladolid"}},{"type":"MultiPolygon","arcs":[[[-54,185]],[[-52,-172,186,-113,187],[-173]]],"id":"48","properties":{"name":"Bizkaia"}},{"type":"Polygon","arcs":[[188,-155,-129,-185,-127,-184,-168]],"id":"49","properties":{"name":"Zamora"}},{"type":"Polygon","arcs":[[-176,-137,-151,-121,-132,-178,-180,-108],[-153],[-152]],"id":"50","properties":{"name":"Zaragoza"}},{"type":"Polygon","arcs":[[189]],"id":"51","properties":{"name":"Ceuta"}},{"type":"Polygon","arcs":[[190]],"id":"52","properties":{"name":"Melilla"}},{"type":"Polygon","arcs":[[-72,191]],"id":"54","properties":{"name":"Gibraltar. Territorio no asociado a ninguna provincia"}},{"type":"Polygon","arcs":[[-55,-186,-53,-188,-112,-149,-135],[-64]],"id":"01","properties":{"name":"Araba/Álava"}},{"type":"MultiPolygon","arcs":[[[192]],[[193]],[[194]],[[195]],[[196]],[[197]]],"id":"35","properties":{"name":"Las Palmas"}},{"type":"MultiPolygon","arcs":[[[198]],[[199]],[[200]],[[201]]],"id":"38","properties":{"name":"Santa Cruz de Tenerife"}}]},"autonomous_regions":{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","arcs":[[[77,-27,-26,-25,-24,-67,-20,-144,92,109,105,106,107,108,94,95,96,97,2,3,4,5,6,80]],[[110]]],"id":"08","properties":{"name":"Castilla-La Mancha"}},{"type":"MultiPolygon","arcs":[[[182,9,7,-4,-3,-98,-181,73,74,75]],[[-182,-96]]],"id":"10","properties":{"name":"Comunitat Valenciana"}},{"type":"MultiPolygon","arcs":[[[70,71,72,116,-30,-29,-28,-78,-81,-7,-6,103,11,12,104,146]]],"id":"01","properties":{"name":"Andalucía"}},{"type":"MultiPolygon","arcs":[[[188,-155,129,121,122,123,158,48,160,50,51,52,53,54,55,-138,175,-107,-106,-143,18,19,20,-66,169],[16,-145]],[[61]],[[62]],[[63]],[[161]],[[162]]],"id":"07","properties":{"name":"Castilla y León"}},{"type":"MultiPolygon","arcs":[[[23,24,25,26,27,28,29,21,64,65,-21,66]]],"id":"11","properties":{"name":"Extremadura"}},{"type":"MultiPolygon","arcs":[[[30]],[[31]],[[32]],[[33]],[[34]],[[35]],[[36]]],"id":"04","properties":{"name":"Illes Balears"}},{"type":"MultiPolygon","arcs":[[[-75,176,177,131,-120,132,99,40,178]],[[100]]],"id":"09","properties":{"name":"Cataluña/Catalunya"}},{"type":"MultiPolygon","arcs":[[[-130,154,155,165,89,139,140,-122]],[[90]],[[163]],[[164]],[[166]]],"id":"12","properties":{"name":"Galicia"}},{"type":"MultiPolygon","arcs":[[[-53,-52,-172,186,113,114,-149,-135,-55,-54],[-173],[-64]]],"id":"16","properties":{"name":"País Vasco/Euskadi"}},{"type":"MultiPolygon","arcs":[[[-109,-108,-176,-137,-151,117,118,119,-132,-178,-177,-74,180,-97,181,-95],[-152],[-153]]],"id":"02","properties":{"name":"Aragón"}},{"type":"MultiPolygon","arcs":[[[134,135,136,137,-56],[-63],[-62]]],"id":"17","properties":{"name":"La Rioja"}},{"type":"MultiPolygon","arcs":[[[-110,-93,143,-19,142],[-111]],[[-17,144]]],"id":"13","properties":{"name":"Comunidad de Madrid"}},{"type":"MultiPolygon","arcs":[[[-12,-104,-5,-8,147]]],"id":"14","properties":{"name":"Región de Murcia"}},{"type":"MultiPolygon","arcs":[[[148,-115,149,-118,150,-136]],[[151]],[[152]]],"id":"15","properties":{"name":"Comunidad Foral de Navarra"}},{"type":"MultiPolygon","arcs":[[[156,157,-123,-141]]],"id":"03","properties":{"name":"Principado de Asturias"}},{"type":"MultiPolygon","arcs":[[[-158,170,171,-51,-161,-49,-159,-124],[-163],[-162]],[[172]]],"id":"06","properties":{"name":"Cantabria"}},{"type":"MultiPolygon","arcs":[[[189]]],"id":"18","properties":{"name":"Ciudad Autónoma de Ceuta"}},{"type":"MultiPolygon","arcs":[[[190]]],"id":"19","properties":{"name":"Ciudad Autónoma de Melilla"}},{"type":"MultiPolygon","arcs":[[[-72,191]]],"id":"20","properties":{"name":"Gibraltar. Territorio no asociado a ninguna autonomía"}},{"type":"MultiPolygon","arcs":[[[192]],[[193]],[[194]],[[195]],[[196]],[[197]],[[198]],[[199]],[[200]],[[201]]],"id":"05","properties":{"name":"Canarias"}}]},"border":{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","arcs":[[[72,116,21,64,169,188,155,165,89,139,156,170,186,113,149,118,132,99,40,178,75,182,9,147,12,104,146,70,191]],[[30]],[[31]],[[32]],[[33]],[[34]],[[35]],[[36]],[[100]],[[90]],[[163]],[[164]],[[166]],[[189]],[[190]],[[192]],[[193]],[[194]],[[195]],[[196]],[[197]],[[198]],[[199]],[[200]],[[201]]],"properties":{}}]}},"arcs":[[[6846,6743],[8,9],[-9,17],[7,26],[-6,7],[17,-6],[10,4],[15,16],[9,27],[5,25],[-27,31],[-15,-1],[-8,15],[0,15],[-5,31],[-13,7],[-4,10],[-16,-1],[-10,13],[-8,-1],[-1,18],[14,18],[7,24],[9,0],[2,35],[-11,16],[-5,18],[16,27],[11,11],[10,21],[16,23],[-9,32]],[[6855,7230],[38,3],[17,10],[9,0],[23,-10],[16,12],[12,-17],[49,-51],[6,8],[5,20],[13,3],[8,-12],[6,-23],[19,11],[12,11],[17,5],[6,7],[42,-10],[10,1],[-11,23],[1,8],[-10,26],[23,0],[10,-4],[-3,-9],[15,-18],[2,-9],[24,6],[22,0],[18,-11],[34,-4],[3,13],[10,13],[11,2],[8,8],[36,17],[27,22],[23,10]],[[7406,7291],[9,4],[-1,-14],[5,5],[10,-7],[3,-22],[11,12],[16,-17],[9,1],[13,-14],[7,6],[17,-9],[3,3],[23,-11],[6,7],[6,-8],[12,0],[3,-5],[-6,-16],[0,-31],[-8,-31],[-15,-17],[-6,-24],[-7,-5],[0,-13],[-4,-6],[1,-18],[16,-13],[30,-43],[6,-16],[17,0],[41,5],[7,8],[18,-4],[1,-14],[7,-13],[8,-5],[-5,-23],[5,-19],[-4,-8],[2,-17]],[[7662,6899],[-15,-6],[15,-42],[6,-6],[-21,-25],[-28,0]],[[7619,6820],[-8,3],[-32,31],[-2,16],[-29,11],[-29,-10],[-15,-20],[-26,-18],[-11,17],[-16,-9],[-20,-25],[2,-8],[-4,-34],[-15,-11],[-6,-20],[9,-32],[2,-44],[-2,-20],[-28,-21],[-7,-11],[-14,-9],[-34,0],[-11,16],[4,14],[-10,10],[-6,-5],[-12,8],[-12,-1],[1,-9],[-11,3],[5,-8],[-13,-3],[-6,-11],[-11,0],[-20,-19],[-39,-13],[-8,2],[-9,10],[-12,3],[-12,-14],[-3,-11],[-14,-17],[-27,-9],[-17,-13],[-8,-25],[-7,-8],[-9,-25],[-26,-24],[-6,-13],[-1,-14]],[[7034,6430],[-14,-2],[-23,6],[-4,6],[-21,7],[-11,9],[-9,1],[-12,9]],[[6940,6466],[16,17],[2,10],[7,4],[13,22],[9,9],[-3,22],[4,7],[0,12],[4,9],[-3,12],[-17,6],[-2,4],[2,30],[-6,14],[4,16],[-22,5],[-7,-2],[-10,7],[-2,13],[4,16],[-4,9],[5,9],[-14,14],[-9,0],[-25,-10],[-25,9],[-15,13]],[[7736,6319],[-12,1],[-7,7],[-11,3],[-12,13],[-29,36],[-20,43],[-25,39],[-6,38],[14,21],[7,17],[9,35],[-1,21],[-8,19],[-17,11],[-25,5],[-2,13],[3,46],[21,20],[9,14],[-5,16],[10,31],[-6,39],[-4,13]],[[7662,6899],[7,-9],[23,1],[14,-24],[16,4],[21,12],[11,-3],[7,-12],[8,5],[5,-8],[15,-1],[0,-14],[11,-11],[15,13],[14,5],[8,10],[12,7],[0,7],[-10,8],[-16,-8],[-8,8],[-5,17],[27,9],[27,-4],[15,13],[26,6],[12,10],[0,5],[14,3],[6,11],[22,-13],[13,-4],[16,4],[-1,4],[16,13],[6,-18],[35,17],[12,-17],[8,9],[-6,9]],[[8058,6963],[7,-7],[25,-10],[8,2],[19,-6],[13,-12],[10,-1],[23,-19],[-6,-10],[11,-16],[5,0],[5,-17],[-16,-2],[-22,-26],[-8,0],[-6,-8],[-7,-1],[-13,-21],[-9,2],[-9,-10],[-16,3],[-11,-9],[-12,-18],[-3,-9],[7,-5],[-21,-25],[-6,6],[-18,1],[-10,-12],[-8,0],[-19,-9],[-15,-4],[-16,-8],[-18,-16],[-14,-8],[-11,-19],[-4,-32],[3,-5],[-20,6],[-28,-23],[-4,-17],[0,-19],[5,-30],[-1,-10],[-12,-9],[-13,2],[-14,-3],[-6,-6],[-12,-27],[-5,-48],[-2,-43],[-19,-10],[-4,-18],[-5,-2],[-1,-16],[-10,-1],[-4,-8],[-5,-31]],[[6684,5641],[-5,22],[21,14],[8,9],[14,5],[6,8],[-6,21],[-12,14],[17,14],[4,18],[14,3],[6,10],[-2,20],[-8,3],[-7,25],[-6,38],[6,0],[5,-10],[8,-3],[17,3],[3,21],[6,16],[14,6],[8,16],[2,24],[13,30],[11,-1],[11,-9],[7,-1],[1,-8],[8,-14],[12,7],[12,-9],[20,-7],[1,11],[-4,12],[1,22],[6,15],[-1,20],[7,1],[-2,28],[20,20],[9,6],[4,10],[17,12],[12,11],[13,0],[7,5],[1,11],[9,0],[24,8],[10,0],[1,15],[-5,10],[0,18],[-10,25],[12,-7],[21,1],[3,8],[-5,8],[-1,29],[20,50],[-11,21],[6,13],[-3,18],[3,16],[10,-3],[7,10],[19,12]],[[7093,6362],[16,-17],[10,6],[12,1],[10,-14],[22,1],[14,-6],[11,7],[9,-8],[-9,-16],[-1,-14],[-5,-28],[5,-29],[-5,-5],[-2,-29],[15,-31],[10,-13],[1,-8],[35,-58],[13,-25],[17,-13],[-2,11],[33,-5],[32,-26],[16,-16]],[[7350,6027],[-9,-11],[-9,0],[-8,-11],[-8,-20],[-23,-27],[-7,-15],[-10,-6],[-12,-37],[-4,-31],[-5,-7],[-3,-25],[-12,-21],[0,-12],[-10,-17],[2,-24],[-8,-9],[-9,3],[-9,-9],[-6,-16],[-8,1],[-7,-10],[1,-27],[-10,-2],[-18,-21],[-1,-17],[-18,-8],[-9,-19],[-12,-1],[-18,-6],[-26,40],[-19,22],[-11,8],[-19,5],[-18,-9],[-11,-10],[-22,16],[-12,-8],[-26,-5],[-17,-26],[-9,-29],[-14,-17],[-22,-10],[-26,-2],[-17,12],[-10,4],[-11,-7],[-6,2],[-17,24],[-10,8],[-9,1],[-17,-8],[-20,5],[-22,-1],[-25,4]],[[5524,7834],[13,22],[15,11],[-5,5],[3,19],[-6,22],[21,15],[5,9],[19,4],[13,6],[1,-8],[-7,-12],[13,-13],[14,0],[2,22],[13,-2],[9,11],[6,29],[6,8],[3,14],[-2,7],[-36,-12],[-6,-5],[4,26],[7,9],[1,-9],[23,-2],[28,26],[3,14],[5,3],[-9,9],[3,8],[21,12],[2,6],[15,3],[20,21],[15,9],[-2,9],[18,13],[1,7],[9,12],[-5,10],[2,17],[11,16],[12,13],[-7,21],[10,7],[7,23],[-8,20],[-17,9],[-3,12],[2,18],[8,8],[2,16]],[[5796,8352],[11,10],[18,-6],[17,10],[4,6],[20,-7],[20,-18],[9,-4],[17,-14],[16,3],[7,19],[12,9],[28,3]],[[5975,8363],[-1,-16],[8,-21],[-4,-11],[6,-12],[10,-1],[18,-13],[5,-8],[10,-28],[18,-9],[3,-10],[0,-34],[10,-8],[2,-9],[-8,-3],[-4,-9],[5,-8],[22,5],[11,-21],[-1,-14],[9,-14],[10,-8],[-1,-16],[7,-38],[0,-13],[38,2],[6,7]],[[6154,8053],[14,3],[14,-1],[1,6],[-9,10]],[[6174,8071],[10,7],[29,4],[12,-3]],[[6225,8079],[-5,-6],[2,-17],[-3,-14],[6,-4],[-24,-11],[-21,-1],[-4,15],[-8,-1],[0,-13],[4,-1],[-4,-25],[-16,-9],[2,-11],[-1,-51],[-8,-8],[4,-18],[-37,1],[-12,-13],[1,-23],[-10,-7],[3,-13],[-22,-2],[-10,18],[-9,-3],[8,-29],[-18,-21],[5,-15],[-3,-10],[-6,-1]],[[6039,7786],[-17,-11],[-10,-1],[-21,8],[0,24],[-6,5],[1,15],[-14,-7],[-6,3],[-8,-9],[-19,9],[-6,-12],[5,-13],[-15,-16],[-15,-6],[-23,-18],[3,-11],[-3,-10],[-15,-4],[-5,-5],[-16,-7],[-5,30],[-22,-5],[-15,-15],[-19,-22],[-25,-6],[-5,15],[-25,4],[-22,-3],[-9,5]],[[5702,7723],[-14,30],[2,9],[-3,23],[5,6],[7,24],[-24,-8],[-14,1],[-5,-12],[-12,-6],[-2,-10],[-26,-8],[-29,14],[-7,-1],[-6,20],[-11,1],[-3,13],[-16,13],[-20,2]],[[4993,6543],[-2,7],[-9,-2],[-7,-9],[-4,6],[-13,-8],[-8,-10],[-13,2],[-13,-10],[-5,5],[-20,39],[0,13],[-6,10],[-9,6],[-11,25],[-30,39],[-9,21],[-12,9],[9,22],[-10,0],[2,24],[5,9],[0,10],[17,27],[3,15],[6,7],[-12,8],[2,40],[3,14],[26,16],[3,10],[15,9],[6,12],[10,10],[12,-1],[13,24],[7,3],[9,12],[-9,18],[12,11],[2,8],[15,24],[16,29],[-7,10],[4,9],[-10,21],[-21,17],[-11,2],[-23,-12],[-18,6],[2,26],[4,9],[-14,9],[-17,4],[-18,14],[-3,28],[8,15]],[[4860,7205],[12,-8],[23,35],[-12,6],[8,18],[16,13],[9,3],[14,-3],[4,-6],[-7,-13],[-8,5],[-2,-8],[9,-7],[2,-15],[12,7],[9,18],[-1,10],[10,13],[-13,5],[-12,11],[8,14],[24,-7],[-1,-3],[26,-14],[29,-10],[7,4],[24,1],[5,-14],[-2,-14],[11,-10],[10,-2],[-5,-30],[-8,-7],[-10,-16],[1,-12],[14,-20],[7,4],[31,-11],[10,14],[11,-1],[25,-11],[2,-13],[16,-2],[-1,16],[22,-8],[23,5],[11,-7],[16,-2],[16,14],[10,0],[4,-18],[-1,-28],[8,-8],[28,-5],[13,-20],[15,1],[7,-4],[5,-13],[23,33],[33,28],[0,-17],[4,-28],[11,8],[18,24],[7,-2],[1,-14],[23,13],[17,4],[7,6],[3,15],[19,-5],[15,-11],[20,-22],[8,-1],[11,13],[19,-1],[9,11],[-8,6],[11,14],[-16,23],[28,17],[10,-15],[6,12],[9,-17],[13,-14],[16,1],[7,-3],[13,10],[7,25],[9,16],[-3,14],[7,44],[16,-8],[9,0],[16,-11],[43,11],[14,14],[3,16],[-1,12],[11,1],[15,-16],[16,3],[5,6],[7,-5],[10,8],[-1,7],[9,0]],[[5873,7277],[5,0]],[[5878,7277],[14,-10],[17,-6],[29,18],[17,2],[5,9]],[[5960,7290],[31,21]],[[5991,7311],[8,-16],[-19,-48],[2,-11],[-24,-5],[13,-40],[8,-7],[2,-21],[20,-15],[7,-13],[-12,3],[-17,11],[-13,4],[-14,-3],[-16,6],[-9,-20],[-10,-9],[-2,-18],[-7,-17],[6,-11],[15,-9],[-3,-11],[-7,0],[-5,-9],[-11,2],[-22,14],[-13,1],[13,-51],[7,-12],[5,4],[13,-9],[12,-1],[6,-10],[-5,-31],[-8,4],[-21,0],[-13,-20],[-5,-16],[-3,-24],[-5,-18],[-8,-13],[-25,-7]],[[5831,6865],[-24,-13],[-8,5],[-23,-2],[-6,4],[7,-26],[-7,-1],[0,-10],[-11,5],[-1,-9],[-12,-7],[-7,-10],[-17,-9],[-8,-10],[1,-10],[-29,3],[-8,-13],[3,-12],[-10,0],[-2,-14],[-30,-22],[-3,-14],[-15,1],[-22,-19],[-7,-20],[0,-9],[11,-12],[-7,-24],[9,-7],[6,-24],[7,-9],[2,-35],[-8,-4],[1,-20],[-10,-12],[-7,1],[-4,-12]],[[5592,6495],[-22,4],[-27,-33],[-17,2],[-4,24],[12,5],[9,10],[-5,8],[8,11],[-18,10],[-12,-10],[-12,3],[-19,-10],[-6,3],[-17,-12],[-2,-14],[-14,-6],[-7,-22],[9,-12],[-5,-11],[-7,-2],[1,-9],[-9,-23],[-18,2],[-6,-5],[-11,4],[-28,-10],[-11,0],[-27,-25]],[[5327,6377],[-7,10],[-17,1],[-8,8],[-23,4],[-11,13],[-12,7],[-5,24],[-10,0],[-11,6],[-17,-2],[4,-5],[-14,-14],[4,-9],[-12,0],[-1,6],[-23,5],[-11,-5],[-7,4],[3,16],[-19,28],[-17,-3],[-30,5],[-8,-6],[-10,5],[0,8],[-18,0],[-3,5],[8,15],[2,21],[-13,-3],[-15,4],[-20,14],[-13,4]],[[8712,6893],[-7,7],[2,7],[5,-14]],[[8702,6965],[-3,-10],[1,-26],[-10,6],[-5,-7],[-5,18],[-8,7],[-17,-3],[-3,6],[-14,1],[-9,-13],[-15,25],[10,27],[-9,10],[8,7],[14,0],[19,3],[-10,16],[3,16],[9,12],[22,19],[6,-8],[5,10],[14,0],[4,9],[6,-7],[6,10],[19,1],[4,8],[12,4],[11,-15],[15,2],[8,-12],[-8,-2],[2,-14],[10,-9],[-15,-14],[-1,-16],[-13,2],[-9,-8],[-1,-21],[-9,1],[-2,-9],[-13,-12],[-16,2],[-1,-9],[-7,1],[-5,-8]],[[8692,6811],[-3,32],[3,0],[-4,16],[8,7],[9,-5],[8,23],[6,-17],[10,-8],[9,-18],[17,-11],[14,12],[9,-9],[-4,-16],[-21,1],[-22,18],[-15,1],[-6,-11],[-18,-15]],[[9100,7387],[1,6],[13,10],[-8,-13],[-6,-3]],[[9230,7372],[-4,-9],[-13,-1],[-10,-9],[0,-18],[-6,-19],[-10,2],[-20,27],[5,9],[-7,11],[-15,-8],[2,7],[-8,1],[-8,-10],[-9,21],[-9,6],[4,8],[-5,6],[5,12],[13,4],[16,14],[19,10],[16,20],[14,11],[11,-1],[13,10],[17,20],[6,10],[13,7],[2,10],[8,3],[6,9],[18,13],[3,-3],[12,8],[-1,7],[14,0],[22,14],[9,2],[14,13],[13,3],[7,10],[16,-7],[18,17],[15,-2],[-3,-6],[29,5],[12,14],[8,3],[7,-4],[15,6],[-5,-11],[-9,-3],[-13,-10],[-10,2],[-10,-13],[-8,4],[-5,-14],[5,-14],[9,-5],[10,7],[4,-3],[23,18],[4,-3],[-8,-11],[4,-9],[-7,-10],[-26,-5],[0,-18],[15,-22],[26,-16],[19,-8],[31,18],[5,16],[5,3],[14,-14],[11,-1],[13,-12],[11,0],[-2,-15],[10,0],[-8,-10],[-1,-31],[-7,0],[-2,-14],[-11,3],[-8,-12],[-3,-18],[7,-7],[-10,-1],[-5,-15],[-12,-6],[-20,-26],[-6,-19],[-3,-33],[-9,-9],[-2,-9],[-12,-18],[-5,4],[-11,-18],[-7,-5],[-11,2],[-12,-11],[-21,-27],[-10,-2],[-4,9],[-10,9],[-6,13],[-9,0],[3,13],[-12,14],[-15,3],[-10,-5],[-12,6],[-17,0],[-6,-6],[-11,7],[-7,-3],[-17,20],[-5,14],[4,12],[-12,24],[13,18],[-11,17],[-17,13],[-25,10],[-3,-14],[-12,1]],[[9385,7110],[-15,12],[5,7],[11,-4],[-1,9],[13,-3],[-8,-6],[0,-13],[-5,-2]],[[9923,7562],[-26,15],[-9,10],[-26,17],[-3,-2],[-25,12],[-27,-10],[-33,0],[1,18],[5,5],[-4,22],[-14,3],[-1,12],[8,6],[5,13],[14,3],[11,-2],[9,5],[5,-7],[5,5],[17,3],[4,-5],[24,3],[5,4],[7,-8],[17,10],[7,-15],[14,12],[-5,-16],[7,-3],[-1,21],[13,-5],[-3,-10],[10,-13],[3,8],[14,-23],[12,2],[5,-3],[-1,-20],[12,-12],[-3,-7],[4,-13],[9,-9],[2,-12],[-7,2],[6,-10],[0,-10],[-5,-16],[-11,-9],[-14,5],[-25,14],[-12,10]],[[8807,8391],[3,8],[-6,17],[-7,-7],[-19,8],[-5,15],[21,-5],[4,10],[1,16],[-12,-5],[-6,7],[4,6],[-11,6],[-6,17],[6,7],[-2,8],[-8,0],[-6,10],[-11,6],[-17,-8],[7,11],[-9,28],[8,12],[-6,14],[-10,0],[-6,7],[-15,5],[-2,14],[22,5],[-1,10],[-7,2],[10,8],[-15,8],[-12,-4]],[[8694,8627],[7,9],[-21,14],[15,14],[24,1],[-20,30],[-2,12],[-7,1],[16,19],[-7,5],[10,35],[20,-1],[-2,-18],[9,5],[-2,7],[10,-1],[1,-9],[17,-11],[1,9],[12,7],[8,-3],[3,7],[-5,10],[10,8],[0,11],[9,5],[-6,22],[-7,3],[-8,-7],[-7,4],[14,15],[7,1],[12,15],[3,9],[-2,17],[13,7],[4,-9],[15,9],[0,11],[-8,8],[-6,-11],[-15,-2],[0,13],[6,-2],[16,11],[-3,11],[-10,-1],[9,26],[11,-1],[3,10],[-8,3],[3,8],[-6,10],[7,12],[11,5],[0,17],[-14,0],[-12,10],[2,10],[9,10],[-9,14],[2,10],[-7,5],[45,4],[30,9]],[[8894,9079],[16,4],[11,6],[20,-4],[16,-11],[15,8],[23,-15],[-12,-11],[-7,-10],[1,-23],[9,0],[5,-13],[-1,-12],[-9,2],[-5,-7],[-10,-3],[-4,6],[2,13],[-16,4],[1,-13],[11,3],[6,-21],[9,2],[16,-11],[14,6],[4,-13],[11,-7],[8,12],[19,2],[8,-6],[4,10],[13,-2],[14,3],[11,-6],[2,-13],[19,6],[9,-1],[6,-10],[9,-1],[-3,-10],[15,-16],[14,12],[8,-2],[9,-11],[-7,-5],[11,-11],[-5,-8],[2,-11],[-14,-5],[9,-6],[-6,-9],[-10,-2],[-6,4],[2,-20],[8,2],[8,-8],[-4,-16],[-12,-11],[-16,5],[-11,-15],[-20,11],[-6,-9],[1,-12],[8,-11],[5,-19],[12,1],[10,-4],[14,1],[9,-12],[14,-11],[12,-3],[0,-8],[7,-6],[3,-11],[29,4],[16,4],[2,6],[10,2],[6,-4],[20,2],[9,-5],[14,0],[-4,-7],[3,-15],[-7,-13],[9,-18]],[[9310,8673],[-26,-13],[-76,-33],[-24,-14],[-11,-4],[-28,-23],[-12,-9],[-36,-13],[-14,-9],[-10,-14],[-9,-18],[-12,-13],[-5,-14],[-5,2],[-9,-32],[-6,-10],[-30,-14],[-23,-7],[-39,-2],[-29,-12],[-7,-5],[-17,1],[-12,-8],[-27,-5],[-24,-11],[-12,-2]],[[8839,8825],[0,0]],[[8805,8464],[0,0]],[[8972,8957],[6,11],[-13,-1],[2,-11],[5,1]],[[8826,8953],[0,0]],[[8806,8959],[21,0],[0,-5],[-21,5]],[[6305,8632],[-10,21],[-11,-2],[2,35],[-1,14],[-7,11],[-12,9],[6,9],[2,17],[4,0]],[[6278,8746],[1,14],[-23,25],[5,11],[-4,14],[12,3],[11,-2],[25,17],[0,19],[13,3],[7,13],[19,0],[1,25],[-9,0],[-20,-10],[-16,-13],[-18,-4],[1,14],[7,14],[9,4],[10,17],[-5,11],[-28,0],[-1,-7],[-14,-2],[-11,16],[1,15],[11,-2],[9,11],[-21,5],[-7,12],[-10,-5],[-5,7],[-15,-3],[-8,5],[0,12],[7,7],[-1,10],[-10,15],[-8,2],[2,12],[-2,17],[-4,8],[-5,25],[-4,0],[-4,21],[3,6],[-7,7],[3,13],[-9,2],[-13,-5],[-4,7],[-2,24],[8,18],[21,-4],[12,2],[-3,14],[2,9],[-12,16],[-2,16],[-10,5],[-2,10],[9,7],[-4,15],[9,7],[2,10],[-4,7],[1,18],[-8,11],[12,9],[4,-10],[17,10],[15,19],[18,11],[9,-1],[0,-10],[7,-1],[12,17]],[[6260,9361],[16,3]],[[6276,9364],[19,-2],[1,4]],[[6296,9366],[10,-7],[14,2],[7,8],[9,-4],[0,11],[7,12],[14,-12],[18,8],[3,23],[-8,10],[4,10],[-17,13],[-5,-9],[3,-11],[-5,-4],[-15,5],[9,18],[-3,10],[14,-3],[7,13],[6,-2],[4,8],[-17,16],[-9,-4],[-1,-15],[-15,-6],[-1,-7],[-21,5],[-7,12],[10,33],[10,14],[16,6],[9,16],[17,-1],[8,14],[-7,13],[17,1],[9,-5],[14,5],[1,9],[12,2],[11,9],[9,11],[3,11],[12,16],[17,-7],[4,-12],[8,3],[18,-4],[16,-7],[40,-2]],[[6555,9591],[21,11],[10,2],[3,8],[13,3],[15,14],[11,3],[14,-17],[6,5],[10,-7],[8,6],[9,-3],[3,-8]],[[6678,9608],[-9,-4],[0,-7],[-9,-14],[21,-14],[-10,-15],[7,-3],[-1,-25],[-12,1],[-3,-5],[15,-9],[24,-4]],[[6701,9509],[6,5],[17,-16]],[[6724,9498],[-3,-6],[13,-12],[9,-1],[6,-8],[-13,-11],[-3,-8],[-32,-6],[-7,7],[-9,-4],[-11,10],[3,9],[-16,6],[-20,3],[-11,-23],[-12,-6],[-3,-16],[21,-24],[12,4],[8,16],[8,-8],[10,3],[11,18],[9,-7],[-3,-11],[-21,-35],[13,-10],[-3,-15],[-5,-5],[14,2],[8,5],[16,-5],[7,3],[3,-16],[10,1],[5,-11],[8,-2],[4,-10],[10,4],[12,-1],[0,-5],[12,-4],[4,-9],[-1,-15],[17,-10]],[[6804,9285],[-11,-11],[-10,3],[-8,-3],[-5,8],[-16,4],[-4,-3],[-11,5],[-6,-7],[-10,5],[-19,0],[-1,-8],[7,-4],[4,-11],[-3,-9],[-17,-22],[-13,-7],[12,-8],[8,6],[8,-7],[-3,-17],[-7,-5],[9,-9],[12,-20],[-7,-12],[-1,-13],[5,-19],[-5,0],[-8,15],[2,11],[-10,1],[2,-8],[-4,-11],[9,-1],[10,-14],[-2,-5],[-19,-2],[0,-8],[6,-7],[-4,-8],[7,-25],[-4,-7],[5,-10],[-7,-9],[0,-12],[-11,-7],[6,-14],[11,-12],[2,-15],[9,-1],[14,-29],[32,-1],[12,3],[9,-32],[0,-9]],[[6779,8904],[-8,-3],[-15,-32],[3,-9],[-5,-14],[-12,2],[-6,-11],[-3,-17],[-18,2],[-15,-9],[-2,-7],[-18,-29],[-15,-16],[-8,6],[-3,17],[-17,7],[-4,14],[-16,3],[-5,-16],[4,-12],[-2,-21],[4,-13],[-14,-5],[-7,-11],[-14,-3],[-2,-10],[1,-17],[-16,-2],[-6,-9],[-4,-17],[-6,-1],[-3,-15],[-10,-21],[-10,5],[-12,0],[-9,10],[-10,-10],[4,-12]],[[6500,8628],[-11,2],[-3,-9],[-19,7],[-25,-10],[-9,-17],[-16,-10],[-2,-30],[2,-7],[-18,1],[-1,38],[2,11],[-17,-15],[8,-18],[-16,-3],[-18,30],[-10,2],[-4,12],[-13,10],[-8,1],[-10,10],[-7,-1]],[[6280,8952],[0,0]],[[6254,8977],[16,-3],[-8,19],[-15,-5],[0,-10],[7,-1]],[[6180,9347],[0,0]],[[6771,9269],[4,-8],[-7,-4],[3,12]],[[6743,9269],[0,0]],[[6801,9350],[5,2],[0,13],[8,17],[4,-7],[15,6],[27,0],[17,-10],[7,1],[20,-9],[13,3],[7,-12],[13,8],[-6,-24],[-16,-18],[6,-3],[7,-13],[14,0],[4,11],[7,-2],[3,-23],[-15,-6],[-15,9],[-23,-2],[-8,13],[-20,3],[-9,-8],[-22,3],[-7,20],[-18,6],[-2,7],[-16,15]],[[4860,7205],[-18,16],[1,3],[-19,20],[0,17],[-5,10],[10,20],[-4,8],[7,16],[-12,11],[-10,3],[-3,6],[-14,2],[-4,7],[0,17],[-16,1],[-9,10],[-9,18],[-15,8],[-4,18],[-8,10],[-3,20],[35,-3],[25,-10],[11,3],[19,-6],[20,11],[16,5],[44,-9],[11,6],[32,-2],[18,7],[4,19],[8,16],[-3,8],[8,20],[-5,23],[8,9],[5,0],[10,9],[1,7],[13,13],[2,19],[-3,11],[9,13],[0,25],[6,9],[-4,28],[-5,12],[-11,4],[-1,13],[-9,15],[-27,5],[-9,15],[2,20],[-6,5],[8,25],[15,10],[7,-2],[5,12],[20,-2],[17,6],[2,4]],[[5023,7819],[12,-13],[16,-4],[9,4],[11,-2],[17,14],[12,-16],[8,13],[38,4],[14,13],[-4,14],[2,9],[11,12],[32,15],[11,1],[9,16],[19,0],[5,14],[14,16],[17,2],[18,12],[6,9],[18,-1],[10,-13],[10,-3],[3,-13],[13,3],[-4,-13],[27,-14],[-9,-13],[1,-10],[-5,-3],[19,-9],[17,-1],[-2,-11],[7,-10],[30,-15],[7,0],[8,8],[4,15],[20,12],[1,-6],[14,14],[9,0],[6,-24],[-9,-9],[4,-7],[13,-4],[12,9]],[[5702,7723],[-14,-9],[-3,-26],[6,-28],[-2,-19],[-13,-40],[-5,-25],[16,7],[20,2],[14,-11],[5,-11],[-11,-13],[-4,-24],[3,-23],[25,-4],[4,8],[17,19],[17,1],[4,-24],[-7,-6],[16,-22],[-6,-11],[-4,-33],[-20,-27],[2,-5],[25,-26],[10,-17],[18,-20],[11,0],[22,-34],[25,-25]],[[5245,5665],[8,4],[-2,40],[2,17],[7,6]],[[5260,5732],[23,7],[9,-9],[12,2],[33,-8],[23,-17],[59,-9],[5,5],[16,1],[16,-7],[-2,6],[8,27],[14,12],[17,6],[19,1],[21,-4],[9,10],[1,13],[13,12],[7,-13],[10,0],[4,-9],[5,6],[9,-2],[1,-20],[22,-13],[-7,17],[11,10],[6,13],[14,9],[5,12],[-11,12],[-7,14],[22,5],[12,6],[6,-24],[-7,-14],[-7,-5],[-1,-13],[7,-16],[11,3],[1,10],[8,10],[21,15],[4,9],[15,16],[0,-11],[13,-18],[17,-31],[13,13],[19,12],[9,14]],[[5788,5797],[13,-9],[8,-13],[-6,-5],[10,-34],[-8,-4],[-3,-15],[-10,-22],[-16,-9],[-23,11],[-4,12],[-16,9],[-1,5],[-14,-9],[-14,-19],[-4,-12],[10,-20],[12,-7],[-15,-32],[1,-31],[-27,-27],[-24,-10],[-8,3],[-3,-19],[-12,-11],[-6,-14],[-15,-13],[-3,7],[-25,8],[-5,-4],[1,-20],[16,0],[6,-5],[16,-4],[14,24],[27,-1],[7,-8],[2,-16],[7,-16],[18,-23],[9,-24],[0,-15],[6,-15],[0,-13],[19,8],[11,-16]],[[5739,5369],[-6,-7],[-13,-34],[-9,-11],[-8,-29],[-2,-17]],[[5701,5271],[-6,-1]],[[5695,5270],[-10,7],[-5,10],[-18,-2],[-7,-11],[1,-19],[8,3],[0,-8],[-9,1],[5,-7],[-5,-13],[7,-4],[-2,-7],[-15,-13],[-10,2],[-13,-10],[-26,-14],[-14,-3],[-19,26],[-20,9],[-8,-5],[-17,8],[-14,10],[-6,-6],[-13,16],[-11,19],[-11,14],[-18,17],[-13,1],[-19,-5],[-11,5],[-10,-3],[-20,39],[-4,13],[-11,17],[-13,2],[-18,45],[-16,15],[-8,29],[-22,47],[-9,13],[12,-4],[9,-19],[-3,-6],[5,-13],[12,-4],[6,12],[9,3],[9,14],[0,8],[-12,4],[-4,-12],[-10,-3],[-11,10],[9,3],[6,27],[-8,10],[-11,-3],[-6,15],[-10,9],[-17,4],[-7,-6],[-17,11],[0,9],[-21,45],[-1,11],[12,6],[24,22],[-1,4]],[[7720,7578],[-14,16],[-7,25],[5,20],[19,6],[10,12],[3,19],[19,0],[7,5],[17,2],[8,10],[11,5],[4,-3],[-7,20],[10,16],[9,2],[7,15],[-1,16],[5,5],[8,38],[8,-8],[14,-6],[11,7],[8,-3],[30,18],[1,8],[-8,12],[16,13],[23,26],[13,5],[-3,14],[-8,12],[-11,10],[-6,11],[5,9],[27,10],[-1,14],[-11,16],[5,13],[-3,11],[1,32],[-12,-6],[-26,13],[4,17],[-5,6],[11,10],[13,2],[5,-11],[29,17],[7,0],[-2,17],[7,22],[13,18],[22,2],[-1,-7],[9,-13],[28,-16],[15,-3],[4,5],[17,-2],[6,-8],[-1,-12],[7,-3],[13,15],[19,8],[13,-6],[12,9]],[[8151,8105],[12,-5],[12,5],[6,-19],[10,3],[14,-12],[-11,-18],[-1,-8],[6,-9],[16,-10],[20,-5],[13,0],[18,-17],[3,-18],[10,-8],[25,-9]],[[8304,7975],[-17,-35],[-5,-4],[-21,-36],[-8,-27],[-16,-21],[-6,-14],[-9,-13],[-23,-22],[-7,-22],[-13,-6],[-14,-11],[-9,-13],[-15,-37],[-1,-11],[-12,-13],[-15,-3],[-16,-13],[-7,-16],[-4,-20],[-10,-17],[-3,-21],[-13,-13],[-15,-21],[-5,0],[-19,-29],[-7,-16],[-23,-41]],[[7991,7480],[-37,18],[-2,12],[-14,16],[-9,3],[-22,-1],[-6,-8],[2,-11],[-10,-15],[-13,-7],[-3,-10],[-7,-1],[-17,19],[-7,20],[-7,11],[-8,-1],[-13,-14],[-5,-19],[-19,3],[-9,4],[3,24],[-5,27],[-15,10],[-10,-22],[-11,3],[-16,30],[-11,7]],[[6177,6629],[-8,-3],[-15,12],[-44,21],[-15,3],[-16,25],[-11,14],[-10,4],[-2,7],[-8,-3],[-2,8],[-21,4],[-5,17],[-20,14],[-17,5],[-2,11],[-13,3],[-21,12],[-13,-1],[-21,14],[-2,26],[-5,16],[-29,-2],[-26,8],[0,8],[-10,11],[-10,2]],[[5991,7311],[30,3],[2,19],[11,9],[10,-1],[6,8],[-3,14],[13,14],[22,-11],[-9,-2],[1,-10],[7,-19],[10,-6],[4,24],[4,4],[10,-10],[25,-7],[20,-8],[10,1],[25,-4],[16,6],[6,6],[11,43],[4,6],[15,-8],[37,7],[5,-33],[-13,0],[-4,-12],[4,-19],[-9,-13],[-17,3],[-4,-30],[-10,-28],[9,2],[11,-15],[14,15],[30,-8],[15,0],[1,-18],[5,-8],[-4,-7],[17,-9],[12,-3],[11,-11],[16,-2],[14,18],[19,3],[20,-14],[11,6],[10,10],[39,7],[14,-5],[11,6],[24,21],[3,18],[27,20],[29,2],[16,-6],[-4,19],[10,26],[49,3],[0,8],[18,4],[21,-13],[12,-15],[21,5],[10,-10],[10,2],[20,17]],[[6771,7325],[13,-29],[15,-21],[-12,-16],[6,-10],[8,4],[8,-5],[13,12],[11,19],[7,-2],[2,-15],[13,-32]],[[6846,6743],[-3,-8],[-16,-10],[-1,-5],[-23,-12],[-13,-12],[-7,9],[-15,3],[-10,-3],[-15,-16],[2,-10],[-6,-8],[-27,39],[-29,-25],[-22,7],[-45,7],[-12,12],[-8,1],[-22,-4],[-1,-22],[-21,-20],[-21,-6],[-15,6],[-10,1],[-6,22],[-18,4],[-2,-28],[-15,-7],[-12,6],[-23,5],[-14,7],[-4,-6],[-11,6],[-19,-1],[-10,-6],[0,-12],[-13,-12],[-8,2],[-16,-6],[-41,0],[-29,8],[-38,0],[-30,11],[-14,2],[-9,-6],[3,-27]],[[5878,7277],[15,61],[12,28],[8,11],[23,-16],[21,-10],[9,-16],[-3,-12],[4,-8],[-11,-13],[4,-12]],[[5841,6162],[-3,11],[-8,-2],[4,11],[-20,11],[14,-1],[3,-6],[7,6],[-1,-11],[4,-19]],[[6177,6629],[14,-4],[-1,-13],[5,-12],[8,0],[-3,-34],[10,-9],[-3,-11],[15,-21],[3,-21],[-7,-9],[-8,-2],[-8,-20],[-9,-8],[-2,-13],[-5,5],[-1,-19],[-8,1],[4,-11],[-10,0],[-1,-12],[10,-25],[0,-30],[-5,-3],[-3,-21],[1,-12],[-4,-37],[12,-5],[15,-1],[8,-5],[-8,-11],[-6,-26],[25,-8],[8,-15],[-10,-7],[-18,-19],[3,-11],[17,-4],[9,-10],[1,-15],[20,-17],[7,-11],[0,-10],[18,-5],[-13,-12],[7,-8],[11,-4],[14,-31],[7,-9]],[[6296,6044],[-14,2],[-24,-1],[-18,-16],[-14,-22],[-23,6],[-13,-15],[1,-19],[-5,-18],[-7,-5],[4,-19],[-18,-19],[-15,-9]],[[6150,5909],[0,13],[-7,5],[-12,1],[-6,14],[3,2],[0,18],[-30,5],[-7,-15],[-22,-20],[-13,-6],[-9,5],[-4,-6],[-14,-1],[2,8],[-8,13],[0,8],[-14,-5],[-3,5]],[[6006,5953],[-4,17],[-8,4],[2,8],[-2,20],[-16,15],[-6,-14],[-8,-3],[-8,4],[-7,-6],[-18,19],[3,12],[-5,0],[-11,20],[5,15],[-20,2],[4,8],[-12,10],[-14,33],[-6,0],[7,16],[-1,25],[1,18],[-4,3],[-11,-6],[5,26],[-13,16],[-7,17],[-21,7],[-19,-14],[-2,-12],[-6,15],[-10,-1],[7,-6],[3,-16],[-13,3],[-6,-4],[-12,12],[-25,-18],[-19,-17],[-21,-6],[-15,-18],[-1,13],[-10,3],[-13,19],[8,9],[-7,2],[-2,9],[4,12],[6,3],[7,-12],[6,12],[11,5],[5,-9],[6,4],[3,14],[-3,20],[1,13],[-9,3],[-9,10],[5,24],[-5,6],[-24,12],[-7,19],[3,3],[-5,18],[4,9],[-16,15],[-8,3],[-11,17],[2,19],[-3,8],[-19,25],[0,7],[-8,9],[-11,4],[-1,10]],[[4651,9964],[3,-12],[-6,-4],[2,-15],[-7,1],[12,-18],[-1,-6],[-10,-1],[-7,-19],[4,-5],[2,-15],[-13,-4],[2,-4],[-6,-14],[6,-14],[-2,-11],[-9,-13],[-5,-24],[-12,-7],[0,-6],[-8,-16],[-26,4],[-7,-11],[6,-9],[-1,-24],[-27,-31],[12,-11],[-5,-16],[-13,-33],[5,-16],[6,-32],[8,-12],[-11,-16],[17,-50],[-1,-22],[-4,-11],[-12,-10],[4,-8],[-13,-15],[-6,-1],[-10,-18]],[[4518,9415],[-12,-1],[-8,-9],[-8,2],[-4,10],[-8,1],[-12,-8],[-2,6],[-8,-4],[-20,10],[-8,-9],[-8,0],[4,-14],[-19,8],[-10,-9],[1,-5],[-11,4],[-8,16],[-13,-8],[6,-2],[0,-21],[-10,-10],[-16,6],[-11,-15],[4,-5],[-11,-7],[-18,-1],[-10,8],[-10,-3],[-19,2],[-5,-8],[-13,1],[-2,-17],[-8,0],[-12,6],[-13,-9],[-17,-3],[-4,-11]],[[4195,9316],[-1,-7],[-12,-19],[-7,4],[-10,-10],[-13,6],[4,8],[-13,14],[-4,-11],[-1,-21],[-3,-15],[-11,5],[5,11],[-12,5],[-16,-21],[7,-13],[-15,-1],[-3,-9],[-12,-2],[1,-17],[-14,-13],[-10,0],[5,21],[-7,12],[-7,4],[-12,-5],[4,18],[5,0],[3,12],[7,7],[4,12],[5,37],[7,2],[0,10],[8,8],[17,5],[5,16],[9,10],[10,4],[-3,13],[-1,-13],[-15,3],[-5,-13],[-11,6],[-2,-8],[-15,4],[2,9],[-24,-8],[8,-10],[-12,-8],[-3,-12],[-9,11],[-5,-2],[-10,23],[-7,6],[16,7],[4,8],[-3,12],[-7,1],[-9,19],[4,13],[6,6],[-15,4],[-6,20],[-9,1],[5,-18],[-12,0],[-4,15],[-7,0],[0,-9],[-11,-2],[-5,-27],[-5,9],[3,7],[-10,10],[6,20],[7,7],[5,23],[-8,4],[-6,22],[12,3],[5,12],[-3,14],[6,-4],[12,12],[8,0],[2,-8],[11,8],[5,14],[-5,13],[-6,-15],[-10,4],[-3,18],[6,-3],[8,8],[3,15],[3,-5],[7,6],[16,1],[15,-8],[10,2],[25,27],[5,-7],[5,7],[18,-1],[-6,20],[-11,3],[-6,6],[15,12],[9,-2],[14,3],[-2,17],[16,0],[7,-3],[5,12],[7,5],[3,-10],[8,-1],[2,-8],[14,-9],[26,-6],[31,10],[10,7],[12,2],[18,-6],[10,4],[14,19],[-9,4],[15,4],[6,-4],[13,16],[17,-4],[-1,9],[9,-12],[-8,-3],[9,-7],[0,-7],[16,3],[4,22],[-7,-1],[2,10],[20,5],[4,-12],[13,0],[7,-14],[0,-8],[19,-13],[-5,35],[6,15],[13,1],[1,6],[-10,4],[-8,-6],[-10,7],[-9,-6],[-9,11],[-17,5],[2,5],[26,8],[10,-7],[13,3],[13,11],[10,23],[-7,-1],[-11,-19],[-26,-4],[1,11],[-9,-16],[-14,-4],[-8,6],[-11,-8],[-1,7],[7,8],[3,13],[-4,3],[3,11],[9,0],[3,6],[-13,15],[4,6],[7,-8],[18,1],[20,16],[0,5],[10,7],[2,11],[10,-5],[11,12],[21,13],[18,-3],[-1,7],[-9,0],[0,14],[6,14],[10,5],[15,-5],[19,10],[6,13],[9,-2],[12,18],[6,-3],[9,7],[4,-7],[-4,-20],[8,-8],[-1,-6],[-11,8],[3,-31],[-15,0],[9,-5],[17,3],[-9,19],[17,1],[2,9],[19,11],[25,11],[3,8],[14,8],[-1,8],[12,-7],[-12,-13],[-5,-13]],[[4068,9177],[-2,13],[8,-10],[-6,-3]],[[6771,7325],[-1,6],[3,42],[3,6],[-2,26],[8,25],[-5,3],[-14,19],[-9,8],[-13,20],[-7,26],[-11,14],[-9,31],[-16,20],[-14,3],[9,18],[5,19],[0,33],[-20,-2],[-4,16],[-7,11],[-2,12],[4,11]],[[6669,7692],[19,-2],[13,5],[13,13],[3,10],[-11,18],[-8,4],[3,13],[10,-4]],[[6711,7749],[2,7],[22,-8],[-3,23],[10,10],[23,-24],[15,-8],[16,11],[6,16],[16,1],[9,25],[2,13],[-3,39],[-4,13],[4,36],[10,13],[4,12],[8,-3],[-5,-12],[21,-16],[8,12],[6,-13],[5,5],[-10,12],[1,5],[16,4],[11,7],[17,-3],[5,4],[20,-9],[2,-6],[12,0],[4,14],[-8,12],[-8,4],[5,15],[-7,13],[8,16],[6,-18],[8,-4],[21,9],[10,10],[6,-9],[15,11],[-2,7],[-14,16],[1,13],[6,8],[12,-5],[8,-8],[-2,-8],[12,-8],[15,3],[5,10],[-3,22],[8,13],[10,-8],[17,-8],[11,7],[10,1],[5,16],[29,-7],[3,-7],[24,-22],[20,-9],[9,4],[-1,10],[18,-9],[12,-36],[8,-11],[-3,-7],[14,-50],[11,-4],[12,-13]],[[7272,7898],[13,-4],[15,-26],[9,-5],[11,-15],[-14,-10],[7,-15],[6,19],[5,1],[10,-9],[3,-8],[23,-24],[7,-4],[9,-14],[14,-14],[13,8],[16,-12],[16,8],[-2,-25],[-2,-7]],[[7431,7742],[-4,-7],[6,-10],[16,-11],[-6,-4],[17,-34],[3,-14],[18,0],[22,-5],[17,-8],[37,9]],[[7557,7658],[10,-24]],[[7567,7634],[-5,-5],[-23,-9],[-2,-13],[6,-9],[-2,-33],[-5,-13],[-1,-19],[-16,-22],[-11,-21],[6,-25],[-8,-13],[-15,-4],[-25,12],[-22,-22],[-8,-16],[-11,-32],[-19,-8],[2,-38],[-6,-12],[0,-16],[-5,0],[9,-25]],[[8894,9079],[-4,13],[1,17],[7,12],[-10,5],[-8,-7],[-5,5],[5,20],[-7,12],[-11,-1],[-17,7],[-3,14],[2,18]],[[8844,9194],[15,-3],[18,2],[17,-8],[2,-6],[15,-5],[1,-5],[15,-3],[7,5],[17,-50],[20,-17],[4,6],[28,5],[1,6],[12,6],[5,18],[18,8],[17,-5],[17,7],[5,6],[19,-9],[3,3],[25,-16],[23,-7],[8,2],[1,-11],[9,-4],[13,-19],[7,2],[19,-6],[9,15],[11,0],[10,-7],[29,-3],[0,11],[-6,4],[-3,14],[8,0],[3,11],[6,0],[11,9],[17,3],[7,-9],[12,5],[3,7],[10,5],[5,13],[10,-3],[4,8],[5,-4],[16,-3],[13,16],[9,-10],[10,5],[11,-5],[12,5],[3,-11],[17,-19],[15,8],[18,-6],[5,-8],[-8,-13],[6,-3],[-5,-7],[3,-11],[10,-6],[5,-10],[3,7],[11,3],[10,-13],[5,6],[20,-8],[2,-6],[-15,-23],[5,-8],[-4,-9],[-22,-1],[-6,-11],[-10,9],[-6,-1],[-5,11],[-15,-10],[-11,-26],[1,-30],[4,-16],[24,-12],[14,-26],[-5,-19],[-1,-12],[8,-27],[8,-4],[1,-12],[-7,-5],[0,-15],[-6,-17],[-9,-2],[-2,-12],[-12,-4],[-8,-10],[-13,0],[-15,-16],[-2,-12],[-10,-13],[-28,-12],[-20,-27],[-21,-9],[-15,-1],[-15,-7],[-12,-10],[-7,-14]],[[8952,9190],[2,6],[9,-6],[-5,-6],[12,-17],[-13,-1],[-12,7],[7,17]],[[6395,5633],[-2,16],[7,15],[-1,8],[-12,12],[0,7],[-14,14],[-21,-1],[-7,9],[-12,0],[-5,9],[-19,6],[-12,-1],[-17,9],[-24,17],[-4,13],[-5,-2],[-25,4],[-12,15],[-9,7],[-4,12],[-13,7],[-9,-5],[-6,65],[-19,40]],[[6296,6044],[9,-9],[13,-6],[17,0],[18,6],[14,-1],[22,49],[4,16],[3,-9],[21,7],[20,18],[25,7],[12,12],[18,11],[11,10],[-2,8],[15,14],[12,-10],[8,-2],[11,-15],[16,-6],[15,2],[4,6],[27,7],[16,28],[-1,3],[21,4],[19,-1],[21,-20],[16,-9],[14,6],[3,7],[30,-10],[4,19],[32,21],[8,10],[-6,2],[-4,26],[1,13],[11,7],[3,19],[12,15],[12,24],[0,14],[6,3],[9,22],[19,11],[9,18],[13,7],[10,-8],[13,12],[10,4],[10,11],[-1,33],[15,15],[6,1]],[[7034,6430],[19,-14],[1,-10],[9,-17],[17,-20],[13,-7]],[[6684,5641],[-7,-5],[-26,4],[-3,-3],[-16,6],[-27,-10],[-15,0],[-11,-15],[-22,-8],[-2,-4],[-29,1],[-19,17],[-12,-6],[-12,6],[-9,12],[-27,2],[-6,-10],[-20,1],[-7,-3],[-9,7],[-5,-6],[-5,6]],[[6501,8373],[9,-2],[9,10],[15,3],[10,20],[18,-1],[-2,12],[3,13],[14,4],[14,-5],[5,6],[15,-3],[7,11],[1,-9],[9,-1],[7,18],[14,10]],[[6649,8459],[44,-10],[20,-9],[20,10],[5,-3],[28,8],[1,10],[15,8],[14,-3],[4,-29],[21,-11],[20,-5],[6,15],[20,1],[3,-14],[18,-10],[10,2],[8,-15],[17,6],[-1,-14],[-12,-4],[0,-8],[8,3],[11,-6],[-8,-18],[9,-6],[16,9],[1,5],[8,-9],[4,-18],[12,-1],[6,-24],[17,-4],[5,-9],[8,3],[21,15],[14,-18],[13,9],[13,-3],[14,19],[26,-9],[3,8],[11,4],[6,9],[5,-9],[27,-20],[4,5],[-8,11],[7,18],[0,14]],[[7163,8362],[1,3],[18,2],[22,10],[5,-3],[7,-18],[16,-2],[16,-19],[25,-9],[15,-14],[5,-12],[19,-21],[24,-22],[12,-16],[8,-5]],[[7356,8236],[4,-10],[-8,-18],[2,-11],[23,-32],[11,-8],[2,-34],[-10,-13],[2,-13],[10,-20],[-1,-18],[-12,-27],[9,-12],[-24,-20],[-16,11],[-14,1],[-4,6],[-8,-9],[2,-7],[-6,-15],[4,-34],[-25,-15],[-16,-31],[-7,1],[-2,-10]],[[6711,7749],[-8,18],[3,14],[-8,37],[-7,10],[-18,-13],[-9,-18],[-10,8],[5,14],[2,27],[13,13],[4,10],[-5,10],[6,5],[-2,8],[6,10],[-5,5],[-6,17],[-19,1],[1,23],[-2,22],[-23,17],[-20,-3],[6,9],[-2,13],[-13,7],[-6,8],[4,9],[-7,9],[4,9],[-17,5],[-4,20],[-11,7],[-2,-14],[-9,8],[-1,-6],[-18,11],[14,20],[-6,6],[2,18],[-10,14],[-16,3],[12,23],[2,24],[12,7],[3,9],[-9,4],[10,30],[9,19],[-1,7],[11,8],[-20,26],[5,14],[0,11],[-9,-1],[-18,14],[-10,21],[-14,7],[1,10]],[[6572,8043],[0,0]],[[7074,9444],[-18,4],[-4,13],[-28,15],[-19,7],[-22,-1],[-9,6],[-11,-5],[-15,9],[-3,-14],[-4,5],[-14,3],[-9,12],[4,3],[-1,13],[7,0],[17,10],[5,19],[-8,12],[1,8]],[[6943,9563],[18,6],[4,16],[-5,26],[10,3],[-3,7],[2,12],[-6,5],[2,10],[15,-1],[11,12],[-1,5],[10,10],[-10,13],[1,7],[11,13]],[[7002,9707],[6,1],[19,-11],[33,-6],[24,10],[23,-14],[12,4],[9,-3],[8,6],[46,15],[8,-4],[1,6],[11,7],[21,-1],[16,11],[4,9],[10,7],[25,8],[-2,-7],[8,-11],[-5,-7],[14,-6],[9,-8],[-2,-8],[6,-14]],[[7306,9691],[-24,-5],[-5,-6],[0,-19],[-25,-13],[-4,-8],[-4,11],[-5,0],[2,-12],[-12,0],[-9,-20],[1,-17],[8,-10],[-20,-23],[-12,-4],[-2,-6],[-15,-5],[-9,-26],[-4,-1],[6,-19],[-4,-11],[-26,-6],[-3,-14],[-12,-6],[-12,2],[-11,-5],[-4,8],[-9,2],[-12,-18],[0,-16],[-6,0]],[[5327,6377],[-2,-8],[8,-12],[10,7],[8,-9],[-15,-20],[-1,-10],[8,0],[6,-15],[3,-17],[-4,-9],[-12,0],[-11,12],[-14,-11],[5,-16],[-5,-13],[-13,-3],[-3,14],[-12,-3],[-14,4],[-35,-10],[-27,-18],[-11,4],[1,-10],[-7,-7],[-6,-18],[-11,-3],[-4,-8],[-1,-15],[4,-7],[6,6],[9,-4],[23,3],[21,-8],[-3,-19],[6,-18],[6,-3],[9,-31],[7,-7],[3,-13],[12,-17],[-3,-11],[-19,-4],[-3,-23],[7,-6],[-17,-17],[18,-16],[5,-8],[-12,-39],[7,-11],[-3,-23],[7,-7],[-11,-19],[7,-12],[-17,-18],[-2,-10],[3,-16],[10,-29],[2,-10],[-5,-25],[-6,-7],[21,-22]],[[5245,5665],[-14,10],[-21,58],[-7,12],[-21,29],[-34,30],[-59,43],[-34,21],[-17,6],[-4,6],[-16,7],[-18,17],[0,-8],[12,-11],[-29,15],[-27,18],[-22,7],[-4,-3],[-32,2],[-56,-4],[-14,-4],[-31,-16],[-16,8],[-5,33],[-6,7],[5,16],[-9,21],[-1,25],[3,7],[-1,20],[-10,10],[7,8],[-5,5],[0,16],[-5,11],[2,9],[-8,6],[-5,17],[-7,0],[-6,18],[7,3],[-4,7],[6,5],[5,16],[16,27],[3,32],[13,28],[-2,7],[12,6],[8,11],[26,23],[18,35],[-1,13],[12,16],[3,20],[-6,14],[7,9],[9,-3],[11,10],[12,-7],[24,8],[-4,15],[14,9],[14,-6],[1,-9],[9,-4],[9,7],[10,-1],[0,16],[5,3],[1,31],[6,1],[7,28],[-5,6],[7,16],[10,14]],[[7674,9349],[0,11],[16,2],[8,14],[-6,10],[4,3],[-2,25],[4,0],[14,17],[-1,17],[16,12],[13,2],[11,-3]],[[7751,9459],[-2,-14],[15,-11],[9,3],[8,-13],[26,-19],[1,-17],[10,2],[6,-6],[-2,-11],[7,-2],[4,10],[6,-2],[2,12],[7,9],[30,-18],[15,8],[6,-6],[14,11],[8,13],[10,-2],[5,9],[16,-8],[17,-17],[26,-14],[9,8],[4,-18],[5,-2],[13,-20],[1,-8],[17,-2],[3,-14],[28,-6],[11,10],[10,-4],[19,13],[7,-4],[14,8],[11,1],[6,8],[13,-5],[10,-7],[14,-1],[5,-15],[11,-12],[13,9],[0,11],[16,12],[16,-15],[11,-6],[27,6],[16,-5],[6,6],[26,-4],[7,2],[24,-5]],[[8368,9317],[9,-15],[7,-5],[1,-18],[18,-10],[13,-1],[-5,-29],[-10,-15],[-6,-17],[6,-5],[-9,-11],[-10,0],[8,-17],[1,-15],[11,-13],[-4,-6],[9,-12],[-11,-12],[22,-9],[-14,-9],[1,-6],[10,-3],[-9,-13],[-4,-29],[-10,-19],[0,-9],[-7,-23],[7,-6],[-8,-7],[2,-28],[-7,-8],[-8,-32],[-6,-9],[5,-7],[-3,-8],[-15,-6],[-8,-20],[-6,6],[-13,-23],[18,-6],[-5,-24],[7,-8],[-12,-5],[0,-8],[-10,2],[-7,-21],[-14,1],[-12,-12],[-6,-22],[-31,-6],[-2,-15],[-5,5],[-7,-16],[-18,-20],[-1,-12],[14,-19],[-5,-6],[1,-14],[24,-4],[11,5],[4,-10],[-3,-13],[7,-14],[-13,-16],[-8,-16],[-26,-4],[2,-14],[5,-5],[-9,-28]],[[8224,8523],[-9,6],[-33,7],[-10,-16],[-16,-5],[-8,7],[-16,-11],[-10,-23],[-43,6],[-6,17],[-9,5],[-2,-12],[9,-18],[-27,15],[-7,27],[0,10],[-9,33],[-13,23],[-10,8],[0,20],[-5,8],[5,6],[-22,7],[-16,-18],[-9,10],[-18,12],[-2,8],[-21,7],[-6,31],[-19,12],[-16,3],[-19,16],[-12,-2],[6,10],[-6,57],[-5,10],[-12,11],[-21,7],[3,9],[-15,9],[-13,28],[-31,2],[-4,-4],[-18,2],[-48,29],[14,11],[-1,16],[13,22],[10,8],[0,-14],[5,-12],[8,1],[9,22],[-3,7],[6,32],[-5,10],[4,19],[-5,17],[1,22],[14,20],[-7,28],[3,18],[-18,13],[-1,-9],[4,-19],[-5,-19],[-14,-32],[-13,12],[-7,-5],[-8,4],[-6,-11],[2,-12],[-14,7],[13,19],[4,20],[10,13],[6,16],[0,13],[9,-1],[3,6],[-11,2],[-1,6],[-15,6],[-13,12],[4,15],[8,5],[-8,7],[2,18],[-18,-2],[7,19],[8,1],[0,13],[-9,-3],[-7,11],[5,10],[7,-1],[2,16],[-11,27],[12,0],[6,7],[3,16],[-18,4],[8,9],[1,17]],[[4928,9204],[8,14],[-5,5],[6,16],[11,12],[-8,9],[2,21],[13,8],[1,12],[-14,19],[14,17],[11,2],[3,-5],[12,23],[9,-9],[15,13],[5,10],[10,6],[1,10],[11,12],[-13,31],[13,3],[9,-6],[-6,22],[5,7]],[[5041,9456],[23,-10],[-1,-10],[8,0],[15,21],[14,3],[35,2],[2,-5],[12,1],[17,-4],[14,10],[9,-5],[6,9],[20,3],[-4,6],[3,9],[-15,2],[-4,16],[14,-6],[17,10],[-2,10],[8,1],[-1,13],[10,2],[7,10],[12,-9],[1,-7],[15,-3],[5,5],[9,-12],[16,-4],[-1,8],[6,16],[12,1],[17,-9],[6,-8],[18,6],[2,22],[5,6],[29,-14],[19,7],[5,-8],[-3,-7],[6,-15],[10,-4],[12,-12],[8,2],[0,-9],[12,1],[8,-11],[17,-1],[20,7],[-3,8],[14,22],[3,13],[18,9],[26,-15],[24,-1],[4,-6],[12,-2],[15,6],[5,-4],[6,20],[14,1],[26,-4],[3,24],[18,4],[1,-7],[13,1],[13,-5],[6,7],[22,-3],[14,10],[9,2],[9,8],[3,-8],[17,0],[4,26],[8,14],[0,7],[7,-3],[9,7],[8,-1],[11,-8],[0,9],[24,25],[10,1],[11,7],[11,-6],[5,-14],[9,-10],[-1,-6]],[[5922,9620],[-4,-5],[7,-9],[-7,-19],[8,-15],[29,-17],[1,-12],[14,-5],[-2,-16]],[[5968,9522],[-8,-4],[-5,-8],[-12,-10],[-6,-11],[2,-12],[-4,-15],[-19,-20],[-5,-20],[-14,2],[4,-14],[-6,-20],[3,-14],[-6,-4],[-12,-22],[8,-6],[1,-8],[11,1],[9,-9],[-9,-10],[-3,-11],[2,-31],[-5,-13],[1,-16],[-5,-20],[12,-5],[-1,-23],[-5,-30],[-11,-9],[9,-8],[-4,-6],[1,-20],[-10,2],[-5,-5],[-12,-2],[-3,-22],[16,5],[0,-12],[-5,-19],[-9,-5],[-12,1]],[[5851,9069],[-16,5],[-2,-19],[-12,-4],[3,11],[-14,19],[-11,-1],[-11,-16],[-24,-13],[-10,11],[-11,-9],[-4,-15],[12,-8],[-7,-8],[-10,-2],[-10,12],[-7,-5],[-2,-14],[-24,16],[-12,-2],[4,-15],[-4,-16],[4,-5],[4,-21],[-3,-19],[-6,-6],[9,-24],[-3,-6]],[[5684,8915],[-20,-6]],[[5664,8909],[-7,0],[-19,13],[-8,19],[-10,9]],[[5620,8950],[-10,1],[-3,-18],[-5,-9],[-6,6],[-5,-9],[-1,16],[-22,5],[8,14],[-13,17],[-7,4],[-10,-2],[5,-11],[-30,-4],[-5,14],[-15,-2],[-22,-9],[-3,-5],[-11,7],[-12,21],[-7,-9],[-16,0],[-2,-11],[-18,13],[-16,8],[-34,3],[-29,-2],[-18,-7],[-6,9],[-12,7],[-19,3],[-7,17],[-8,-4],[-44,2],[-7,-6],[-7,3],[-9,-10],[-13,2],[-3,9],[-19,5],[-25,-3],[-11,9],[-22,-1],[-7,-4],[-13,9],[-1,7],[-10,2],[-12,10]],[[5058,9047],[8,2],[1,9],[11,16],[3,38],[-15,4],[-3,8],[-21,4],[-10,13],[12,13],[-2,17],[6,9],[-13,16],[-5,-5],[-30,15],[-4,5],[-16,-1],[-6,-15],[-14,7],[-10,-4],[-11,6],[-11,0]],[[5712,9056],[-14,-1],[2,-21],[11,5],[7,15],[-6,2]],[[8246,8443],[-9,16],[2,7],[-9,8],[11,14],[-7,13],[-17,14],[7,8]],[[8368,9317],[7,0],[3,11],[-4,6],[-10,29],[7,7],[-7,6],[9,12],[0,12],[-5,8],[8,11],[14,4],[12,-8],[20,-8],[9,3],[14,-8],[11,-1],[22,-18],[11,-5],[13,10],[10,-11],[10,2],[30,-5],[16,-7],[10,-13],[1,-14],[14,-12],[23,7],[5,5],[11,-8],[28,3],[8,3],[10,-3],[-3,-10],[18,-11],[-1,-11],[11,-8],[3,-19],[9,-18],[-6,-8],[8,-6],[-8,-9],[-6,-14],[12,5],[6,-3],[7,-18],[-22,-17],[10,-4],[1,-21],[4,-3],[28,-5],[16,2],[2,14],[11,-3],[8,11],[14,-3],[12,3],[2,16],[18,-2],[10,9],[2,-8]],[[8694,8627],[5,-11],[-9,-1],[-5,6],[-30,3],[-5,-3],[-33,2],[-4,-13],[-13,-3],[-8,-19],[7,-15],[-21,-7],[-11,-6],[-30,21],[4,-9],[-5,-4],[17,-13],[-12,-14],[-9,-17],[-10,-2],[-6,-11],[-5,2],[-8,-15],[1,-7],[-24,-4],[-21,-7],[-9,15],[-6,-2],[-5,-19],[-25,4],[-5,-11],[-25,-2],[-36,-14],[-8,1],[-10,16],[-9,5],[-12,-23],[-11,0],[-10,20],[-8,8],[-12,-9],[-1,-27],[-21,1]],[[6804,9285],[7,-6],[0,-13],[10,4],[0,-14],[-9,-7],[7,-16],[4,9],[15,6],[8,27],[15,-3],[10,-11],[12,-4],[-5,-32],[-6,-16],[12,5],[0,-9],[10,-4],[3,-12],[19,12],[6,-7],[-4,-7],[11,2],[2,6],[8,-6],[11,0],[-4,6],[13,16],[-3,-18],[17,-2],[13,6],[13,-5]],[[6999,9192],[9,-11],[10,1],[13,-13],[10,10],[12,-6],[1,6],[10,-14],[15,-2],[2,-10],[12,-7],[10,3],[5,-7],[15,8],[16,-3],[-5,-10],[13,-10],[3,-11],[-4,-12],[8,-2],[11,10],[14,6],[18,-10],[4,-12],[11,1],[3,-8],[7,3],[11,-23],[10,0],[2,-9],[-4,-10],[9,-6],[1,6],[23,-23],[9,1],[18,-7],[15,-3],[1,-10],[11,-2],[-9,-9],[9,-14],[-18,-11],[-9,10],[-11,1],[-6,-8],[-19,10],[-7,-8],[-1,-8],[-23,-26],[-8,-17],[3,-18],[7,-1],[14,-16],[3,4]],[[7253,8895],[2,-13],[-10,-6],[4,-7]],[[7249,8869],[-9,-9],[-13,-4],[-4,-8],[-29,-9],[-21,22],[-4,-8],[-11,8],[-17,1],[-7,5],[-4,20],[8,4],[-4,12],[-17,16],[-3,12],[15,8],[0,11],[-20,5],[-29,-2],[-14,-9],[-6,14],[0,13],[-16,8],[-31,-1],[-22,-3],[-9,-14],[-12,-6],[-13,5],[-4,-19],[4,-9],[-17,-14],[-6,-20],[-6,-11],[-21,7],[-15,-1],[-6,-5],[-14,11],[-18,-4],[-5,15],[22,33],[0,12],[-12,12],[-7,-5],[-11,4],[-7,-9],[-3,-38],[-26,-12],[-12,-12],[-14,9]],[[4549,9248],[8,8],[9,23],[2,20],[-2,10],[13,18],[-5,8],[-13,9],[-10,1],[-12,11],[-13,21],[1,15],[10,17],[-5,6],[-7,-4],[-7,4]],[[4651,9964],[8,-4],[4,11],[10,-2],[6,6],[3,-19],[10,-2],[-3,-11],[1,-17],[7,0],[9,11],[-4,10],[12,2],[1,11],[14,5],[5,-9],[9,3],[12,-3],[-5,-6],[4,-6],[27,-9],[2,-4],[21,-7],[0,-7],[11,-21],[4,1],[13,-21],[21,-12],[-7,-10],[8,-4],[3,11],[26,-5],[5,-4],[23,4],[12,-4],[11,2],[14,-8]],[[4948,9846],[-6,-23],[0,-19],[-20,-14],[-3,-13],[-13,-6],[-7,4],[-13,0],[1,-14],[-3,-16],[8,-5],[9,6],[5,-7],[-2,-26],[7,-2],[6,-14],[17,-2],[-3,-21],[4,-14],[19,-19],[4,6],[4,-10],[13,-2],[3,-9],[-7,-14],[10,-20],[9,-1],[16,14],[7,1],[5,18],[16,-13],[8,-14],[-3,-12],[-17,-14],[-2,-6],[-11,0],[-9,-11],[-3,5],[-13,-4],[-8,-11],[-1,-17],[-5,7],[-6,-13],[15,-18],[-1,22],[8,4],[3,-13],[14,-14],[12,1],[20,-21],[-2,-18],[8,-8]],[[4928,9204],[-10,-31],[-6,-1],[-15,-12],[0,-9],[-8,-11],[-3,-16],[-6,-5],[-8,-28],[-12,21],[4,17],[-12,2],[-9,15],[-10,0],[-7,9],[-17,1],[-11,-6],[-8,8],[-33,-16],[-17,-11],[-16,-4],[-18,13],[-18,-13],[-7,15],[-13,9],[-9,0],[-8,6],[-5,12],[-12,3],[-6,-3],[-11,6],[-2,7],[15,5],[-11,9],[-12,-9],[-34,19],[-17,-2],[6,8],[-10,3],[15,8],[0,7],[-10,4],[-8,14]],[[6225,8079],[7,3],[4,14],[11,16],[6,3],[0,10],[12,18],[22,-8],[8,5],[10,-3],[0,9],[8,15],[-1,7],[8,18],[2,16],[-4,3],[13,22],[6,16],[13,12],[31,8],[13,8],[11,17],[7,16],[11,12],[16,7],[12,14],[8,17],[15,13],[27,6]],[[6669,7692],[-2,16],[-16,-15],[-18,-8],[-9,2],[-18,-2],[-11,16],[-22,-3],[0,-15],[-7,-9],[-14,7],[-10,-5],[-1,6],[-10,-2],[-15,2],[-11,-19],[-26,-3],[-2,-7],[-20,-9],[4,-12],[-21,-5],[-9,-8],[-6,5],[-15,-9],[-7,-13],[-8,-5],[-13,-15],[-12,8],[-18,6],[0,12],[16,8],[4,-6],[9,13],[10,-6],[0,6],[13,9],[10,-4],[-5,11],[9,6],[12,19],[9,-2],[7,12],[5,-3],[6,12],[7,2],[6,17],[1,17],[-22,10],[-5,11],[-7,-6],[-16,9],[-12,-10],[-11,5],[-13,22],[-15,-8],[-8,4],[-6,12],[-22,2],[-7,8],[-9,-9],[-1,14],[-17,-2],[-15,17],[1,8],[-13,1],[-12,10],[-11,-16],[-21,5],[3,9],[-10,6],[-6,12],[-10,-3],[0,-12],[-19,3],[-11,-23],[-11,-11],[-7,10],[-5,-5],[-9,9],[-6,18],[0,24],[-10,4],[-2,-16],[-23,-19],[0,-9],[-6,-7],[-11,-1],[-20,-10],[-8,-10],[-17,5],[-2,6]],[[6154,8053],[2,11],[14,9],[4,-2]],[[5788,5797],[9,15],[5,-5],[13,7],[12,1],[10,10],[24,12],[12,16],[10,4],[9,9],[3,14],[-18,12],[2,12],[15,-1],[3,-12],[10,2],[8,9],[2,16],[13,1],[-2,-9],[19,-19],[11,13],[23,13],[-8,8],[-2,10],[6,8],[-8,3],[7,10],[13,-5],[17,2]],[[6395,5633],[-6,5],[-19,5],[-14,-3],[-6,-5],[-18,-1],[-17,-9],[-16,8],[-32,6],[-8,-2],[-12,-12],[-28,-6],[-33,-3],[-15,2],[-26,-1],[-25,6],[-17,-14],[-9,-22],[-12,-15],[-14,-28],[-13,-10],[-19,-3],[-10,-9],[-14,-32],[-16,-2],[-7,-8],[-22,-4],[-51,14],[-19,0],[-16,-5],[-33,-25],[-11,1],[-12,-7],[-10,0],[-11,-9],[-12,-4],[-9,-8],[-10,0],[-19,-25],[-12,-40],[-3,1]],[[7736,6319],[4,-36],[-10,19],[-9,-6],[-2,-17],[-12,-17],[-10,-8],[-4,-15],[21,-34],[11,-7],[27,-10],[2,9],[-8,5],[3,10],[-5,23],[2,20],[-8,23],[6,-1],[0,-14],[7,-5],[-6,-23],[6,-25],[13,-23],[-15,-20],[-22,-4],[-18,-12],[-13,4],[-30,-17],[-23,3],[8,5],[-10,6],[0,13],[-6,0],[-10,-14],[-28,5],[-9,-9],[-6,0],[-8,-10],[9,-11],[-26,4],[-2,10],[-14,10],[-17,2],[-8,-12],[-30,4],[-18,-13],[-12,-11],[-4,-11],[-18,-6],[-8,-7],[-10,-21],[2,-15],[-6,-4],[-13,6],[-20,-17],[-12,-1],[-17,-17]],[[6999,9192],[-1,14],[13,4],[-3,16],[4,3],[-3,31],[-12,4],[-13,-23],[-4,12],[-13,0],[-4,18],[8,-3],[14,22],[16,10],[12,-3],[7,-9],[-4,-6],[16,0],[6,8],[19,5],[-2,14],[-7,-4],[-2,23],[-4,10],[7,7],[15,4],[3,7],[-6,20],[5,6],[1,11],[14,13],[-3,32],[-4,6]],[[7306,9691],[15,11],[12,1],[19,-5],[-2,-13],[6,-17],[18,-5],[9,18],[-4,6],[13,4],[13,-1],[20,-13],[15,-3],[6,4],[13,-12],[3,-15],[-4,-22],[-7,-10],[0,-14],[-5,-17],[-25,-23],[-1,-6],[14,-22],[39,-11],[5,16],[-2,23],[12,13],[22,4],[-8,-9],[-9,-22],[27,-16],[8,8],[22,-14],[3,3],[13,-9],[1,-10],[12,10],[13,-13],[35,-7],[3,-8],[25,-15],[13,6],[23,-8],[23,0],[11,8],[16,2],[9,-13],[1,-16]],[[7674,9349],[-10,1],[-11,-20],[-9,-5],[-26,-2],[-5,-5],[3,-10],[-3,-17],[-14,-4],[-10,3],[-27,0],[-2,-23],[-10,-1],[10,-5],[-20,-13],[0,-18],[-10,-5],[-18,9],[-12,-28],[8,-10],[1,-8],[-8,-15],[-11,-5],[-12,-16],[0,-10],[-8,-18],[10,-4],[4,-10],[-10,-10],[-21,-30],[4,-8],[-5,-20],[-7,-15],[1,-12],[10,-13],[-3,-34],[14,-12],[7,-21],[18,-1],[3,-18],[-16,-15],[-12,-22],[-7,-24],[-9,-6],[-8,-13],[-14,1],[-9,6],[-13,0],[-10,-9],[-15,2],[-17,8],[-8,15],[-18,9],[-8,1],[-6,-9],[-13,3],[-12,7],[-11,17],[-11,-4],[-8,5],[-11,-1],[-6,8]],[[7550,9153],[12,10],[-1,-17],[-13,-8],[2,15]],[[7573,9167],[12,23],[14,-12],[8,-13],[-4,-7],[-30,9]],[[4430,8985],[7,2],[9,15],[-6,2],[0,12],[-7,5],[11,5],[0,16],[-17,-1],[-13,-7],[-14,12],[-3,17],[4,22],[-10,2],[-12,15],[-5,16],[4,7],[-11,33],[-1,20],[-5,9],[5,7],[17,-1],[14,19],[15,11],[9,-3],[20,24],[12,-15],[4,4],[20,1],[14,-5],[5,4],[14,-8],[11,19],[14,-3],[14,7]],[[5058,9047],[-8,-9],[7,-15],[-19,7],[-11,0],[-14,-8],[-6,-15],[-17,-8],[-5,-25],[-18,-9],[-1,-14],[-5,-9],[-13,-6],[1,-7],[10,-7],[15,2],[6,-18],[-14,-25],[3,-9]],[[4969,8872],[-9,-13],[-32,1],[-4,13],[-24,11],[-8,-9],[-9,2],[-3,-6],[1,-23],[4,-8],[-10,-25],[-16,-8],[-11,0],[-26,-15],[-18,-1],[-3,8],[-12,-7],[-3,-10],[-14,-12],[1,15],[-10,9],[-2,12],[-14,-2],[-3,6],[-10,-6],[4,-7],[-7,-5],[-24,-8],[-18,1],[6,22],[7,9],[-30,0],[-23,16],[-13,-9],[-13,4],[-7,-7],[-29,-4],[1,-9],[-11,-5],[-3,-8],[-8,9],[3,18],[-1,23],[-9,0],[-6,-28],[-12,-6],[-10,3],[-8,-5],[-11,-24],[-12,0],[-8,-8],[-16,-5],[-16,0],[-16,6],[2,27],[-4,11],[-13,-4],[-8,25],[13,21],[6,5],[5,17],[10,4],[5,9],[20,8],[0,19],[-5,15],[-10,7],[-14,-2],[-14,-9],[-7,55]],[[4948,9846],[1,7],[25,0],[11,10],[16,0],[17,-6],[2,3],[19,-1],[8,-7],[11,1],[8,8],[4,-5],[11,2],[4,-5],[7,5],[11,-4],[11,6],[14,1],[17,-10],[4,2],[25,-4],[23,1],[1,12],[18,-11],[15,4],[11,-5],[17,6],[12,1],[28,17],[17,-10],[7,3],[-1,-8],[9,2],[26,-9],[20,7],[20,12],[5,-3],[23,-1],[8,6],[-3,5],[15,8],[0,9],[12,-1],[13,11],[0,10],[7,0],[7,-11],[19,-5],[-3,-10],[16,-20],[9,-5],[15,-4],[3,-13],[21,-3],[13,10],[8,-6],[36,2],[10,-4],[12,4],[25,2],[12,-12],[38,0],[15,-10],[-1,-6],[19,-14],[5,-8],[38,6],[6,-4],[13,-1],[7,-6],[26,-5],[17,3],[17,-2],[23,-7],[6,-4],[13,2],[8,-6],[26,-4],[10,-7],[28,-5],[12,-5],[33,-2],[5,-4],[10,5],[14,-4]],[[6068,9752],[1,-7],[-10,-9],[-1,-15],[6,-3],[0,-36],[-7,-7],[-5,10],[-26,7],[-13,-14],[2,-4],[-32,-1],[-11,-6],[4,-16],[-7,-13],[1,-13],[-9,-3],[-11,5],[-20,-8],[-8,1]],[[5968,9522],[10,-2],[14,5],[20,-6],[15,11],[21,-10],[17,18],[20,-6],[6,14],[13,-9],[15,-7],[11,-25],[12,-14],[38,-4],[10,-7],[1,-23],[6,-33],[11,-12],[22,17],[10,-9],[-8,-17],[-6,5],[-12,-13],[15,-17],[12,3],[12,-2],[7,-18]],[[6278,8746],[-26,4],[-10,20],[-13,-5],[-19,3],[-9,-2],[-10,7],[-10,-4],[-12,-19],[-9,1],[-5,-8],[-31,15],[-7,-3],[-18,-15],[-26,8],[4,6],[3,24],[7,13],[-17,-5],[-5,-6],[-13,5],[-7,-11],[-11,15],[-6,1],[-13,15],[-2,15],[-14,8],[-14,-8],[-12,-12],[0,-8],[-14,-18],[-14,-5],[-11,28],[-8,11],[-2,11],[-11,12],[-3,8],[-9,1],[-10,-11],[-7,0],[-10,12],[-16,-13],[-8,15],[4,15],[8,7],[5,21],[13,7],[-6,20],[10,14],[10,3],[-6,8],[-5,17],[1,20],[-17,0],[-10,-4],[-17,6],[-2,12],[8,10],[-5,19],[6,5],[-4,16],[8,22]],[[6276,9364],[1,14],[13,11],[-3,8],[8,7],[3,-28],[-2,-10]],[[6246,9395],[3,7],[8,-6],[-6,-15],[-5,14]],[[6224,9397],[0,0]],[[4100,9110],[-2,15],[8,6],[-6,-21]],[[4111,9021],[5,19],[2,-16],[-7,-3]],[[4430,8985],[-12,-13],[-9,4],[-6,-11],[-7,1],[-13,-12],[-9,-2],[-4,-11],[-17,3],[-5,-7],[-10,2],[-12,-4],[-5,6],[-36,-3],[0,-9],[-10,-6],[-21,2],[-16,-4],[-13,-13],[-1,-16],[-7,-7],[-17,-8],[-13,-9],[-5,-19],[-13,-11],[-15,-6],[-17,-20],[-7,-3],[-4,8],[3,10],[-5,11],[-1,38],[3,16],[-3,7],[1,22],[-5,10],[2,10],[-4,18],[9,-1],[8,7],[13,-6],[5,3],[0,16],[-12,4],[14,8],[1,16],[16,10],[7,16],[11,-2],[6,10],[6,-1],[4,11],[12,3],[4,9],[9,7],[8,-3],[7,8],[-4,7],[5,12],[0,11],[-7,3],[-8,-9],[4,-6],[-12,-10],[5,-8],[-17,-11],[-10,-1],[-3,7],[-21,-19],[-8,2],[-2,-9],[-12,7],[-4,-5],[-17,11],[2,22],[16,-18],[2,20],[-7,21],[15,-2],[4,-7],[17,11],[6,18],[15,15],[3,-2],[19,19],[-11,-3],[-4,11],[-10,-10],[-13,-5],[-13,-15],[-20,6],[-10,-10],[-12,17],[-7,3],[4,11],[-5,13],[-26,6],[4,9],[9,-2],[10,4],[4,11],[8,-1],[3,-16],[-7,-7],[2,-8],[16,6],[5,-4],[-5,19],[6,12],[2,17],[-7,-7],[1,14],[-4,7],[3,15],[9,0],[18,19],[-4,5],[22,32],[1,14]],[[4130,9215],[-4,5],[5,14],[-8,7],[5,4],[8,-10],[-6,-20]],[[5194,8453],[6,-5],[23,-7],[19,7],[11,-9],[13,-1],[8,-8],[14,-1],[19,-17],[40,-24],[11,14],[16,-1],[6,6],[6,-7],[17,-5],[-8,-16],[2,-12],[9,-2],[8,13],[5,-1],[4,-16],[6,-4],[7,7],[1,9],[8,9],[-3,24],[11,12],[27,-11],[12,3],[8,-6],[12,0],[6,6],[22,6],[10,-2],[10,8],[10,-10],[2,-9],[18,-7],[7,8],[7,-1],[27,-23],[4,2],[1,-21],[7,7],[-3,13],[15,4],[15,1],[5,-14],[-2,-10],[8,-8],[12,4],[12,-15],[14,6],[4,34]],[[5723,8383],[0,9],[16,2],[11,-6],[5,-19],[17,5],[24,-22]],[[5023,7819],[0,16],[20,18],[13,6],[-2,13],[6,5],[-18,20],[-8,11],[-5,23],[17,33],[7,4],[-4,18],[2,6],[-20,10],[3,17],[8,11],[12,31],[-9,29],[2,5],[-9,16],[2,27],[4,7],[-3,30],[10,2],[-4,21],[-13,5],[-4,7],[0,13],[-5,17],[-7,6],[-15,24],[-6,2],[-4,17],[5,5],[23,-7],[15,1],[11,5],[25,42],[-8,12],[2,7],[26,24],[7,12],[0,9],[20,25],[8,-3],[19,6],[1,-7],[15,3],[2,7],[13,11],[8,-6],[9,7],[-5,5],[5,6]],[[6068,9752],[10,2],[8,-4],[13,5],[32,-3],[15,7],[4,-8],[22,-2],[21,7],[7,-2],[47,14],[13,12],[2,-5],[24,7],[11,-1],[18,10],[6,8],[31,7],[5,-3],[23,12],[12,-2],[6,-15],[-17,-7],[-3,-12],[6,-7],[-6,-11],[16,10],[-5,4],[10,11],[11,0],[-14,7],[19,0],[12,12],[11,0],[16,12],[15,1],[7,8],[8,-4],[13,2],[4,-10],[12,-1],[0,-9],[18,-7],[18,-2],[3,-11],[-16,-4],[-2,-21],[7,19],[12,-14],[23,3],[2,-4],[18,3],[22,-8],[9,0],[16,-6],[4,-11],[7,-2],[15,-13],[4,1]],[[6673,9727],[1,-21],[-3,-11],[-16,-2],[-7,-9],[-25,8],[-12,-4],[-1,7],[-13,-5],[-9,1],[2,-10],[-19,-5],[-8,-15],[-22,-6],[7,-19],[0,-16],[7,-29]],[[6618,9672],[12,-3],[-1,-8],[-8,-8],[2,-17],[-9,-5],[-5,5],[1,23],[-4,9],[12,4]],[[5975,8363],[9,16],[10,7],[16,-11],[7,1],[-4,13],[-6,5],[0,14],[12,8],[11,18],[11,6],[-1,6],[-11,12],[2,11],[17,-11],[11,10],[13,-5],[2,-5],[13,-7],[0,16],[-10,6],[-4,10],[3,13],[5,2],[-14,17],[0,9],[13,0],[34,20],[20,-3],[1,8],[14,-3],[14,8],[17,-4],[6,7],[7,-4],[16,9],[17,7],[10,-3],[25,11],[10,1],[13,13],[12,-1],[3,25],[6,17]],[[6500,8628],[3,-18],[25,-17],[9,10],[17,-15],[-2,-19],[18,-10],[9,1],[6,-6],[9,2],[-7,-20],[0,-20],[8,-12],[25,-15],[1,-7],[15,-14],[13,-9]],[[7249,8869],[0,-35],[8,-13],[3,-16],[4,1],[2,-23],[-11,-14],[-4,-10],[12,-6],[10,-18],[-3,-9],[15,-7],[-5,-16],[-7,-2],[-4,-21],[-21,0],[-6,-14],[-11,-4],[-11,-21],[-16,4],[-15,-2],[-1,-15],[12,-20],[-5,-13],[-1,-23],[12,-15],[2,-20],[5,-14],[-7,1],[-21,-10],[-4,-5],[-14,2],[3,24],[-5,4],[-25,8],[-6,-13],[-2,-28],[-13,-15],[-6,0],[3,-12],[-6,-11],[-2,-19],[5,-3],[6,-40],[2,-21],[29,-9],[13,-14]],[[8151,8105],[2,14],[6,-3],[10,11],[8,0],[2,12],[10,8],[10,13],[-13,21],[2,11],[-7,7],[10,27],[6,5],[4,18],[-1,14],[-10,17],[9,2],[-12,9],[-15,17],[1,7]],[[8173,8315],[-1,7],[-8,1],[4,20],[-4,5],[6,7],[16,-4],[1,13],[9,-1],[14,9],[8,38],[8,4],[11,-3],[9,32]],[[8807,8391],[-19,-4],[-27,-3],[-38,-13],[-28,-19],[-9,1],[-14,-5],[-22,1],[-16,-8],[-15,-14],[-1,9],[-10,-7],[-12,-24],[-19,12],[-21,-7],[-16,0],[-19,-13],[-9,-2],[-13,-13],[-10,-16],[-14,-10],[-46,-62],[-23,-23],[-2,-10],[-13,-7],[-5,-7],[13,-19],[15,-5],[9,6],[-22,13],[15,0],[24,-32],[9,-6],[6,4],[8,-4],[-3,-22],[-8,-10],[-40,-24],[-23,-34],[-13,-13],[-24,-8],[-10,6],[-4,10],[11,0],[0,5],[14,-8],[5,12],[21,-1],[17,29],[-8,2],[-17,-3],[-11,-6],[-28,-2],[-28,-34],[-10,-28]],[[7356,8236],[12,-5],[14,2],[21,11],[2,4],[15,-9],[11,17],[-5,19],[-8,5],[29,12],[3,20],[12,4],[8,9],[3,-19],[9,-4],[28,3],[8,14],[-8,14],[7,14],[20,10],[16,-10],[23,7],[7,20],[9,-2],[21,-18],[17,0],[9,6],[-9,-18],[1,-12],[24,-13],[14,11],[-1,8],[14,15],[10,-14],[14,-7],[18,7],[6,28],[10,9],[11,-14],[6,-12],[9,-8],[10,11],[3,10],[12,17],[13,11],[-27,28],[12,1],[8,6],[-2,40],[11,6],[25,-34],[7,-24],[10,6],[2,8],[-10,23],[-22,17],[-2,20],[10,4],[4,-5],[21,5],[10,-5],[5,-17],[20,-3],[-2,-12],[10,-14],[17,-7],[11,-13],[15,8],[18,-23],[10,-2],[11,-14],[18,-1],[22,-16],[13,-8],[11,1],[30,-19],[4,-18],[17,-27],[7,5],[2,12],[10,3],[18,-2],[12,-8],[9,4],[24,1]],[[7720,7578],[-13,-6],[-18,-15],[-9,3],[-10,10],[5,15],[-7,16],[4,14],[-6,15],[-6,-5],[-15,11],[-16,4],[-10,-4],[-14,4],[-22,-4],[-9,-7],[-7,5]],[[7557,7658],[13,3],[23,13],[5,15],[-17,19],[-10,4],[-11,11],[-23,-3],[-12,2],[-6,6],[-1,12],[-14,18],[-6,17],[-6,3],[-5,-12],[1,-24],[-15,-10],[-5,5],[-12,-2],[-25,7]],[[7991,7480],[-10,-43],[-12,-10],[-10,-15],[-7,-25],[-14,-22],[-7,-22],[2,-25],[7,0],[-4,-11],[-5,9],[3,-21],[-6,3],[-1,-12],[5,-22],[14,-44],[31,-72],[-9,-12],[2,-19],[11,-36],[14,-30],[20,-37],[12,-17],[31,-34]],[[5723,8383],[-16,-2],[-7,10],[20,22],[-2,20],[2,19],[-4,16],[-8,5],[-4,19],[0,16],[11,19],[-14,7],[3,15],[-1,16],[15,15],[17,2],[15,16],[-8,11],[-12,2],[-9,15],[12,10],[-2,7],[-26,9],[5,13],[-4,27],[-6,11],[-8,1],[-1,18],[-6,-1],[-7,20],[22,18],[11,1],[16,14],[-3,9],[-19,2],[10,17],[-1,22],[7,16],[-18,13],[13,8],[11,15],[-9,8],[-11,18],[-10,2],[-13,11]],[[5664,8909],[-11,-11],[7,-7],[-3,-22],[-21,11],[-1,7],[7,6],[-9,17],[2,4],[-9,11],[3,6],[-9,19]],[[6701,9509],[0,5],[11,9],[7,14],[14,-5],[-7,-9],[21,-7],[0,-12],[9,5],[4,-4],[-21,-7],[-15,0]],[[6673,9727],[18,-1],[8,7],[21,-12],[6,2],[6,-13],[4,7],[-4,13],[-8,9],[14,7],[14,13],[10,4],[3,15],[29,1],[6,-3],[26,-1],[25,16],[7,-18],[18,-13],[15,2],[7,4],[12,-15],[18,-3],[7,3],[8,-11],[16,2],[10,-8],[12,-18],[11,0],[10,-9]],[[6943,9563],[-21,-4],[-18,3],[-12,-8],[12,-18],[0,-15],[-15,7],[-12,-6],[-4,6],[-12,-5],[-4,6],[-14,-4],[-5,5],[-18,1],[-19,10],[-11,-4],[-38,33],[4,3],[13,24],[-8,10],[4,7],[-12,10],[-4,10],[-11,-4],[-4,4],[-5,-26],[-17,-3],[-4,-6],[-9,3],[-8,-5],[-13,11]],[[5194,8453],[13,3],[15,30],[10,1],[8,7],[-8,6],[1,8],[11,6],[6,-9],[17,7],[-8,10],[17,18],[-5,9],[8,10],[2,8],[15,14],[-4,7],[10,5],[11,24],[10,9],[-9,15],[-12,5],[-8,16],[-21,18],[-24,9],[-8,-1],[-14,4],[-21,0],[-2,-9],[-14,-5],[-11,2],[-16,15],[3,11],[-6,22],[-6,3],[6,9],[4,22],[13,50],[-24,5],[11,30],[-1,8],[-17,15],[-5,-12],[-45,-10],[-23,7],[-8,25],[-19,5],[1,-14],[-5,-15],[-12,-2],[-10,4],[-6,-5],[-27,2],[-6,15],[-12,2]],[[5682,5122],[7,3],[14,-15],[9,-3],[12,11],[3,-8],[-18,-4],[-10,-10],[-13,6],[-4,20]],[[6762,4755],[9,-16],[2,-12],[-10,-6],[-9,15],[8,19]],[[5701,5271],[-1,-23],[-3,-4],[-6,21],[4,5]],[[1237,182],[-6,-29],[3,-17],[-12,-6],[-4,-23],[-8,-6],[-21,-5],[-34,-21],[-2,-12],[-14,-3],[-9,9],[-4,-3],[-14,8],[-6,-5],[-7,14],[-16,10],[-27,29],[-14,36],[-7,11],[2,24],[-2,16],[7,18],[-2,5],[14,4],[11,17],[12,5],[14,22],[-3,8],[8,30],[-6,9],[12,2],[8,-7],[12,9],[11,-15],[15,-3],[16,3],[6,4],[23,-11],[4,-7],[10,3],[7,9],[-5,11],[9,11],[8,-4],[-4,-28],[-7,11],[0,-13],[8,-17],[-4,-22],[2,-9],[12,-12],[9,-23],[-7,-15],[2,-13],[8,-6],[-8,-3]],[[1690,254],[-22,6],[-30,12],[-12,-3],[5,7],[-3,10],[31,1],[21,8],[30,19],[31,31],[10,13],[6,27],[-2,17],[5,26],[12,11],[6,16],[0,12],[5,23],[11,17],[11,12],[12,30],[3,16],[15,26],[-2,12],[13,40],[-4,11],[0,13],[19,12],[8,0],[14,10],[5,-4],[11,8],[10,-7],[0,-6],[10,-5],[6,-21],[-1,-12],[5,-51],[-3,-6],[1,-19],[-5,-6],[-2,-24],[-9,-6],[-2,-8],[5,-13],[-3,-13],[5,-9],[0,-19],[-5,-5],[-7,-30],[-7,-8],[-4,-17],[3,-5],[-13,-29],[-10,-9],[-18,0],[-9,-11],[-28,-5],[-36,-12],[-2,-4],[-19,-2],[-10,-6],[-12,-28],[-23,-27],[-11,-17],[-15,1]],[[1929,681],[-6,9],[10,8],[-4,-17]],[[1983,792],[-15,-6],[-8,-21],[-15,-22],[-3,10],[-16,5],[-21,-2],[-2,16],[23,28],[-2,37],[9,27],[27,28],[19,0],[21,21],[2,7],[12,-4],[12,11],[9,-1],[10,-10],[10,4],[7,11],[1,18],[11,29],[12,13],[22,-23],[-4,-29],[-8,-5],[-7,-19],[7,-15],[-10,-36],[3,-6],[-10,-20],[-4,1],[-25,-22],[-22,-6],[-7,-11],[-13,-7],[-25,-1]],[[2078,997],[-15,-18],[-10,0],[-1,8],[9,6],[1,15],[7,15],[11,-7],[5,-8],[-7,-11]],[[2062,1098],[8,3],[7,-8],[-8,-12],[-10,1],[3,16]],[[89,34],[-5,-13],[1,-14],[-7,-7],[-11,7],[-8,17],[-10,10],[-33,8],[-9,-1],[-7,8],[4,9],[0,18],[9,7],[12,-9],[18,-2],[11,5],[19,18],[5,10],[-3,9],[17,12],[16,4],[11,-10],[5,-12],[-19,-41],[-3,-11],[-11,-5],[-2,-17]],[[108,591],[-9,29],[-11,18],[-8,37],[-9,15],[-2,15],[5,12],[7,5],[5,13],[21,20],[11,-9],[17,-6],[22,6],[13,-3],[9,-21],[0,-11],[15,-27],[-3,-14],[-6,-5],[-11,-22],[9,-35],[-3,-4],[-2,-27],[-12,-16],[-4,-16],[-9,-15],[-7,-22],[-11,1],[-8,19],[-2,31],[-9,20],[-8,12]],[[370,274],[-9,11],[4,21],[-3,10],[13,34],[19,9],[7,0],[7,-11],[19,0],[11,-14],[26,-16],[6,-14],[2,-21],[-24,-25],[-6,-11],[-14,-8],[-13,2],[-7,-4],[-12,3],[-1,6],[-21,16],[-4,12]],[[677,229],[-12,0],[-6,-6],[-13,8],[-1,22],[-12,5],[-1,21],[-13,13],[-11,19],[-5,19],[-13,19],[-5,23],[3,10],[-10,20],[-9,10],[-10,22],[-7,2],[1,11],[21,7],[18,14],[9,-11],[24,-1],[33,10],[3,6],[10,-3],[22,-1],[21,15],[15,0],[8,4],[3,9],[9,1],[1,8],[20,22],[3,18],[20,18],[5,-1],[15,7],[1,12],[14,-5],[11,6],[22,-8],[14,4],[16,11],[10,-5],[6,-18],[-10,-19],[-5,1],[-29,-21],[-7,-2],[-8,-22],[-6,-1],[-23,-30],[-4,1],[-12,-12],[-6,-17],[4,-22],[-1,-8],[-10,-14],[-1,-12],[-17,-39],[2,-2],[-6,-26],[4,-3],[-17,-20],[-13,-23],[-22,-24],[-2,-11],[-6,4],[-16,-2],[-19,-13]]]}
+;
+
+/* ================= DATOS ================= */
+const CATS = {
+  crma:     {n:"Proyecto Estratégico UE (CRMA)", hex:"#96361F"},
+  singular: {n:"Producción singular en la UE",   hex:"#31614E"},
+  disputa:  {n:"Yacimiento en disputa",          hex:"#9C7A14"}
+};
+const VERIF = {confirmado:"Confirmado", parcial:"Parcialmente verificado", no_verificado:"No verificado"};
+const CARACTER = {
+  activo:["Producción activa","c-activo"],
+  historico:["Distrito histórico","c-historico"],
+  desarrollo:["En desarrollo","c-desarrollo"],
+  disputa:["En disputa","c-disputa"],
+  mixto:["Activo y en desarrollo","c-mixto"]
+};
+const F_CE   = {t:"Comisión Europea — 1ª lista de Proyectos Estratégicos CRMA", f:"25·03·2025", u:"https://spain.representation.ec.europa.eu/noticias-eventos/noticias-0/la-comision-selecciona-47-proyectos-estrategicos-para-asegurar-y-diversificar-el-acceso-las-materias-2025-03-25_bg"};
+const F_EE1  = {t:"elEconomista — «La UE elige 7 proyectos en España»", f:"25·03·2025", u:"https://www.eleconomista.es/energia/noticias/13284758/03/25/la-ue-selecciona-7-proyectos-de-materias-primas-estrategicas-en-espana-y-47-en-europa.html"};
+const F_EE2  = {t:"elEconomista — «Quién está detrás de los 7 proyectos»", f:"31·03·2025", u:"https://www.eleconomista.es/energia/noticias/13292321/03/25/quien-esta-detras-de-los-7-proyectos-de-mineria-estrategicos-seleccionados-por-la-union-europea.html"};
+const F_DOADE= {t:"Mina Doade — página del promotor", f:"05·2025", u:"https://minadoade.gal/es/proyecto-estrategico-ue/"};
+const HUECO  = {hueco:true, t:"Fuente primaria pendiente de asignar — hueco explícito"};
+
+const DATOS = [
+ {id:"doade", nombre:"Mina Doade", cat:"crma", verif:"confirmado", materias:["Litio"], tipo:"Extracción",
+  municipio:"Beariz / Doade", provincia:"Ourense", lat:42.4665, lon:-8.2846,
+  promotor:{v:"Recursos Minerales de Galicia (Grupo Samca)", verif:"confirmado"},
+  estado:{v:"En tramitación · objetivo 2027–2028 declarado por el promotor", fecha:"03·2025", verif:"no_verificado"},
+  claves:[{k:"Producción prevista", v:"≈ 500.000 t/año de mineral procesado — cifra del promotor", verif:"no_verificado"}],
+  fuentes:[F_CE, F_EE2, F_DOADE],
+  nota:"La inclusión en la lista CRMA es un hecho oficial. Calendario y cifras proceden del promotor: se registran, no cuentan como evidencia."},
+ {id:"lasnavas", nombre:"Las Navas", cat:"crma", verif:"confirmado", materias:["Litio"], tipo:"Extracción y procesamiento",
+  municipio:"Cañaveral", provincia:"Cáceres", lat:39.7896, lon:-6.3927,
+  promotor:{v:"Lithium Iberia", verif:"confirmado"},
+  estado:{v:"En desarrollo (fase administrativa)", fecha:"03·2025", verif:"parcial"},
+  claves:[], fuentes:[F_CE, F_EE1], nota:""},
+ {id:"laparrilla", nombre:"La Parrilla", cat:"crma", verif:"confirmado", materias:["Wolframio","Estaño"], tipo:"Extracción y procesamiento",
+  municipio:"Almoharín", provincia:"Cáceres", lat:39.1836, lon:-6.0491,
+  promotor:{v:"Iberian Resources Spain (P6 Metals)", verif:"confirmado"},
+  estado:{v:"Reactivación de mina existente", fecha:"03·2025", verif:"parcial"},
+  claves:[{k:"Peso en la UE", v:"Cubriría ≈ 25 % de la demanda europea de wolframio — cifra de prensa sin contraste", verif:"no_verificado"}],
+  fuentes:[F_CE, F_EE2], nota:""},
+ {id:"elmoto", nombre:"El Moto", cat:"crma", verif:"confirmado", materias:["Wolframio"], tipo:"Extracción",
+  municipio:"Abenójar", provincia:"Ciudad Real", lat:38.8790, lon:-4.3529,
+  promotor:{v:"—", verif:"no_verificado"},
+  estado:{v:"Seleccionado en la 1ª lista CRMA", fecha:"03·2025", verif:"confirmado"},
+  claves:[], fuentes:[F_CE, F_EE1],
+  nota:"El promotor no queda unívocamente identificado en las fuentes consultadas: hueco explícito hasta contrastar el catastro minero."},
+ {id:"aguablanca", nombre:"Aguablanca", cat:"crma", verif:"confirmado", materias:["Níquel","Cobre","Cobalto","PGM"], tipo:"Extracción",
+  municipio:"Monesterio", provincia:"Badajoz", lat:38.0805, lon:-6.2708,
+  promotor:{v:"Río Narcea Recursos", verif:"confirmado"},
+  estado:{v:"Reactivación del único yacimiento de níquel explotado en España", fecha:"03·2025", verif:"parcial"},
+  claves:[], fuentes:[F_CE, F_EE2], nota:""},
+ {id:"lascruces", nombre:"PMR Las Cruces", cat:"crma", verif:"confirmado", materias:["Cobre","Zinc","Plomo","Plata"], tipo:"Extracción, procesamiento y refino",
+  municipio:"Gerena", provincia:"Sevilla", lat:37.7275, lon:-6.1552,
+  promotor:{v:"Cobre Las Cruces (First Quantum) · venta en curso a fecha del dato", verif:"parcial"},
+  estado:{v:"Refinería polimetalúrgica sobre mina existente", fecha:"03·2025", verif:"confirmado"},
+  claves:[], fuentes:[F_CE, F_EE1, F_EE2],
+  nota:"La titularidad puede haber cambiado desde marzo de 2025: el campo queda marcado hasta reverificar."},
+ {id:"circular", nombre:"CirCular", cat:"crma", verif:"confirmado", materias:["Cobre","PGM","Oro","Plata","Estaño"], tipo:"Reciclaje (RAEE)",
+  municipio:"Huelva", provincia:"Huelva", lat:37.2496, lon:-6.9403,
+  promotor:{v:"Atlantic Copper (Freeport-McMoRan)", verif:"confirmado"},
+  estado:{v:"Único proyecto español de la lista dedicado al reciclaje", fecha:"03·2025", verif:"confirmado"},
+  claves:[{k:"Dimensión anunciada", v:"410 M€ · 350 empleos · 60.000 t/año RAEE — cifras del anuncio de la empresa", verif:"no_verificado"}],
+  fuentes:[F_CE, F_EE2],
+  nota:"Las magnitudes existen solo como anuncio corporativo. Se registran con su origen; no se elevan a dato medido."},
+ {id:"montevive", nombre:"Celestina de Montevive", cat:"singular", verif:"parcial", materias:["Estroncio"], tipo:"Extracción",
+  municipio:"Escúzar (cerro Montevive)", provincia:"Granada", lat:37.0700, lon:-3.7050,
+  promotor:{v:"—", verif:"no_verificado"},
+  estado:{v:"España es el único productor de estroncio de la UE", fecha:"07·2026", verif:"confirmado"},
+  claves:[], fuentes:[HUECO],
+  nota:"El hecho estratégico está contrastado; la ficha del yacimiento, pendiente de fuente primaria."},
+ {id:"vicalvaro", nombre:"Sepiolita de Vicálvaro", cat:"singular", verif:"parcial", materias:["Sepiolita"], tipo:"Extracción",
+  municipio:"Vicálvaro (Madrid)", provincia:"Madrid", lat:40.4043, lon:-3.6083,
+  promotor:{v:"TOLSA", verif:"parcial"},
+  estado:{v:"España, único productor de sepiolita a escala industrial en la UE", fecha:"07·2026", verif:"confirmado"},
+  claves:[{k:"Afirmación habitual", v:"«Mayor yacimiento del mundo» — repetido en prensa, sin fuente técnica localizada", verif:"no_verificado"}],
+  fuentes:[HUECO], nota:""},
+ {id:"matamulas", nombre:"Matamulas", cat:"disputa", verif:"no_verificado", materias:["Tierras raras (monacita)"], tipo:"Extracción (proyecto)",
+  municipio:"Torrenueva", provincia:"Ciudad Real", lat:38.6380, lon:-3.3630,
+  promotor:{v:"Quantum Minería", verif:"parcial"},
+  estado:{v:"Autorización denegada por la Junta de C-LM · situación litigiosa. Estado actual sin reverificar", fecha:"—", verif:"no_verificado"},
+  claves:[{k:"Potencial citado", v:"≈ 2.100 t/año de óxidos de tierras raras — cifra circulante sin contraste", verif:"no_verificado"}],
+  fuentes:[HUECO],
+  nota:"El yacimiento existe; casi todo lo demás requiere verificación. Se publica el hueco, no un relleno."}
+];
+
+/* ---- dotación: dominios minerales (trazado ilustrativo, cada zona abre cuadro) ---- */
+const ZONAS_MIN = [
+ {id:"faja", n:"Faja Pirítica", sym:"Cu · Zn · Pb · Ag", hex:"#9E5A33",
+  minerales:["Cobre","Zinc","Plomo","Plata","Pirita"], caracter:"activo", sub:"Huelva – norte de Sevilla",
+  desc:"Una de las mayores provincias de sulfuros masivos del planeta: más de dos siglos de minería de cobre y polimetálicos, hoy de nuevo en el centro de la estrategia europea del cobre.",
+  distritos:["Riotinto","Tharsis","Aznalcóllar","Las Cruces (Gerena)","Sotiel"], extra:["circular"],
+  ring:[[-7.52,37.42],[-6.05,37.42],[-5.9,37.72],[-6.5,37.98],[-7.52,37.82]], lbl:[-6.95,37.26]},
+ {id:"galicia", n:"Estaño–litio de Galicia", sym:"Sn · Ta · Li · W", hex:"#7A6248",
+  minerales:["Estaño","Tantalio","Litio","Wolframio","Cuarzo de alta pureza"], caracter:"mixto", sub:"Ourense · Pontevedra · A Coruña",
+  desc:"Granitos y pegmatitas con estaño, tantalio, wolframio y litio: el distrito concentra buena parte del potencial español en metales de la transición digital.",
+  distritos:["Penouta (Sn–Ta)","Doade–Beariz (Li)","San Finx (W–Sn)","Serrabal (cuarzo)"],
+  ring:[[-9.1,42.2],[-7.9,42.0],[-7.1,42.3],[-7.2,43.15],[-8.5,43.35],[-9.2,43.0]], lbl:[-8.45,42.5]},
+ {id:"salamanca", n:"Wolframio del oeste", sym:"W · Sn", hex:"#6B5B45",
+  minerales:["Wolframio","Estaño"], caracter:"activo", sub:"Salamanca – Zamora",
+  desc:"Cinturón wolframífero del zócalo salmantino, reactivado por la demanda de defensa y herramienta; incluye el distrito de uranio de Ciudad Rodrigo, hoy paralizado.",
+  distritos:["Barruecopardo (W, activa)","Los Santos (W)","Morille","Retortillo (U, paralizado)"],
+  ring:[[-6.85,40.45],[-5.9,40.35],[-5.75,41.0],[-6.75,41.15]], lbl:[-6.35,41.35]},
+ {id:"extremadura", n:"Litio–wolframio de Extremadura", sym:"Li · W · Sn", hex:"#8A6A4B",
+  minerales:["Litio","Wolframio","Estaño"], caracter:"desarrollo", sub:"Cáceres – norte de Badajoz",
+  desc:"Pegmatitas y filones del oeste con litio, wolframio y estaño; concentra tres de los siete proyectos españoles de la primera lista estratégica europea.",
+  distritos:["Las Navas (Cañaveral)","Valdeflórez (Cáceres)","La Parrilla (Almoharín)"],
+  ring:[[-6.9,38.9],[-5.9,38.9],[-5.8,39.55],[-6.55,39.95],[-7.1,39.5]], lbl:[-6.7,40.12]},
+ {id:"ossa", n:"Ossa-Morena", sym:"Ni · Cu · PGM", hex:"#5C5346",
+  minerales:["Níquel","Cobre","Cobalto","PGM"], caracter:"desarrollo", sub:"Sur de Badajoz – sierra de Huelva/Sevilla",
+  desc:"Banda del zócalo de Ossa-Morena con las únicas mineralizaciones de níquel magmático explotadas en España.",
+  distritos:["Aguablanca (Monesterio)","Cala (Fe–Cu, histórico)"],
+  ring:[[-6.7,37.9],[-5.6,38.0],[-5.7,38.35],[-6.6,38.3]], lbl:[-6.75,38.46]},
+ {id:"noroeste", n:"Oro del noroeste", sym:"Au · Cu", hex:"#B08D2E",
+  minerales:["Oro","Cobre"], caracter:"activo", sub:"Occidente de Asturias – León",
+  desc:"Cinturón aurífero explotado desde Roma —Las Médulas— y de nuevo activo en el occidente asturiano.",
+  distritos:["El Valle-Boinás y Carlés (activas)","Salave (Tapia, en tramitación)","Las Médulas (histórico romano)"],
+  ring:[[-7.2,43.3],[-6.0,43.2],[-6.2,42.6],[-7.05,42.55]], lbl:[-6.6,43.5]},
+ {id:"fluorita", n:"Fluorita de Asturias", sym:"CaF₂", hex:"#4E6E8A",
+  minerales:["Fluorita"], caracter:"activo", sub:"Costa oriental asturiana",
+  desc:"Filones de espato flúor de la franja Berbes–Caravia; la fluorita figura en la lista europea de materias primas críticas.",
+  distritos:["Berbes","Caravia","La Collada"],
+  ring:[[-5.4,43.33],[-4.95,43.33],[-5.0,43.52],[-5.45,43.52]], lbl:[-5.15,43.7]},
+ {id:"cantabrico", n:"Zinc cantábrico", sym:"Zn · Pb", hex:"#6E7B8A",
+  minerales:["Zinc","Plomo"], caracter:"historico", sub:"Cantabria",
+  desc:"Distrito de zinc-plomo sobre calizas que sostuvo la mina de Reocín, una de las grandes de Europa, cerrada en 2003.",
+  distritos:["Reocín","Áliva (Picos de Europa)"],
+  ring:[[-4.35,43.2],[-3.7,43.2],[-3.75,43.42],[-4.4,43.42]], lbl:[-4.05,43.6]},
+ {id:"magnesita", n:"Magnesita de Eugui", sym:"MgCO₃", hex:"#5E7A5A",
+  minerales:["Magnesita"], caracter:"activo", sub:"Navarra (y Rubián, Lugo)",
+  desc:"Carbonatos magnésicos en explotación continua; junto con Rubián (Lugo) forma la producción española de magnesita, materia prima crítica.",
+  distritos:["Eugui (Navarra)","Rubián (Lugo)"],
+  ring:[[-1.68,42.9],[-1.35,42.9],[-1.38,43.08],[-1.7,43.08]], lbl:[-1.5,43.24]},
+ {id:"potasas", n:"Potasas del Bages", sym:"K · sal", hex:"#8A5E7A",
+  minerales:["Potasa","Sal"], caracter:"activo", sub:"Cuenca potásica catalana (Barcelona)",
+  desc:"La cuenca potásica catalana alberga la única producción española de potasa, insumo estratégico de la cadena de fertilizantes.",
+  distritos:["Súria","Sallent"],
+  ring:[[1.6,41.63],[2.0,41.63],[2.0,41.9],[1.6,41.9]], lbl:[1.8,42.06]},
+ {id:"almaden", n:"Mercurio de Almadén", sym:"Hg", hex:"#8C4A4A",
+  minerales:["Mercurio"], caracter:"historico", sub:"Ciudad Real",
+  desc:"El mayor yacimiento de mercurio conocido del mundo, explotado más de dos mil años y cerrado en 2003; hoy Patrimonio Mundial.",
+  distritos:["Almadén","Almadenejos"],
+  ring:[[-5.05,38.6],[-4.68,38.6],[-4.72,38.85],[-5.08,38.85]], lbl:[-4.95,38.48]},
+ {id:"alcudia", n:"Wolframio de Alcudia", sym:"W", hex:"#77664A",
+  minerales:["Wolframio"], caracter:"desarrollo", sub:"Valle de Alcudia – Abenójar (Ciudad Real)",
+  desc:"Filones de wolframio del entorno de Alcudia; El Moto figura en la primera lista estratégica europea.",
+  distritos:["El Moto (Abenójar)"],
+  ring:[[-4.55,38.78],[-4.15,38.78],[-4.18,38.98],[-4.58,38.98]], lbl:[-4.3,39.12]},
+ {id:"montiel", n:"Tierras raras del Campo de Montiel", sym:"REE", hex:"#7D6386",
+  minerales:["Tierras raras (monacita)"], caracter:"disputa", sub:"Sur de Ciudad Real",
+  desc:"Arenas con monacita rica en tierras raras: uno de los escasos potenciales europeos en estos elementos, sin desarrollar.",
+  distritos:["Matamulas (Torrenueva)"],
+  ring:[[-3.75,38.5],[-3.1,38.5],[-3.0,38.75],[-3.6,38.85]], lbl:[-3.3,38.3]},
+ {id:"granada", n:"Celestina de Granada", sym:"Sr", hex:"#4E7A8A",
+  minerales:["Estroncio"], caracter:"activo", sub:"Depresión de Granada",
+  desc:"Los depósitos de celestina de la depresión de Granada hacen de España el único productor de estroncio de la Unión Europea.",
+  distritos:["Montevive (Escúzar)"],
+  ring:[[-3.95,36.95],[-3.5,36.98],[-3.45,37.18],[-3.9,37.15]], lbl:[-3.68,36.78]},
+ {id:"madrid", n:"Arcillas especiales", sym:"sepiolita", hex:"#8B8556",
+  minerales:["Sepiolita","Bentonita"], caracter:"activo", sub:"Cuenca de Madrid – Toledo",
+  desc:"Arcillas especiales de la cuenca del Tajo; España es el único productor de sepiolita a escala industrial de la UE.",
+  distritos:["Vicálvaro (Madrid)","Cuenca del Tajo (Toledo)"],
+  ring:[[-3.85,39.95],[-3.3,40.05],[-3.35,40.45],[-3.8,40.4]], lbl:[-2.95,40.3]},
+ {id:"cartagena", n:"Sierra de Cartagena", sym:"Zn · Pb", hex:"#6E7B8A",
+  minerales:["Zinc","Plomo"], caracter:"historico", sub:"La Unión – Mazarrón (Murcia)",
+  desc:"Sierra minera de zinc y plomo explotada desde los fenicios; hoy distrito histórico con la bahía de Portmán como pasivo pendiente de restauración.",
+  distritos:["La Unión","Portmán","Mazarrón"],
+  ring:[[-1.5,37.5],[-0.72,37.53],[-0.78,37.7],[-1.55,37.65]], lbl:[-1.15,37.32]}
+];
+/* ---- dotación: recurso eólico ---- */
+const ZONAS_EOL = [
+ {id:"estrecho", n:"Estrecho", sub:"Cádiz — Tarifa y La Janda",
+  desc:"El embudo entre el Atlántico y el Mediterráneo produce vientos de levante y poniente sostenidos; aquí nació la eólica española.",
+  distritos:["Tarifa","La Janda"],
+  ring:[[-6.15,35.95],[-5.35,36.0],[-5.5,36.4],[-6.2,36.32]], lbl:[-5.8,35.85]},
+ {id:"ebro", n:"Valle del Ebro (cierzo)", sub:"Navarra · Aragón · La Rioja",
+  desc:"El cierzo canaliza el viento del noroeste a lo largo del valle: una de las mayores concentraciones de parques del país.",
+  distritos:["La Ribera navarra","Campo de Zaragoza","Monegros"],
+  ring:[[-2.8,42.5],[-0.2,41.05],[0.6,41.35],[-2.2,42.85]], lbl:[-1.1,41.55]},
+ {id:"galicia-eol", n:"Costa gallega", sub:"Costa da Morte y dorsal gallega",
+  desc:"Frentes atlánticos constantes sobre las sierras litorales del noroeste.",
+  distritos:["Costa da Morte","Serra da Capelada"],
+  ring:[[-9.35,42.85],[-8.75,43.05],[-8.9,43.55],[-9.4,43.3]], lbl:[-9.6,42.62]},
+ {id:"paramos", n:"Páramos de Castilla", sub:"Burgos · Soria · Palencia",
+  desc:"Altiplanos expuestos de la meseta norte; Castilla y León encabeza la potencia eólica instalada.",
+  distritos:["Páramo de Masa","Tierras Altas de Soria"],
+  ring:[[-4.55,41.65],[-2.7,41.6],[-3.0,42.5],[-4.6,42.4]], lbl:[-3.75,42.0]}
+];
+/* ---- dotación: recurso solar ---- */
+const ZONAS_SOL = [
+ {id:"sol-oeste", n:"Extremadura · Guadalquivir", sub:"Badajoz · Cáceres · valle del Guadalquivir",
+  desc:"Máximos peninsulares de irradiación; gran despliegue fotovoltaico y termosolar.",
+  distritos:["Vegas del Guadiana","Campiña sevillana"],
+  ring:[[-7.2,37.8],[-4.8,37.55],[-4.9,38.9],[-6.4,39.6],[-7.3,38.9]], lbl:[-6.0,38.35]},
+ {id:"sol-este", n:"La Mancha · sureste", sub:"La Mancha · Murcia · Almería",
+  desc:"Cielos despejados y suelo disponible: el segundo gran eje solar peninsular.",
+  distritos:["Llanura manchega","Altiplano murciano","Desierto de Tabernas"],
+  ring:[[-3.9,38.4],[-1.0,37.7],[-1.2,38.6],[-3.4,39.2]], lbl:[-2.4,38.55]}
+];
+/* ---- dotación: cables submarinos ---- */
+const CABLES = [
+ {id:"bilbao", n:"Bilbao–Sopelana", dest:"→ Norteamérica · Reino Unido", land:[-2.99,43.39], out:[-4.6,44.6],
+  sistemas:["MAREA — Virginia Beach (EE. UU.)","Grace Hopper — Nueva York · Reino Unido"],
+  desc:"Puerta atlántica norte del tráfico de datos europeo."},
+ {id:"barcelona", n:"Barcelona", dest:"→ Mediterráneo · África", land:[2.15,41.35], out:[3.9,40.6],
+  sistemas:["2Africa — perímetro africano","Medusa — arco mediterráneo"],
+  desc:"Aterrizaje mediterráneo en expansión."},
+ {id:"conil", n:"Conil (Cádiz)", dest:"→ Canarias · América", land:[-6.09,36.28], out:[-7.9,35.5],
+  sistemas:["Canalink — Canarias","Troncales atlánticos históricos"],
+  desc:"Nudo clásico de los enlaces con Canarias y América."},
+ {id:"estepona", n:"Estepona (Málaga)", dest:"→ Norte de África", land:[-5.15,36.42], out:[-4.7,35.7],
+  sistemas:["Enlaces cortos con el norte de África"],
+  desc:"Cruce corto del mar de Alborán."}
+];
+const CABLE_CANARIAS = {id:"canarias", n:"Hub de Canarias", dest:"Tenerife · Gran Canaria", land:[-16.25,28.35],
+  sistemas:["Hub Tenerife–Gran Canaria","Canalink — enlace con la Península"],
+  desc:"Escala atlántica del tráfico de datos entre tres continentes."};
+
+/* ---- el tablero: límites y soberanía (ilustrativo; el atlas registra la reclamación, no dicta veredicto) ---- */
+const DISPUTAS = [
+ {id:"gibraltar", nombre:"Gibraltar", tipo:"Soberanía", estatus:"activo", partes:["España","Reino Unido"],
+  lat:36.140, lon:-5.353,
+  resumen:"Cedido por el Tratado de Utrecht (1713); España reclama la retrocesión. Único territorio de la lista de descolonización de la ONU en Europa occidental. Contencioso separado sobre el istmo y las aguas, que España no considera cedidos.",
+  instrumentos:[{t:"Tratado de Utrecht, artículo X", f:"1713", tipo:"primaria"},
+                {t:"Lista de territorios no autónomos — Comité de los 24 (ONU)", f:"vigente", tipo:"primaria"},
+                {t:"Acuerdo político UE–Reino Unido sobre Gibraltar", f:"06·2025", tipo:"primaria"}]},
+ {id:"ceuta", nombre:"Ceuta", tipo:"Soberanía", estatus:"activo", partes:["España","Marruecos (reclamación)"],
+  lat:35.889, lon:-5.316,
+  resumen:"Española desde 1580 (portuguesa desde 1415); Marruecos la reclama desde su independencia (1956). España no la considera cuestión colonial: no figura en la lista de la ONU.",
+  instrumentos:[{t:"Posición marroquí reiterada ante Naciones Unidas", f:"desde 1975", tipo:"primaria"},
+                {t:"Fuente primaria de detalle pendiente de asignar", tipo:"hueco"}]},
+ {id:"melilla", nombre:"Melilla", tipo:"Soberanía", estatus:"activo", partes:["España","Marruecos (reclamación)"],
+  lat:35.293, lon:-2.938,
+  resumen:"Española desde 1497; reclamada por Marruecos junto con Ceuta y las plazas menores. Fuera de la lista de descolonización de la ONU.",
+  instrumentos:[{t:"Fuente primaria de detalle pendiente de asignar", tipo:"hueco"}]},
+ {id:"perejil", nombre:"Islote de Perejil", tipo:"Soberanía", estatus:"latente", partes:["España","Marruecos"],
+  lat:35.913, lon:-5.418,
+  resumen:"Islote deshabitado frente a Ceuta; crisis de julio de 2002 y vuelta al statu quo (desocupación mutua) con mediación de EE. UU.",
+  instrumentos:[{t:"Statu quo de 2002 (entendimiento no formalizado)", f:"2002", tipo:"hueco"}]},
+ {id:"alboran", nombre:"Alborán y plazas menores", tipo:"Soberanía", estatus:"latente", partes:["España","Marruecos (reclamación de las plazas)"],
+  lat:35.940, lon:-3.035,
+  resumen:"Alborán, Vélez de la Gomera, Alhucemas y Chafarinas: soberanía española efectiva; las plazas menores entran en la reclamación marroquí general.",
+  instrumentos:[{t:"Fuente primaria de detalle pendiente de asignar", tipo:"hueco"}]},
+ {id:"olivenza", nombre:"Olivenza", tipo:"Contencioso histórico", estatus:"latente", partes:["España","Portugal (cuestión durmiente)"],
+  lat:38.685, lon:-7.100,
+  resumen:"Bajo administración española desde 1801 (Guerra de las Naranjas); Portugal nunca renunció formalmente a su título tras el Congreso de Viena. Cuestión durmiente que no perturba la relación bilateral.",
+  instrumentos:[{t:"Tratado de Badajoz", f:"1801", tipo:"primaria"},
+                {t:"Acta del Congreso de Viena, artículo 105", f:"1815", tipo:"primaria"}]}
+];
+const DISPUTA_AGUAS = {id:"aguas-canarias", nombre:"Aguas Canarias–Marruecos", tipo:"Aguas (sin delimitación acordada)", estatus:"activo",
+  partes:["España","Marruecos"],
+  resumen:"No existe delimitación acordada: las leyes marroquíes de 2020 sobre espacios marinos se solapan con la mediana defendida por España. Bajo la zona, el monte submarino Tropic y sus costras de cobalto y telurio — el cruce directo con el árbol de minerales.",
+  instrumentos:[{t:"Leyes marroquíes 37-17 y 38-17 de delimitación de espacios marinos", f:"2020", tipo:"primaria"},
+                {t:"Convención de la ONU sobre el Derecho del Mar (Montego Bay)", f:"1982", tipo:"primaria"}],
+  ring:[[-14.55,27.62],[-13.15,27.95],[-12.85,29.15],[-14.15,29.4]]};
+
+/* ---- "activo": campo DERIVADO (tabla de mapeo del contrato §activo; aquí materializado a mano para la demo) ---- */
+const ACTIVO_PROY = {doade:false, lasnavas:false, laparrilla:false, elmoto:false, aguablanca:false,
+                     lascruces:false, circular:false, montevive:true, vicalvaro:true, matamulas:false};
+const activoDeCaracter = c => (c==="activo" || c==="mixto");
+
+/* ================= RENDER BASE ================= */
+const svg = d3.select("#mapa");
+const W = window.innerWidth, H = window.innerHeight;
+svg.attr("viewBox", `0 0 ${W} ${H}`);
+
+const defs = svg.append("defs");
+defs.append("filter").attr("id","pincel").attr("x","-30%").attr("y","-30%").attr("width","160%").attr("height","160%")
+  .append("feGaussianBlur").attr("stdDeviation", 6);
+defs.append("filter").attr("id","pincel-suave").attr("x","-40%").attr("y","-40%").attr("width","180%").attr("height","180%")
+  .append("feGaussianBlur").attr("stdDeviation", 11);
+
+const provFC = topojson.feature(TOPO, TOPO.objects.provinces);
+const CANARIAS = new Set(["Las Palmas","Santa Cruz de Tenerife"]);
+const penFeats = provFC.features.filter(f => !CANARIAS.has(f.properties.name));
+const canFeats = provFC.features.filter(f =>  CANARIAS.has(f.properties.name));
+
+const headerPad = 86, footPad = 46, sidePadL = 290, sidePadR = 30;
+const projPen = d3.geoConicConformal().rotate([5,0]).parallels([37,42.5]);
+projPen.fitExtent([[Math.min(sidePadL, W*0.28), headerPad],[W-sidePadR, H-footPad]], {type:"FeatureCollection", features:penFeats});
+
+const insetW = Math.min(280, W*0.24), insetH = insetW*0.42;
+const insetX = W-insetW-20, insetY = H-footPad-insetH-10;
+const projCan = d3.geoConicConformal().rotate([15.7,0]).parallels([27.5,29]);
+projCan.fitExtent([[insetX+10, insetY+10],[insetX+insetW-10, insetY+insetH-16]], {type:"FeatureCollection", features:canFeats});
+
+const pathPen = d3.geoPath(projPen);
+const pathCan = d3.geoPath(projCan);
+const ringPathWith = (proj, ring) => "M" + ring.map(c=>proj(c).map(v=>v.toFixed(1)).join(",")).join("L") + "Z";
+const ringPath = ring => ringPathWith(projPen, ring);
+
+svg.append("rect").attr("width","100%").attr("height","100%").attr("fill","var(--mar)");
+
+const gMain = svg.append("g");
+const gLand = gMain.append("g");
+gLand.selectAll("path.provincia").data(penFeats).join("path")
+  .attr("class","provincia").attr("d", pathPen)
+  .on("mousemove",(ev,d)=>ttShow(ev,`<span class="tt-cat">provincia</span><br>${d.properties.name}`))
+  .on("mouseleave", ttHide);
+gLand.append("path").attr("class","limites").attr("d", pathPen(topojson.mesh(TOPO, TOPO.objects.provinces,(a,b)=>a!==b)));
+gLand.append("path").attr("class","limites-ccaa").attr("d", pathPen(topojson.mesh(TOPO, TOPO.objects.autonomous_regions,(a,b)=>a!==b)));
+gLand.append("path").attr("class","costa").attr("d", pathPen(topojson.mesh(TOPO, TOPO.objects.provinces,(a,b)=>a===b)));
+
+/* contenedores de capas, en orden de pintado */
+const gSol = gMain.append("g");
+const gEol = gMain.append("g");
+const gMin = gMain.append("g");
+const gCab = gMain.append("g");
+const gPts = gMain.append("g");
+const gDisp = gMain.append("g");
+
+/* inset Canarias (estático, encima del zoom) */
+const gInset = svg.append("g");
+defs.append("clipPath").attr("id","clip-inset").append("rect")
+  .attr("x",insetX).attr("y",insetY).attr("width",insetW).attr("height",insetH);
+gInset.append("rect").attr("class","inset-caja").attr("x",insetX).attr("y",insetY).attr("width",insetW).attr("height",insetH);
+gInset.selectAll("path.provincia").data(canFeats).join("path").attr("class","provincia").attr("d", pathCan);
+gInset.append("path").attr("class","costa")
+  .attr("d", pathCan(topojson.mesh(TOPO, TOPO.objects.provinces,(a,b)=> a===b && CANARIAS.has(a.properties.name))));
+gInset.append("text").attr("class","inset-label").attr("x",insetX+9).attr("y",insetY+14).text("CANARIAS");
+const gCabCan = gInset.append("g");
+
+/* ================= CAPAS ================= */
+function pintarMinerales(g){
+  ZONAS_MIN.forEach(z=>{
+    const gz = g.append("g").attr("class","zona-min").datum(z);
+    gz.append("path").attr("d", ringPath(z.ring))
+      .attr("fill", z.hex).attr("fill-opacity",.16).attr("filter","url(#pincel)")
+      .attr("stroke", z.hex).attr("stroke-opacity",.35).attr("stroke-width",1)
+      .style("cursor","pointer")
+      .on("mouseenter",function(){ d3.select(this).attr("fill-opacity",.3); })
+      .on("mousemove",(ev)=>ttShow(ev,`<span class="tt-cat">dominio mineral · ${CARACTER[z.caracter][0]}</span><br><b>${z.n}</b><br>${z.minerales.join(", ")}<br><span class="tt-cat">clic para el cuadro de zona</span>`))
+      .on("mouseleave",function(){ d3.select(this).attr("fill-opacity",.16); ttHide(); })
+      .on("click",(ev)=>{ev.stopPropagation(); abrirZona(z,"min");});
+    const p = projPen(z.lbl);
+    const t = gz.append("text").attr("class","zona-label").attr("x",p[0]).attr("y",p[1]).attr("fill", z.hex).style("pointer-events","none");
+    t.append("tspan").attr("x",p[0]).text(z.n);
+    t.append("tspan").attr("x",p[0]).attr("dy","1.15em").attr("font-size","8px").attr("opacity",.8).text(z.sym);
+  });
+}
+function pintarZonas(g, zonas, hex, dash, tipo){
+  zonas.forEach(z=>{
+    g.append("path").attr("d", ringPath(z.ring))
+      .attr("fill", hex).attr("fill-opacity",.14).attr("filter","url(#pincel-suave)")
+      .attr("stroke", hex).attr("stroke-opacity",.4).attr("stroke-width",1).attr("stroke-dasharray",dash)
+      .style("cursor","pointer")
+      .on("mouseenter",function(){ d3.select(this).attr("fill-opacity",.26); })
+      .on("mousemove",(ev)=>ttShow(ev,`<span class="tt-cat">${tipo==="eol"?"recurso eólico":"recurso solar"}</span><br><b>${z.n}</b><br><span class="tt-cat">clic para el cuadro de zona</span>`))
+      .on("mouseleave",function(){ d3.select(this).attr("fill-opacity",.14); ttHide(); })
+      .on("click",(ev)=>{ev.stopPropagation(); abrirZona({...z, hex}, tipo);});
+    const p = projPen(z.lbl);
+    g.append("text").attr("class","zona-label").attr("x",p[0]).attr("y",p[1]).attr("fill", hex).style("pointer-events","none").text(z.n);
+  });
+}
+function pintarCables(){
+  const c = "#3D4C57";
+  CABLES.forEach(cb=>{
+    const a = projPen(cb.land), b = projPen(cb.out);
+    const mx = (a[0]+b[0])/2 + (b[1]-a[1])*0.25, my = (a[1]+b[1])/2 - (b[0]-a[0])*0.25;
+    gCab.append("path").attr("class","cable-linea")
+      .attr("d", `M${a[0]},${a[1]} Q${mx},${my} ${b[0]},${b[1]}`)
+      .attr("stroke", c).attr("stroke-width",1.4).attr("stroke-dasharray","5 3").attr("opacity",.75);
+    gCab.append("rect").attr("x",a[0]-4).attr("y",a[1]-4).attr("width",8).attr("height",8)
+      .attr("fill", c).attr("stroke","var(--papel)").attr("stroke-width",1.2)
+      .style("cursor","pointer")
+      .on("mousemove",(ev)=>ttShow(ev,`<span class="tt-cat">aterrizaje de cable</span><br><b>${cb.n}</b><br>${cb.dest}<br><span class="tt-cat">clic para el cuadro</span>`))
+      .on("mouseleave", ttHide)
+      .on("click",(ev)=>{ev.stopPropagation(); abrirCable(cb);});
+    const t = gCab.append("text").attr("class","cable-label").attr("x",b[0]).attr("y",b[1]-5).attr("text-anchor","middle").style("pointer-events","none");
+    t.append("tspan").attr("x",b[0]).text(cb.n);
+    t.append("tspan").attr("x",b[0]).attr("dy","1.2em").attr("opacity",.7).text(cb.dest);
+  });
+  const a = projCan(CABLE_CANARIAS.land);
+  gCabCan.append("rect").attr("x",a[0]-3.5).attr("y",a[1]-3.5).attr("width",7).attr("height",7)
+    .attr("fill", c).attr("stroke","var(--papel)").attr("stroke-width",1)
+    .style("cursor","pointer")
+    .on("mousemove",(ev)=>ttShow(ev,`<span class="tt-cat">aterrizaje de cable</span><br><b>${CABLE_CANARIAS.n}</b><br>${CABLE_CANARIAS.dest}`))
+    .on("mouseleave", ttHide)
+    .on("click",(ev)=>{ev.stopPropagation(); abrirCable(CABLE_CANARIAS);});
+}
+const R = 7;
+function pintarPuntos(){
+  const sel = gPts.selectAll("g.punto").data(DATOS).join("g")
+    .attr("class","punto")
+    .attr("transform", d=>{const p=projPen([d.lon,d.lat]); return `translate(${p[0]},${p[1]})`;})
+    .attr("tabindex",0).attr("role","button").attr("aria-label", d=>d.nombre)
+    .on("mousemove",(ev,d)=>ttShow(ev,`<span class="tt-cat">${CATS[d.cat].n}</span><br><b>${d.nombre}</b> · ${d.materias.join(", ")}<br><span class="tt-cat">${VERIF[d.verif]}</span>`))
+    .on("mouseleave", ttHide)
+    .on("click",(ev,d)=>{ev.stopPropagation(); abrirFicha(d);})
+    .on("keydown",(ev,d)=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();abrirFicha(d);}});
+  sel.each(function(d){
+    const g = d3.select(this), color = CATS[d.cat].hex;
+    g.append("circle").attr("class","halo").attr("r",R+4.5);
+    const c = g.append("circle").attr("class","nucleo").attr("r",R);
+    if(d.verif==="confirmado"){ c.attr("fill",color).attr("stroke","var(--tinta)").attr("stroke-width",1.1); }
+    else if(d.verif==="parcial"){ c.attr("fill",color).attr("fill-opacity",.5).attr("stroke",color).attr("stroke-width",1.4).attr("stroke-dasharray","3 2.2"); }
+    else{ c.attr("fill","var(--papel)").attr("stroke",color).attr("stroke-width",1.6).attr("stroke-dasharray","2.5 2.5"); }
+  });
+}
+pintarMinerales(gMin);
+pintarZonas(gEol, ZONAS_EOL, "#5E7E93", "4 3", "eol");
+pintarZonas(gSol, ZONAS_SOL, "#C79A3B", "1.5 2.5", "sol");
+pintarCables();
+pintarPuntos();
+
+/* ---- el tablero ---- */
+const DISP_C = "#5E5470";
+let gDispInset = null;
+function pintarDisputas(){
+  const sym = d3.symbol().type(d3.symbolDiamond);
+  DISPUTAS.forEach(d=>{
+    const p = projPen([d.lon,d.lat]);
+    const gd = gDisp.append("g").attr("class","disputa").datum(d)
+      .attr("transform",`translate(${p[0]},${p[1]})`)
+      .style("cursor","pointer")
+      .attr("tabindex",0).attr("role","button").attr("aria-label", d.nombre)
+      .on("mousemove",(ev)=>ttShow(ev,`<span class="tt-cat">el tablero · ${d.tipo}</span><br><b>${d.nombre}</b><br>${d.partes.join(" · ")}<br><span class="tt-cat">clic para el cuadro</span>`))
+      .on("mouseleave", ttHide)
+      .on("click",(ev)=>{ev.stopPropagation(); abrirDisputa(d);})
+      .on("keydown",(ev)=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();abrirDisputa(d);}});
+    gd.append("path").attr("class","disp-marca")
+      .attr("d", sym.size(115)())
+      .attr("fill", d.estatus==="activo" ? DISP_C : "var(--papel)")
+      .attr("stroke", DISP_C).attr("stroke-width",1.4)
+      .attr("stroke-dasharray", d.estatus==="latente" ? "2.5 2" : null);
+  });
+  [["gibraltar",9,-8],["olivenza",10,-7],["melilla",9,11],["alboran",9,-10]].forEach(([id,dx,dy])=>{
+    const d = DISPUTAS.find(x=>x.id===id); const p = projPen([d.lon,d.lat]);
+    gDisp.append("text").attr("class","disp-label").attr("x",p[0]+dx).attr("y",p[1]+dy)
+      .text(d.nombre).style("pointer-events","none");
+  });
+  gDispInset = gInset.append("g").attr("clip-path","url(#clip-inset)");
+  gDispInset.append("path").attr("d", ringPathWith(projCan, DISPUTA_AGUAS.ring))
+    .attr("fill", DISP_C).attr("fill-opacity",.16).attr("filter","url(#pincel-suave)")
+    .attr("stroke", DISP_C).attr("stroke-opacity",.5).attr("stroke-width",1).attr("stroke-dasharray","4 3")
+    .style("cursor","pointer")
+    .on("mousemove",(ev)=>ttShow(ev,`<span class="tt-cat">el tablero · aguas</span><br><b>${DISPUTA_AGUAS.nombre}</b><br>${DISPUTA_AGUAS.partes.join(" · ")}<br><span class="tt-cat">clic para el cuadro</span>`))
+    .on("mouseleave", ttHide)
+    .on("click",(ev)=>{ev.stopPropagation(); abrirDisputa(DISPUTA_AGUAS);});
+  const lp = projCan([-13.85,28.5]);
+  gDispInset.append("text").attr("class","disp-label").attr("x",lp[0]).attr("y",lp[1])
+    .text("sin delimitar").style("pointer-events","none");
+}
+pintarDisputas();
+
+/* ================= ÁRBOLES, FILTRO Y VISIBILIDAD ================= */
+const CAPAS = [
+ {id:"min",  arbol:"minerales",    nombre:"Dominios minerales",     tag:"ilustrativo", g:()=>[gMin], on:true},
+ {id:"pts",  arbol:"minerales",    nombre:"Proyectos (con ficha)",  tag:"verificado",  g:()=>[gPts], on:true},
+ {id:"eol",  arbol:"energia",      nombre:"Recurso eólico",         tag:"ilustrativo", g:()=>[gEol], on:false},
+ {id:"sol",  arbol:"energia",      nombre:"Recurso solar",          tag:"ilustrativo", g:()=>[gSol], on:false},
+ {id:"cab",  arbol:"conectividad", nombre:"Cables submarinos",      tag:"ilustrativo", g:()=>[gCab,gCabCan], on:true},
+ {id:"disp", arbol:"tablero",      nombre:"Límites y soberanía",    tag:"ilustrativo", g:()=>[gDisp,gDispInset], on:true}
+];
+const ARBOLES = [
+ {id:"minerales",    titulo:"Minerales y materias primas", prep:[]},
+ {id:"energia",      titulo:"Energía", prep:["Gas y regasificación","Nuclear","Red eléctrica e interconexiones","Renovable instalada por provincia","Agua embalsada"]},
+ {id:"conectividad", titulo:"Conectividad", prep:["Centros de datos","Corredor H2Med"]},
+ {id:"tablero",      titulo:"El tablero", prep:["PERTE en ejecución (acotado)"]},
+ {id:"intangibles",  titulo:"Intangibles", tag:"análisis", prep:["El idioma como activo (ámbito: mundo)"]}
+];
+let FILTRO = "todo";
+function pasaFiltro(activo){
+  if(FILTRO==="todo" || activo===undefined || activo===null) return true;
+  return FILTRO==="activo" ? activo===true : activo===false;
+}
+function aplicarVisibilidad(){
+  CAPAS.forEach(c=> c.g().forEach(g=> g && g.style("display", c.on ? null : "none")));
+  gMin.selectAll("g.zona-min").style("display", z=> pasaFiltro(activoDeCaracter(z.caracter)) ? null : "none");
+  gPts.selectAll("g.punto").style("display", d=> pasaFiltro(ACTIVO_PROY[d.id]) ? null : "none");
+}
+const panel = document.getElementById("capas");
+const fdiv = document.createElement("div"); fdiv.id="filtro";
+fdiv.innerHTML = `<h2>Explotación</h2>
+  <div class="seg">
+    <button data-f="todo" class="on">Todo</button>
+    <button data-f="activo">En explotación</button>
+    <button data-f="latente">Latente</button>
+  </div>
+  <div class="filtro-nota">«activo» es un campo derivado del estado de cada registro — nunca editado a mano. Corta a través de los árboles; recurso y tablero quedan al margen.</div>`;
+panel.appendChild(fdiv);
+fdiv.querySelectorAll("button").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    FILTRO = b.dataset.f;
+    fdiv.querySelectorAll("button").forEach(x=>x.classList.toggle("on", x===b));
+    aplicarVisibilidad();
+  });
+});
+ARBOLES.forEach(a=>{
+  const det = document.createElement("details"); det.open = true;
+  const sum = document.createElement("summary"); sum.textContent = a.titulo;
+  if(a.tag){ const s=document.createElement("span"); s.className="arbol-tag"; s.textContent=a.tag; sum.appendChild(s); }
+  det.appendChild(sum);
+  const ramas = document.createElement("div"); ramas.className="ramas";
+  CAPAS.filter(c=>c.arbol===a.id).forEach(c=>{
+    const lab = document.createElement("label"); lab.className="capa-item";
+    lab.innerHTML = `<input type="checkbox" ${c.on?"checked":""} data-capa="${c.id}"><span class="capa-check"></span><span class="capa-nombre">${c.nombre}<span class="capa-tag">${c.tag}</span></span>`;
+    ramas.appendChild(lab);
+  });
+  a.prep.forEach(n=>{
+    const div = document.createElement("div"); div.className="rama-prep";
+    div.innerHTML = `<span>${n}</span><span class="prep-tag">en preparación</span>`;
+    ramas.appendChild(div);
+  });
+  det.appendChild(ramas);
+  panel.appendChild(det);
+});
+const aviso = document.createElement("div"); aviso.className="aviso";
+aviso.textContent = "El mapa declara su propio horizonte: las ramas en gris existen en la taxonomía y esperan su release. Nada llega sin casa; nada se publica a medias.";
+panel.appendChild(aviso);
+panel.addEventListener("change", e=>{
+  const id = e.target.dataset.capa; if(!id) return;
+  const c = CAPAS.find(x=>x.id===id); c.on = e.target.checked; aplicarVisibilidad();
+});
+aplicarVisibilidad();
+
+/* ================= ZOOM ================= */
+const zoom = d3.zoom().scaleExtent([1,9]).on("zoom",(ev)=>{
+  gMain.attr("transform", ev.transform);
+  const k = ev.transform.k;
+  gPts.selectAll("circle.nucleo").attr("r", R/Math.sqrt(k));
+  gPts.selectAll("circle.halo").attr("r",(R+4.5)/Math.sqrt(k));
+  gDisp.selectAll("path.disp-marca").attr("d", d3.symbol().type(d3.symbolDiamond).size(115/k)());
+  gLand.selectAll(".limites").attr("stroke-width",.6/k);
+  gLand.selectAll(".limites-ccaa").attr("stroke-width",.75/k);
+  gLand.selectAll(".costa").attr("stroke-width",1/k);
+  gMain.selectAll(".zona-label").attr("opacity", k>4 ? 0 : 1);
+});
+svg.call(zoom);
+svg.on("click", ()=>cerrarFicha());
+
+/* ================= tooltip / ficha ================= */
+const tt = document.getElementById("tooltip");
+function ttShow(ev, html){
+  tt.innerHTML = html; tt.style.display="block";
+  tt.style.left = Math.min(ev.clientX+14, window.innerWidth-270)+"px";
+  tt.style.top = (ev.clientY+14)+"px";
+}
+function ttHide(){ tt.style.display="none"; }
+
+const ficha = document.getElementById("ficha");
+const fCont = document.getElementById("ficha-contenido");
+document.querySelector(".ficha-cerrar").addEventListener("click", cerrarFicha);
+function badge(v){ return `<span class="badge ${v}">${VERIF[v]}</span>`; }
+function campo(k, valor, verif, meta){
+  return `<div class="campo"><div class="campo-k"><span>${k}</span>${verif?badge(verif):""}</div><div class="campo-v">${valor}</div>${meta?`<div class="campo-meta">${meta}</div>`:""}</div>`;
+}
+function abrirFicha(d){
+  d3.selectAll("g.punto").classed("activo", p=>p.id===d.id);
+  const cat = CATS[d.cat];
+  fCont.innerHTML = `
+    <div class="ficha-cat" style="color:${cat.hex}"><span class="pastilla" style="background:${cat.hex}"></span>${cat.n}</div>
+    <h3>${d.nombre}</h3>
+    <div class="ficha-lugar">${d.municipio} · ${d.provincia}</div>
+    ${badge(d.verif)}
+    <div class="materias">${d.materias.map(m=>`<span class="materia">${m}</span>`).join("")}</div>
+    <div class="registro">
+      ${campo("Tipo de proyecto", d.tipo)}
+      ${campo("Promotor", d.promotor.v, d.promotor.verif)}
+      ${campo("Estado", d.estado.v, d.estado.verif, d.estado.fecha!=="—"?("dato de "+d.estado.fecha):"sin fecha de dato")}
+      ${d.claves.map(c=>campo(c.k, c.v, c.verif)).join("")}
+      ${campo("Precisión geográfica","Centroide municipal — no es la ubicación exacta", null, "pendiente de contraste con el catastro minero")}
+    </div>
+    <div class="fuentes"><h4>Fuentes</h4>
+      ${d.fuentes.map(f=> f.hueco ? `<div class="fuente hueco">${f.t}</div>` : `<div class="fuente"><a href="${f.u}" target="_blank" rel="noopener">${f.t}</a> <span class="f-fecha">· ${f.f}</span></div>`).join("")}
+    </div>
+    ${d.nota?`<div class="ficha-nota">${d.nota}</div>`:""}`;
+  ficha.classList.add("abierta");
+  ficha.setAttribute("aria-hidden","false");
+}
+function cerrarFicha(){
+  ficha.classList.remove("abierta");
+  ficha.setAttribute("aria-hidden","true");
+  d3.selectAll("g.punto").classed("activo", false);
+}
+
+/* ---- cuadros de zona ---- */
+function dentro(pt, ring){
+  let c = false;
+  for(let i=0, j=ring.length-1; i<ring.length; j=i++){
+    const xi=ring[i][0], yi=ring[i][1], xj=ring[j][0], yj=ring[j][1];
+    if(((yi>pt[1])!==(yj>pt[1])) && (pt[0] < (xj-xi)*(pt[1]-yi)/(yj-yi)+xi)) c = !c;
+  }
+  return c;
+}
+const EYE = {min:"Dominio mineral · lo que tiene", eol:"Recurso eólico · lo que tiene", sol:"Recurso solar · lo que tiene", cab:"Cable submarino · lo que tiene"};
+function proyectosEnZona(z){
+  const ids = new Set(z.extra||[]);
+  DATOS.forEach(d=>{ if(dentro([d.lon,d.lat], z.ring)) ids.add(d.id); });
+  return DATOS.filter(d=>ids.has(d.id));
+}
+function abrirCard(html){
+  fCont.innerHTML = html;
+  fCont.querySelectorAll(".proy-link").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const d = DATOS.find(x=>x.id===el.dataset.id);
+      if(d) abrirFicha(d);
+    });
+  });
+  ficha.classList.add("abierta");
+  ficha.setAttribute("aria-hidden","false");
+}
+function abrirZona(z, tipo){
+  d3.selectAll("g.punto").classed("activo", false);
+  const hex = z.hex || "#5E7E93";
+  const proys = (tipo==="min") ? proyectosEnZona(z) : [];
+  abrirCard(`
+    <div class="ficha-cat" style="color:${hex}"><span class="pastilla" style="background:${hex}"></span>${EYE[tipo]}</div>
+    <h3>${z.n}</h3>
+    <div class="ficha-lugar">${z.sub||""}</div>
+    ${z.caracter?`<span class="badge ${CARACTER[z.caracter][1]}">${CARACTER[z.caracter][0]}</span>`:""}
+    ${z.minerales?`<div class="materias">${z.minerales.map(m=>`<span class="materia">${m}</span>`).join("")}</div>`:""}
+    <div class="zona-desc">${z.desc}</div>
+    ${z.distritos && z.distritos.length?`
+      <div class="fuentes"><h4>Distritos y yacimientos</h4>
+        ${z.distritos.map(d=>`<div class="fuente">${d}</div>`).join("")}
+      </div>`:""}
+    ${proys.length?`
+      <div class="fuentes"><h4>Proyectos en el atlas — abre su ficha</h4>
+        ${proys.map(d=>`<div class="proy-link" data-id="${d.id}" role="button" tabindex="0">
+          <span class="pl-dot" style="background:${CATS[d.cat].hex}"></span>
+          <span>${d.nombre} · ${d.materias[0]}</span>
+          <span class="pl-verif">${VERIF[d.verif]}</span>
+        </div>`).join("")}
+      </div>`:""}
+    <div class="ficha-nota">Trazado ilustrativo a mano alzada: dibuja dónde, no cuánto ni de quién. Geometría pendiente de sustituirse por cartografía de fuente primaria (IGME).</div>
+  `);
+}
+function abrirDisputa(d){
+  d3.selectAll("g.punto").classed("activo", false);
+  abrirCard(`
+    <div class="ficha-cat" style="color:${DISP_C}"><span class="pastilla" style="background:${DISP_C}"></span>El tablero · límites y soberanía</div>
+    <h3>${d.nombre}</h3>
+    <div class="ficha-lugar">${d.tipo}</div>
+    <span class="badge ${d.estatus==="activo"?"c-disputa":"c-historico"}">${d.estatus==="activo"?"Contencioso vivo":"Latente / durmiente"}</span>
+    <div class="materias">${d.partes.map(p=>`<span class="materia">${p}</span>`).join("")}</div>
+    <div class="zona-desc">${d.resumen}</div>
+    <div class="fuentes"><h4>Instrumentos y posiciones</h4>
+      ${d.instrumentos.map(i=> i.tipo==="hueco"
+        ? `<div class="fuente hueco">${i.t}</div>`
+        : `<div class="fuente">${i.t} <span class="f-fecha">· ${i.f} · primaria</span></div>`).join("")}
+    </div>
+    <div class="ficha-nota">El atlas registra que la reclamación existe y quién la sostiene; no dicta el veredicto. Un instrumento acredita la posición de una parte, no la razón de nadie. Puntos y trazados ilustrativos.</div>
+  `);
+}
+function abrirCable(cb){
+  d3.selectAll("g.punto").classed("activo", false);
+  const c = "#3D4C57";
+  abrirCard(`
+    <div class="ficha-cat" style="color:${c}"><span class="pastilla" style="background:${c}"></span>${EYE.cab}</div>
+    <h3>${cb.n}</h3>
+    <div class="ficha-lugar">${cb.dest}</div>
+    <div class="zona-desc">${cb.desc}</div>
+    <div class="fuentes"><h4>Sistemas que aterrizan</h4>
+      ${cb.sistemas.map(s=>`<div class="fuente">${s}</div>`).join("")}
+    </div>
+    <div class="ficha-nota">Punto y sistemas ilustrativos, sin trazado real del cable: la capa verificada se reconstruirá desde fuentes primarias (permisos de aterrizaje, anuncios de operadores), no desde mapas licenciados.</div>
+  `);
+}
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") cerrarFicha(); });
+</script>
+</body>
+</html>
