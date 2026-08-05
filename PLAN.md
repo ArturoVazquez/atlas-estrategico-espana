@@ -38,7 +38,23 @@ comprueba que falle **por la regla violada y por ninguna otra**.
 > es normativa desde la v1.1 pero **no tiene diente** hasta que exista la capa
 > `minerales-dominios`, en F3. Es la única regla del contrato sin implementar.
 
-## F1 · Primera colección real: minerales-proyectos
+## F1 · Primera colección real: minerales-proyectos — ✅ HECHA (2026-08-05)
+
+> **Release `datos-v2026.08` publicada.** 11 registros (no 10: Escúzar salió del
+> de Montevives, que la demo fundía en uno), 3 fuentes primarias archivadas, CI
+> en verde. El detalle de lo corregido está en `CHANGELOG-DATOS.md`.
+>
+> **Lo que queda a deber, y es lo grande:** la **geometría**. Los 11 puntos son
+> `geo_precision: municipio` con `geo_fuente` diciendo que son aproximación
+> **sin fuente cartográfica primaria**. Hasta sustituirlos por el catastro
+> minero o el Nomenclátor del IGN, ninguna coordenada de esta capa sirve para
+> medir — y el mapa no debe sugerir lo contrario.
+>
+> **Matamulas sigue siendo un hueco entero:** falta la resolución de la Junta,
+> la sentencia del TSJ de Castilla-La Mancha y el estado del recurso de casación
+> ante el Tribunal Supremo.
+
+### Lo que decía la fase
 
 - Migrar los 10 registros de la demo v4 al formato canónico del contrato.
 - Pasada de verificación: localizar y **archivar** en `fuentes/` los documentos
