@@ -13,6 +13,7 @@
 /** La tabla normativa de §6.5, transcrita. Nada más, y nada inventado. */
 const TABLA = {
   "minerales-proyectos": (p) => p.fase === "produccion",
+  nuclear: (p) => p.fase === "produccion",
   "minerales-dominios": (p) => p.caracter === "activo" || p.caracter === "mixto",
   "cables-submarinos": (p) => p.fase === "produccion",
   // `recurso-eolico`, `recurso-solar` y el tablero NO APLICAN: son recurso o

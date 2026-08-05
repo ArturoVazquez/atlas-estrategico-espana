@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.5.0 · **Fecha:** 2026-08-05
+**Versión del contrato:** 1.6.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -296,6 +296,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | Capa | `activo` se deriva de | `true` cuando |
 |---|---|---|
 | `minerales-proyectos` | `fase` (§10, vocabulario) | `fase == "produccion"` |
+| `nuclear` *(1.6)* | `fase` | `fase == "produccion"` (reactor en explotación) |
 | `minerales-dominios` | `caracter` (§10, vocabulario) | `caracter ∈ {activo, mixto}` |
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
@@ -517,6 +518,7 @@ existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado
 **`categoria`, por capa:**
 
 - *minerales-proyectos*: `estrategico_ue` · `produccion_singular` · `en_disputa`
+- *nuclear* *(1.6)*: `en_operacion` · `en_cese` · `desmantelamiento`
 - *minerales-dominios*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
@@ -546,6 +548,31 @@ reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` 
 > sulphide project*. Sin este campo, quien quisiera contrastar una ficha contra
 > el DOUE no encontraría la entrada. `nombre` sigue siendo el de presentación;
 > `nombre_oficial` es el que permite la cita.
+
+**nuclear** *(1.6)* (`actividad`, puntos, verificado):
+`grupo` (✔: el reactor dentro de su emplazamiento) · `municipio` (✔) ·
+`provincia` (✔) · `potencia_mw` (+`__v`,`__f`) · `tecnologia` (+`__v`,`__f`) ·
+`titulares[]` (+`__v`,`__f`) · **`fase`** (✔, vocabulario; +`__v`,`__f`) ·
+**`autorizacion_hasta`** (+`__v`,`__f`) · **`cierre_acordado`** (+`__v`,`__f`) ·
+`nombre_oficial` · `claves[]`
+
+> **Por qué DOS fechas, y no una «fecha de cierre».** Son hechos distintos, de
+> instrumentos distintos, y en España no coinciden:
+>
+> - **`autorizacion_hasta`** es hasta cuándo un reactor está **legalmente
+>   autorizado** a operar. Lo fija una orden ministerial publicada en el BOE, que
+>   es lo más duro que hay: se cita por su número y se archiva.
+> - **`cierre_acordado`** es la fecha del **calendario pactado** en 2019 entre
+>   Enresa y los titulares.
+>
+> Vandellós II lo enseña de un vistazo: autorizado hasta 2030, acordado para
+> 2035. Meterlo todo en un campo obligaría a elegir cuál es «la» fecha, y quien
+> lea el mapa no sabría cuál está viendo.
+>
+> **Un reactor por registro, aunque compartan emplazamiento.** Almaraz I y II
+> tienen autorizaciones, fechas y potencias distintas: son dos hechos, no uno.
+> Comparten coordenada, y eso se dice — separarlos en el mapa exigiría una
+> fuente que sitúe cada edificio, y no la hay (§6.6).
 
 **minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado):
 `materias[]` (✔) · `caracter` (✔, vocabulario) · `distritos[]` · `sym` (etiqueta
@@ -668,6 +695,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.6.0** | 2026-08-06 | **Aditiva.** Entra la capa `nuclear` (§10), la primera que estrena el mecanismo sin ser la primera capa del atlas: `grupo`, `potencia_mw`, `tecnologia`, `titulares[]`, `fase` y **dos campos de fecha** —`autorizacion_hasta`, de la orden del BOE, y `cierre_acordado`, del calendario de 2019—, que son hechos distintos y en España no coinciden. Su `categoria` en §9 y su fila en la tabla de `activo` de §6.5, sin la cual un reactor no respondería al filtro de explotación, que es justo la pregunta que sí se le hace. La regla de un registro **por reactor** aunque compartan emplazamiento, y por qué comparten coordenada, queda escrita en §10. |
 | **1.5.0** | 2026-08-05 | **`vigilar.py` existe.** Se retira la declaración de pendiente que puso la 1.4.0: la guardia semanal está construida, con su `vigilar.yml`. §7 se reescribe con lo que la implementación obligó a decidir y a admitir. Decidido: **avisa fallando, no abriendo issues** —eso habría costado permiso de escritura sobre un repositorio público—, y **«muerta» es solo 404 y 410**, porque un vigilante que grita por el 403 anti-bot de un ministerio acaba apagado. Admitido, y esto es lo que más importa: **EUR-Lex y el IGME devuelven 200 para documentos que no existen**. Donde la URL promete formato el engaño se detecta; donde no, **no hay comprobación posible** y la guardia lo imprime cada vez que corre. Con esto el contrato no tiene ninguna pieza sin implementar salvo **R8**, que sigue esperando a `minerales-dominios` (§6.5). |
 | **1.4.0** | 2026-08-05 | **Aditiva, y sobre todo correctora.** Lo importante no es lo que añade sino lo que **deja de afirmar**: seis lugares de este repo daban por construido `pipeline/vigilar.py` —y su `vigilar.yml`— en presente y sin matizar, incluido el README público. No existen. §7 gana su bloque de estado, redactado como el de R8 en §6.5, y §2, §3 y §12.6 dejan de darlo por hecho. Mientras no exista, **nadie vigila la caducidad de una capa ni la muerte de una URL**, y eso ahora está dicho donde se afirma en vez de descubrirse por su ausencia — que es la regla que §8 se impone a sí mismo. Lo que se añade: `pipeline/consultar.py` en §2 (consulta al IGN y al catastro, contrasta, **nunca escribe**), `.cache/` con su distinción entre copia de trabajo y cita, y en §6.6 el **contraste de municipio**, que es la comprobación que R9 no puede hacer porque exige salir a la red. La regla de estructura pasa a «valida, vigila y consulta; nunca genera datos». |
 | **1.3.0** | 2026-08-05 | **Aditiva.** La geometría entra en la doctrina. `geo_fuente` admite `__v`/`__f` (§5); nuevo §6.6 con la tabla de qué precisión concede cada clase de fuente, el CRS como parte de la cita, y la regla **R9** (§6.4), que exige fuente primaria a toda `geo_precision` de `exacta` o `paraje` — con su implementación en `validar.py` y sus dos fixtures, no declarada y pendiente. §9: `paraje` y `exacta` se redefinen para distinguir la fuente del **nombre del lugar** de la del **objeto**; ningún registro publicado usaba ninguno de los dos, así que no hay nada que migrar. §8: sufijo `.N` para una segunda release en el mismo mes. Salió de la deuda de geometría de F1: once puntos honestos, pero con la única procedencia del atlas que nadie podía comprobar. **§6.6 lleva además una lección aprendida tocando la fuente**, no escribiendo el contrato: un punto representativo no hereda la precisión de su polígono, así que `exacta` es inalcanzable mientras la capa sea de puntos. |

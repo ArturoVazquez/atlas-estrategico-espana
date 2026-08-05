@@ -1,7 +1,7 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación: el visor no reordena ni traduce, lee de aquí.",
-  "schema_version": "1.3.0",
-  "actualizado": "2026-08-05",
+  "schema_version": "1.6.0",
+  "actualizado": "2026-08-06",
 
   "registro": {
     "verif": [
@@ -98,6 +98,11 @@
       { "valor": "estrategico_ue", "etiqueta": "Proyecto Estratégico UE (CRMA)" },
       { "valor": "produccion_singular", "etiqueta": "Producción singular en la UE" },
       { "valor": "en_disputa", "etiqueta": "Yacimiento en disputa" }
+    ],
+    "nuclear": [
+      { "valor": "en_operacion", "etiqueta": "En operación" },
+      { "valor": "en_cese", "etiqueta": "En cese de explotación" },
+      { "valor": "desmantelamiento", "etiqueta": "En desmantelamiento" }
     ],
     "minerales-dominios": [
       { "valor": "activo", "etiqueta": "Producción activa" },

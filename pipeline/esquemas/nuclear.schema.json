@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/nuclear.schema.json",
+  "title": "Extensión de capa · nuclear",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json, sin repetir el núcleo (§7.1). Un registro por REACTOR, no por central: cada grupo tiene su propia autorización, su fecha y su potencia.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "El emplazamiento. Dos grupos de la misma central comparten coordenada: separarlos exigiría una fuente que sitúe cada edificio, y no la hay (§6.6)."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["grupo", "municipio", "provincia", "fase"],
+            "properties": {
+              "grupo": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El reactor dentro de su emplazamiento: «I», «II», o el nombre de la central cuando es de un solo grupo. Es lo que distingue dos registros que comparten punto."
+              },
+              "municipio": { "type": "string", "minLength": 1 },
+              "provincia": { "type": "string", "minLength": 1 },
+              "potencia_mw": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Potencia eléctrica en MW, tal y como la publica la fuente. No se redondea: si el ministerio dice 1.049,40, se escribe 1049.4."
+              },
+              "tecnologia": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Tipo de reactor (PWR, BWR…). Texto libre a propósito: es lo que dice la fuente, no un enum del atlas."
+              },
+              "titulares": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "minLength": 1 },
+                "description": "Sociedades titulares con su porcentaje, como las publica la fuente. Titular y explotador pueden ser distintos; el explotador va en `claves` si consta."
+              },
+              "fase": {
+                "type": "string",
+                "description": "Campo CONTROLADO del que se deriva `activo` (§6.5). Se comprueba contra el vocabulario `fase`."
+              },
+              "autorizacion_hasta": {
+                "type": "string",
+                "format": "date",
+                "description": "Hasta cuándo está LEGALMENTE autorizado a operar, según la orden ministerial del BOE. Ojo: hay órdenes que dan la fecha literal y otras que dicen «validez de diez años» desde una fecha — en esas, este valor es una DERIVACIÓN aritmética y no puede ir como `confirmado`."
+              },
+              "cierre_acordado": {
+                "type": "string",
+                "format": "date",
+                "description": "La fecha del calendario pactado en 2019 entre Enresa y los titulares. NO es lo mismo que `autorizacion_hasta` y a menudo no coincide: Vandellós II está autorizado hasta 2030 y acordado para 2035."
+              },
+              "nombre_oficial": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El nombre en el instrumento que lo autoriza, cuando difiere del corriente: la orden del BOE dice «Central Nuclear Trillo I»."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
