@@ -1,8 +1,15 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.0.0 · **Fecha:** 2026-07-22
+**Versión del contrato:** 1.1.0 · **Fecha:** 2026-08-05
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
+
+> **Qué añade la 1.1.0** (aditiva; ningún consumidor de la 1.0.0 se rompe) —
+> formaliza lo que `DECISIONES.md` D2/D3/D4 acordaron y este documento aún no
+> recogía: el campo `arbol` y el `ambito` en el manifiesto (§3), la clase de
+> registro `analisis` (§3), las entradas `en_preparacion` (§3), el campo
+> **derivado** `activo` con su tabla de mapeo normativa (§6.5) y el campo
+> controlado `fase` del que se deriva (§10). Historial completo en §13.
 
 ---
 
@@ -29,10 +36,16 @@ el código se adapta al contrato, nunca al revés.
 ## 2 · Estructura del repositorio
 
 ```
-atlas/
+atlas-estrategico-espana/
 ├── CONTRATO-DATOS.md          ← este documento
 ├── CHANGELOG-DATOS.md         ← una entrada por release de datos
+├── DECISIONES.md              ← el porqué de cada decisión
+├── PLAN.md                    ← fases y criterios de hecho
+├── CLAUDE.md                  ← guía de trabajo
+├── README.md                  ← el escaparate público
+├── LICENSE                    ← MIT, solo para el CÓDIGO
 ├── datos/
+│   ├── LICENCIA-DATOS.md      ← CC BY 4.0, y qué obliga (licencias contagiosas)
 │   ├── manifest.json          ← registro de capas (la app lee de aquí)
 │   ├── vocabularios.json      ← vocabularios controlados (enums)
 │   └── capas/
@@ -45,16 +58,26 @@ atlas/
 │   └── 2026-07-22_ce_lista-crma-1.pdf     (fecha-captura_emisor_titulo.ext)
 ├── pipeline/
 │   ├── esquemas/              ← JSON Schema: nucleo.schema.json + uno por capa
+│   ├── pruebas/               ← fixtures: uno válido y uno por regla de §6.4
 │   ├── validar.py             ← esquema + reglas de doctrina (§7)
 │   └── vigilar.py             ← comprobación de URLs y caducidad (avisa, no escribe)
-└── app/                       ← el visor (consume datos/ por release etiquetada)
+├── referencia/                ← la demo v4: canon de interacción, no de código
+├── app/                       ← el visor (consume datos/ por release etiquetada)
+└── .github/workflows/         ← validar.yml (cada PR) · vigilar.yml (semanal)
 ```
 
 Reglas de la estructura:
 
 - `datos/` es **curado a mano**; `pipeline/` **valida y vigila, nunca genera datos**.
 - Toda fuente citada por URL se **archiva** en `fuentes/` en el momento de la cita.
+  `fuentes/` **jamás** entra en `.gitignore`: es la cita.
 - La app **no lee ficheros vivos**: lee la última release etiquetada (§8).
+- **Licencias separadas:** MIT para el código, CC BY 4.0 para los datos. Esa
+  segunda elección prohíbe incorporar datasets con licencia contagiosa
+  (*ShareAlike* / *NonCommercial*); ver `datos/LICENCIA-DATOS.md`.
+- **Finales de línea LF** en todo el repo (`.gitattributes`). Un CRLF colado
+  reescribe ficheros enteros en el diff y destruye la trazabilidad de una
+  corrección, que es el argumento del principio 6.
 
 ---
 
@@ -65,13 +88,15 @@ fichero y su entrada aquí. La app construye el panel desde el manifiesto.
 
 ```json
 {
-  "schema_version": "1.0.0",
-  "release": "2026.07",
+  "schema_version": "1.1.0",
+  "release": "2026.08",
   "capas": [
     {
       "id": "minerales-proyectos",
       "titulo": "Minerales críticos — proyectos",
+      "arbol": "minerales",
       "grupo": "actividad",
+      "ambito": "espana",
       "geometria": "puntos",
       "registro": "verificado",
       "cadencia_revision_dias": 120,
@@ -80,6 +105,13 @@ fichero y su entrada aquí. La app construye el panel desde el manifiesto.
       "fichero": "capas/minerales-proyectos.geojson",
       "licencia": "CC-BY-4.0",
       "atribucion": "Atlas Estratégico de España"
+    },
+    {
+      "id": "renovable-provincia",
+      "titulo": "Renovable instalada por provincia",
+      "arbol": "energia",
+      "grupo": "dotacion",
+      "en_preparacion": true
     }
   ]
 }
@@ -87,11 +119,19 @@ fichero y su entrada aquí. La app construye el panel desde el manifiesto.
 
 | Campo | Valores / notas |
 |---|---|
+| `arbol` | **(1.1)** dominio bajo el que cuelga la capa en el panel: `minerales` · `energia` · `conectividad` · `tablero` · `intangibles`. Es la organización visible (D3). |
 | `grupo` | `dotacion` (lo que tiene) · `actividad` (lo que se trabaja). Abierto a nuevos grupos por versión menor. |
+| `ambito` | **(1.1)** `espana` (por defecto si se omite) · `mundo`. Relaja la comprobación de bbox de §7.4: una capa de ámbito mundo no se valida contra el recuadro de España. |
 | `geometria` | `puntos` · `poligonos` · `lineas` · `mixta` |
-| `registro` | `verificado` (fichas con doctrina completa) · `ilustrativo` (dibuja dónde, no cuánto ni de quién) |
+| `registro` | `verificado` (fichas con doctrina completa) · `ilustrativo` (dibuja dónde, no cuánto ni de quién) · **(1.1)** `analisis` (investigación u opinión **sellada como tal**, con su `debate_url` al hilo donde se defiende — nunca se presenta como hecho) |
 | `cadencia_revision_dias` | umbral tras el cual la capa se considera caducada; el visor lo muestra, `vigilar.py` avisa |
 | `version` | semver de la **capa**: parche = corrección de valores; menor = registros o campos nuevos; mayor = cambio de esquema |
+| `en_preparacion` | **(1.1)** `true` = rama declarada pero sin datos. **El mapa declara su horizonte** (D4): el panel la pinta en gris, no cargable. Una entrada `en_preparacion` solo exige `id`, `titulo`, `arbol` y `grupo`; el resto de campos se rellenan cuando la capa nace. |
+
+**Regla del horizonte:** una capa con `en_preparacion: true` **no puede** declarar
+`fichero`. El día que tiene datos, se le quita la marca y se le añaden `fichero`,
+`geometria`, `registro`, `version` y `verificado_a`. Eso es una versión menor de
+manifiesto, no un cambio de contrato.
 
 ---
 
@@ -212,12 +252,78 @@ Afirmaciones sueltas con su propio estado, sin abrir un campo nuevo por cada una
 
 ### 6.4 Reglas de coherencia (se validan en CI, §7)
 
-- `verif: confirmado` del registro ⇒ existe al menos una fuente `primaria`.
-- Un campo con `__v: confirmado` ⇒ su `__f` apunta a una fuente `primaria`.
-- Una fuente `corporativa` o `prensa` **no puede** ser la `__f` de un valor `confirmado`.
-- Existe una fuente `tipo: hueco` ⇒ el registro no puede ser `confirmado` global.
-- `registro: ilustrativo` en el manifiesto ⇒ la capa no declara `__v` por campo y
-  toda su geometría es `geo_precision: ilustrativa`; su ficha lo dice.
+Van numeradas **desde la 1.1** para que `validar.py` pueda nombrarlas en el
+mensaje de error: un fallo de doctrina debe decir *qué doctrina*, no soltar un
+error de esquema genérico.
+
+| | Regla |
+|---|---|
+| **R1** | `verif: confirmado` del registro ⇒ existe al menos una fuente `primaria`. |
+| **R2** | Un campo con `__v: confirmado` ⇒ su `__f` apunta a una fuente `primaria`. |
+| **R3** | Una fuente `corporativa` o `prensa` **no puede** ser la `__f` de un valor `confirmado`. |
+| **R4** | Existe una fuente `tipo: hueco` ⇒ el registro no puede ser `confirmado` global. |
+| **R5** | `registro: ilustrativo` en el manifiesto ⇒ la capa no declara `__v` por campo y toda su geometría es `geo_precision: ilustrativa`; su ficha lo dice. |
+| **R6** *(1.1)* | Todo `__v` y todo `__f` acompañan a un campo que existe, y todo `__f` apunta a un `id` que existe en `fuentes`. Un metadato huérfano es un dato que nadie sostiene. |
+| **R7** *(1.1)* | Ningún fichero de datos contiene el campo `activo`: es **derivado** (§6.5). Escribirlo a mano es la doble fuente de verdad que D3 descartó. |
+
+R2 y R3 son la misma frontera vista desde los dos lados, y así se validan: R2
+comprueba que el confirmado tiene detrás una primaria; R3, que ninguna prensa o
+corporativa se cuela por debajo. Se mantienen separadas porque los mensajes de
+error que producen son distintos y ambos son útiles.
+
+### 6.5 · El campo derivado `activo` *(1.1)*
+
+`activo` responde a una sola pregunta: **¿esto está en explotación hoy?** Es el
+filtro transversal que corta a través de los árboles (D3).
+
+**No se escribe: se calcula.** No aparece en ningún `.geojson` de `datos/` (R7);
+lo materializa el consumidor —el visor, o `validar.py` al comprobar— aplicando
+esta tabla. La razón está en D3: un booleano editable a mano junto a un campo de
+estado son dos fuentes de verdad que acaban contradiciéndose.
+
+| Capa | `activo` se deriva de | `true` cuando |
+|---|---|---|
+| `minerales-proyectos` | `fase` (§10, vocabulario) | `fase == "produccion"` |
+| `minerales-dominios` | `caracter` (§10, vocabulario) | `caracter ∈ {activo, mixto}` |
+| `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
+| `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
+| `tablero` (límites y soberanía) | — | **no aplica**, por el mismo motivo. |
+
+Una capa cuya fila diga «no aplica» devuelve `null`, no `false`. La diferencia
+importa: `false` afirma que algo está parado; `null` dice que la pregunta no se
+le hace a esa capa. El filtro de la interfaz solo esconde `false`.
+
+**Por qué `fase` y no el `estado_proyecto` que ya existe.** `estado_proyecto` es
+texto libre en voz del atlas («Reactivación del único yacimiento de níquel
+explotado en España») y el texto libre no puede gobernar un filtro sin adivinar.
+La 1.1 añade `fase`, un campo **controlado** que lleva su propio `__v`/`__f` como
+cualquier otro dato. Los dos conviven: `fase` es la máquina, `estado_proyecto` es
+la prosa.
+
+#### El matiz abierto de D3, cerrado
+
+D3 dejó anotado el problema: al filtrar «en explotación», un dominio marcado
+`desarrollo` desaparece **aunque contenga una mina viva**.
+
+La salida **no** es hacer que `activo` del dominio mire dentro de sí. Eso
+enmascararía el problema al pintar, dejando el dato mal en el fichero. Si un
+dominio alberga un registro en producción, entonces su `caracter` correcto es
+`mixto` —que existe precisamente para eso— y declararlo `desarrollo` es
+sencillamente un **error de dato**.
+
+Así que se convierte en una comprobación, no en una derivación:
+
+| | Regla |
+|---|---|
+| **R8** *(1.1)* | Un polígono de `minerales-dominios` con `caracter ∈ {desarrollo, historico}` **no puede contener** un registro de `minerales-proyectos` con `fase == "produccion"`. Si lo contiene, su `caracter` es `mixto` o `activo`. |
+
+Esto atrapa la mentira en el fichero en lugar de disimularla en pantalla, que es
+la doctrina del proyecto entera en miniatura.
+
+> **Estado de R8:** normativa desde la 1.1, **implementada en `validar.py` cuando
+> exista la capa `minerales-dominios`** (fase F3 del plan). Es la única regla de
+> este documento que hoy no tiene diente, y queda dicho aquí en vez de
+> descubrirse por su ausencia. Las ocho restantes corren desde F0.
 
 ---
 
@@ -229,13 +335,26 @@ ser prosa y pasa a ser test:
 1. **Esquema:** cada capa valida contra `nucleo.schema.json` + su extensión.
 2. **Identidad:** `slug` únicos por capa; `id` = `capa:slug`; ids nunca
    desaparecen entre releases (solo cambian de `estado_registro`).
-3. **Doctrina:** las reglas de §6.4, mecánicamente.
-4. **Geometría:** WGS84 plausible (bbox de España), ≤5 decimales, anillos
-   cerrados y orientados según RFC.
-5. **Fechas:** `fecha_verificacion` ≥ `fecha_alta`; formato ISO-8601.
+3. **Doctrina:** las reglas **R1–R7** de §6.4, mecánicamente. El mensaje de error
+   **nombra la regla** (`R3: la fuente f2 es de tipo prensa…`), no describe un
+   fallo de esquema: quien lo lee tiene que poder ir al contrato.
+4. **Geometría:** WGS84 plausible, ≤5 decimales, anillos cerrados y orientados
+   según RFC. El recuadro de plausibilidad depende del `ambito` de la capa
+   *(1.1)*: `espana` valida contra el bbox del territorio —**Canarias incluidas**,
+   `[-18.3, 27.5, 4.4, 43.9]`—; `mundo` solo contra el rango legal de WGS84.
+5. **Fechas:** `fecha_verificacion` ≥ `fecha_alta`; formato ISO-8601; ninguna
+   fecha en el futuro *(1.1)*.
 6. **Vocabularios:** todo enum contra `vocabularios.json`.
 7. **Archivo de fuentes:** toda fuente con `url` y tipo ≠ `hueco` referencia un
    `archivo` existente en `fuentes/` (aviso, no bloqueo, durante la v1).
+8. **Manifiesto** *(1.1)*: cada capa con `fichero` apunta a un fichero que existe;
+   el `atlas.capa` de la colección coincide con el `id` del manifiesto; una capa
+   `en_preparacion` no declara `fichero` (regla del horizonte, §3).
+
+**Aviso vs. bloqueo.** La comprobación 7 avisa y no rompe el CI mientras dure la
+v1 —hay citas que se archivan con retraso—; el resto **bloquea**. `validar.py`
+distingue las dos cosas en la salida y solo devuelve código ≠ 0 por las que
+bloquean.
 
 `pipeline/vigilar.py` corre programado (Action semanal): URLs muertas y capas que
 superan su `cadencia_revision_dias` → abre issue. **Avisa; jamás escribe datos.**
@@ -264,7 +383,15 @@ superan su `cadencia_revision_dias` → abre issue. **Avisa; jamás escribe dato
 | Añadir valor a un vocabulario | menor de contrato | acto deliberado en `vocabularios.json` |
 | Añadir capa o grupo | menor de manifiesto | entrada en manifiesto + esquema propio |
 | Punto → polígono del mismo registro | menor de capa | mismo `id`, `geo_precision` y `geo_fuente` actualizados |
+| Declarar una rama `en_preparacion` *(1.1)* | menor de manifiesto | solo `id`, `titulo`, `arbol`, `grupo`; **sin `fichero`** |
+| Una rama `en_preparacion` nace con datos *(1.1)* | menor de manifiesto | se retira la marca y se añaden `fichero`, `geometria`, `registro`, `version`, `verificado_a` |
+| Añadir una regla de coherencia `R*` *(1.1)* | menor de contrato | entra con su implementación en `validar.py`, **o con su estado declarado** si aún no la tiene (como R8) |
 | Renombrar/eliminar campo o cambiar semántica | **mayor de contrato** | prohibido sin migración documentada |
+
+**El contrato no puede mentir sobre sí mismo.** Una regla escrita aquí que el CI
+no comprueba es prosa disfrazada de garantía — el fallo exacto que este documento
+existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado
+(hoy: solo R8), y por eso §7 separa lo que avisa de lo que bloquea.
 
 ---
 
@@ -272,16 +399,36 @@ superan su `cadencia_revision_dias` → abre issue. **Avisa; jamás escribe dato
 
 `datos/vocabularios.json` — añadir valores es versión menor de contrato:
 
+**Del registro:**
+
 - `verif`: `confirmado` · `parcial` · `no_verificado`
 - `estado_registro`: `vigente` · `historico` · `retirado`
 - `geo_precision`: `exacta` · `paraje` · `municipio` · `ilustrativa`
 - `fuente.tipo`: `primaria` · `prensa` · `corporativa` · `hueco`
-- `grupo` (manifiesto): `dotacion` · `actividad`
-- `categoria` por capa:
-  - *minerales-proyectos*: `estrategico_ue` · `produccion_singular` · `en_disputa`
-  - *minerales-dominios*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
-  - *cables-submarinos*: `aterrizaje` · `trazado`
-  - *recurso-eolico* / *recurso-solar*: `zona`
+- `fase` *(1.1)*: `produccion` · `desarrollo` · `tramitacion` · `parado` · `cerrado`
+
+**Del manifiesto:**
+
+- `grupo`: `dotacion` · `actividad`
+- `arbol` *(1.1)*: `minerales` · `energia` · `conectividad` · `tablero` · `intangibles`
+- `ambito` *(1.1)*: `espana` · `mundo`
+- `registro`: `verificado` · `ilustrativo` · `analisis` *(1.1)*
+- `geometria`: `puntos` · `poligonos` · `lineas` · `mixta`
+
+**`categoria`, por capa:**
+
+- *minerales-proyectos*: `estrategico_ue` · `produccion_singular` · `en_disputa`
+- *minerales-dominios*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
+- *cables-submarinos*: `aterrizaje` · `trazado`
+- *recurso-eolico* / *recurso-solar*: `zona`
+
+> **`fase` y `categoria` no son lo mismo, aunque compartan palabras.**
+> `categoria` dice **qué clase de cosa es** un registro (por qué está en el
+> atlas); `fase` dice **en qué punto de su vida está** (§6.5). Una mina puede ser
+> `estrategico_ue` y estar en `tramitacion`, o dejar de estarlo sin cambiar de
+> categoría. Que `minerales-dominios` use `caracter` con valores parecidos a
+> `fase` es deliberado: un dominio no tiene fases, tiene carácter — describe una
+> comarca entera, no un expediente.
 
 ---
 
@@ -290,7 +437,8 @@ superan su `cadencia_revision_dias` → abre issue. **Avisa; jamás escribe dato
 **minerales-proyectos** (`actividad`, puntos, verificado):
 `materias[]` (✔) · `tipo_proyecto` (✔: extracción / procesamiento / refino /
 reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` (+`__v`,`__f`)
-· `estado_proyecto` (+`__v`,`__f`,`_fecha`) · `claves[]`
+· **`fase`** (✔ *(1.1)*, vocabulario; +`__v`,`__f`) · `estado_proyecto`
+(+`__v`,`__f`,`_fecha`) · `claves[]`
 
 **minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado):
 `materias[]` (✔) · `caracter` (✔, vocabulario) · `distritos[]` · `sym` (etiqueta
@@ -331,8 +479,11 @@ apartado aquí y su esquema en `pipeline/esquemas/`.)*
     "municipio": "Monesterio",
     "provincia": "Badajoz",
     "promotor": "Río Narcea Recursos",
-    "promotor__v": "confirmado",
+    "promotor__v": "parcial",
     "promotor__f": "f2",
+    "fase": "desarrollo",
+    "fase__v": "parcial",
+    "fase__f": "f1",
     "estado_proyecto": "Reactivación en curso",
     "estado_proyecto__v": "parcial",
     "estado_proyecto__f": "f1",
@@ -354,10 +505,15 @@ apartado aquí y su esquema en `pipeline/esquemas/`.)*
 }
 ```
 
-*(Obsérvese que `promotor__v: confirmado` con `promotor__f: f2` —prensa— violaría
-§6.4 y el CI lo rechazaría: en el dato real habría que localizar fuente primaria
-del promotor o degradar a `parcial`. El ejemplo con f2 en prensa exigiría
-`promotor__v: parcial`.)*
+**Este ejemplo valida.** Es literalmente el fixture `pipeline/pruebas/valido.geojson`
+que el CI pasa en verde — no una ilustración aproximada. Si el contrato y el
+fixture se separan alguna vez, el error está en el contrato.
+
+*(Obsérvese `promotor__v: parcial` con `promotor__f: f2`. La fuente f2 es prensa,
+y por **R3** no puede sostener un `confirmado`: elevar ese campo exigiría
+localizar fuente primaria del promotor —registro mercantil, catastro minero—, no
+reescribir el estado. `fase: desarrollo` también queda en `parcial` por lo mismo.
+Un dato solo sube de rango cuando sube su evidencia.)*
 
 ---
 
@@ -372,3 +528,27 @@ del promotor o degradar a `parcial`. El ejemplo con f2 en prensa exigiría
 6. **`vigilar.py` avisa y jamás escribe** → el criterio humano firma; la máquina
    instruye (compatible con el futuro pipeline de expedientes).
 7. **Nada se borra**: `estado_registro` + historial Git.
+8. **`activo` es derivado, no escrito** *(1.1)* → una sola fuente de verdad (D3).
+   Y el campo del que se deriva, `fase`, es **controlado**: un filtro no puede
+   colgar de texto libre sin adivinar.
+9. **Las reglas de doctrina van numeradas** *(1.1)* → un error de CI nombra la
+   regla y manda al contrato. Una violación de doctrina que se reporta como
+   error de esquema no enseña nada a quien la comete.
+10. **El horizonte se declara en el manifiesto** *(1.1)* → `en_preparacion`
+    convierte «lo que falta» en dato consultable en vez de en una promesa suelta
+    en un README (D4).
+
+---
+
+## 13 · Historial del contrato
+
+| Versión | Fecha | Qué cambió |
+|---|---|---|
+| **1.1.0** | 2026-08-05 | **Aditiva.** Manifiesto: `arbol`, `ambito`, `en_preparacion`, `registro: analisis` (§3). Reglas de doctrina numeradas R1–R5 y ampliadas con **R6** (metadato huérfano), **R7** (`activo` no se escribe) y **R8** (dominio que contradice a la mina que contiene, sin diente hasta F3) (§6.4). Nuevo §6.5: el campo derivado `activo` y su tabla de mapeo, cerrando el matiz abierto de D3. Nuevo campo controlado `fase` en `minerales-proyectos` (§10) y su vocabulario (§9). §7: bbox según `ambito`, fechas no futuras, comprobación del manifiesto, y separación explícita entre avisar y bloquear. §11: el ejemplo canónico pasa a **validar de verdad** y es el fixture del CI. |
+| **1.0.0** | 2026-07-22 | Contrato inicial: GeoJSON RFC 7946 WGS84, manifiesto de capas, propiedades planas, campos en español, sufijos `__v`/`__f`, fuentes tipadas, doctrina como validación de CI, releases etiquetadas, nada se borra. |
+
+**Compatibilidad 1.0.0 → 1.1.0.** Ningún campo se renombró ni cambió de
+semántica; todo lo nuevo es opcional salvo `fase`, que es obligatorio en una capa
+—`minerales-proyectos`— que **todavía no tiene datos publicados**. No hay nada
+que migrar: la 1.1 llega antes que el primer dato, que era exactamente el momento
+de hacerla.

@@ -33,7 +33,14 @@ confirmado**; doctrina como validación de CI; releases etiquetadas
 **Extensiones v1.1 acordadas:** campo `arbol` en manifiesto; campo `activo`
 **derivado** (ver D3); clase de registro `analisis`; campo `ambito`
 (`espana`/`mundo`); entradas `en_preparacion` en el manifiesto.
-**Pendiente:** redactar la v1.1 del documento incorporándolas formalmente.
+~~**Pendiente:** redactar la v1.1 del documento incorporándolas formalmente.~~
+**HECHO (2026-08-05):** contrato v1.1.0, con su historial en §13. Todas las
+extensiones acordadas quedan formalizadas, más tres que no estaban previstas y
+salieron al escribirla: las reglas de doctrina **numeradas** (R1–R8, para que un
+error de CI nombre la regla y no suelte un fallo de esquema), la separación
+explícita entre lo que **avisa** y lo que **bloquea** en §7, y el ejemplo
+canónico del §11 convertido en el **fixture real** que corre en CI — un ejemplo
+que no valida es una trampa esperando a alguien.
 
 ## D3 · Árboles por dominio; actividad como filtro derivado (ago 2026)
 
@@ -45,9 +52,21 @@ contrato y comprobado por CI.
 **Descartado:** árboles por "activo/no activo" (el estado es mutable → mudanzas
 de árbol y duplicados; el propio boceto ponía cables en ambos) y un booleano
 `activo` editable a mano (dos fuentes de verdad → contradicciones).
-**Matiz abierto (observado en la demo):** al filtrar por activo, un dominio "en
-desarrollo" desaparece aunque contenga un punto activo; decidir si el dominio
-debe permanecer cuando algo vivo late dentro.
+**Matiz CERRADO (2026-08-05, contrato v1.1 §6.5):** el dominio **no** mira
+dentro de sí. Hacer que su `activo` dependa de lo que contiene arreglaría la
+pantalla dejando el fichero mal. Si un dominio alberga una explotación viva, su
+`caracter` correcto es `mixto` —que existe para eso— y declararlo `desarrollo`
+es un error de dato. Así que el matiz se convierte en **regla R8**: un dominio
+`desarrollo`/`historico` no puede contener un proyecto en `fase: produccion`, y
+el CI lo comprueba. Atrapa la mentira en el origen en vez de disimularla al
+pintar.
+**Consecuencia no prevista, y buena:** `activo` no podía derivarse de
+`estado_proyecto`, que es texto libre en voz del atlas. La v1.1 añade **`fase`**,
+campo controlado con su propio `__v`/`__f`, del que sí se deriva. La prosa y la
+máquina conviven en campos distintos en lugar de pelearse en uno.
+**Deuda declarada:** R8 es la única regla del contrato sin implementar (necesita
+la capa `minerales-dominios`, F3). Está escrita como tal en §6.5 y §8 — el
+contrato no puede afirmar garantías que el CI no da.
 
 ## D4 · Alcance: taxonomía completa, publicación por releases (ago 2026)
 
