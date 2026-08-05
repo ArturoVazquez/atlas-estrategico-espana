@@ -17,5 +17,12 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Copias de trabajo de `consultar.py` (CSV provinciales del catastro minero).
+# Se ignoran a propósito, y la distinción es la del contrato: una copia de
+# trabajo NO es una cita. La cita es el extracto curado que se archiva a mano en
+# `fuentes/`, con su título y su fecha de captura. Si esto se versionara, el repo
+# tendría dos copias de la misma fuente y solo una sería la citada.
+.cache/
+
 # Nota: `fuentes/` SÍ se versiona. Es el archivo documental del contrato
 # (§2: «las URLs se pudren; esto no»). No se ignora nunca.

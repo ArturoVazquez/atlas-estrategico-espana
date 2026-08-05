@@ -39,5 +39,12 @@ jobs:
       - name: Probar el validador (las reglas de §6.4 y las comprobaciones de §7)
         run: python pipeline/pruebas/correr.py
 
+      # `consultar.py` NO corre en CI: consulta al IGN y al catastro, y un
+      # contrato que se cae porque un ministerio está de mantenimiento no es un
+      # contrato. Lo que sí corre es su punto-en-polígono, que es geometría pura
+      # y offline — y es lo que decide si una coordenada se acepta.
+      - name: Probar el punto-en-polígono de consultar.py (offline)
+        run: python pipeline/pruebas/correr-consultar.py
+
       - name: Validar el manifiesto y las capas publicadas
         run: python pipeline/validar.py
