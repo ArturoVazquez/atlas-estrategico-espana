@@ -356,6 +356,15 @@ Quedarse en `municipio` es un resultado legítimo: es el hueco del principio 1
 aplicado a la geometría. Lo que no es legítimo es ascender de rango sin que
 ascienda la evidencia — el mismo criterio que gobierna todos los demás campos.
 
+**Un punto representativo no hereda la precisión del polígono del que sale.**
+Un perímetro de fuente primaria concede `exacta` **a ese perímetro**, no a un
+punto sacado de él: el centroide de una concesión minera de 28 km² no es una
+coordenada de nada, y el de un derecho **multiparte** puede caer donde no hay
+derecho ninguno (las dos cosas, comprobadas sobre el catastro minero al abrir
+esta capa). Consecuencia práctica, y conviene decirla entera: **mientras una
+capa sea de puntos, `exacta` es inalcanzable por construcción.** Se llega a ella
+ascendiendo la geometría a polígono (§8), no reetiquetando el punto.
+
 **El CRS es parte de la cita, no un detalle de taller.** Los derechos mineros
 españoles vienen históricamente en **ED50**, y ED50→ETRS89 en la Península
 desplaza del orden de 100-200 m. Una coordenada mal transformada cae fuera de la
@@ -407,7 +416,10 @@ superan su `cadencia_revision_dias` → abre issue. **Avisa; jamás escribe dato
 ## 8 · Versionado y releases
 
 - **Release de datos:** etiqueta Git `datos-vAAAA.MM` (p. ej. `datos-v2026.07`).
-  El visor consume siempre una release etiquetada, nunca la rama viva.
+  El visor consume siempre una release etiquetada, nunca la rama viva. Si en un
+  mismo mes sale una segunda release, lleva sufijo `.N` empezando en 1
+  (`datos-v2026.08.1`) *(1.3)*. La etiqueta ya publicada **no se mueve ni se
+  reescribe**: el sufijo existe precisamente para no tener que tocarla.
 - **Por release:** una entrada en `CHANGELOG-DATOS.md` — qué cambió, por qué, con
   qué evidencia. Esa entrada alimenta la respuesta en el hilo de El Tercio.
 - **Semver de contrato** (este documento) y **semver por capa** (manifiesto)
@@ -611,7 +623,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
-| **1.3.0** | 2026-08-05 | **Aditiva.** La geometría entra en la doctrina. `geo_fuente` admite `__v`/`__f` (§5); nuevo §6.6 con la tabla de qué precisión concede cada clase de fuente, el CRS como parte de la cita, y la regla **R9** (§6.4), que exige fuente primaria a toda `geo_precision` de `exacta` o `paraje` — con su implementación en `validar.py` y sus dos fixtures, no declarada y pendiente. §9: `paraje` y `exacta` se redefinen para distinguir la fuente del **nombre del lugar** de la del **objeto**; ningún registro publicado usaba ninguno de los dos, así que no hay nada que migrar. Salió de la deuda de geometría de F1: once puntos honestos, pero con la única procedencia del atlas que nadie podía comprobar. |
+| **1.3.0** | 2026-08-05 | **Aditiva.** La geometría entra en la doctrina. `geo_fuente` admite `__v`/`__f` (§5); nuevo §6.6 con la tabla de qué precisión concede cada clase de fuente, el CRS como parte de la cita, y la regla **R9** (§6.4), que exige fuente primaria a toda `geo_precision` de `exacta` o `paraje` — con su implementación en `validar.py` y sus dos fixtures, no declarada y pendiente. §9: `paraje` y `exacta` se redefinen para distinguir la fuente del **nombre del lugar** de la del **objeto**; ningún registro publicado usaba ninguno de los dos, así que no hay nada que migrar. §8: sufijo `.N` para una segunda release en el mismo mes. Salió de la deuda de geometría de F1: once puntos honestos, pero con la única procedencia del atlas que nadie podía comprobar. **§6.6 lleva además una lección aprendida tocando la fuente**, no escribiendo el contrato: un punto representativo no hereda la precisión de su polígono, así que `exacta` es inalcanzable mientras la capa sea de puntos. |
 | **1.2.0** | 2026-08-05 | **Aditiva.** Campo opcional `nombre_oficial` (+`__v`,`__f`) en `minerales-proyectos` (§10). Salió de la propia F1: el nombre oficial del documento que reconoce un proyecto difiere del corriente en cinco de los siete españoles, y sin él la ficha no se puede contrastar contra el DOUE. Ningún consumidor de la 1.1 se rompe: es opcional. |
 | **1.1.0** | 2026-08-05 | **Aditiva.** Manifiesto: `arbol`, `ambito`, `en_preparacion`, `registro: analisis` (§3). Reglas de doctrina numeradas R1–R5 y ampliadas con **R6** (metadato huérfano), **R7** (`activo` no se escribe) y **R8** (dominio que contradice a la mina que contiene, sin diente hasta F3) (§6.4). Nuevo §6.5: el campo derivado `activo` y su tabla de mapeo, cerrando el matiz abierto de D3. Nuevo campo controlado `fase` en `minerales-proyectos` (§10) y su vocabulario (§9). §7: bbox según `ambito`, fechas no futuras, comprobación del manifiesto, y separación explícita entre avisar y bloquear. §11: el ejemplo canónico pasa a **validar de verdad** y es el fixture del CI. |
 | **1.0.0** | 2026-07-22 | Contrato inicial: GeoJSON RFC 7946 WGS84, manifiesto de capas, propiedades planas, campos en español, sufijos `__v`/`__f`, fuentes tipadas, doctrina como validación de CI, releases etiquetadas, nada se borra. |
