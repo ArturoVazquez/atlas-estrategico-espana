@@ -1,0 +1,612 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "minerales-proyectos",
+    "schema_version": "1.2.0",
+    "verificado_a": "2026-08-05"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:aguablanca",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "aguablanca",
+        "nombre": "Aguablanca",
+        "nombre_oficial": "Aguablanca Project",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "categoria": "estrategico_ue",
+        "descripcion": "Único yacimiento de níquel magmático explotado en España, en la banda de Ossa-Morena. Cerrado en 2016; la reactivación es el proyecto reconocido por la Comisión.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["cobalto", "pgm", "cobre", "niquel"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "promotor": "Rio Narcea Recursos S.A.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "desarrollo",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Reconocido como Proyecto Estratégico de la UE en la primera lista de la CRMA.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2025/840 de la Comisión, de 25 de marzo de 2025, por la que se reconocen determinados proyectos de materias primas críticas como proyectos estratégicos — anexo, punto 2",
+            "fecha": "2025-04-30",
+            "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
+            "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          }
+        ],
+        "nota": "El anexo del DOUE dice literalmente «proyecto de extracción en curso». «En curso» describe el proyecto, no la producción: por eso `fase` va marcada como no verificada."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:circular",
+      "geometry": { "type": "Point", "coordinates": [-6.9403, 37.2496] },
+      "properties": {
+        "slug": "circular",
+        "nombre": "CirCular",
+        "nombre_oficial": "CirCular",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "categoria": "estrategico_ue",
+        "descripcion": "Único proyecto español de la primera lista dedicado al reciclaje: recuperación de metales a partir de residuos de aparatos eléctricos y electrónicos.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["cobre", "niquel", "pgm"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["reciclaje"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Huelva",
+        "provincia": "Huelva",
+        "promotor": "Atlantic Copper SLU",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "desarrollo",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Reconocido como Proyecto Estratégico de la UE en la primera lista de la CRMA.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [
+          {
+            "k": "Dimensión anunciada",
+            "v": "410 M€ · 350 empleos · 60.000 t/año de RAEE",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2025/840 de la Comisión — anexo, punto 10",
+            "fecha": "2025-04-30",
+            "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
+            "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "Cifras de inversión, empleo y capacidad: pendiente de fuente. Circulan como anuncio corporativo y no se elevan a dato."
+          }
+        ],
+        "nota": "El DOUE reconoce cobre, níquel y metales del grupo del platino. Las menciones a oro, plata y estaño que circulan en prensa no están en el anexo y no se recogen aquí."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:las-navas",
+      "geometry": { "type": "Point", "coordinates": [-6.3927, 39.7896] },
+      "properties": {
+        "slug": "las-navas",
+        "nombre": "Las Navas",
+        "nombre_oficial": "Las Navas",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "categoria": "estrategico_ue",
+        "descripcion": "Proyecto de litio en las pegmatitas del oeste extremeño, uno de los tres proyectos de litio españoles del entorno CRMA.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["litio"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Cañaveral",
+        "provincia": "Cáceres",
+        "promotor": "Lithium Iberia S.L.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "tramitacion",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Reconocido como Proyecto Estratégico de la UE en la primera lista de la CRMA.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2025/840 de la Comisión — anexo, punto 21",
+            "fecha": "2025-04-30",
+            "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
+            "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          }
+        ],
+        "nota": "El anexo lo describe solo como proyecto de extracción, sin procesamiento — al contrario que P6 Metals y Las Cruces, que sí figuran como integrados."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:mina-doade",
+      "geometry": { "type": "Point", "coordinates": [-8.2846, 42.4665] },
+      "properties": {
+        "slug": "mina-doade",
+        "nombre": "Mina Doade",
+        "nombre_oficial": "MINA DOADE PROJECT",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "categoria": "estrategico_ue",
+        "descripcion": "Litio en las pegmatitas de la dorsal gallega, en el distrito estaño-litio de Ourense.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["litio"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Beariz",
+        "provincia": "Ourense",
+        "promotor": "Recursos Minerales de Galicia, S.A.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "tramitacion",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Reconocido como Proyecto Estratégico de la UE en la primera lista de la CRMA.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [
+          {
+            "k": "Calendario y capacidad declarados por el promotor",
+            "v": "Puesta en marcha hacia 2027-2028 y del orden de 500.000 t/año de mineral procesado",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2025/840 de la Comisión — anexo, punto 26",
+            "fecha": "2025-04-30",
+            "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
+            "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "Calendario y capacidad: pendiente de fuente. Circulan como declaración del promotor y no se elevan a dato."
+          }
+        ],
+        "nota": "La vinculación del promotor con el Grupo Samca, que circula en prensa, no figura en el anexo del DOUE y no se recoge como dato."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:el-moto",
+      "geometry": { "type": "Point", "coordinates": [-4.3529, 38.879] },
+      "properties": {
+        "slug": "el-moto",
+        "nombre": "El Moto",
+        "nombre_oficial": "Mining Project El Moto",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "categoria": "estrategico_ue",
+        "descripcion": "Wolframio en los filones del valle de Alcudia. Materia prima de la lista europea con demanda de defensa y herramienta.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["wolframio"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Abenójar",
+        "provincia": "Ciudad Real",
+        "promotor": "Abenojar Tungsten S.L.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "tramitacion",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Reconocido como Proyecto Estratégico de la UE en la primera lista de la CRMA.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2025/840 de la Comisión — anexo, punto 27",
+            "fecha": "2025-04-30",
+            "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
+            "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          }
+        ],
+        "nota": "El promotor era uno de los cuatro huecos declarados al abrir esta capa. El anexo del DOUE lo nombra sin ambigüedad — Abenojar Tungsten S.L. — y el hueco se cierra con fuente primaria, no con una atribución plausible."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:p6-metals",
+      "geometry": { "type": "Point", "coordinates": [-6.0491, 39.1836] },
+      "properties": {
+        "slug": "p6-metals",
+        "nombre": "P6 Metals (La Parrilla)",
+        "nombre_oficial": "P6 Metals",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "categoria": "estrategico_ue",
+        "descripcion": "Reactivación con procesamiento integrado de la mina de wolframio de La Parrilla, en el cinturón wolframífero del oeste.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["wolframio"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion", "procesamiento"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Almoharín",
+        "provincia": "Cáceres",
+        "promotor": "Iberian Resources Spain",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "desarrollo",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Reconocido como Proyecto Estratégico de la UE en la primera lista de la CRMA.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [
+          {
+            "k": "Peso declarado en la demanda europea",
+            "v": "Cubriría del orden del 25 % de la demanda europea de wolframio",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2025/840 de la Comisión — anexo, punto 30",
+            "fecha": "2025-04-30",
+            "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
+            "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "Porcentaje de la demanda europea: pendiente de fuente. Circula en prensa sin contraste."
+          }
+        ],
+        "nota": "El proyecto se llama oficialmente «P6 Metals»; «La Parrilla» es la mina. La demo de referencia los tenía al revés. El anexo reconoce solo wolframio: el estaño que suele citarse con La Parrilla no figura."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:las-cruces",
+      "geometry": { "type": "Point", "coordinates": [-6.1552, 37.5275] },
+      "properties": {
+        "slug": "las-cruces",
+        "nombre": "Las Cruces",
+        "nombre_oficial": "Polymetallic primary sulphide project",
+        "nombre_oficial__v": "confirmado",
+        "nombre_oficial__f": "f1",
+        "categoria": "estrategico_ue",
+        "descripcion": "Paso a los sulfuros primarios sobre la mina existente de la Faja Pirítica, con procesamiento integrado.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["cobre"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion", "procesamiento"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Gerena",
+        "provincia": "Sevilla",
+        "promotor": "Cobre las Cruces S.A.U.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "produccion",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Reconocido como Proyecto Estratégico de la UE en la primera lista de la CRMA.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Decisión (UE) 2025/840 de la Comisión — anexo, punto 32",
+            "fecha": "2025-04-30",
+            "url": "https://eur-lex.europa.eu/eli/dec/2025/840/oj",
+            "archivo": "fuentes/2026-08-05_doue_decision-2025-840-proyectos-estrategicos-crma.pdf"
+          }
+        ],
+        "nota": "El anexo reconoce solo cobre; el zinc, plomo y plata que se citan con el yacimiento no figuran. La titularidad última tampoco: el DOUE nombra a Cobre las Cruces S.A.U. y nada más, así que la matriz no se recoge como dato."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:montevives",
+      "geometry": { "type": "Point", "coordinates": [-3.66, 37.11] },
+      "properties": {
+        "slug": "montevives",
+        "nombre": "Celestina de Montevives",
+        "categoria": "produccion_singular",
+        "descripcion": "Yacimiento de celestina de la depresión de Granada. Desde 2012 se recuperan las antiguas escombreras tras tres años de inactividad.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación entre Las Gabias y Alhendín, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["estroncio"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Las Gabias y Alhendín",
+        "provincia": "Granada",
+        "promotor": "Canteras Industriales S.L.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "produccion",
+        "fase__v": "parcial",
+        "fase__f": "f1",
+        "estado_proyecto": "Recuperación de antiguas escombreras desde 2012.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2024-02-02",
+        "claves": [
+          {
+            "k": "España como único productor de estroncio de la UE",
+            "v": "Afirmación frecuente que la fuente primaria consultada NO sostiene: el IGME habla de «posición prominente como país productor», sin comparación con la Unión Europea",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGME — Panorama Minero, Estroncio 2021 (edición de 2024), §20.1",
+            "fecha": "2024-02-02",
+            "url": "https://web.igme.es/PanoramaMinero/actual/ESTRONCIO%202021.pdf",
+            "archivo": "fuentes/2026-08-05_igme_panorama-minero-estroncio-2021.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "Singularidad de España en la UE para el estroncio: pendiente de fuente que la sostenga."
+          }
+        ],
+        "nota": "La demo de referencia situaba este yacimiento en Escúzar y lo llamaba «Montevive». El IGME lo sitúa en los términos de Gabia la Grande y Alhendín, lo escribe «Montevives», y describe Escúzar como un yacimiento DISTINTO a 7 km, con otro titular. Aquí se separan en dos registros."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:escuzar",
+      "geometry": { "type": "Point", "coordinates": [-3.749, 37.087] },
+      "properties": {
+        "slug": "escuzar",
+        "nombre": "Celestina de Escúzar",
+        "categoria": "produccion_singular",
+        "descripcion": "El otro yacimiento de celestina en explotación en España, en la depresión de Granada. Planta de tratamiento en marcha desde 1990.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["estroncio"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion", "procesamiento"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Escúzar y Ventas de Huelma",
+        "provincia": "Granada",
+        "promotor": "Solvay Minerales S.A.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "estado_proyecto": "En explotación desde 1990. El IGME cifra las reservas en torno a 1 Mt, equivalentes a unos siete años de vida útil al ritmo de extracción del momento.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2024-02-02",
+        "claves": [
+          {
+            "k": "Método de concentración",
+            "v": "Flotación y medios densos, con recuperación superior al 90 %; el IGME la describe como la única empresa del mundo que usa satisfactoriamente esta metodología",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGME — Panorama Minero, Estroncio 2021 (edición de 2024), §20.1 y §20.1.2",
+            "fecha": "2024-02-02",
+            "url": "https://web.igme.es/PanoramaMinero/actual/ESTRONCIO%202021.pdf",
+            "archivo": "fuentes/2026-08-05_igme_panorama-minero-estroncio-2021.pdf"
+          }
+        ],
+        "nota": "Registro NUEVO respecto de la demo de referencia, que fundía este yacimiento con el de Montevives en una sola ficha. Son dos explotaciones, con dos titulares."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:sepiolita-madrid",
+      "geometry": { "type": "Point", "coordinates": [-3.6083, 40.4043] },
+      "properties": {
+        "slug": "sepiolita-madrid",
+        "nombre": "Sepiolita de Madrid",
+        "categoria": "produccion_singular",
+        "descripcion": "Arcillas especiales de la cuenca del Tajo. La sepiolita se extrae y procesa principalmente en el Grupo Minero Victoria (Madrid) y el Grupo Minero Santa Catalina (Toledo).",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["sepiolita"],
+        "materias__v": "confirmado",
+        "materias__f": "f1",
+        "tipo_proyecto": ["extraccion", "procesamiento"],
+        "tipo_proyecto__v": "confirmado",
+        "tipo_proyecto__f": "f1",
+        "municipio": "Madrid",
+        "provincia": "Madrid",
+        "promotor": "TOLSA, S.A.",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "estado_proyecto": "En explotación. El IGME describe a TOLSA como principal productor nacional de arcillas especiales y referente mundial, con explotaciones también en Reino Unido, Marruecos y Senegal.",
+        "estado_proyecto__v": "confirmado",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2024-02-02",
+        "claves": [
+          {
+            "k": "España como único productor de sepiolita a escala industrial en la UE",
+            "v": "Afirmación frecuente que la fuente primaria consultada NO sostiene: el informe del IGME no compara con la Unión Europea",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          },
+          {
+            "k": "«Mayor yacimiento del mundo»",
+            "v": "Repetido en prensa sobre el yacimiento madrileño; sin fuente técnica localizada",
+            "verif": "no_verificado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "IGME — Panorama Minero, Arcillas especiales 2021 (edición de 2024), apartado «Sepiolita»",
+            "fecha": "2024-02-02",
+            "url": "https://web.igme.es/PanoramaMinero/actual/ARCILLAS%20ESPECIALES%202021.pdf",
+            "archivo": "fuentes/2026-08-05_igme_panorama-minero-arcillas-especiales-2021.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "hueco",
+            "titulo": "Singularidad de España en la UE y tamaño del yacimiento: pendiente de fuente que las sostenga."
+          }
+        ],
+        "nota": "La demo de referencia lo titulaba «Sepiolita de Vicálvaro». El informe del IGME no menciona Vicálvaro: habla del Grupo Minero Victoria, en Madrid. El nombre se ajusta a lo que dice la fuente."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:matamulas",
+      "geometry": { "type": "Point", "coordinates": [-3.363, 38.638] },
+      "properties": {
+        "slug": "matamulas",
+        "nombre": "Matamulas",
+        "categoria": "en_disputa",
+        "descripcion": "Proyecto de tierras raras sobre arenas con monacita en el Campo de Montiel. Uno de los escasos potenciales europeos en estos elementos, sin desarrollar.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "municipio",
+        "geo_fuente": "aproximación al municipio, sin fuente cartográfica primaria",
+        "fecha_alta": "2026-08-05",
+        "fecha_verificacion": "2026-08-05",
+        "materias": ["tierras_raras"],
+        "materias__v": "no_verificado",
+        "tipo_proyecto": ["extraccion"],
+        "tipo_proyecto__v": "no_verificado",
+        "municipio": "Torrenueva",
+        "provincia": "Ciudad Real",
+        "promotor": "Quantum Minería S.L.",
+        "promotor__v": "no_verificado",
+        "fase": "parado",
+        "fase__v": "no_verificado",
+        "estado_proyecto": "Autorización denegada por la Junta de Castilla-La Mancha y recurrida en vía contencioso-administrativa. El estado procesal actual no está verificado.",
+        "estado_proyecto__v": "no_verificado",
+        "claves": [
+          {
+            "k": "Potencial citado",
+            "v": "Del orden de 2.100 t/año de óxidos de tierras raras",
+            "verif": "no_verificado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Todo este registro está pendiente de fuente primaria: la resolución de la Junta que deniega la autorización, la sentencia del TSJ de Castilla-La Mancha y el estado del recurso de casación ante el Tribunal Supremo."
+          }
+        ],
+        "nota": "El yacimiento existe; casi todo lo demás requiere verificación documental. Se publica el hueco, no un relleno. Es el único registro de la capa sin una sola fuente primaria, y por eso el único «no verificado» global: la ficha lo dice antes que nada."
+      }
+    }
+  ]
+}

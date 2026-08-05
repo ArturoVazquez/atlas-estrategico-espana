@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.1.0 · **Fecha:** 2026-08-05
+**Versión del contrato:** 1.2.0 · **Fecha:** 2026-08-05
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -438,7 +438,15 @@ existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado
 `materias[]` (✔) · `tipo_proyecto` (✔: extracción / procesamiento / refino /
 reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` (+`__v`,`__f`)
 · **`fase`** (✔ *(1.1)*, vocabulario; +`__v`,`__f`) · `estado_proyecto`
-(+`__v`,`__f`,`_fecha`) · `claves[]`
+(+`__v`,`__f`,`_fecha`) · **`nombre_oficial`** (– *(1.2)*; +`__v`,`__f`) · `claves[]`
+
+> **Por qué existe `nombre_oficial` *(1.2)*.** El nombre con el que se conoce un
+> proyecto y el que lleva en el documento que lo reconoce no siempre coinciden —
+> en la primera lista CRMA difieren en cinco de los siete proyectos españoles:
+> «La Parrilla» figura como *P6 Metals* y «Las Cruces» como *Polymetallic primary
+> sulphide project*. Sin este campo, quien quisiera contrastar una ficha contra
+> el DOUE no encontraría la entrada. `nombre` sigue siendo el de presentación;
+> `nombre_oficial` es el que permite la cita.
 
 **minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado):
 `materias[]` (✔) · `caracter` (✔, vocabulario) · `distritos[]` · `sym` (etiqueta
@@ -549,6 +557,7 @@ Un dato solo sube de rango cuando sube su evidencia.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.2.0** | 2026-08-05 | **Aditiva.** Campo opcional `nombre_oficial` (+`__v`,`__f`) en `minerales-proyectos` (§10). Salió de la propia F1: el nombre oficial del documento que reconoce un proyecto difiere del corriente en cinco de los siete españoles, y sin él la ficha no se puede contrastar contra el DOUE. Ningún consumidor de la 1.1 se rompe: es opcional. |
 | **1.1.0** | 2026-08-05 | **Aditiva.** Manifiesto: `arbol`, `ambito`, `en_preparacion`, `registro: analisis` (§3). Reglas de doctrina numeradas R1–R5 y ampliadas con **R6** (metadato huérfano), **R7** (`activo` no se escribe) y **R8** (dominio que contradice a la mina que contiene, sin diente hasta F3) (§6.4). Nuevo §6.5: el campo derivado `activo` y su tabla de mapeo, cerrando el matiz abierto de D3. Nuevo campo controlado `fase` en `minerales-proyectos` (§10) y su vocabulario (§9). §7: bbox según `ambito`, fechas no futuras, comprobación del manifiesto, y separación explícita entre avisar y bloquear. §11: el ejemplo canónico pasa a **validar de verdad** y es el fixture del CI. |
 | **1.0.0** | 2026-07-22 | Contrato inicial: GeoJSON RFC 7946 WGS84, manifiesto de capas, propiedades planas, campos en español, sufijos `__v`/`__f`, fuentes tipadas, doctrina como validación de CI, releases etiquetadas, nada se borra. |
 

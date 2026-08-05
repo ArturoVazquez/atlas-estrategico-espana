@@ -43,6 +43,11 @@
               "municipio": { "type": "string", "minLength": 1 },
               "provincia": { "type": "string", "minLength": 1 },
               "promotor": { "type": "string" },
+              "nombre_oficial": {
+                "type": "string",
+                "minLength": 1,
+                "description": "(1.2) El nombre en el documento que reconoce el proyecto, cuando difiere del corriente. Es lo que permite contrastar la ficha contra su fuente: «La Parrilla» figura en el DOUE como «P6 Metals»."
+              },
               "fase": {
                 "type": "string",
                 "description": "Campo CONTROLADO del que se deriva `activo` (§6.5). Su valor se comprueba contra el vocabulario `fase`. Obligatorio: sin él, el filtro de explotación tendría que adivinar leyendo `estado_proyecto`, que es prosa."
