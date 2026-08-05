@@ -131,9 +131,31 @@ exige firma humana sobre fuente primaria.
 - El techo del prototipo SVG está tocado; la potencia visual (relieve, teselas,
   etiquetado inteligente, LOD) pertenece al visor MapLibre del proyecto real.
 
-## D9 · PENDIENTE — repo público vs privado
+## D9 · Repositorio público — RESUELTA (2026-08-05)
 
-Sin decidir. **Bloquea la creación del repositorio remoto** (F0 del plan).
-Elementos ya sobre la mesa: "el repo es la cita" (la auditabilidad pública es
-parte del valor) vs. la firma personal sobre la capa de contenciosos; posible
-camino intermedio: desarrollo privado y apertura al publicar la v1.
+**Decidido: público desde el primer commit.** Desbloquea la creación del
+repositorio remoto, que era lo único que F0 tenía marcado con ⚠.
+
+**Porqué:** el principio 6 del contrato dice *«el repo es la cita»*, y una cita
+que nadie puede abrir no es una cita. La auditabilidad pública no es un adorno
+del proyecto: es su argumento entero. Un atlas que pide que le creas sobre la
+palabra de un repositorio cerrado se contradice a sí mismo en la primera línea
+del README.
+
+**Descartado:** el camino intermedio (desarrollo privado, apertura al publicar
+la v1). Suena prudente y es peor: el historial de un repo que nace cerrado se
+abre con las costuras ya hechas y nadie ve **cómo** se decidió nada — que es la
+mitad de lo que hace confiable un dataset curado a mano. Abrir después conserva
+los ficheros y pierde el proceso.
+
+**Sobre la firma personal en la capa de contenciosos**, que era el argumento del
+otro lado: sigue siendo cierto que El tablero lleva nombre y apellidos. La
+respuesta no es esconder el repo, sino la doctrina D5 —el atlas registra que la
+reclamación existe y quién la sostiene, **no dicta veredicto**— y el hecho de
+que cada instrumento citado sea un documento público verificable. Firmar una
+compilación de tratados con fuente no es tomar partido; taparla sí insinuaría
+que hay algo que tapar.
+
+**Consecuencia asumida:** el repo público expone también los **huecos** —lo que
+el atlas no sabe— a la vista de cualquiera. Es deliberado. Un hueco visible es
+una invitación a llenarlo con fuente; un hueco escondido es solo un hueco.
