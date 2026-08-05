@@ -1,0 +1,59 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "minerales-proyectos",
+    "schema_version": "1.3.0",
+    "verificado_a": "2026-08-05"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:aguablanca",
+      "geometry": { "type": "Point", "coordinates": [-6.2708, 38.0805] },
+      "properties": {
+        "slug": "aguablanca",
+        "nombre": "Aguablanca",
+        "categoria": "estrategico_ue",
+        "descripcion": "Reactivación del único yacimiento de níquel explotado en España.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "exacta",
+        "geo_fuente": "coordenada del plano de situación publicado por el promotor",
+        "geo_fuente__v": "parcial",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-07-22",
+        "fecha_verificacion": "2026-07-22",
+        "materias": ["niquel", "cobre", "cobalto", "pgm"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Monesterio",
+        "provincia": "Badajoz",
+        "promotor": "Río Narcea Recursos",
+        "promotor__v": "parcial",
+        "promotor__f": "f2",
+        "fase": "desarrollo",
+        "fase__v": "parcial",
+        "fase__f": "f1",
+        "estado_proyecto": "Reactivación en curso",
+        "estado_proyecto__v": "parcial",
+        "estado_proyecto__f": "f1",
+        "estado_proyecto_fecha": "2025-03-25",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Comisión Europea — Decisión de la 1ª lista de Proyectos Estratégicos CRMA, con su anexo",
+            "fecha": "2025-03-25"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Río Narcea Recursos — plano de situación del proyecto en su web",
+            "fecha": "2025-06-10"
+          }
+        ],
+        "nota": "VIOLA R9, y SOLO R9 — esa es la mitad interesante. La geometría se declara «exacta» sobre una fuente corporativa, pero con «geo_fuente__v: parcial», así que R3 no se dispara: R3 solo mira los campos declarados «confirmado». Sin R9 este fichero pasaba en verde, con un plano de empresa haciendo de cartografía y el mapa dibujando un punto que nadie oficial ha situado nunca. La salida no es reescribir el estado a mano: es localizar el catastro minero, o bajar la geometría a «municipio» y decirlo. Un dato sube de rango cuando sube su evidencia."
+      }
+    }
+  ]
+}

@@ -39,6 +39,14 @@ CASOS: dict[str, tuple[set[str], int]] = {
     "invalido-r6-metadato-huerfano.geojson":           ({"R6"},     1),
     "invalido-r7-activo-escrito-a-mano.geojson":       ({"R7"},     1),
 
+    # R9 va con DOS fixtures porque la regla tiene dos mitades y solo una es
+    # obvia. La segunda es la que justifica que R9 exista: sin ella, R2 y R3
+    # dejaban pasar una geometría «exacta» apoyada en una fuente corporativa,
+    # con solo declararla «parcial». (R8 no tiene fixture: no tiene diente
+    # todavía — necesita `minerales-dominios`, y el contrato lo dice en §6.5.)
+    "invalido-r9-exacta-sin-fuente.geojson":           ({"R9"},     1),
+    "invalido-r9-exacta-con-corporativa.geojson":      ({"R9"},     1),
+
     # Las comprobaciones de §7 que no son reglas de doctrina. F0 no las exigía;
     # están porque un control que nadie ejercita puede llevar meses roto sin que
     # se note, y este validador es lo único que separa el atlas de la

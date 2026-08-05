@@ -2,7 +2,9 @@
 """Validador del Atlas Estratégico de España — el contrato con dientes.
 
 Comprueba las siete verificaciones de CONTRATO-DATOS.md §7 sobre las reglas de
-doctrina R1–R7 de §6.4. Corre en CI en cada PR que toque `datos/`.
+doctrina R1–R7 y R9 de §6.4. Corre en CI en cada PR que toque `datos/`.
+(R8 es la única sin diente: necesita la capa `minerales-dominios`, F3. Lo dice
+el propio contrato en §6.5, para que no se descubra por su ausencia.)
 
     python pipeline/validar.py                    # todas las capas del manifiesto
     python pipeline/validar.py fichero.geojson    # una o varias, sueltas
@@ -163,7 +165,7 @@ def comprobar_identidad(doc: dict, capa: str) -> list[Hallazgo]:
 
 
 def comprobar_doctrina(doc: dict, registro_capa: str) -> list[Hallazgo]:
-    """§7.3 · Las reglas R1–R7 de §6.4, que son el proyecto entero en forma de test."""
+    """§7.3 · R1–R7 y R9 de §6.4, que son el proyecto entero en forma de test."""
     out = []
 
     for f in doc.get("features", []):
@@ -246,6 +248,34 @@ def comprobar_doctrina(doc: dict, registro_capa: str) -> list[Hallazgo]:
                                     f"fuente «{fid}», de tipo «{tipos.get(fid)}». "
                                     f"Localiza fuente primaria o baja el campo a "
                                     f"«parcial» — el dato sube cuando sube su evidencia."))
+
+        # R9 · una precisión que promete cartografía tiene que citarla (§6.6).
+        # No lo cubren R2 ni R3: esas solo miran los campos declarados
+        # «confirmado», y una geometría `exacta` marcada `parcial` sobre un
+        # anuncio corporativo pasaba en verde. R9 mira la precisión DECLARADA,
+        # que es lo que el mapa va a dibujar.
+        if props.get("geo_precision") in ("exacta", "paraje"):
+            precision, fid = props.get("geo_precision"), props.get("geo_fuente__f")
+            if not props.get("geo_fuente"):
+                out.append(Hallazgo(BLOQUEA, "R9", donde,
+                                    f"Declara «geo_precision: {precision}» y no dice de "
+                                    f"dónde sale la coordenada: falta «geo_fuente». Una "
+                                    f"precisión que promete cartografía tiene que "
+                                    f"citarla (§6.6)."))
+            elif fid is None:
+                out.append(Hallazgo(BLOQUEA, "R9", donde,
+                                    f"Declara «geo_precision: {precision}» y describe su "
+                                    f"origen en prosa, pero no lo ata a ninguna fuente: "
+                                    f"falta «geo_fuente__f». La prosa no es una cita — "
+                                    f"nadie puede comprobarla (§6.6)."))
+            elif fid in fuentes and tipos.get(fid) != "primaria":
+                out.append(Hallazgo(BLOQUEA, "R9", donde,
+                                    f"La geometría se declara «{precision}» "
+                                    f"apoyándose en «{fid}», de tipo «{tipos.get(fid)}». "
+                                    f"Solo una fuente primaria concede esa precisión: "
+                                    f"catastro minero, nomenclátor oficial o la resolución "
+                                    f"que lo autoriza. Si no la hay, la geometría es "
+                                    f"«municipio», y eso es un resultado legítimo (§6.6)."))
 
         # R3 también gobierna las `claves`: llevan su propio verif y su fuente.
         for i, clave in enumerate(props.get("claves", [])):
