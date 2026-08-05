@@ -115,10 +115,19 @@ contradiría el motivo por el que se decidió autoalojarlo.
 
 ## F3 · Capas del listón de salida
 
-- **Límites y soberanía** (verificada): pasada de instrumentos con fuente
-  primaria archivada (Utrecht, listas ONU, leyes 37-17/38-17, Badajoz 1801,
-  Viena art. 105; verificar fecha y naturaleza del acuerdo UE–RU sobre
-  Gibraltar); zonas sin delimitar según doctrina D5.
+- ~~**Límites y soberanía** (verificada): pasada de instrumentos con fuente
+  primaria archivada.~~ **HECHA el 2026-08-06**, release `datos-v2026.08.3`.
+  Ocho territorios con la simetría `administrado_por` / `reclamado_por`, que es
+  D5 puesta en datos. El **acuerdo UE–RU sobre Gibraltar queda verificado**:
+  firmado el 14 de julio de 2026, en aplicación provisional desde el 15, sin
+  ratificar (Decisión (UE) 2026/1732 del Consejo, archivada).
+  - **Lo que NO se pudo archivar, y es el hallazgo:** Utrecht, Badajoz 1801 y
+    Viena art. 105 — los tres tratados que se citan en cada discusión — no
+    aparecen con emisor autorizado. Tampoco ningún instrumento marroquí, ni la
+    lista de la ONU (su servidor bloquea la descarga).
+  - **Pendiente:** las **zonas sin delimitar** (Canarias–Marruecos y el monte
+    Tropic) y las **leyes marroquíes 37-17 y 38-17**, que son su instrumento.
+    Piden polígono `ilustrativo` y activan R5 sobre la capa: segunda tanda.
 - **Gas y regasificación**: las plantas de GNL con fuente Enagás/CNMC.
 - ~~**Nuclear**: los 7 reactores con calendario de cierre; fuentes CSN/MITECO.~~
   **HECHA el 2026-08-06**, release `datos-v2026.08.2`. Un registro por reactor,

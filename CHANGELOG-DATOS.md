@@ -32,6 +32,76 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.3 — El tablero: ocho territorios, ningún veredicto
+
+Tercera capa, y la que da al atlas su carácter. El árbol **El tablero** estaba
+vacío desde F0.
+
+D5 fijó la doctrina hace tiempo: *el atlas registra que la reclamación existe y
+quién la sostiene; no dicta veredicto*. Esta capa es esa frase convertida en
+datos, con **dos campos simétricos** —`administrado_por` y `reclamado_por`— con
+los que Gibraltar y Ceuta se describen con la misma estructura, y una
+`categoria` de dos valores que dice **quién reclama, no quién tiene razón**.
+
+### Añadido
+
+- **`limites-soberania`** — ocho registros: `gibraltar`, `ceuta`, `melilla`,
+  `penon-velez-gomera`, `penon-alhucemas`, `islas-chafarinas`, `perejil` y
+  `olivenza`.
+
+Es además la primera capa del árbol `tablero`, y por tanto la primera que
+ejercita la rama «no aplica» de §6.5: su `activo` es `null` y el filtro de
+explotación no la esconde nunca.
+
+### Huecos
+
+Esta capa es, sobre todo, un inventario de argumentos sin documento:
+
+- **Ninguno de los tratados que se citan está archivado.** Utrecht (1713),
+  Badajoz (1801) y el artículo 105 del Acta Final de Viena (1815) aparecen en
+  cada discusión sobre Gibraltar y Olivenza, y no se ha localizado texto de
+  **emisor autorizado** de ninguno. Van como huecos, y lo que sostienen queda
+  `no_verificado`.
+- **Tampoco hay instrumento marroquí archivado** para las reclamaciones sobre
+  Ceuta, Melilla, las plazas de soberanía o Perejil. Se registra que la
+  reclamación existe; no que esté acreditada.
+- **La lista de Territorios No Autónomos de la ONU no se pudo archivar**: el
+  servidor responde 202 sin contenido a las descargas automáticas.
+- **Las plazas de soberanía no tienen estatuto que citar**, a diferencia de
+  Ceuta y Melilla. Su régimen concreto queda pendiente.
+- **`perejil` es el único `no_verificado` global** de la capa. De la isla lo
+  único documentado es dónde está: quién la administra, con qué título y qué se
+  acordó en 2002 no tienen texto público localizable.
+- **Las aguas sin delimitar quedan fuera de esta tanda** —Canarias–Marruecos y
+  su cruce con el monte Tropic—: piden polígono `ilustrativo`, activan **R5**
+  sobre la capa y merecen su propia discusión cartográfica.
+
+### Lo que sí quedó acreditado
+
+Los **Estatutos de Autonomía de Ceuta y Melilla** (LO 1/1995 y 2/1995, texto
+consolidado del BOE), la **posición oficial española sobre Gibraltar** (MAEC) y
+la **Decisión (UE) 2026/1732 del Consejo** — que responde lo que F3 pedía
+verificar sobre el acuerdo UE–Reino Unido: **firmado el 14 de julio de 2026 y en
+aplicación provisional desde el 15, sin ratificar**, y sin alterar la posición
+de ninguna parte sobre la soberanía. Comprobado sobre la copia archivada.
+
+### Dos hallazgos de geometría
+
+- **El Nomenclátor del IGN no nombra Gibraltar.** Tres resultados por etiqueta,
+  todos falsos amigos en Huelva y Badajoz; 69 topónimos en el recuadro del
+  Peñón, ninguno es Gibraltar. Su punto va puesto a mano y declarado
+  `ilustrativa`: es la única coordenada de la capa sin fuente cartográfica.
+- **«Melilla» estuvo a punto de quedarse en Huelva.** La consulta por nombre
+  devuelve primero un homónimo onubense. Se eligió por posición — es la clase de
+  error que no da ningún aviso y deja el dato a 400 km con aspecto de correcto.
+
+### Contrato
+
+Sube a **1.7.0**: §10 con el apartado de `limites-soberania` y §9 con su
+`categoria`. No toca §6.5, que ya declaraba el tablero como «no aplica».
+
+---
+
 ## datos-v2026.08.2 — Nuclear: siete reactores, y un calendario sin documento
 
 Segunda capa del atlas, y la primera que estrena el mecanismo **sin ser la
