@@ -32,6 +32,55 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.6 — Dieciséis dominios, y la última regla que era solo prosa
+
+Entra la capa **`minerales-dominios`** y, con ella, **R8 deja de ser una regla
+sin diente**. Desde el contrato 1.10 no queda ninguna: las nueve reglas de §6.4
+las comprueba el CI.
+
+### Añadido
+
+- **`minerales-dominios` — 16 dominios**, migrados de la demo v4. Primera capa
+  de polígonos del atlas. Faja Pirítica · Estaño–litio de Galicia · Wolframio
+  del oeste · Litio–wolframio de Extremadura · Ossa-Morena · Oro del noroeste ·
+  Fluorita de Asturias · Zinc cantábrico · Magnesita de Eugui · Potasas del
+  Bages · Mercurio de Almadén · Wolframio de Alcudia · Tierras raras del Campo
+  de Montiel · Celestina de Granada · Arcillas especiales del Tajo · Sierra de
+  Cartagena.
+- **R8 con diente.** Un dominio `desarrollo` o `historico` no puede contener una
+  mina en producción. Es la **única regla que compara dos capas**, así que vive
+  fuera de la validación por fichero: se comprueba cuando ambas entran en la
+  misma pasada, que es siempre en CI.
+- Contrato **1.10.0**: R8 entra en la tabla de §6.4, `caracter` y `categoria`
+  dejan de ser dos campos con los mismos cinco valores, y §9 estrena los colores
+  de la capa.
+
+### Corregido
+
+- **`oro-del-noroeste` · geometría** — el anillo venía en sentido **horario**
+  desde la demo. RFC 7946 pide antihorario para el exterior, y hay visores que
+  pintan del revés lo que reciben así. Invertido al migrar.
+
+### Huecos
+
+- **Los dieciséis perímetros, todos.** Ninguno tiene cartografía de fuente
+  primaria: son trazados a mano alzada, cada uno con su fuente `tipo: hueco`
+  diciéndolo, y por R4 ninguno pasa de `no_verificado`. **La capa entera es el
+  hueco declarado**, no un adorno con una nota al pie.
+- **El ascenso a cartografía del IGME no se ha hecho**, y no se puede hacer de
+  uno en uno: R5 es regla de **capa**, no de registro, así que verificar la Faja
+  Pirítica obligaría a verificar las quince restantes o a partir la capa en dos.
+  Queda pendiente y dicho.
+- **Los `distritos` son nombres, no coordenadas.** Riotinto, Tharsis o Reocín
+  figuran como texto; quien quiera su posición la busca en `minerales-proyectos`
+  o en el nomenclátor. Enumerarlos sin coordenada es honesto; fabricársela, no.
+- **«Mina Circular» no cae dentro de ningún dominio.** No incumple nada —R8
+  gobierna lo que un dominio SÍ contiene— pero es el choque entre un trazado a
+  mano alzada y un centroide municipal en el mismo mapa, y queda anotado antes
+  de que parezca un dato.
+
+---
+
 ## datos-v2026.08.5 — El color deja de vivir en el código
 
 Release **solo de vocabulario**: ningún registro cambia. Cada categoría de §9

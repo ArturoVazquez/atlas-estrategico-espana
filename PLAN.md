@@ -33,10 +33,11 @@ estaban escritas y sin ejercitar, y un control que nadie ejercita puede llevar
 meses roto sin que se note. El runner no comprueba que el validador falle:
 comprueba que falle **por la regla violada y por ninguna otra**.
 
-> **Lo único que F0 deja a deber, y está dicho en el contrato:** la regla **R8**
-> (un dominio `desarrollo`/`historico` no puede contener una mina en producción)
-> es normativa desde la v1.1 pero **no tiene diente** hasta que exista la capa
-> `minerales-dominios`, en F3. Es la única regla del contrato sin implementar.
+> ~~**Lo único que F0 deja a deber, y está dicho en el contrato:** la regla
+> **R8**… es la única regla del contrato sin implementar.~~ **SALDADA el
+> 2026-08-06** con la capa `minerales-dominios` (contrato 1.10, release
+> `datos-v2026.08.6`). Ninguna regla de §6.4 es ya prosa: las nueve las comprueba
+> el CI.
 
 ## F1 · Primera colección real: minerales-proyectos — ✅ HECHA (2026-08-05)
 
@@ -142,16 +143,27 @@ contradiría el motivo por el que se decidió autoalojarlo.
   protocolo privado— así que va vacío y declarado en cinco de los siete, en vez
   de rellenarse con la fecha que cita todo el mundo. La prórroga de Almaraz no
   mueve ninguna fecha mientras MITECO no resuelva.
-- Dominios minerales: primer ascenso de una mancha ilustrativa a cartografía
-  de fuente primaria (candidata: Faja Pirítica, IGME).
+- ~~Dominios minerales~~ **HECHOS el 2026-08-06**, release `datos-v2026.08.6`.
+  Los 16 de la demo, primera capa de polígonos, todos `ilustrativo` y todos con
+  su hueco declarado. El anillo de «Oro del noroeste» venía en sentido horario y
+  se invirtió al migrar (RFC 7946).
+  - **El ascenso a cartografía primaria NO se hizo**, y ahora se sabe por qué no
+    puede hacerse de uno en uno: **R5 es regla de capa, no de registro**.
+    Verificar la Faja Pirítica con el IGME obligaría a verificar las quince
+    restantes —o a partir la capa en dos, que es probablemente la salida.
 - **Punto → polígono en `minerales-proyectos`** (menor de capa, §8: mismo `id`).
   El catastro minero da el perímetro del derecho y ya está descargado y
   entendido — CRS resuelto, derechos multiparte detectados. Es el único camino a
   `geo_precision: exacta`, que §6.6 declara inalcanzable mientras la capa sea de
   puntos. Arrastra el manifiesto a `geometria: mixta` y obliga al visor de F2 a
   pintar las dos cosas: por eso no se hizo en F1.
-- **R8 gana su diente** aquí: necesita `minerales-dominios` para poder
-  comprobarse, y es **la única pieza del contrato sin implementar**.
+- ~~**R8 gana su diente** aquí~~ **GANADO el 2026-08-06.** Es la **única regla
+  que compara dos capas**, así que no cabe en la validación por fichero: vive en
+  `main()`, se comprueba cuando ambas entran en la misma pasada —siempre, en
+  CI— y calla con una sola. Su caso de prueba estrena forma: **dos fixtures**
+  que por separado son impecables. Ninguno miente a solas; la mentira está en
+  lo que dicen juntos, y ese es todo el argumento de R8. El punto-en-polígono se
+  **mudó** de `consultar.py` a `validar.py` en vez de copiarse.
 - ~~`vigilar.py` + `vigilar.yml`.~~ **HECHO el 2026-08-05**, contrato 1.5.0: se
   adelantó a F3 y ya corre los lunes. Lo que dejó dicho, y conviene tener
   presente al añadir capas: EUR-Lex y el IGME devuelven **200 para documentos que
@@ -163,11 +175,13 @@ publicada contiene prensa sosteniendo un confirmado.~~ **CUMPLIDO el
 2026-08-06**: cuatro capas publicadas y validando, y ninguna cifra no primaria
 sostiene un confirmado en ninguna de ellas.
 
-**Lo que queda de F3, fuera de su criterio:** los **dominios minerales** —que
-son los que darían diente a **R8**, la única regla del contrato sin
-implementar— y las **aguas sin delimitar** del tablero, con las leyes marroquíes
-37-17 y 38-17. Las dos piden geometría de polígono, que el visor todavía no
-dibuja.
+**Lo que queda de F3, fuera de su criterio:** las **aguas sin delimitar** del
+tablero, con las leyes marroquíes 37-17 y 38-17. El visor ya dibuja polígonos y
+`minerales-dominios` los estrena, así que el camino está abierto.
+
+Y sigue pendiente, con más motivo ahora que hay dominios contra los que
+contrastar, el **punto → polígono de `minerales-proyectos`** con el catastro
+minero.
 
 ## F4 · Despliegue e integración editorial
 
