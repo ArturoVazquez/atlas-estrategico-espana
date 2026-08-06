@@ -287,7 +287,11 @@ def comprobar_doctrina(doc: dict, registro_capa: str) -> list[Hallazgo]:
         # «confirmado», y una geometría `exacta` marcada `parcial` sobre un
         # anuncio corporativo pasaba en verde. R9 mira la precisión DECLARADA,
         # que es lo que el mapa va a dibujar.
-        if props.get("geo_precision") in ("exacta", "paraje"):
+        # `generalizada` (1.14) entra en R9 por el mismo motivo que las otras
+        # dos: promete cartografía. Que el borde publicado esté simplificado
+        # no rebaja de dónde sale, y una simplificación sin fuente citada es
+        # un trazado a mano alzada con mejor nombre.
+        if props.get("geo_precision") in ("exacta", "paraje", "generalizada"):
             precision, fid = props.get("geo_precision"), props.get("geo_fuente__f")
             if not props.get("geo_fuente"):
                 out.append(Hallazgo(BLOQUEA, "R9", donde,

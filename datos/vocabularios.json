@@ -25,6 +25,8 @@
         "def": "Coordenada del objeto mismo, de fuente cartográfica: catastro minero, o la resolución que lo autoriza. Exige fuente primaria (R9, §6.6)." },
       { "valor": "paraje", "etiqueta": "Paraje",
         "def": "El lugar concreto, por topónimo de nomenclátor oficial: primaria para el NOMBRE del lugar, no para el perímetro del objeto. Exige fuente primaria (R9, §6.6)." },
+      { "valor": "generalizada", "etiqueta": "Generalizada",
+        "def": "Perímetro del objeto mismo, de fuente cartográfica primaria, SIMPLIFICADO por el atlas para poder publicarse. Su procedencia es tan buena como la de una `exacta`; su borde, no: está afinado y no sirve para medir. Exige fuente primaria (R9, §6.6)." },
       { "valor": "municipio", "etiqueta": "Centroide municipal",
         "def": "El municipio, no la ubicación. No sirve para medir distancias. Es el hueco del principio 1 aplicado a la geometría: un resultado legítimo, dicho en voz alta." },
       { "valor": "ilustrativa", "etiqueta": "Ilustrativa",

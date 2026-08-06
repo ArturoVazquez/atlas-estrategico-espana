@@ -190,7 +190,7 @@ anglosajón) se asume y queda anotado aquí.
 | `descripcion` | string | – | 1–3 frases de contexto |
 | `estado_registro` | enum | ✔ | `vigente` · `historico` · `retirado` |
 | `verif` | enum | ✔ | `confirmado` · `parcial` · `no_verificado` — estado global del registro |
-| `geo_precision` | enum | ✔ | `exacta` · `paraje` · `municipio` · `ilustrativa` |
+| `geo_precision` | enum | ✔ | `exacta` · `paraje` · **(1.14)** `generalizada` · `municipio` · `ilustrativa` |
 | `geo_fuente` | string | – | de dónde sale la geometría (p. ej. `catastro minero`, `mano alzada`). **(1.3)** admite `__v`/`__f` como cualquier campo sensible — ver §6.6 |
 | `fecha_alta` | fecha ISO | ✔ | cuándo entró el registro en el atlas |
 | `fecha_verificacion` | fecha ISO | ✔ | última pasada de verificación humana |
@@ -275,7 +275,7 @@ error de esquema genérico.
 | **R6** *(1.1)* | Todo `__v` y todo `__f` acompañan a un campo que existe, y todo `__f` apunta a un `id` que existe en `fuentes`. Un metadato huérfano es un dato que nadie sostiene. |
 | **R7** *(1.1)* | Ningún fichero de datos contiene el campo `activo`: es **derivado** (§6.5). Escribirlo a mano es la doble fuente de verdad que D3 descartó. |
 | **R8** *(1.1, con diente desde 1.10)* | Un polígono de `minerales-dominios` con `categoria ∈ {desarrollo, historico}` **no puede contener** un registro de `minerales-proyectos` con `fase == "produccion"`. Su explicación larga está en §6.5, porque nació de cerrar el matiz abierto de D3. |
-| **R9** *(1.3)* | `geo_precision ∈ {exacta, paraje}` ⇒ el registro declara `geo_fuente`, y su `geo_fuente__f` apunta a una fuente `primaria`. Una precisión que promete cartografía tiene que citarla (§6.6). |
+| **R9** *(1.3; `generalizada` desde 1.14)* | `geo_precision ∈ {exacta, paraje, generalizada}` ⇒ el registro declara `geo_fuente`, y su `geo_fuente__f` apunta a una fuente `primaria`. Una precisión que promete cartografía tiene que citarla (§6.6). |
 
 **Esta tabla es lo que el CI comprueba, y desde la 1.10 no le falta ninguna.**
 R8 estuvo fuera desde la 1.1 —escrita, normativa y sin diente— porque necesitaba
@@ -373,12 +373,25 @@ su copia archivada, igual que la que sostiene un promotor.
 |---|---|
 | Perímetro o coordenadas **del objeto mismo**: catastro minero, o la resolución que lo autoriza | `exacta` |
 | Topónimo de un nomenclátor oficial: primaria para el **nombre del lugar**, no para el perímetro de la instalación | `paraje` |
+| Perímetro del objeto mismo, de fuente cartográfica primaria, **simplificado por el atlas** para poder publicarse *(1.14)* | `generalizada` |
 | Nada localizable, o fuente con licencia incompatible (`datos/LICENCIA-DATOS.md`) | `municipio` — se queda ahí, y lo dice |
 | Trazado a mano alzada | `ilustrativa` |
 
 Quedarse en `municipio` es un resultado legítimo: es el hueco del principio 1
 aplicado a la geometría. Lo que no es legítimo es ascender de rango sin que
 ascienda la evidencia — el mismo criterio que gobierna todos los demás campos.
+
+**`generalizada` no es una `ilustrativa` con mejor nombre** *(1.14)*. Nació
+porque la primera coropleta lo pedía y porque `ilustrativa` habría hecho MENTIR
+a la ficha: su definición dice «trazado a mano alzada», y el límite de una
+provincia no lo es — es cartografía del IGN, simplificada a propósito para que
+52 polígonos y 1,2 millones de vértices quepan en una página web. Meter las dos
+cosas en el mismo cajón habría borrado justo la distinción que este atlas existe
+para conservar: **de dónde sale un borde y cuánto se ha tocado son dos preguntas
+distintas**, y solo la segunda separa una simplificación declarada de un dibujo.
+Por eso `generalizada` entra en **R9** como las otras dos que prometen
+cartografía: la simplificación tiene que citar qué simplificó. Lo que NO concede
+es exactitud — un borde generalizado no sirve para medir, y su ficha lo dice.
 
 **Un punto representativo no hereda la precisión del polígono del que sale.**
 Un perímetro de fuente primaria concede `exacta` **a ese perímetro**, no a un
@@ -550,8 +563,8 @@ vocabulario.
 
 - `verif`: `confirmado` · `parcial` · `no_verificado`
 - `estado_registro`: `vigente` · `historico` · `retirado`
-- `geo_precision`: `exacta` · `paraje` · `municipio` · `ilustrativa` — qué fuente
-  concede cada uno, en §6.6
+- `geo_precision`: `exacta` · `paraje` · `generalizada` *(1.14)* · `municipio` ·
+  `ilustrativa` — qué fuente concede cada uno, en §6.6
 - `fuente.tipo`: `primaria` · `prensa` · `corporativa` · `hueco`
 - `fase` *(1.1)*: `produccion` · `desarrollo` · `tramitacion` · `parado` · `cerrado`
 
@@ -938,7 +951,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
-| **1.14.0** | 2026-08-06 | **Aditiva.** Nace `generacion-electrica-provincia` (§10), la primera **coropleta** del atlas: 52 provincias con su mezcla de generación por tecnología. Nace **de una casilla imposible** — el horizonte pedía potencia INSTALADA por provincia y no la sostiene nadie con licencia compatible: MITECO desagrega generación, no potencia; **la CNMC publica potencia pero bajo CC BY-SA**, ShareAlike, vetada por `datos/LICENCIA-DATOS.md`; REE llega a provincia y es `corporativa` (R3). Que el atlas se detenga ante la **licencia de un organismo público** es lo nuevo: hasta hoy solo le había pasado con fuente privada. §3 estrena `fondo`, marca de manifiesto para la capa que cubre el territorio entero y **cede el clic** a las que tiene encima — sin ella el visor tendría que conocerla por su nombre. §6.5 le da su fila: «no aplica», porque una provincia no es una instalación. §9 sus ocho categorías, que son la **tecnología dominante** y por eso se comprueban contra el argmax de las cifras del propio registro: un derivado solo se escribe si el CI puede desmentirlo. La geometría del IGN va **generalizada** —186 MB no se publican— y por eso su `geo_precision` es `ilustrativa`, no por dudar del IGN sino porque el borde publicado ya no es el suyo. |
+| **1.14.0** | 2026-08-06 | **Aditiva.** Nace `generacion-electrica-provincia` (§10), la primera **coropleta** del atlas: 52 provincias con su mezcla de generación por tecnología. Nace **de una casilla imposible** — el horizonte pedía potencia INSTALADA por provincia y no la sostiene nadie con licencia compatible: MITECO desagrega generación, no potencia; **la CNMC publica potencia pero bajo CC BY-SA**, ShareAlike, vetada por `datos/LICENCIA-DATOS.md`; REE llega a provincia y es `corporativa` (R3). Que el atlas se detenga ante la **licencia de un organismo público** es lo nuevo: hasta hoy solo le había pasado con fuente privada. §3 estrena `fondo`, marca de manifiesto para la capa que cubre el territorio entero y **cede el clic** a las que tiene encima — sin ella el visor tendría que conocerla por su nombre. §6.5 le da su fila: «no aplica», porque una provincia no es una instalación. §9 sus ocho categorías, que son la **tecnología dominante** y por eso se comprueban contra el argmax de las cifras del propio registro: un derivado solo se escribe si el CI puede desmentirlo. La geometría del IGN va **generalizada** —186 MB no se publican— y eso obliga a estrenar un valor de `geo_precision`: **`generalizada`** (§6.6, §9), dentro de **R9**. Se intentó con `ilustrativa` y la ficha quedó mintiendo, porque ese valor está definido como «trazado a mano alzada» y el límite de una provincia no lo es. De dónde sale un borde y cuánto se ha tocado son dos preguntas distintas. |
 | **1.13.0** | 2026-08-06 | **Aditiva.** Nace `electricidad-interconexiones` (§10): los enlaces eléctricos que cruzan una frontera, con su punto en el extremo español y el de fuera **nombrado y sin coordenada** — un enlace tiene dos extremos y el atlas solo puede situar uno, y eso se dice en vez de disimularlo con una recta. §6.5 le da su fila (`activo` cuando `en_servicio`), §9 su categoría. Deja escrito por qué la red de transporte NO entra: la publica Red Eléctrica, que es sociedad cotizada, y no hay cartografía del mallado bajo licencia compatible con CC BY 4.0 — la misma frontera que marcó Enagás en la capa de gas. |
 | **1.12.0** | 2026-08-06 | **Aditiva.** Nace `minerales-derechos` (§10): los derechos del Catastro Minero cuyo titular es un promotor que el atlas ya registra, con su perímetro y **el primer `geo_precision: exacta` del atlas**. §6.6 gana la enmienda que obligó a escribir la propia fuente: «del objeto mismo» quiere decir **del objeto que la fuente define y de ningún otro** — el catastro define DERECHOS, no minas, y un proyecto que tiene un derecho no hereda su geometría ni su precisión. Por eso `minerales-proyectos` **no** pasa de punto a polígono, contra lo que PLAN.md preveía: elegir cuál de los cincuenta derechos de TOLSA «es» el proyecto de sepiolita sería una atribución sin fuente. Las dos capas se solapan en el mapa y el lector ve el solape, que sí es un hecho. Y §10 deja escrito que `superficie_declarada` va verbatim porque **no concuerda con el perímetro que la misma fuente dibuja**. |
 | **1.11.0** | 2026-08-06 | **Aditiva.** Nace `espacios-maritimos` (§10), la capa del mar del tablero, con su `categoria` (§9) y su fila de §6.5 —«no aplica», como el resto del tablero—. Estrena el `ambito: mundo` para geometría real: la plataforma continental más allá de las 200 millas **cae fuera del recuadro de §7.4 por definición**, así que se declara el ámbito de la capa y **no se ensancha el recuadro**, que habría debilitado la comprobación de las otras seis. Deja escrito, donde ya confundió una vez, que **R5 va de la capa hacia la geometría y no al revés**: una capa `verificado` puede contener un registro `geo_precision: ilustrativa`, y eso es lo que permite dibujar la zona sin delimitación acordada sin dictar ninguna frontera (D5). |
