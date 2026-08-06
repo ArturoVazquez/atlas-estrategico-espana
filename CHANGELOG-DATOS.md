@@ -66,8 +66,8 @@ que sí es un hecho.
 
 ### Añadido
 
-- **`minerales-derechos` — 106 registros**: 55 vigentes, 16 en tramitación,
-  **35 extinguidos**. Regla de selección mecánica y declarada: los derechos cuyo
+- **`minerales-derechos` — 106 registros**: 55 vigentes, 17 en tramitación,
+  **34 extinguidos**. Regla de selección mecánica y declarada: los derechos cuyo
   titular es un promotor que el atlas ya registra.
 - **Ocho shapefiles provinciales** archivados en `fuentes/`.
 - Contrato **1.12.0**, con la enmienda de §6.6: «del objeto mismo» quiere decir
@@ -83,6 +83,22 @@ que sí es un hecho.
 - **Mojibake silencioso.** El `.dbf` trae la página de códigos sin declarar
   (0x00) y el contenido en UTF-8: leerlo como latin-1 —lo que manda el formato de
   1998— convierte «CARABAÑA» en «CARABAÃ‘A» sin lanzar un solo error.
+- **Ortografía.** La exportación en shapefile **quita las tildes agudas** de los
+  campos de vocabulario y de parte de los nombres («Concesion de Explotacion»,
+  «SANTA LUCIA»), aunque conserva la eñe. La prosa se toma del CSV, que las
+  escribe bien; la geometría, solo del shapefile. Cada exportación sirve para lo
+  que hace bien, y las dos se citan en cada ficha.
+
+### Lo que apareció al cruzar las dos exportaciones
+
+**El catastro se contradice consigo mismo en dos derechos.** «DON PEPE» figura
+como *Trámite/otorgamiento* en el CSV y como *Otorgado* en el shapefile; «UGENA
+1 (3365-TO)», como *Otorgado* en uno y **Caducado** en el otro. No es un fallo de
+lectura: son dos exportaciones del mismo registro, descargadas el mismo día.
+
+Los dos bajan a `situacion__v: parcial` y lo dicen en su ficha. **El atlas
+registra el desacuerdo; no lo resuelve** — y no lo habría visto nunca leyendo una
+sola de las dos copias.
 
 ### Huecos
 
