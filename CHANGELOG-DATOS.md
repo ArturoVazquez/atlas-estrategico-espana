@@ -32,6 +32,72 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.7 — Las aguas sin delimitar, y las dos leyes que no dibujan nada
+
+Entra **`espacios-maritimos`** y con ella **se cierra F3**. Seis capas
+publicadas.
+
+### El hallazgo
+
+**Ni la ley marroquí 37-17 ni la 38-17 contienen una sola coordenada.** Se
+comprobó sobre el texto íntegro del Boletín Oficial marroquí n.º 6870, ahora
+archivado: la 37-17 fija el mar territorial en 12 millas «desde las líneas de
+base» y remite sus coordenadas a un reglamento posterior; la 38-17, en su
+artículo 11, manda delimitar la zona económica exclusiva «a fin de alcanzar un
+resultado equitativo, en particular con los Estados cuyas costas son adyacentes
+o están frente a las del Reino de Marruecos» — contempla **acuerdo**, no
+trazado unilateral.
+
+Seis años de titulares dicen que Marruecos dibujó una línea sobre aguas
+canarias. Los instrumentos no dibujan ninguna línea. Va en la ficha, con la cita.
+
+### Añadido
+
+- **`espacios-maritimos` — 4 registros.** La zona sin delimitación acordada
+  Canarias–Marruecos (ilustrativa), el límite exterior de la plataforma
+  continental al oeste de Canarias (448 puntos fijos), el contorno perimetral de
+  las aguas canarias (Ley 44/2010) y el Monte Tropic.
+- **Siete fuentes primarias**, todas archivadas: el BO marroquí, la nota verbal
+  marroquí ante la ONU, la respuesta española, el resumen ejecutivo de la CLCS,
+  la Ley 44/2010, el RD 2510/1977 y el gazetteer GEBCO/SCUFN.
+- Contrato **1.11.0**: la capa en §10, su `categoria` en §9, su fila en §6.5 y
+  el primer `ambito: mundo` con geometría real.
+
+### Corregido
+
+- **`espacios-maritimos:contorno-aguas-canarias` · geometría** — el anillo del
+  Anexo I recorre el archipiélago en sentido **horario**; RFC 7946 pide
+  antihorario para el exterior. Invertido al construirlo.
+- **Una suposición de la tanda anterior**, que estaba escrita en dos sitios: se
+  dio por hecho que un polígono ilustrativo obligaría a la capa entera a ser
+  `ilustrativo` por R5. **No es así** — R5 va de la capa hacia la geometría y no
+  al revés. Por eso esta capa es `verificado` y contiene una zona `ilustrativa`.
+- **La otra suposición**: se dio por perdido cualquier instrumento marroquí.
+  Estaba en `sgg.gov.ma`.
+
+### Huecos
+
+- **El perímetro de la zona sin delimitar.** Ningún instrumento lo dibuja. Lo
+  que se publica es un **esquema del corredor** entre el archipiélago y la costa
+  africana, con su fuente `hueco`: **no delimita el alcance de la superposición
+  de derechos**, que se extiende mucho más al suroeste. Trazar una línea mediana
+  sería dictar el resultado que los dos Estados dejan a un acuerdo (D5).
+- **Las leyes de las costras del Monte Tropic.** Las cifras de telurio y cobalto
+  que circulan vienen de campañas científicas que este atlas no ha archivado, y
+  **no se publican**. Del monte se registra su nombre y su posición, con la
+  autoridad que lo nombra.
+- **La Comisión no ha emitido recomendaciones** sobre la presentación española
+  de 2014. Un límite depositado no es un límite reconocido, y la ficha lo dice.
+- **Marruecos y España no discuten dónde va una línea, sino qué instrumento
+  aplica.** Marruecos funda su objeción en la Ley 44/2010; España responde que
+  «no define líneas de base y no ha sido en modo alguno empleada» y remite al RD
+  2510/1977. El desacuerdo queda registrado, no resuelto.
+- **Los dos ficheros grandes se archivan enteros.** El BO marroquí (165 páginas)
+  y el resumen ejecutivo (40) pesan 4,5 MB cada uno. Un boletín recortado a las
+  tres páginas que interesan deja de ser el boletín.
+
+---
+
 ## datos-v2026.08.6 — Dieciséis dominios, y la última regla que era solo prosa
 
 Entra la capa **`minerales-dominios`** y, con ella, **R8 deja de ser una regla

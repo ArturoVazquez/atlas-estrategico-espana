@@ -122,13 +122,24 @@ contradiría el motivo por el que se decidió autoalojarlo.
   D5 puesta en datos. El **acuerdo UE–RU sobre Gibraltar queda verificado**:
   firmado el 14 de julio de 2026, en aplicación provisional desde el 15, sin
   ratificar (Decisión (UE) 2026/1732 del Consejo, archivada).
-  - **Lo que NO se pudo archivar, y es el hallazgo:** Utrecht, Badajoz 1801 y
-    Viena art. 105 — los tres tratados que se citan en cada discusión — no
-    aparecen con emisor autorizado. Tampoco ningún instrumento marroquí, ni la
-    lista de la ONU (su servidor bloquea la descarga).
-  - **Pendiente:** las **zonas sin delimitar** (Canarias–Marruecos y el monte
-    Tropic) y las **leyes marroquíes 37-17 y 38-17**, que son su instrumento.
-    Piden polígono `ilustrativo` y activan R5 sobre la capa: segunda tanda.
+  - **Lo que NO se pudo archivar:** Utrecht, Badajoz 1801 y Viena art. 105 — los
+    tres tratados que se citan en cada discusión — no aparecen con emisor
+    autorizado, ni la lista de la ONU (su servidor bloquea la descarga).
+    ~~Tampoco ningún instrumento marroquí.~~ **Ese sí:** estaba en `sgg.gov.ma`,
+    Boletín Oficial n.º 6870 (ver abajo).
+  - ~~**Pendiente:** las **zonas sin delimitar**…~~ **HECHAS el 2026-08-06**,
+    release `datos-v2026.08.7`, en su propia capa `espacios-maritimos`.
+    - **La premisa de esta línea era falsa y conviene que quede tachada:** un
+      polígono ilustrativo **no** activa R5 sobre la capa. R5 va de la capa
+      hacia la geometría —capa ilustrativa ⇒ geometría ilustrativa— y **no al
+      revés**; R9 solo vigila `exacta` y `paraje`. La capa es `verificado` y
+      contiene una zona `ilustrativa` sin conflicto alguno.
+    - **El hallazgo:** ni la ley 37-17 ni la 38-17 **contienen una sola
+      coordenada**. La 37-17 remite las líneas de base a un reglamento
+      posterior; la 38-17 manda delimitar «a fin de alcanzar un resultado
+      equitativo» con los Estados vecinos. No trazan ninguna línea.
+    - Y lo que sí traza una línea: los **448 puntos fijos** que España depositó
+      ante la CLCS en 2014 — la primera geometría `exacta` del tablero.
 - ~~**Gas y regasificación**: las plantas de GNL con fuente Enagás/CNMC.~~
   **HECHA el 2026-08-06**, release `datos-v2026.08.4`. Ojo con cómo estaba
   escrita esta línea: **Enagás es una sociedad cotizada**, así que es fuente
@@ -175,13 +186,13 @@ publicada contiene prensa sosteniendo un confirmado.~~ **CUMPLIDO el
 2026-08-06**: cuatro capas publicadas y validando, y ninguna cifra no primaria
 sostiene un confirmado en ninguna de ellas.
 
-**Lo que queda de F3, fuera de su criterio:** las **aguas sin delimitar** del
-tablero, con las leyes marroquíes 37-17 y 38-17. El visor ya dibuja polígonos y
-`minerales-dominios` los estrena, así que el camino está abierto.
+**F3 está cerrada del todo desde el 2026-08-06.** Seis capas publicadas y
+validando, ninguna regla del contrato sin diente, y ninguna cifra no primaria
+sosteniendo un confirmado en ninguna de ellas.
 
-Y sigue pendiente, con más motivo ahora que hay dominios contra los que
-contrastar, el **punto → polígono de `minerales-proyectos`** con el catastro
-minero.
+Sigue pendiente, y ya no es de F3: el **punto → polígono de
+`minerales-proyectos`** con el catastro minero. Tiene más sentido ahora, con los
+dominios delante contra los que contrastarlo.
 
 ## F4 · Despliegue e integración editorial
 
