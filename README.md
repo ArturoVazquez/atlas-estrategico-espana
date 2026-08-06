@@ -61,7 +61,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las siete capas con datos, por si sirve de índice:
+Las nueve capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -70,6 +70,8 @@ Las siete capas con datos, por si sirve de índice:
 | `minerales-dominios` | **ilustrativa** | Los distritos, a mano alzada y declarados como tales |
 | `nuclear` | verificada | Un registro por reactor, con lo autorizado y lo acordado por separado |
 | `gas-regasificacion` | verificada | Las siete plantas de GNL |
+| `electricidad-interconexiones` | verificada | Los enlaces que cruzan frontera, con el extremo de fuera nombrado y sin coordenada |
+| `generacion-electrica-provincia` | verificada | Las 52 provincias y su mezcla de generación por tecnología |
 | `limites-soberania` | verificada | Ocho territorios, con quién administra y quién reclama |
 | `espacios-maritimos` | verificada | Las aguas sin delimitar, la plataforma continental y el monte Tropic |
 

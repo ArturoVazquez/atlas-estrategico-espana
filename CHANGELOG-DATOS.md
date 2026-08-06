@@ -32,6 +32,89 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.10 — La generación por provincia, y una casilla que no se podía cumplir
+
+Entra **`generacion-electrica-provincia`**: las 52 provincias con su mezcla de
+generación eléctrica de 2024, ocho tecnologías en producción neta. Es la primera
+**coropleta** del atlas y llega con nueve capas en total.
+
+### El hallazgo
+
+La casilla del horizonte decía «renovable **instalada** por provincia», y ese
+dato **no lo sostiene ninguna fuente primaria con licencia compatible**. Las tres
+puertas, y las tres cerradas por motivos distintos:
+
+- **MITECO** desagrega por provincia la **generación** (GWh), no la potencia (MW).
+  Es primaria y sirve — para otra cosa que la que la casilla prometía.
+- **La CNMC** publica potencia instalada y es **el regulador**, o sea primaria de
+  manual. Queda fuera igualmente por dos razones independientes: solo llega a
+  **comunidad autónoma**, y sus **204 conjuntos, sin una excepción, van bajo
+  CC BY-SA 4.0** — ShareAlike, contagiosa, prohibida por `datos/LICENCIA-DATOS.md`.
+- **Red Eléctrica** llega a provincia y es sociedad cotizada: `corporativa` por
+  §6.1, y R3 no la deja sostener un `confirmado`.
+
+Hasta hoy el atlas solo había chocado con una licencia contagiosa en fuente
+**privada** (TeleGeography, en los cables submarinos). **También pasa con las
+públicas**, y por eso la respuesta del catálogo de la CNMC se archiva como prueba
+y no como recuerdo.
+
+### Añadido
+
+- `generacion-electrica-provincia` — 52 registros, uno por provincia, con
+  `nuclear_gwh` · `eolica_gwh` · `solar_fv_gwh` · `solar_termica_gwh` ·
+  `mareomotriz_gwh` · `combustibles_gwh` · `cogeneracion_gwh` · `hidraulica_gwh`
+  y su `total_gwh`, todos `confirmado` sobre la Estadística de la Industria de la
+  Energía Eléctrica 2024 de MITECO (operación 23103 del IOE).
+- Geometría de límites provinciales del **Instituto Geográfico Nacional**
+  (Orden FOM/2807/2015, compatible con CC BY 4.0), generalizada por el atlas.
+
+### Lo que el lector tiene que saber antes de usar estas cifras
+
+- **Son provisionales, y lo dicen.** El propio fichero de MITECO se titula «DATOS
+  PROVISIONALES A FECHA 27/11/2025». Va en el campo `caracter_dato`, no en una
+  nota al pie.
+- **Los 52 no suman el total nacional de la misma publicación:** 270.400,35 GWh
+  netos frente a los 279.398,17 de su hoja «Nacional», y 8.700,38 de la
+  diferencia son de solar fotovoltaica. **No es un fallo del emparejamiento**: las
+  cinco provincias extrapeninsulares cuadran al céntimo con la hoja
+  «Extrapeninsular», así que el hueco es peninsular. La fuente no lo explica y el
+  atlas no lo suple: se publica lo que hay por provincia, sin repartir el resto
+  entre nadie. Va escrito en las 52 fichas.
+- **Con estas cifras no se puede calcular la cuota renovable.** La fuente no
+  desglosa biomasa ni residuos: van dentro de «Combustibles» y «Cogeneración».
+  Por eso el atlas no publica ninguna, y el esquema **prohíbe** un campo
+  `renovable_gwh`.
+- **El borde de cada provincia está simplificado.** La respuesta del IGN son
+  1.188.710 vértices y 186 MB; se publican 63.501. Estrena `geo_precision:
+  generalizada` (contrato 1.14), que existe precisamente para no llamar «trazado
+  a mano alzada» a cartografía oficial afinada. **No sirve para medir**; su
+  procedencia, sí. Ni un solo anillo se perdió: 5.236 de origen, 5.236
+  publicados.
+
+### Cómo se comprobó que cada cifra está en su provincia
+
+- La **nuclear sale mayor que cero en exactamente cuatro provincias** —Cáceres,
+  Guadalajara, Tarragona y Valencia—, que es el mapa de los reactores en
+  servicio. La eólica encabeza en Zaragoza, la hidráulica en Ourense y Salamanca,
+  la termosolar en Badajoz y Sevilla.
+- Los **33 puntos del atlas que declaran provincia** caen todos dentro del
+  polígono de la suya. Es el primer cruce que dos capas del atlas pueden hacerse.
+- El recuadro de cada provincia publicada queda **dentro de la tolerancia** del
+  que el IGN dio: la peor desviación es 0,00139° en Badajoz, con 0,002 de margen.
+
+### Huecos
+
+- **Potencia instalada por provincia** — declarada como hueco en las 52 fichas,
+  con sus tres motivos. Sigue sin fuente primaria de licencia compatible.
+- **Biomasa y residuos** — no desglosados por la fuente; se quedan dentro de
+  «Combustibles» y «Cogeneración».
+- **Los 8.997,82 GWh que faltan** para cuadrar con la hoja nacional. Sin explicar
+  por la fuente y sin repartir por el atlas.
+- Siguen abiertos los de la release anterior: la **red de transporte** (licencia)
+  y las **interconexiones ya en servicio** (solo las publica REE).
+
+---
+
 ## datos-v2026.08.9 — Las interconexiones eléctricas, y la mitad que no se sitúa
 
 Entra **`electricidad-interconexiones`**: cinco enlaces que cruzan una frontera,

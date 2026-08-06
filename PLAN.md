@@ -233,10 +233,34 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 
 ## Horizonte (post-v1, por orden acordado)
 
-~~Red eléctrica e interconexiones~~ → renovable por provincia → agua embalsada →
-centros de datos → H2Med → PERTE acotado → intangibles (clase `analisis`,
-ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya señales
-reales con las que diseñarlo.
+~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
+embalsada → centros de datos → H2Med → PERTE acotado → intangibles (clase
+`analisis`, ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
+señales reales con las que diseñarlo.
+
+**La segunda casilla, cumplida por otro nombre** (release `datos-v2026.08.10`).
+Decía «renovable **instalada** por provincia» y ese dato no lo publica nadie con
+licencia compatible: MITECO desagrega **generación**, no potencia; la CNMC da
+potencia pero solo por comunidad autónoma y **bajo CC BY-SA**, que
+`datos/LICENCIA-DATOS.md` prohíbe; y REE llega a provincia siendo `corporativa`,
+que R3 no admite. Se publica lo que sí se sostiene —la mezcla de generación de
+las 52 provincias— y la potencia queda como hueco declarado en las 52 fichas.
+**La casilla se renombra; no se disfraza.**
+
+Lo que deja escrito, para quien retome esto:
+
+- **La licencia también cierra puertas públicas.** Hasta aquí el atlas solo se
+  había topado con una licencia contagiosa en fuente privada. La CNMC es el
+  regulador y su catálogo entero está fuera. Conviene no reintentarlo.
+- **Una fuente oficial puede no cuadrar consigo misma.** Los 52 provinciales no
+  suman el total nacional del mismo fichero, y la diferencia —casi 9.000 GWh, en
+  su mayor parte fotovoltaica— no está explicada en ninguna parte del documento.
+  Se publica el desacuerdo, como ya se hizo con los dos derechos mineros del
+  catastro.
+- **Queda una pregunta de convención sin decidir:** dos registros escriben
+  «Valencia» donde el IGN pone «València/Valencia». El punto es correcto en los
+  dos casos. Si algún día el atlas fija que `provincia` se escribe siempre en la
+  forma del IGN, son dos líneas.
 
 **La primera casilla, a medias y dicho:** las **interconexiones** están hechas
 (release `datos-v2026.08.9`, cinco enlaces proyectados). La **red de transporte
