@@ -234,8 +234,8 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 ## Horizonte (post-v1, por orden acordado)
 
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
-embalsada → centros de datos → H2Med → PERTE acotado → intangibles (clase
-`analisis`, ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
+embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → H2Med → PERTE acotado →
+intangibles (clase `analisis`, ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
 señales reales con las que diseñarlo.
 
 **La segunda casilla, cumplida por otro nombre** (release `datos-v2026.08.10`).
@@ -246,6 +246,46 @@ potencia pero solo por comunidad autónoma y **bajo CC BY-SA**, que
 que R3 no admite. Se publica lo que sí se sostiene —la mezcla de generación de
 las 52 provincias— y la potencia queda como hueco declarado en las 52 fichas.
 **La casilla se renombra; no se disfraza.**
+
+**La tercera casilla, hecha y pequeña a propósito** (release
+`datos-v2026.08.11`). `centros-datos` publica SEIS registros, y el tamaño es el
+hallazgo: **España no tiene registro público de centros de datos**. La base
+europea del artículo 12 de la Directiva 2023/1791 se publica agregada por Estado
+miembro, MITECO no lleva censo y las cifras de mercado son de la patronal. Solo
+quedan los actos administrativos, y el único localizado que nombra, sitúa y
+dimensiona centros es el PIGA «Expansión Región AWS en Aragón»: cinco
+proyectados que declaran **10.848,2 GWh/año**, el 48 % de lo que Aragón generó
+en 2024.
+
+Lo que deja escrito:
+
+- **El comunicado de un gobierno no es fuente primaria; lo es el acto** (§6.1
+  del contrato, enmienda 1.15). Lo obligaron los «26 proyectos y 2.000 MW» que
+  anunció la Generalitat sin un expediente detrás. Primera vez que el atlas
+  rechaza una fuente pública, y la trampa es peor que la privada.
+- **Madrid y Cataluña son el hueco grande**: concentran la mayor parte del parque
+  español y no tienen aquí un solo acto archivado. Quien retome esto, que barra
+  el BOCM y el DOGC — el patrón del BOA ya está probado.
+- El **cuarto trimestre de esta casilla** sería la potencia TI en MW, y hoy no la
+  publica ningún acto: el esquema la prohíbe a propósito.
+
+**La casilla de agua embalsada quedó EMPEZADA y bloqueada en un solo paso.** El
+censo está resuelto y es primario: el Boletín Hidrológico da 374 embalses con su
+capacidad, su cuenca y un `ELECTRICO_FLAG` que **no cambia ni una vez en 38 años**
+—93 son hidroeléctricos, el 31 % de la capacidad—. Falta la GEOMETRÍA: el
+inventario del SNCZI está tras un reto de prueba de trabajo que el atlas no
+cruza solo, y el Nomenclátor del IGN solo sitúa 28 de los 93. Cuando
+`egis_embalse_geoetrs89.zip` y `egis_presa_geoetrs89.zip` estén en `fuentes/`,
+el resto es mecánico. Tres cosas medidas que conviene no volver a medir:
+
+- El llenado se mueve **3,9 puntos en la mediana cada cuatro semanas** y hasta 86
+  en los extremos, así que **el agua almacenada no se publica**: sería una cifra
+  falsa antes de la siguiente release. Va como hueco, apuntando al boletín.
+- **La capacidad tampoco es intemporal**: 231 de 401 embalses la han cambiado, y
+  Contreras pasó de 874 a 361 hm³ en 2019. Se toma de la última semana y lleva
+  fecha.
+- **Seis de los 93 no son embalses** sino agrupaciones («Sistema Capdella»,
+  «Sistema Valle de Arán»…): 123 hm³ y sin polígono propio.
 
 Lo que deja escrito, para quien retome esto:
 

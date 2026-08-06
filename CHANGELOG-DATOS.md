@@ -32,6 +32,94 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.11 — Seis centros de datos, y por qué no puede haber más
+
+Entra **`centros-datos`**: la capa más pequeña del atlas, con seis registros.
+Décima capa.
+
+### El hallazgo
+
+**España no tiene registro público de centros de datos.** No es que cueste
+encontrarlo: no existe.
+
+- La **base europea** del artículo 12 de la Directiva 2023/1791 obliga a reportar
+  a todo centro de ≥500 kW — y se publica **agregada por Estado miembro**. Ni
+  instalación, ni ubicación.
+- **MITECO** no lleva censo propio: remite a reportar a esa base europea.
+- Las cifras que cita toda la prensa —439 MW instalados en 2025, 2.537 previstos
+  para 2030, «25 GW solicitados de los que solo 3 son reales»— las publica
+  **SpainDC, la patronal**: `corporativa` por §6.1, y R3 no la admite.
+
+Así que la capa se levanta con lo único que nombra, sitúa y dimensiona centros
+concretos: **actos administrativos**. Y de ahí sale su tamaño.
+
+### La cifra
+
+Los cinco centros del PIGA «Expansión Región AWS en Aragón» declaran, según el
+propio acto, **10.848,2 GWh/año** a plena capacidad. Contra la capa de generación
+por provincia de la release anterior —las dos cifras primarias, ninguna
+interpretada— eso equivale al **48 % de todo lo que Aragón generó en 2024** y al
+**71 % de lo que generó la provincia de Zaragoza**.
+
+El atlas pone los dos números en el mismo mapa y no concluye nada. Para eso está
+el hilo de El Tercio.
+
+### Añadido
+
+- `centros-datos` — seis registros, todos del mismo acto (INAGA, resolución de 16
+  de julio de 2025, BOA n.º 150): **CAR** (Zaragoza, 143,2 ha, 3.279,7 GWh/año),
+  **VDG1** y **VDG2** (Villanueva de Gállego, 13,1 y 83,3 ha, 756,9 y 2.775),
+  **WQA** (Huesca, Parque Tecnológico Walqa, 56,7 ha, 2.270,6), **BDE** (El Burgo
+  de Ebro, 43,7 ha, 1.766) y el centro **ya existente** de El Burgo de Ebro, que
+  el acto menciona al situar el proyectado a 400 m de él.
+
+### Lo que el lector tiene que saber antes de usar estas cifras
+
+- **Ninguno de los cinco consume nada todavía.** Es la demanda declarada a plena
+  capacidad de centros que no existen: van con `fase: tramitacion` y la nota lo
+  dice antes que el número.
+- **El sexto solo tiene nombre.** Del centro existente el acto dice que existe y
+  nada más: superficie, consumo y fecha de servicio son hueco declarado. Se
+  registra igual — el atlas prefiere un registro con tres huecos a callar lo que
+  sabe que está ahí.
+- **La geometría se queda en `municipio`**, que §6.6 reconoce como resultado
+  legítimo. El acto sitúa por polígono industrial —«Empresarium», «Walqa», «El
+  Espartal»— y el Nomenclátor del IGN no nombra ninguno de los tres: los únicos
+  «El Espartal» que existen están en La Rioja y Navarra, a 120 km.
+
+### Lo que se dejó fuera, y por qué
+
+- **Los 26 proyectos de centros de datos de Cataluña** (unos 2.000 MW, siete
+  polos). Los anunció la Generalitat en **nota de prensa**, no en un acto: no
+  están autorizados ni localizados por expediente alguno. Obligó a escribir la
+  enmienda de §6.1 del contrato — **el comunicado de un gobierno no es fuente
+  primaria; lo es el acto**. Es la primera vez que el atlas tiene que rechazar
+  una fuente pública, y la trampa es peor que la privada porque parece oficial.
+- **Los tres solicitantes que el BOE sí nombra.** El primer concurso de capacidad
+  de acceso de demanda desanonimiza sus códigos en la última tabla:
+  **CPD4GREEN, SAU** (nudo Brazatortas 400), **Benbros DC, SL** (Francolí 220) y
+  **ACS DC Infra, SLU** (Nuevo Vigo 220). **Los tres, excluidos.** Los 928 MW
+  fueron a acero verde (Hydnum, 500 MW), cobre, gases industriales, Stellantis y
+  Moeve — ni un megavatio a un centro de datos, porque el criterio principal
+  puntúa CO₂ evitado por MW. No entran en la capa: esa resolución define una
+  solicitud en un nudo, no un centro en un sitio.
+- **La acometida de ACS DC LA PUEBLA** (BOE-B-2026-24883), por lo mismo: ese acto
+  define una línea de 400 kV en Villamayor de Gállego, y el centro se llama «La
+  Puebla», que es otro municipio.
+
+### Huecos
+
+- **La potencia TI en MW** — la cifra con la que se compara el sector. Ningún acto
+  la publica; el esquema la **prohíbe** para que no entre un día desde un informe
+  de mercado.
+- **Todo lo que no sea el nombre**, en el centro existente de El Burgo de Ebro.
+- **Los centros de datos de Madrid y Cataluña**, que son la mayoría del parque
+  español y hoy no tienen en esta capa un solo acto archivado.
+- Siguen abiertos los de releases anteriores: red de transporte, interconexiones
+  en servicio, potencia instalada renovable por provincia.
+
+---
+
 ## datos-v2026.08.10 — La generación por provincia, y una casilla que no se podía cumplir
 
 Entra **`generacion-electrica-provincia`**: las 52 provincias con su mezcla de
