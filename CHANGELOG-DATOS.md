@@ -32,6 +32,31 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.5 — El color deja de vivir en el código
+
+Release **solo de vocabulario**: ningún registro cambia. Cada categoría de §9
+lleva ahora su **`color`**, y con eso el mapa deja de pintar tres capas del
+mismo gris.
+
+### Corregido
+
+- **`vocabularios.json` · `categoria`** — las diez categorías de las cuatro
+  capas publicadas ganan `color`. Lo destapó tener cuatro capas encendidas a la
+  vez: la paleta vivía cableada en el visor y solo conocía las tres categorías
+  de `minerales-proyectos`, así que nuclear, gas y el tablero caían todos en el
+  gris de reserva. Cuatro capas, indistinguibles en el mapa.
+
+El color es **dato**, no decisión del programa, por el mismo motivo que el
+rótulo y el orden: el vocabulario dice de sí mismo que el visor «no reordena, no
+traduce y no elige colores». Consecuencia asumida: **cambiar un color exige una
+release**, como cualquier cambio de vocabulario.
+
+### Contrato
+
+Sube a **1.9.0**: §9 documenta el campo `color` y su consecuencia.
+
+---
+
 ## datos-v2026.08.4 — Gas y regasificación, y la cifra que nadie publica
 
 Cuarta capa. Con ella **F3 cumple su criterio de hecho**: las tres capas que
