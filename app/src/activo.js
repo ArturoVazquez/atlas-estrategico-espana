@@ -18,6 +18,9 @@ const TABLA = {
   // La única que no mira `fase`: un dominio no es un expediente, es una comarca,
   // y su carácter ES la clase de cosa que es. Va en `categoria` (contrato 1.10).
   "minerales-dominios": (p) => p.categoria === "activo" || p.categoria === "mixto",
+  // Un enlace en servicio SÍ está en explotación — al contrario que un derecho
+  // minero, que es un título y no una obra, y por eso no figura en esta tabla.
+  "electricidad-interconexiones": (p) => p.categoria === "en_servicio",
   "cables-submarinos": (p) => p.fase === "produccion",
   // `recurso-eolico`, `recurso-solar` y el tablero NO APLICAN: son recurso o
   // condición del territorio, no explotación. Ausentes de la tabla a propósito.

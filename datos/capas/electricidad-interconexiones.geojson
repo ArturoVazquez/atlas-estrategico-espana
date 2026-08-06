@@ -1,0 +1,435 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "electricidad-interconexiones",
+    "schema_version": "1.13.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "electricidad-interconexiones:interconexion-portugal-beariz",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.27302,
+          42.46706
+        ]
+      },
+      "properties": {
+        "slug": "interconexion-portugal-beariz",
+        "nombre": "Interconexión con Portugal por Beariz–Fontefría",
+        "nombre_oficial": "Interconexión Portugal-España entre Beariz-Fontefría (ES), Fontefría (ES)-Ponte de Lima (PT)",
+        "categoria": "proyectada",
+        "descripcion": "Nueva interconexión de 400 kV entre Galicia y el norte de Portugal, con dos subestaciones nuevas —Beariz y Fontefría— y el doble circuito que las une.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Beariz» (Entidad singular) del Nomenclátor Geográfico Básico de España; es el LUGAR que el instrumento nombra, no la subestación",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "pais_vecino": "Portugal",
+        "pais_vecino__v": "confirmado",
+        "pais_vecino__f": "f2",
+        "extremo_exterior": "Ponte de Lima (Portugal)",
+        "codigo_actuacion": "INT_ESP-POR",
+        "tension_kv": 400,
+        "instrumento": "Plan de desarrollo de la red de transporte 2021-2026, y proyecto de interés común 1.1 de la lista de la Unión",
+        "municipio": "Beariz",
+        "provincia": "Ourense",
+        "claves": [
+          {
+            "k": "Qué comprende",
+            "v": "Nueva subestación Beariz 400 kV, nueva subestación Fontefría 400/220 kV, nuevo doble circuito Beariz–Fontefría 400 kV y nueva línea Fontefría–frontera portuguesa.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Dónde queda Fontefría",
+            "v": "No se publica su punto: el NGBE no nombra ese lugar y la subestación no existe todavía. El registro se sitúa en Beariz, que sí está nombrado.",
+            "verif": "no_verificado",
+            "fuente": "f8"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión, de 1 de diciembre de 2025 — lista de la Unión de proyectos de interés común y de interés mutuo (VIGENTE; sustituye a la del Reglamento Delegado (UE) 2024/1041)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2026-04-09",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plan de desarrollo de la red de transporte de energía eléctrica 2021-2026 (MITECO, aprobado por Acuerdo de Consejo de Ministros de 22 de marzo de 2022) — EXTRACTO de las páginas 91-92, 160-162, 325-330 y 477-479 del documento completo, de 535 páginas y 355 MB",
+            "url": "https://www6.serviciosmin.gob.es/Aplicaciones/Planificacion/PLAN_DESARROLLO_RdT_H2026_COMPLETO.pdf",
+            "fecha": "2022-03-22",
+            "archivo": "fuentes/2026-08-06_miteco_planificacion-red-transporte-2021-2026_extracto-interconexiones.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España (IGN) — topónimos que sitúan el extremo español de cada enlace",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-interconexiones.json"
+          },
+          {
+            "id": "f8",
+            "tipo": "hueco",
+            "titulo": "El estado que se publica es el que dicen los instrumentos de PLANIFICACIÓN, no un parte de obra. Este atlas no ha archivado ninguna fuente que acredite en qué punto de ejecución está cada enlace hoy."
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "Las interconexiones YA EN SERVICIO con Francia, Portugal, Marruecos y Andorra no están en esta capa: no se ha localizado un instrumento que las inventaríe con sus extremos. El que lo publica es Red Eléctrica, fuente corporativa."
+          }
+        ],
+        "nota": "Se sitúa el extremo ESPAÑOL, y es un punto en el LUGAR que el instrumento nombra —no la subestación, que en cuatro de los cinco casos todavía no existe—. El extremo exterior va nombrado y sin coordenada: dibujar una recta hasta una subestación extranjera cuya posición este atlas no ha comprobado sería inventar la mitad del dato. Y OJO con lo que esta capa NO trae: las interconexiones que YA están en servicio con Francia, Portugal, Marruecos y Andorra. El propio plan las nombra de pasada —habla de un «tercer eje» con Marruecos, y sus tablas citan Arkale, Hernani-Argia y Baixas-Vic— pero no las inventaría con sus extremos, y quien sí publica ese inventario es Red Eléctrica, que es sociedad cotizada y por R3 no sostiene un confirmado. Están declaradas como hueco, no omitidas."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "electricidad-interconexiones:interconexion-francia-navarra",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.77984,
+          42.8464
+        ]
+      },
+      "properties": {
+        "slug": "interconexion-francia-navarra",
+        "nombre": "Interconexión con Francia por Navarra (Olza–Cantegrit)",
+        "nombre_oficial": "Interconexión entre Navarra (ES) y Landes (FR)",
+        "categoria": "proyectada",
+        "descripcion": "Enlace en corriente continua por el Pirineo occidental, con tecnología VSC y dos monopolos simétricos de 1.000 MW cada uno.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Olza» (EATIM) del Nomenclátor Geográfico Básico de España; es el LUGAR que el instrumento nombra, no la subestación",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "pais_vecino": "Francia",
+        "pais_vecino__v": "confirmado",
+        "pais_vecino__f": "f2",
+        "extremo_exterior": "Cantegrit (Landas, Francia)",
+        "codigo_actuacion": "INT_ESP-FRA",
+        "instrumento": "Plan de desarrollo de la red de transporte 2021-2026, y proyecto de interés común 1.7.1 de la lista de la Unión",
+        "municipio": "Cendea de Olza/Oltza Zendea",
+        "provincia": "Navarra",
+        "claves": [
+          {
+            "k": "Capacidad proyectada",
+            "v": "Dos monopolos simétricos de 1.000 MW cada uno, en corriente continua con tecnología VSC.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Cómo se llama fuera",
+            "v": "La lista de la Unión lo nombra «Pyrenean crossing 1» y lo sitúa entre Navarra y las Landas.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión, de 1 de diciembre de 2025 — lista de la Unión de proyectos de interés común y de interés mutuo (VIGENTE; sustituye a la del Reglamento Delegado (UE) 2024/1041)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2026-04-09",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plan de desarrollo de la red de transporte de energía eléctrica 2021-2026 (MITECO, aprobado por Acuerdo de Consejo de Ministros de 22 de marzo de 2022) — EXTRACTO de las páginas 91-92, 160-162, 325-330 y 477-479 del documento completo, de 535 páginas y 355 MB",
+            "url": "https://www6.serviciosmin.gob.es/Aplicaciones/Planificacion/PLAN_DESARROLLO_RdT_H2026_COMPLETO.pdf",
+            "fecha": "2022-03-22",
+            "archivo": "fuentes/2026-08-06_miteco_planificacion-red-transporte-2021-2026_extracto-interconexiones.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España (IGN) — topónimos que sitúan el extremo español de cada enlace",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-interconexiones.json"
+          },
+          {
+            "id": "f8",
+            "tipo": "hueco",
+            "titulo": "El estado que se publica es el que dicen los instrumentos de PLANIFICACIÓN, no un parte de obra. Este atlas no ha archivado ninguna fuente que acredite en qué punto de ejecución está cada enlace hoy."
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "Las interconexiones YA EN SERVICIO con Francia, Portugal, Marruecos y Andorra no están en esta capa: no se ha localizado un instrumento que las inventaríe con sus extremos. El que lo publica es Red Eléctrica, fuente corporativa."
+          }
+        ],
+        "nota": "Se sitúa el extremo ESPAÑOL, y es un punto en el LUGAR que el instrumento nombra —no la subestación, que en cuatro de los cinco casos todavía no existe—. El extremo exterior va nombrado y sin coordenada: dibujar una recta hasta una subestación extranjera cuya posición este atlas no ha comprobado sería inventar la mitad del dato. Y OJO con lo que esta capa NO trae: las interconexiones que YA están en servicio con Francia, Portugal, Marruecos y Andorra. El propio plan las nombra de pasada —habla de un «tercer eje» con Marruecos, y sus tablas citan Arkale, Hernani-Argia y Baixas-Vic— pero no las inventaría con sus extremos, y quien sí publica ese inventario es Red Eléctrica, que es sociedad cotizada y por R3 no sostiene un confirmado. Están declaradas como hueco, no omitidas."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "electricidad-interconexiones:interconexion-francia-vizcaya",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.87388,
+          43.36308
+        ]
+      },
+      "properties": {
+        "slug": "interconexion-francia-vizcaya",
+        "nombre": "Interconexión con Francia por el golfo de Vizcaya",
+        "nombre_oficial": "Interconexión entre Gatica (ES) y Cubnezais (FR)",
+        "categoria": "proyectada",
+        "descripcion": "Enlace submarino por el golfo de Vizcaya entre el País Vasco y la Gironda, el que más capacidad añadiría a la frontera con Francia.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "«Gatika» (Municipio) del Nomenclátor Geográfico Básico de España; es el LUGAR que el instrumento nombra, no la subestación",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "pais_vecino": "Francia",
+        "pais_vecino__v": "confirmado",
+        "pais_vecino__f": "f2",
+        "extremo_exterior": "Cubnezais (Gironda, Francia)",
+        "instrumento": "Proyecto de interés común 1.2 de la lista de la Unión, conocido como «Biscay Gulf»",
+        "municipio": "Gatika",
+        "provincia": "Bizkaia",
+        "claves": [
+          {
+            "k": "Cómo figura en la planificación",
+            "v": "El plan de desarrollo de la red de transporte lo incorpora expresamente como nueva interconexión entre España y Francia por el golfo de Vizcaya.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión, de 1 de diciembre de 2025 — lista de la Unión de proyectos de interés común y de interés mutuo (VIGENTE; sustituye a la del Reglamento Delegado (UE) 2024/1041)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2026-04-09",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plan de desarrollo de la red de transporte de energía eléctrica 2021-2026 (MITECO, aprobado por Acuerdo de Consejo de Ministros de 22 de marzo de 2022) — EXTRACTO de las páginas 91-92, 160-162, 325-330 y 477-479 del documento completo, de 535 páginas y 355 MB",
+            "url": "https://www6.serviciosmin.gob.es/Aplicaciones/Planificacion/PLAN_DESARROLLO_RdT_H2026_COMPLETO.pdf",
+            "fecha": "2022-03-22",
+            "archivo": "fuentes/2026-08-06_miteco_planificacion-red-transporte-2021-2026_extracto-interconexiones.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España (IGN) — topónimos que sitúan el extremo español de cada enlace",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-interconexiones.json"
+          },
+          {
+            "id": "f8",
+            "tipo": "hueco",
+            "titulo": "El estado que se publica es el que dicen los instrumentos de PLANIFICACIÓN, no un parte de obra. Este atlas no ha archivado ninguna fuente que acredite en qué punto de ejecución está cada enlace hoy."
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "Las interconexiones YA EN SERVICIO con Francia, Portugal, Marruecos y Andorra no están en esta capa: no se ha localizado un instrumento que las inventaríe con sus extremos. El que lo publica es Red Eléctrica, fuente corporativa."
+          }
+        ],
+        "nota": "Se sitúa el extremo ESPAÑOL, y es un punto en el LUGAR que el instrumento nombra —no la subestación, que en cuatro de los cinco casos todavía no existe—. El extremo exterior va nombrado y sin coordenada: dibujar una recta hasta una subestación extranjera cuya posición este atlas no ha comprobado sería inventar la mitad del dato. Y OJO con lo que esta capa NO trae: las interconexiones que YA están en servicio con Francia, Portugal, Marruecos y Andorra. El propio plan las nombra de pasada —habla de un «tercer eje» con Marruecos, y sus tablas citan Arkale, Hernani-Argia y Baixas-Vic— pero no las inventaría con sus extremos, y quien sí publica ese inventario es Red Eléctrica, que es sociedad cotizada y por R3 no sostiene un confirmado. Están declaradas como hueco, no omitidas."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "electricidad-interconexiones:interconexion-andorra",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.40082,
+          42.3267
+        ]
+      },
+      "properties": {
+        "slug": "interconexion-andorra",
+        "nombre": "Interconexión con Andorra por Adrall",
+        "categoria": "proyectada",
+        "descripcion": "Nuevo doble circuito de 220 kV desde Adrall hasta la frontera andorrana, en sustitución del eje actual de 110 kV.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Adrall» (Entidad singular) del Nomenclátor Geográfico Básico de España; es el LUGAR que el instrumento nombra, no la subestación",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "pais_vecino": "Andorra",
+        "pais_vecino__v": "confirmado",
+        "pais_vecino__f": "f2",
+        "extremo_exterior": "Frontera con Andorra",
+        "codigo_actuacion": "INT_ESP-AND",
+        "tension_kv": 220,
+        "instrumento": "Plan de desarrollo de la red de transporte 2021-2026",
+        "municipio": "Ribera d'Urgellet",
+        "provincia": "Lleida",
+        "claves": [
+          {
+            "k": "Por qué no basta lo que hay",
+            "v": "El plan descarta repotenciar el eje actual de 110 kV: no alcanza capacidades suficientes.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "El extremo andorrano",
+            "v": "El instrumento llega solo «a la frontera con Andorra» y no nombra subestación al otro lado. No se inventa ninguna.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión, de 1 de diciembre de 2025 — lista de la Unión de proyectos de interés común y de interés mutuo (VIGENTE; sustituye a la del Reglamento Delegado (UE) 2024/1041)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2026-04-09",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plan de desarrollo de la red de transporte de energía eléctrica 2021-2026 (MITECO, aprobado por Acuerdo de Consejo de Ministros de 22 de marzo de 2022) — EXTRACTO de las páginas 91-92, 160-162, 325-330 y 477-479 del documento completo, de 535 páginas y 355 MB",
+            "url": "https://www6.serviciosmin.gob.es/Aplicaciones/Planificacion/PLAN_DESARROLLO_RdT_H2026_COMPLETO.pdf",
+            "fecha": "2022-03-22",
+            "archivo": "fuentes/2026-08-06_miteco_planificacion-red-transporte-2021-2026_extracto-interconexiones.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España (IGN) — topónimos que sitúan el extremo español de cada enlace",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-interconexiones.json"
+          },
+          {
+            "id": "f8",
+            "tipo": "hueco",
+            "titulo": "El estado que se publica es el que dicen los instrumentos de PLANIFICACIÓN, no un parte de obra. Este atlas no ha archivado ninguna fuente que acredite en qué punto de ejecución está cada enlace hoy."
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "Las interconexiones YA EN SERVICIO con Francia, Portugal, Marruecos y Andorra no están en esta capa: no se ha localizado un instrumento que las inventaríe con sus extremos. El que lo publica es Red Eléctrica, fuente corporativa."
+          }
+        ],
+        "nota": "Se sitúa el extremo ESPAÑOL, y es un punto en el LUGAR que el instrumento nombra —no la subestación, que en cuatro de los cinco casos todavía no existe—. El extremo exterior va nombrado y sin coordenada: dibujar una recta hasta una subestación extranjera cuya posición este atlas no ha comprobado sería inventar la mitad del dato. Y OJO con lo que esta capa NO trae: las interconexiones que YA están en servicio con Francia, Portugal, Marruecos y Andorra. El propio plan las nombra de pasada —habla de un «tercer eje» con Marruecos, y sus tablas citan Arkale, Hernani-Argia y Baixas-Vic— pero no las inventaría con sus extremos, y quien sí publica ese inventario es Red Eléctrica, que es sociedad cotizada y por R3 no sostiene un confirmado. Están declaradas como hueco, no omitidas."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "electricidad-interconexiones:interconexion-marruecos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.61298,
+          36.07989
+        ]
+      },
+      "properties": {
+        "slug": "interconexion-marruecos",
+        "nombre": "Tercera interconexión con Marruecos",
+        "categoria": "proyectada",
+        "descripcion": "Tercer eje de 400 kV entre España y Marruecos, con un enlace subterráneo-submarino desde Puerto de la Cruz, en Tarifa, hasta Beni Harchane.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Puerto de la Cruz» (Paso de montaña) del Nomenclátor Geográfico Básico de España; es el LUGAR que el instrumento nombra, no la subestación",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f3",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "pais_vecino": "Marruecos",
+        "pais_vecino__v": "confirmado",
+        "pais_vecino__f": "f2",
+        "extremo_exterior": "Beni Harchane (Marruecos)",
+        "codigo_actuacion": "INT_ESP-MAR",
+        "tension_kv": 400,
+        "instrumento": "Plan de desarrollo de la red de transporte 2021-2026",
+        "municipio": "Tarifa",
+        "provincia": "Cádiz",
+        "claves": [
+          {
+            "k": "Qué comprende",
+            "v": "Nuevo enlace subterráneo-submarino entre Puerto de la Cruz 400 kV y Beni Harchane 400 kV, más cuatro reactancias de 50 MVAr en Puerto de la Cruz.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "De dónde viene",
+            "v": "El plan lo vincula al acuerdo con el Reino de Marruecos de febrero de 2019 para desarrollar una tercera interconexión eléctrica antes de 2026.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Que sea el TERCERO dice algo",
+            "v": "El propio instrumento lo llama «tercer eje», así que hay dos en servicio. Esta capa no los trae: ver el hueco f9.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión, de 1 de diciembre de 2025 — lista de la Unión de proyectos de interés común y de interés mutuo (VIGENTE; sustituye a la del Reglamento Delegado (UE) 2024/1041)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2026-04-09",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plan de desarrollo de la red de transporte de energía eléctrica 2021-2026 (MITECO, aprobado por Acuerdo de Consejo de Ministros de 22 de marzo de 2022) — EXTRACTO de las páginas 91-92, 160-162, 325-330 y 477-479 del documento completo, de 535 páginas y 355 MB",
+            "url": "https://www6.serviciosmin.gob.es/Aplicaciones/Planificacion/PLAN_DESARROLLO_RdT_H2026_COMPLETO.pdf",
+            "fecha": "2022-03-22",
+            "archivo": "fuentes/2026-08-06_miteco_planificacion-red-transporte-2021-2026_extracto-interconexiones.pdf"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España (IGN) — topónimos que sitúan el extremo español de cada enlace",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-interconexiones.json"
+          },
+          {
+            "id": "f8",
+            "tipo": "hueco",
+            "titulo": "El estado que se publica es el que dicen los instrumentos de PLANIFICACIÓN, no un parte de obra. Este atlas no ha archivado ninguna fuente que acredite en qué punto de ejecución está cada enlace hoy."
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "Las interconexiones YA EN SERVICIO con Francia, Portugal, Marruecos y Andorra no están en esta capa: no se ha localizado un instrumento que las inventaríe con sus extremos. El que lo publica es Red Eléctrica, fuente corporativa."
+          }
+        ],
+        "nota": "Se sitúa el extremo ESPAÑOL, y es un punto en el LUGAR que el instrumento nombra —no la subestación, que en cuatro de los cinco casos todavía no existe—. El extremo exterior va nombrado y sin coordenada: dibujar una recta hasta una subestación extranjera cuya posición este atlas no ha comprobado sería inventar la mitad del dato. Y OJO con lo que esta capa NO trae: las interconexiones que YA están en servicio con Francia, Portugal, Marruecos y Andorra. El propio plan las nombra de pasada —habla de un «tercer eje» con Marruecos, y sus tablas citan Arkale, Hernani-Argia y Baixas-Vic— pero no las inventaría con sus extremos, y quien sí publica ese inventario es Red Eléctrica, que es sociedad cotizada y por R3 no sostiene un confirmado. Están declaradas como hueco, no omitidas."
+      }
+    }
+  ]
+}

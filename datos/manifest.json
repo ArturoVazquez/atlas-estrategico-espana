@@ -109,8 +109,24 @@
       "atribucion": "Atlas Estratégico de España"
     },
     {
+      "id": "electricidad-interconexiones",
+      "titulo": "Interconexiones eléctricas",
+      "arbol": "energia",
+      "grupo": "actividad",
+      "geometria": "puntos",
+      "registro": "verificado",
+      "ambito": "espana",
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/electricidad-interconexiones.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Atlas Estratégico de España"
+    },
+    {
+      "_": "Se retitula: era «Red eléctrica e interconexiones» y las interconexiones ya tienen su capa. Lo que sigue faltando es el MALLADO —líneas de 400 kV y subestaciones interiores—, y falta por licencia: quien lo publica es Red Eléctrica, sociedad cotizada, y no hay cartografía de la red compatible con CC BY 4.0 (datos/LICENCIA-DATOS.md).",
       "id": "red-electrica",
-      "titulo": "Red eléctrica e interconexiones",
+      "titulo": "Red eléctrica (transporte)",
       "arbol": "energia",
       "grupo": "dotacion",
       "en_preparacion": true
