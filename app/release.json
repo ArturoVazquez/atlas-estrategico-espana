@@ -1,5 +1,5 @@
 {
   "_": "La release de datos que sirve este visor. Vive en UN solo sitio: lo lee el guion de construcción para copiar los ficheros, y lo lee el visor para estamparlo en la cabecera. Cambiar de release es cambiar esta línea y volver a construir.",
   "_por_que": "CONTRATO-DATOS.md §8: «la app no lee ficheros vivos: lee la última release etiquetada». En un sitio estático eso solo puede significar una cosa honesta: que el BUILD fije la etiqueta. Si el visor leyera datos/ del árbol de trabajo, publicaría datos sin verificar cada vez que alguien guarda un fichero.",
-  "etiqueta": "datos-v2026.08.7"
+  "etiqueta": "datos-v2026.08.8"
 }

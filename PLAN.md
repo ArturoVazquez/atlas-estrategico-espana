@@ -162,12 +162,21 @@ contradiría el motivo por el que se decidió autoalojarlo.
     puede hacerse de uno en uno: **R5 es regla de capa, no de registro**.
     Verificar la Faja Pirítica con el IGME obligaría a verificar las quince
     restantes —o a partir la capa en dos, que es probablemente la salida.
-- **Punto → polígono en `minerales-proyectos`** (menor de capa, §8: mismo `id`).
-  El catastro minero da el perímetro del derecho y ya está descargado y
-  entendido — CRS resuelto, derechos multiparte detectados. Es el único camino a
-  `geo_precision: exacta`, que §6.6 declara inalcanzable mientras la capa sea de
-  puntos. Arrastra el manifiesto a `geometria: mixta` y obliga al visor de F2 a
-  pintar las dos cosas: por eso no se hizo en F1.
+- ~~**Punto → polígono en `minerales-proyectos`**… Es el único camino a
+  `geo_precision: exacta`.~~ **DESCARTADO el 2026-08-06, con motivo**, y en su
+  lugar nace `minerales-derechos` (release `datos-v2026.08.8`).
+  - **Lo que invalida la tarea tal y como estaba escrita:** el catastro define
+    **derechos, no minas**. Qué derecho «es» un proyecto no lo contesta ningún
+    documento — TOLSA tiene **54 derechos solo en Madrid**. Elegir uno sería una
+    atribución sin fuente, y §6.6 lo recoge ya como doctrina.
+  - **`geo_precision: exacta` SÍ se alcanza**, pero sobre el derecho, que es el
+    objeto que la fuente define. Los once proyectos siguen en `paraje` y
+    `municipio`, declarado.
+  - **Y el CSV del catastro que este proyecto usó en F1 está TRUNCADO** a 424
+    caracteres: 38 de 106 derechos pierden vértices, 29 de ellos una esquina
+    real. Sirve para nombres y titulares —que es a lo que se usó— y **no sirve
+    para geometría**. El shapefile del mismo endpoint sí, y su `.prj` confirma
+    ETRS89 por la fuente.
 - ~~**R8 gana su diente** aquí~~ **GANADO el 2026-08-06.** Es la **única regla
   que compara dos capas**, así que no cabe en la validación por fichero: vive en
   `main()`, se comprueba cuando ambas entran en la misma pasada —siempre, en
@@ -190,9 +199,12 @@ sostiene un confirmado en ninguna de ellas.
 validando, ninguna regla del contrato sin diente, y ninguna cifra no primaria
 sosteniendo un confirmado en ninguna de ellas.
 
-Sigue pendiente, y ya no es de F3: el **punto → polígono de
-`minerales-proyectos`** con el catastro minero. Tiene más sentido ahora, con los
-dominios delante contra los que contrastarlo.
+~~Sigue pendiente, y ya no es de F3: el **punto → polígono de
+`minerales-proyectos`**.~~ **Resuelto por otra vía el 2026-08-06** — ver arriba:
+se descarta con motivo y en su lugar entra `minerales-derechos`.
+
+**Con eso no queda nada abierto salvo lo que no puede hacer Claude:** el
+extracto PMTiles y su bucket, que es lo único que separa a F2 de estar cerrada.
 
 ## F4 · Despliegue e integración editorial
 

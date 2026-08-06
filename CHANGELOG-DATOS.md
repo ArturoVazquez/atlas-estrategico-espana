@@ -32,6 +32,74 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.8 — Los derechos mineros, y el punto → polígono que NO se hace
+
+Entra **`minerales-derechos`**: 106 derechos del Catastro Minero con su
+perímetro. Es la **primera capa del atlas con `geo_precision: exacta`**, y lo es
+por un motivo estrecho — la geometría *es* el derecho que la fuente define.
+
+### El hallazgo, y es feo
+
+**La exportación en CSV del Catastro Minero trunca las coordenadas a 424
+caracteres.** De los 106 derechos que interesan, **38 vienen cortados** y en
+**29 lo que se pierde es una esquina real**, no el vértice de cierre —
+comprobado comparando el fragmento truncado contra el primer vértice.
+
+Un polígono al que le falta una esquina **cierra igual y parece correcto**. Es
+el peor fallo que este atlas puede cometer, y lo sirve la fuente.
+
+El mismo endpoint con `extension=SHP` devuelve el shapefile completo, y su
+`.prj` declara **ETRS89 con TOWGS84 a ceros** — confirmando por la fuente lo
+que F1 dedujo midiendo 2.426 vértices. **Toda la geometría de esta capa sale del
+shapefile; ninguna del CSV**, y está comprobado registro a registro.
+
+### Lo que NO se hace, y por qué
+
+PLAN.md preveía subir `minerales-proyectos` de punto a polígono con este mismo
+catastro. **No se hace.** El catastro define *derechos*, no minas, y qué derecho
+«es» un proyecto no lo contesta ningún documento: **TOLSA tiene 54 derechos solo
+en Madrid**, Solvay seis en Granada, Iberian Resources cuatro entre Badajoz y
+Cáceres. Elegir uno sería una atribución sin fuente.
+
+Se publican las dos capas, se solapan en el mapa, y **el lector ve el solape**,
+que sí es un hecho.
+
+### Añadido
+
+- **`minerales-derechos` — 106 registros**: 55 vigentes, 16 en tramitación,
+  **35 extinguidos**. Regla de selección mecánica y declarada: los derechos cuyo
+  titular es un promotor que el atlas ya registra.
+- **Ocho shapefiles provinciales** archivados en `fuentes/`.
+- Contrato **1.12.0**, con la enmienda de §6.6: «del objeto mismo» quiere decir
+  del objeto que la fuente define **y de ningún otro**.
+
+### Corregido
+
+- **Nueve registros con el anillo exterior al revés**, cazados por §7.4 antes de
+  publicarse. Agrupé los anillos por índice; el shapefile los distingue por
+  **orientación** (exterior horario, hueco antihorario — al revés que RFC 7946).
+  Con eso bien, «LA MONAGUERA» resulta ser **tres piezas disjuntas** y «DEMASÍA A
+  CARABAÑA» tiene **un hueco de verdad**.
+- **Mojibake silencioso.** El `.dbf` trae la página de códigos sin declarar
+  (0x00) y el contenido en UTF-8: leerlo como latin-1 —lo que manda el formato de
+  1998— convierte «CARABAÑA» en «CARABAÃ‘A» sin lanzar un solo error.
+
+### Huecos
+
+- **`superficie_declarada` no concuerda con el perímetro, y se publica igual.**
+  Cada unidad vale ~0,30 km² con el código «C» y ~0,22 km² con el código «H»,
+  que el catastro rotula «hectáreas» (0,01 km²). El atlas **no elige** entre dos
+  datos de la misma fuente: publica el perímetro, que es el que esa fuente
+  dibuja, y deja el campo verbatim, sin `__v`, con su desacuerdo dicho.
+- **Solo ocho provincias**, las que tienen proyectos registrados. TOLSA o Solvay
+  pueden tener derechos en otras; no se insinúa que no los tengan.
+- **Un derecho no dice que haya mina.** Por eso `activo` figura como «no aplica»
+  en §6.5: se puede tener una concesión décadas sin abrir nada.
+- **Qué derecho corresponde a cada proyecto sigue sin saberse**, y esta release
+  no lo insinúa: no hay ningún campo que los enlace.
+
+---
+
 ## datos-v2026.08.7 — Las aguas sin delimitar, y las dos leyes que no dibujan nada
 
 Entra **`espacios-maritimos`** y con ella **se cierra F3**. Seis capas
