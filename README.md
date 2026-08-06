@@ -13,8 +13,15 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** en construcción. Fase F0 (contrato, esquemas y validación). Todavía
-no hay visor publicado ni release de datos.
+**Estado:** **siete capas publicadas**, release `datos-v2026.08.8`, visor
+construido. Minerales críticos (proyectos, dominios y derechos), nuclear, gas y
+regasificación, y el tablero (límites y soberanía, espacios marítimos). Las
+demás ramas están **declaradas y vacías**, que es su forma de decir la verdad.
+
+Falta una sola cosa para publicar: el **mapa base propio**. Mientras tanto el
+visor tira de un depósito de demostración ajeno y **lo advierte en su propio
+pie**, porque publicar así contradiría el motivo por el que se decidió
+autoalojarlo.
 
 ---
 
@@ -45,13 +52,26 @@ sustituyan por cartografía de fuente primaria).
 CONTRATO-DATOS.md   el formato de los datos y la doctrina. Manda sobre el código
 DECISIONES.md       el porqué de cada decisión, con lo que se descartó
 PLAN.md             fases de construcción y criterios de hecho
+CHANGELOG-DATOS.md  una entrada por release: qué cambió, y qué sigue sin saberse
 datos/              las capas (GeoJSON RFC 7946, WGS84) y el manifiesto
 fuentes/            archivo documental de todo lo citado
 pipeline/           validar.py (doctrina como test, en CI) · vigilar.py (semanal)
                     consultar.py (consulta al IGN y al catastro; contrasta)
-app/                el visor
+app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
+
+Las siete capas con datos, por si sirve de índice:
+
+| Capa | Clase | Qué registra |
+|---|---|---|
+| `minerales-proyectos` | verificada | Los proyectos: CRMA, productores singulares y yacimientos en disputa |
+| `minerales-derechos` | verificada | Los derechos del Catastro Minero de esos mismos promotores, con perímetro |
+| `minerales-dominios` | **ilustrativa** | Los distritos, a mano alzada y declarados como tales |
+| `nuclear` | verificada | Un registro por reactor, con lo autorizado y lo acordado por separado |
+| `gas-regasificacion` | verificada | Las siete plantas de GNL |
+| `limites-soberania` | verificada | Ocho territorios, con quién administra y quién reclama |
+| `espacios-maritimos` | verificada | Las aguas sin delimitar, la plataforma continental y el monte Tropic |
 
 Los datos son **curación humana con fuente primaria**. El pipeline valida, vigila
 y consulta; **nunca genera datos**, y nunca archiva una fuente por su cuenta.
@@ -64,9 +84,21 @@ y consulta; **nunca genera datos**, y nunca archiva una fuente por su cuenta.
 > quedan sin comprobar de verdad. Es la razón entera de que exista `fuentes/`: la
 > copia archivada no depende de que un servidor ajeno siga siendo honesto.
 >
-> Y la única pieza del contrato **sin implementar**: la regla **R8** no tendrá
-> diente hasta que exista la capa `minerales-dominios` (CONTRATO-DATOS.md §6.5).
-> Está declarada como tal para que no se descubra por su ausencia.
+> **Una fuente oficial puede contradecirse consigo misma.** Dos derechos del
+> Catastro Minero tienen hoy dos situaciones jurídicas distintas según qué
+> exportación se descargue, el mismo día y del mismo registro. Cuando pasa, el
+> atlas **publica el desacuerdo y baja el campo a `parcial`**: no elige por su
+> cuenta cuál de los dos vale.
+>
+> **Y una descarga oficial puede venir mutilada sin avisar.** La exportación en
+> CSV de ese mismo catastro corta la lista de vértices a 424 caracteres: de 106
+> derechos, 38 vienen cortados y 29 pierden **una esquina real**. Un polígono al
+> que le falta una esquina cierra igual y parece correcto. Toda la geometría sale
+> del shapefile por eso, y el CSV se archiva como evidencia de su propio defecto.
+>
+> ~~Y la única pieza del contrato **sin implementar**: la regla **R8**…~~
+> **Cerrada el 2026-08-06** con la capa `minerales-dominios`. **Ninguna regla del
+> contrato es prosa**: las nueve las comprueba el CI.
 
 ## Cómo se corrige un dato
 
@@ -96,7 +128,14 @@ licencia contagiosa, y qué obliga eso a reconstruir desde fuente primaria.
 
 El visor consume **releases etiquetadas** (`datos-vAAAA.MM`), nunca la rama
 viva. Cada release lleva su entrada en `CHANGELOG-DATOS.md`: qué cambió, por qué
-y con qué evidencia.
+y con qué evidencia — **y una sección de huecos que no es opcional**. Una release
+que no declara lo que ignora está afirmando que lo sabe todo.
+
+La página **«Método»** del visor cuenta todo esto para quien llega de fuera, y no
+lo cuenta de memoria: la tabla de estados de verificación y el inventario de
+capas los lee del vocabulario y del manifiesto de la release. Este README, que
+llevaba ocho releases diciendo «fase F0, todavía no hay visor», es la prueba de
+por qué.
 
 ---
 

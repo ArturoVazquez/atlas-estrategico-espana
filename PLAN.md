@@ -209,9 +209,24 @@ extracto PMTiles y su bucket, que es lo único que separa a F2 de estar cerrada.
 ## F4 · Despliegue e integración editorial
 
 - Deploy estático + CNAME `atlas.eltercioviejo.com` (DNS en Hostinger).
-- Página "Método" pública: doctrina, contrato enlazado, cómo se corrige un dato.
-- Hilo fijado en La hacienda presentando el atlas (voz de la casa); `debate_url`
-  cableado en las fichas; changelog de la release como primera respuesta.
+- ~~Página "Método" pública: doctrina, contrato enlazado, cómo se corrige un
+  dato.~~ **HECHA el 2026-08-06**, en `/metodo.html`.
+  - **No repite la doctrina: la lee.** La tabla de estados de verificación y la
+    de tipos de fuente salen de `vocabularios.json`; el inventario de capas, del
+    manifiesto de la release. El motivo estaba en el propio repo: el README
+    llevaba **ocho releases** diciendo «fase F0, todavía no hay visor publicado
+    ni release de datos». Un texto que describe un dato y vive aparte del dato
+    envejece sin que nadie lo note.
+  - El enlace va en la **cabecera** y no en el pie, que se oculta por debajo de
+    760 px — ahí «Método» habría sido inalcanzable justo en el teléfono.
+  - Vite pasa a multipágina: sin `vite.config.js`, el build deja fuera el segundo
+    HTML **sin avisar**, y el enlace da 404 solo en producción.
+- Hilo fijado en La hacienda presentando el atlas (voz de la casa); ~~`debate_url`
+  cableado en las fichas~~ **HECHO**; changelog de la release como primera
+  respuesta.
+  - `debate_url` estaba en el contrato y en el esquema desde el principio y **la
+    ficha se lo tragaba en silencio**. Ya se pinta; falta el hilo, que es de la
+    casa.
 
 **Hecho cuando:** el subdominio sirve la release v1, la cadena
 ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
