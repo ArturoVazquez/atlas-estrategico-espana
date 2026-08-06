@@ -32,6 +32,122 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.12 — La red de hidrógeno, y el trazado de lo que aún no existe
+
+Entra **`hidrogeno-red`** con diez registros y **3.268 km dibujados**. Undécima
+capa. Sustituye a la casilla que el horizonte llamaba «H2Med», y el renombre es
+la primera cosa que hay que explicar.
+
+### El hallazgo
+
+**El H2Med es la parte pequeña.** De los 3.268 km, **2.634 son la red troncal
+española** —dos ejes, de Gijón a Barcelona por el norte y de Gijón a Huelva por
+el oeste— que no es el H2Med y que casi nadie nombra. BarMar son 382 y CelZa
+252. Llamar «Corredor H2Med» a esta capa habría sido inexacto desde el primer
+día, así que el id se cambió antes de publicar nada.
+
+**Y el corredor tiene dos piezas que el relato público olvida.** El Acuerdo del
+Consejo de Ministros de 30 de julio de 2024 habilita a Enagás para **cinco**
+proyectos, no tres: los dos últimos son **cavernas de sal** para almacenamiento
+estacional, una en Cantabria (272 GWh útiles en 2030) y otra en la cuenca
+vasco-cantábrica (164 GWh en 2032). Ninguna nota de prensa del H2Med las
+menciona; las nombra el BOE, con su número de proyecto.
+
+**La exclusión española creció de uno a cinco entre las dos listas de la Unión.**
+La primera lista (2024/1041) dejaba fuera del PIC un solo tramo interior:
+Guitiriz–Zamora. La vigente (2026/764) deja fuera cinco: Coruña-Zamora,
+Huelva-Algeciras, Zamora-Haro, Guitiriz-Zamora y la conexión Castilla-La
+Mancha–Madrid. Son dos hechos con fuente y ninguna conclusión: el atlas los
+registra y el debate va a El Tercio.
+
+### Añadido
+
+- `hidrogeno-red` — diez registros: los tres hidroductos (9.1.2 CelZa, 9.1.3 red
+  troncal, 9.1.4 BarMar), las cinco estaciones de compresión que la ficha técnica
+  nombra y los dos almacenamientos (9.24.1 y 9.24.2).
+- Cuatro fuentes nuevas archivadas: el Acuerdo del Consejo de Ministros
+  (BOE-A-2024-19047), el Reglamento TEN-E 2022/869, la consulta a la plataforma
+  de transparencia PCI-PMI y los términos de reutilización de esa plataforma.
+
+### La fuente, y por qué se puede usar
+
+La geometría sale de la **plataforma de transparencia PCI-PMI** de la Comisión,
+que **no es una web de divulgación**: existe por el **artículo 23 del TEN-E**,
+que obliga a publicar «información general actualizada, por ejemplo,
+**información geográfica**, para cada proyecto de la lista de la Unión». Es el
+registro, no la nota sobre el registro.
+
+**Y por una vez la licencia sale verde.** La política de reutilización de la
+Comisión (Decisión 2011/833/UE) es CC BY 4.0. Después de que la licencia matara
+la potencia instalada de la CNMC (CC BY-SA) y el mallado de Red Eléctrica, esta
+vez la puerta estaba abierta. Se acotó la captura a la capa `ENERGY/PCI`: el
+mismo visor sirve una capa `PLATTS`, de S&P Global, que es de tercero y no entra.
+
+### Lo que la fuente advierte, y lo que obligó a cambiar
+
+La plataforma dice de su propia geometría que **«no prejuzga y puede no coincidir
+con el trazado final del proyecto»**. Ninguno de los cinco valores de
+`geo_precision` decía eso, así que nace **`proyectada`** (contrato 1.16.0). No es
+un sinónimo elegante de `ilustrativa`: la distinción es de **tiempo**, no de
+detalle. Las otras dicen cuánto se ha afinado un contorno; esta dice que **el
+terreno todavía no puede desmentirlo**, porque el tubo no está construido. Sobre
+una geometría `proyectada` no se mide.
+
+### La trampa que casi entra
+
+La plataforma sirve un campo de longitud (`SHAPE.LEN`) **en metros de Web
+Mercator**, inflados por la latitud entre un 26 % y un 38 %. Ahí BarMar «mide»
+518 km; sobre el elipsoide mide 382, coherente con los «unos 400 km» que declara
+su propia ficha técnica. De ahí sale la regla **R10**: lo declarado cuadra con lo
+dibujado al 15 %, medido sobre el elipsoide. El esquema prohíbe además
+`shape_len` por su nombre. Las tres longitudes publicadas cuadran: 7,0 %, 5,9 % y
+4,6 %.
+
+### Corregido
+
+- `espacios-maritimos:plataforma-continental-canarias` — **su ficha no se podía
+  abrir**, y llevaba así desde que se publicó. El visor solo cableaba el clic
+  sobre puntos y rellenos, nunca sobre trazados, y esa era la única línea del
+  atlas. No lo destapó una revisión del código: lo destapó preguntarse si la capa
+  nueva funcionaría. Los datos no cambian; lo que cambia es que ahora se pueden
+  leer.
+
+### Huecos
+
+- **La potencia de tres de las cinco estaciones de compresión.** La ficha técnica
+  las nombra (Villar de Arnedo, Tivissa, Zamora) y no las dimensiona. Solo llevan
+  cifra las dos de los interconectores: 30 MW en Zamora y 60 MW en Barcelona.
+- **El coste de los proyectos.** El artículo 23 obliga a publicarlo «excepto toda
+  información sensible desde el punto de vista comercial», y en la práctica la
+  plataforma no lo da. Las cifras que circulan son de nota de prensa, que R3 no
+  admite. El campo está **prohibido** en el esquema, no simplemente ausente.
+- **Qué estación es cuál, en la red troncal.** La plataforma publica esos tres
+  puntos como «otros activos de hidrógeno», sin nombre propio. Los nombres salen
+  de la descripción del proyecto —que nombra exactamente tres— y el
+  emparejamiento es del atlas: Villar de Arnedo cae en su propio municipio y los
+  otros dos quedan por eliminación. Los tres registros van `parcial` y lo dicen en
+  su ficha.
+- **Dos nombres no coinciden con su municipio, y se publica el desacuerdo.** La
+  fuente sitúa una compresora «en Zamora» y otra «de Tivissa»; sus puntos caen en
+  **Coreses** y en **Móra la Nova** (y el tercero, en **Molacillos**). Se conserva
+  el nombre de la fuente —es el único con el que identifica cada estación— y cada
+  ficha dice dónde cae su punto, contrastado contra el callejero del IGN.
+- **Un punto para tres provincias.** La fuente describe 9.24.2 sobre «la cuenca
+  vasco-cantábrica, incluyendo Burgos, Guipúzcoa y Álava» y publica una sola
+  coordenada, en Amurrio. El punto sitúa el proyecto; no delimita la caverna.
+- **«Under consideration» no cabe en el vocabulario.** El estado que la Comisión
+  da a 9.24.2 es anterior al de los otros cuatro y no es ninguno de los cinco
+  valores de `fase`. Se deja en `tramitacion` marcada como parcial y la palabra
+  literal se conserva en `estado_pci`, para no fingir una precisión que el
+  vocabulario no tiene.
+- **Los cinco electrolizadores españoles no entran** (9.15.4 a 9.15.8: Huelva,
+  Asturias, ValdoEume, Catalina y ErasmoPower2X), aunque la misma fuente los
+  sirve con geometría y promotor. Son producción, no red, y de promotores
+  distintos; el acto que da el perímetro de esta capa no habilita a Enagás para
+  ellos. Es trabajo ya localizado para otra capa, no un olvido.
+
+---
+
 ## datos-v2026.08.11 — Seis centros de datos, y por qué no puede haber más
 
 Entra **`centros-datos`**: la capa más pequeña del atlas, con seis registros.

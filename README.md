@@ -13,10 +13,12 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **siete capas publicadas**, release `datos-v2026.08.8`, visor
-construido. Minerales críticos (proyectos, dominios y derechos), nuclear, gas y
-regasificación, y el tablero (límites y soberanía, espacios marítimos). Las
-demás ramas están **declaradas y vacías**, que es su forma de decir la verdad.
+**Estado:** **once capas publicadas**, release `datos-v2026.08.12`, visor
+construido. Minerales críticos (proyectos, dominios y derechos); energía
+(nuclear, gas y regasificación, interconexiones eléctricas, generación por
+provincia); conectividad (centros de datos, red de hidrógeno); y el tablero
+(límites y soberanía, espacios marítimos). Las demás ramas están **declaradas y
+vacías**, que es su forma de decir la verdad.
 
 Falta una sola cosa para publicar: el **mapa base propio**. Mientras tanto el
 visor tira de un depósito de demostración ajeno y **lo advierte en su propio
@@ -61,7 +63,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las nueve capas con datos, por si sirve de índice:
+Las once capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -72,6 +74,8 @@ Las nueve capas con datos, por si sirve de índice:
 | `gas-regasificacion` | verificada | Las siete plantas de GNL |
 | `electricidad-interconexiones` | verificada | Los enlaces que cruzan frontera, con el extremo de fuera nombrado y sin coordenada |
 | `generacion-electrica-provincia` | verificada | Las 52 provincias y su mezcla de generación por tecnología |
+| `centros-datos` | verificada | Los centros que un acto administrativo nombra, sitúa y dimensiona |
+| `hidrogeno-red` | verificada | Los cinco proyectos de hidrógeno de la lista de la Unión, y sus compresoras |
 | `limites-soberania` | verificada | Ocho territorios, con quién administra y quién reclama |
 | `espacios-maritimos` | verificada | Las aguas sin delimitar, la plataforma continental y el monte Tropic |
 
@@ -100,7 +104,7 @@ y consulta; **nunca genera datos**, y nunca archiva una fuente por su cuenta.
 >
 > ~~Y la única pieza del contrato **sin implementar**: la regla **R8**…~~
 > **Cerrada el 2026-08-06** con la capa `minerales-dominios`. **Ninguna regla del
-> contrato es prosa**: las nueve las comprueba el CI.
+> contrato es prosa**: las diez las comprueba el CI.
 
 ## Cómo se corrige un dato
 

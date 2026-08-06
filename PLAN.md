@@ -234,7 +234,8 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 ## Horizonte (post-v1, por orden acordado)
 
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
-embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → H2Med → PERTE acotado →
+embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → ~~H2Med~~ →
+electrolizadores (NUEVA, ver abajo) → PERTE acotado →
 intangibles (clase `analisis`, ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
 señales reales con las que diseñarlo.
 
@@ -246,6 +247,47 @@ potencia pero solo por comunidad autónoma y **bajo CC BY-SA**, que
 que R3 no admite. Se publica lo que sí se sostiene —la mezcla de generación de
 las 52 provincias— y la potencia queda como hueco declarado en las 52 fichas.
 **La casilla se renombra; no se disfraza.**
+
+**La cuarta casilla, y resultó ser más grande que su nombre** (release
+`datos-v2026.08.12`). Se llamaba «H2Med» y la capa se publica como
+**`hidrogeno-red`**: de los 3.268 km que dibuja, **2.634 son la red troncal
+española**, que no es el H2Med. Diez registros —tres hidroductos, cinco
+estaciones de compresión y dos cavernas de sal—, y el perímetro no lo eligió el
+atlas: lo fija el Acuerdo del Consejo de Ministros de 30-07-2024, que habilita a
+Enagás para cinco proyectos exactos.
+
+Lo que deja escrito:
+
+- **Un registro que una norma obliga a publicar es fuente primaria, aunque viva
+  en una web** (§6.1 del contrato, enmienda 1.16). Es el reverso de la enmienda
+  1.15: aquella dijo que el comunicado de un gobierno no basta; esta, que la
+  plataforma de transparencia PCI-PMI sí, porque existe **por el artículo 23 del
+  TEN-E**. Con dos cautelas que valen para cualquier registro así: la obligación
+  **no alcanza a lo que se sirve junto** —la capa PLATTS del mismo visor es de
+  S&P Global—, y **un registro puede publicar y advertir a la vez**.
+- **La licencia también abre puertas.** Es la primera fuente cartográfica grande
+  que pasa el filtro: Decisión 2011/833/UE, CC BY 4.0. Conviene recordarlo
+  después de la CNMC y de Red Eléctrica, no fuera a instalarse la idea de que
+  toda fuente grande está cerrada.
+- **`geo_precision: proyectada`**, para lo que aún no existe. La distinción es de
+  **tiempo**, no de detalle: las otras cuatro dicen cuánto se afina un contorno;
+  esta dice que el terreno todavía no puede desmentirlo.
+- **Cuidado con las longitudes de cualquier servicio ArcGIS.** `SHAPE.LEN` viene
+  en metros de la proyección del servicio, y si es Web Mercator está inflado por
+  la latitud hasta un 38 %. De ahí R10.
+- **Las líneas del visor no se podían pinchar**, y una llevaba así desde que se
+  publicó. Lo destapó preguntarse si la capa nueva funcionaría, no revisar el
+  código. Si algún día se añade una cuarta clase de geometría, el sitio donde
+  mirar es la constante `PINCHABLES` de `app/src/main.js`.
+
+**Casilla nueva en el horizonte: los electrolizadores.** La misma plataforma
+sirve, con geometría, promotor y capacidad, los cinco proyectos españoles de
+electrólisis que están en la lista de la Unión: **9.15.4** Valle andaluz del
+hidrógeno verde (Huelva, Moeve, 1.000 MW), **9.15.5** Asturias H2 Valley (EDP),
+**9.15.6** ValdoEume (Reganosa y Forestal del Atlántico), **9.15.7** Catalina y
+**9.15.8** ErasmoPower2X (Saceruela, Ciudad Real). No entraron aquí porque son
+**producción, no red**, y de promotores distintos de los que habilita el acto
+español. El trabajo está localizado y la fuente ya archivada: es media tarde.
 
 **La tercera casilla, hecha y pequeña a propósito** (release
 `datos-v2026.08.11`). `centros-datos` publica SEIS registros, y el tamaño es el
