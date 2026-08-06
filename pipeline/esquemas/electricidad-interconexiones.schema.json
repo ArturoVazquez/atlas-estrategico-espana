@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/electricidad-interconexiones.schema.json",
+  "title": "Extensión de capa · electricidad-interconexiones",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Los enlaces eléctricos que cruzan una frontera. Un enlace tiene dos extremos y el atlas solo puede situar uno: el español va como coordenada y el de fuera, NOMBRADO Y SIN COORDENADA. Dibujar una recta hasta una subestación extranjera que no se puede citar sería inventar la mitad del dato.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "El extremo español. El ascenso a LineString espera a que un instrumento publique el trazado (§8, mismo `id`)."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["pais_vecino", "extremo_exterior"],
+            "properties": {
+              "pais_vecino": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El país al otro lado. Obligatorio: sin él, un enlace transfronterizo no se distingue de una línea interior, y esta capa no tiene otras."
+              },
+              "extremo_exterior": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La subestación o el punto del otro lado, POR SU NOMBRE. Obligatorio y sin coordenada a propósito: es la mitad del enlace que el atlas conoce y no puede situar, y nombrarla es la forma de decirlo sin fingir que la sitúa."
+              },
+              "codigo_actuacion": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El código con el que la actuación figura en el instrumento de planificación (p. ej. «INT_ESP-MAR»). Es la referencia con la que un tercero encuentra la ficha en el documento."
+              },
+              "tension_kv": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Tensión nominal del enlace en kV, solo si el instrumento la da."
+              },
+              "instrumento": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El documento que planifica o autoriza el enlace, nombrado por lo que es."
+              },
+              "municipio": { "type": "string", "minLength": 1 },
+              "provincia": { "type": "string", "minLength": 1 },
+              "fase": {
+                "not": {},
+                "description": "PROHIBIDO: esta capa deriva su `activo` de `categoria` (§6.5), que ya dice si el enlace está en servicio. Tener las dos cosas sería el par de campos contradictorios que R7 existe para evitar."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.12.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.13.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -308,6 +308,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `nuclear` *(1.6)* | `fase` | `fase == "produccion"` (reactor en explotación) |
 | `gas-regasificacion` *(1.8)* | `fase` | `fase == "produccion"` (planta en servicio) |
 | `minerales-dominios` *(1.10)* | `categoria` (§9, vocabulario) | `categoria ∈ {activo, mixto}` |
+| `electricidad-interconexiones` *(1.13)* | `categoria` (§9) | `categoria == "en_servicio"`. Un enlace en servicio SÍ está en explotación — al contrario que un derecho minero, que es un título y no una obra. |
 | `minerales-derechos` *(1.12)* | — | **no aplica**. Un título otorgado NO dice que se esté explotando: se puede tener una concesión décadas sin abrir una mina. Va en el grupo `actividad` porque alguien lo sostiene y puede caducar, pero la pregunta del filtro no se le hace. |
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
@@ -569,6 +570,7 @@ vocabulario.
 - *gas-regasificacion* *(1.8)*: `regasificacion` · `logistica_gnl`
 - *minerales-dominios* *(1.10)*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *minerales-derechos* *(1.12)*: `vigente` · `en_tramite` · `extinguido`
+- *electricidad-interconexiones* *(1.13)*: `en_servicio` · `en_construccion` · `proyectada`
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
 
@@ -700,6 +702,28 @@ mundo`): `estado_juridico` (✔; +`__v`,`__f`) · `partes[]` · `instrumento` ·
 > capa hacia la geometría —capa ilustrativa ⇒ toda su geometría ilustrativa— y
 > **no al revés**; R9 solo vigila `exacta` y `paraje`. Queda escrito aquí porque
 > el malentendido contrario ya aplazó esta capa una vez.
+
+**electricidad-interconexiones** *(1.13)* (`actividad`, puntos, verificado):
+`pais_vecino` (✔) · `extremo_exterior` · `codigo_actuacion` · `tension_kv` ·
+`instrumento` · `municipio` · `provincia` · `claves[]`
+
+> **Un enlace tiene dos extremos y el atlas solo puede situar uno.** Ningún
+> instrumento publica el trazado de estas interconexiones, y la subestación del
+> otro lado —Cantegrit, Beni Harchane, la frontera andorrana— está en un país
+> cuyo nomenclátor este atlas no ha comprobado. Dibujar una recta entre las dos
+> sería un esquema; dibujarla hasta una coordenada extranjera que no puedo citar
+> sería inventar la mitad del dato.
+>
+> Así que **el registro es un PUNTO en el extremo español** y el de fuera va
+> **nombrado y sin coordenada**, en `extremo_exterior`. El día que un instrumento
+> publique el trazado, el registro sube a `LineString` con el mismo `id` (§8).
+>
+> **Por qué la red de transporte NO está aquí.** El mallado español —líneas de
+> 400 kV, subestaciones interiores— lo publica Red Eléctrica, que es **sociedad
+> cotizada**: por §6.1 es `corporativa` y por R3 no sostiene un `confirmado`. No
+> hay cartografía de la red bajo licencia compatible con CC BY 4.0
+> (`datos/LICENCIA-DATOS.md`), así que `red-electrica` sigue declarada y vacía.
+> Es la misma frontera que ya marcó Enagás en la capa de gas.
 
 **minerales-derechos** *(1.12)* (`actividad`, polígonos, verificado):
 `titular` (✔) · `tipo_derecho` · `situacion` (✔) · `n_registro` ·
@@ -860,6 +884,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.13.0** | 2026-08-06 | **Aditiva.** Nace `electricidad-interconexiones` (§10): los enlaces eléctricos que cruzan una frontera, con su punto en el extremo español y el de fuera **nombrado y sin coordenada** — un enlace tiene dos extremos y el atlas solo puede situar uno, y eso se dice en vez de disimularlo con una recta. §6.5 le da su fila (`activo` cuando `en_servicio`), §9 su categoría. Deja escrito por qué la red de transporte NO entra: la publica Red Eléctrica, que es sociedad cotizada, y no hay cartografía del mallado bajo licencia compatible con CC BY 4.0 — la misma frontera que marcó Enagás en la capa de gas. |
 | **1.12.0** | 2026-08-06 | **Aditiva.** Nace `minerales-derechos` (§10): los derechos del Catastro Minero cuyo titular es un promotor que el atlas ya registra, con su perímetro y **el primer `geo_precision: exacta` del atlas**. §6.6 gana la enmienda que obligó a escribir la propia fuente: «del objeto mismo» quiere decir **del objeto que la fuente define y de ningún otro** — el catastro define DERECHOS, no minas, y un proyecto que tiene un derecho no hereda su geometría ni su precisión. Por eso `minerales-proyectos` **no** pasa de punto a polígono, contra lo que PLAN.md preveía: elegir cuál de los cincuenta derechos de TOLSA «es» el proyecto de sepiolita sería una atribución sin fuente. Las dos capas se solapan en el mapa y el lector ve el solape, que sí es un hecho. Y §10 deja escrito que `superficie_declarada` va verbatim porque **no concuerda con el perímetro que la misma fuente dibuja**. |
 | **1.11.0** | 2026-08-06 | **Aditiva.** Nace `espacios-maritimos` (§10), la capa del mar del tablero, con su `categoria` (§9) y su fila de §6.5 —«no aplica», como el resto del tablero—. Estrena el `ambito: mundo` para geometría real: la plataforma continental más allá de las 200 millas **cae fuera del recuadro de §7.4 por definición**, así que se declara el ámbito de la capa y **no se ensancha el recuadro**, que habría debilitado la comprobación de las otras seis. Deja escrito, donde ya confundió una vez, que **R5 va de la capa hacia la geometría y no al revés**: una capa `verificado` puede contener un registro `geo_precision: ilustrativa`, y eso es lo que permite dibujar la zona sin delimitación acordada sin dictar ninguna frontera (D5). |
 | **1.10.0** | 2026-08-06 | **Aditiva, y cierra el único renglón en el que este documento no se sostenía a sí mismo.** Nace la capa `minerales-dominios` (§10) y con ella **R8 gana su diente**: entra en la tabla de §6.4, se retira la nota de estado de §6.5 y §8 deja de citarla como el ejemplo vivo de regla sin implementar. Desde hoy **ninguna regla del contrato es prosa**. La capa unifica el `caracter` de §10 con el `categoria` del núcleo, que archivaban los MISMOS cinco valores en dos campos: renombrado nominalmente mayor por §8, gratis de hecho porque la capa no tenía datos publicados — el mismo argumento con el que la 1.1 introdujo `fase`. Los cinco valores estrenan `color` (§9). |

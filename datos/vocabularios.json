@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.12.0",
+  "schema_version": "1.13.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -101,6 +101,17 @@
         "color": "#31614E" },
       { "valor": "en_disputa", "etiqueta": "Yacimiento en disputa",
         "color": "#9C7A14" }
+    ],
+    "electricidad-interconexiones": [
+      { "valor": "en_servicio", "etiqueta": "En servicio",
+        "color": "#2E6B5E",
+        "def": "El enlace transporta energía hoy. Único valor que deriva activo = true (§6.5)." },
+      { "valor": "en_construccion", "etiqueta": "En construcción",
+        "color": "#5C917F",
+        "def": "Obra en curso sobre un enlace ya autorizado." },
+      { "valor": "proyectada", "etiqueta": "Proyectada",
+        "color": "#94B3A6",
+        "def": "Recogida en un instrumento de planificación o en la lista de la Unión, sin obra empezada." }
     ],
     "gas-regasificacion": [
       { "valor": "regasificacion", "etiqueta": "Planta de regasificación",
