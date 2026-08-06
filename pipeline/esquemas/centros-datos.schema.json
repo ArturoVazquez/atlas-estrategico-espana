@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/centros-datos.schema.json",
+  "title": "Extensión de capa · centros-datos",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Los centros de datos que un ACTO ADMINISTRATIVO nombra, sitúa y dimensiona. España no tiene registro público de centros de datos: la base europea del artículo 12 de la Directiva 2023/1791 se publica agregada por Estado miembro, y las cifras de mercado son de la patronal. El acto es lo único que queda, y por eso es la regla de entrada.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "Un punto por emplazamiento. Los actos delimitan parcelas, pero ninguno publica su polígono en formato reutilizable: cuando uno lo haga, el registro sube a Polygon con el mismo `id` (§8)."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["promotor", "instrumento", "fase", "municipio", "provincia"],
+            "properties": {
+              "promotor": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Quien figura como promotor EN EL ACTO, con su forma societaria. No la marca comercial: el acto de AWS lo firma «Amazon Data Services Spain, SL»."
+              },
+              "codigo_promotor": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El nombre interno con el que el acto identifica el emplazamiento (CAR, VDG1, VDG2, WQA, BDE). Es la única manera de seguir un centro concreto entre expedientes: el nombre comercial no aparece y el municipio se repite."
+              },
+              "consumo_gwh_anio": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Demanda eléctrica anual A PLENA CAPACIDAD que declara el acto. NO es consumo medido: un campus autorizado y sin construir no consume nada. Se lee junto a `fase`, que dice en qué punto está."
+              },
+              "superficie_ha": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Superficie en hectáreas según el acto. Ojo al transcribirla: los actos distinguen la del CENTRO DE DATOS de la del terreno calificado y de la del ámbito de urbanización, y las tres cifras conviven en el mismo documento."
+              },
+              "instrumento": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El acto que sostiene el registro, nombrado por lo que es. Obligatorio: sin acto no hay registro, que es la regla de entrada entera."
+              },
+              "fase": { "type": "string" },
+              "municipio": { "type": "string", "minLength": 1 },
+              "provincia": { "type": "string", "minLength": 1 },
+
+              "potencia_it_mw": {
+                "not": {},
+                "description": "PROHIBIDO. La potencia TI en MW es la cifra con la que se compara el sector, y ningún acto administrativo la da: la publican la patronal y los propios operadores, que por §6.1 son `corporativa` y por R3 no sostienen un `confirmado`. Prohibirla aquí impide que un día entre desde un informe de mercado y se lea como si viniera de un expediente."
+              },
+              "empleos": {
+                "not": {},
+                "description": "PROHIBIDO. Los actos recogen la previsión de empleo que declara el promotor, no una cifra verificada por nadie. Es la clase de número que se cita durante años sin que se compruebe jamás; si algún día importa, entrará como `clave` con su verificación al lado, no como campo."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

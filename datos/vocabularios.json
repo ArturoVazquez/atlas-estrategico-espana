@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.14.0",
+  "schema_version": "1.15.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -137,6 +137,18 @@
       { "valor": "mareomotriz", "etiqueta": "Mareomotriz y olas",
         "color": "#6FA8A0",
         "def": "Declarada porque la fuente la publica, no porque domine en ninguna provincia. Una categoría del vocabulario no promete que exista un registro que la use." }
+    ],
+    "_centros-datos": "El estado del centro SEGÚN SU ACTO, no según lo que anuncie su promotor. `autorizado` es el que tiene evaluación o autorización ambiental y todavía no presta servicio: sigue siendo una obra sobre plano, por muchos gigavatios-hora que prometa.",
+    "centros-datos": [
+      { "valor": "en_servicio", "etiqueta": "En servicio",
+        "color": "#3A3646",
+        "def": "Presta servicio hoy. Único valor que deriva activo = true (§6.5)." },
+      { "valor": "autorizado", "etiqueta": "Autorizado",
+        "color": "#6E6A82",
+        "def": "Con evaluación o autorización ambiental resuelta, sin prestar servicio todavía." },
+      { "valor": "en_tramitacion", "etiqueta": "En tramitación",
+        "color": "#A6A2B4",
+        "def": "Expediente abierto —información pública, evaluación en curso— y sin resolver." }
     ],
     "gas-regasificacion": [
       { "valor": "regasificacion", "etiqueta": "Planta de regasificación",

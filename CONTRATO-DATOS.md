@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.14.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.15.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -226,6 +226,20 @@ consultable con GDAL sin adaptadores. Las dos excepciones estructuradas son
 | `corporativa` | anuncio, web o comunicado de empresa | No |
 | `hueco` | fuente pendiente de asignar — el hueco explícito del principio 1 | No |
 
+> **Una nota de prensa de una administración NO es `primaria`** *(1.15)*. Lo dice
+> ya la tabla —«decisión, resolución, registro, estadística»— pero conviene
+> escribirlo, porque es la trampa más fácil de todas: el comunicado lo firma un
+> gobierno y lo publica un dominio oficial, así que *parece* fuente primaria y no
+> lo es. Lo primario es el **acto**, no el anuncio del acto.
+>
+> El caso que obligó a escribirlo: la Generalitat de Catalunya anunció «26
+> proyectos de centros de datos, unos 2.000 MW y siete polos de implantación».
+> Ninguno de esos 26 estaba autorizado ni localizado por un acto: son intenciones
+> recopiladas por quien quiere atraerlas. Publicarlas con el sello de `primaria`
+> habría convertido una previsión en un hecho, que es la única cosa que este
+> atlas no puede hacer. Cuando el acto llegue, el registro entra; hasta entonces,
+> la fuente es `prensa` y el registro no puede ser `confirmado`.
+
 ### 6.2 Verificación por campo
 
 Los campos **sensibles** llevan compañeros con sufijo reservado `__v` (estado) y
@@ -314,6 +328,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
+| `centros-datos` *(1.15)* | `fase` | `fase == "produccion"` (el centro presta servicio). Un campus **autorizado y sin construir no está en explotación**, por muchos gigavatios-hora que prometa su declaración ambiental. |
 | `generacion-electrica-provincia` *(1.14)* | — | **no aplica**. El registro no es una instalación: es una **provincia**, y a un territorio no se le pregunta si está en explotación. Lo que generó no la pone «en explotación» ni la deja fuera: la pregunta es de otra clase de objeto. Devuelve `null`, y por eso el filtro no esconde ni una sola de las 52. |
 
 Una capa cuya fila diga «no aplica» devuelve `null`, no `false`. La diferencia
@@ -586,6 +601,7 @@ vocabulario.
 - *minerales-dominios* *(1.10)*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *minerales-derechos* *(1.12)*: `vigente` · `en_tramite` · `extinguido`
 - *electricidad-interconexiones* *(1.13)*: `en_servicio` · `en_construccion` · `proyectada`
+- *centros-datos* *(1.15)*: `en_servicio` · `autorizado` · `en_tramitacion`
 - *generacion-electrica-provincia* *(1.14)*: `eolica` · `solar_fv` · `solar_termica` ·
   `hidraulica` · `nuclear` · `combustibles` · `cogeneracion` · `mareomotriz` —
   la **tecnología dominante** de la provincia
@@ -841,8 +857,41 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > exactitud que la simplificación ya no tiene. La generalización **no puede borrar
 > islas**: la tolerancia se aplica a la escala de cada anillo, no plana.
 
-*(Capas futuras —PERTE acotado, agua embalsada, centros de datos, H2Med— entran
-por §8 con su apartado aquí y su esquema en `pipeline/esquemas/`.)*
+**centros-datos** *(1.15)* (`actividad`, puntos, verificado): `promotor` (✔) ·
+`codigo_promotor` · `consumo_gwh_anio` (+`__v`,`__f`) · `superficie_ha` ·
+`fase` · `instrumento` · `municipio` (✔) · `provincia` (✔) · `claves[]`
+
+> **Regla de entrada, y es toda la capa:** un centro de datos entra **si y solo si
+> un acto administrativo lo nombra**. Sirven la evaluación o autorización
+> ambiental, la autorización de su acometida eléctrica y la resolución de un
+> concurso de capacidad de demanda. **No sirve nada más**, y eso deja fuera cosas
+> que a primera vista parecen mejores: España **no tiene registro público de
+> centros de datos**, la base europea del artículo 12 de la Directiva 2023/1791
+> se publica **agregada por Estado miembro** —ni instalación ni ubicación—, y las
+> cifras de mercado que todo el mundo repite (439 MW instalados, 2.537 para 2030)
+> las publica la patronal: `corporativa`, y R3 no la admite.
+>
+> **Los tres solicitantes del concurso NO son registros de esta capa**, aunque
+> sean lo único que el BOE nombra: CPD4GREEN, Benbros DC y ACS DC Infra pidieron
+> capacidad en Brazatortas, Francolí y Nuevo Vigo, y los tres fueron excluidos.
+> Esa resolución define **una solicitud de capacidad en un nudo**, no un centro
+> de datos en un sitio: no hay emplazamiento, ni superficie, ni más coordenada
+> que la de una subestación, que es otro objeto. Es exactamente el límite que
+> §6.6 fijó cuando un derecho minero no pudo ascender a mina. El hecho se
+> registra en el changelog; el mapa no lo inventa.
+>
+> **`consumo_gwh_anio` es lo que el acto declara, no lo que el centro consume.**
+> Un campus autorizado todavía no consume nada: la cifra es la demanda prevista a
+> plena capacidad que el promotor declaró y el órgano ambiental evaluó. Va con su
+> `fase` al lado para que no se lean como lo mismo.
+>
+> **`codigo_promotor`** guarda el nombre interno con el que el acto identifica
+> cada emplazamiento (CAR, VDG1, VDG2, WQA, BDE). No es adorno: es la única
+> manera de seguir un centro concreto a través de los sucesivos expedientes,
+> porque el nombre comercial no aparece y el municipio se repite.
+
+*(Capas futuras —PERTE acotado, agua embalsada, H2Med— entran por §8 con su
+apartado aquí y su esquema en `pipeline/esquemas/`.)*
 
 ---
 
@@ -951,6 +1000,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.15.0** | 2026-08-06 | **Aditiva.** Nace `centros-datos` (§10) con una regla de entrada estrecha y explícita: **entra el centro que un acto administrativo nombra**, y nada más. La casilla obligó a decidirlo porque **España no tiene registro público de centros de datos** —la base europea del art. 12 de la Directiva 2023/1791 se publica agregada por Estado miembro, MITECO no lleva censo y las cifras de mercado son de la patronal—. §6.1 gana la enmienda que faltaba: **una nota de prensa de una administración no es `primaria`**; lo primario es el acto, no su anuncio. La escribió el caso catalán, con sus «26 proyectos y 2.000 MW» sin un solo expediente detrás: hasta ahora el atlas solo había tenido que rechazar fuentes privadas, y la trampa pública es peor porque parece oficial. §10 deja además fuera a los tres solicitantes de centros de datos que el concurso de capacidad de demanda **sí nombra** —CPD4GREEN, Benbros DC y ACS DC Infra, los tres excluidos—: esa resolución define una solicitud en un nudo, no un centro en un sitio, que es el límite de §6.6 aplicado por segunda vez. §6.5 y §9 dan su fila y sus tres categorías. |
 | **1.14.0** | 2026-08-06 | **Aditiva.** Nace `generacion-electrica-provincia` (§10), la primera **coropleta** del atlas: 52 provincias con su mezcla de generación por tecnología. Nace **de una casilla imposible** — el horizonte pedía potencia INSTALADA por provincia y no la sostiene nadie con licencia compatible: MITECO desagrega generación, no potencia; **la CNMC publica potencia pero bajo CC BY-SA**, ShareAlike, vetada por `datos/LICENCIA-DATOS.md`; REE llega a provincia y es `corporativa` (R3). Que el atlas se detenga ante la **licencia de un organismo público** es lo nuevo: hasta hoy solo le había pasado con fuente privada. §3 estrena `fondo`, marca de manifiesto para la capa que cubre el territorio entero y **cede el clic** a las que tiene encima — sin ella el visor tendría que conocerla por su nombre. §6.5 le da su fila: «no aplica», porque una provincia no es una instalación. §9 sus ocho categorías, que son la **tecnología dominante** y por eso se comprueban contra el argmax de las cifras del propio registro: un derivado solo se escribe si el CI puede desmentirlo. La geometría del IGN va **generalizada** —186 MB no se publican— y eso obliga a estrenar un valor de `geo_precision`: **`generalizada`** (§6.6, §9), dentro de **R9**. Se intentó con `ilustrativa` y la ficha quedó mintiendo, porque ese valor está definido como «trazado a mano alzada» y el límite de una provincia no lo es. De dónde sale un borde y cuánto se ha tocado son dos preguntas distintas. |
 | **1.13.0** | 2026-08-06 | **Aditiva.** Nace `electricidad-interconexiones` (§10): los enlaces eléctricos que cruzan una frontera, con su punto en el extremo español y el de fuera **nombrado y sin coordenada** — un enlace tiene dos extremos y el atlas solo puede situar uno, y eso se dice en vez de disimularlo con una recta. §6.5 le da su fila (`activo` cuando `en_servicio`), §9 su categoría. Deja escrito por qué la red de transporte NO entra: la publica Red Eléctrica, que es sociedad cotizada, y no hay cartografía del mallado bajo licencia compatible con CC BY 4.0 — la misma frontera que marcó Enagás en la capa de gas. |
 | **1.12.0** | 2026-08-06 | **Aditiva.** Nace `minerales-derechos` (§10): los derechos del Catastro Minero cuyo titular es un promotor que el atlas ya registra, con su perímetro y **el primer `geo_precision: exacta` del atlas**. §6.6 gana la enmienda que obligó a escribir la propia fuente: «del objeto mismo» quiere decir **del objeto que la fuente define y de ningún otro** — el catastro define DERECHOS, no minas, y un proyecto que tiene un derecho no hereda su geometría ni su precisión. Por eso `minerales-proyectos` **no** pasa de punto a polígono, contra lo que PLAN.md preveía: elegir cuál de los cincuenta derechos de TOLSA «es» el proyecto de sepiolita sería una atribución sin fuente. Las dos capas se solapan en el mapa y el lector ve el solape, que sí es un hecho. Y §10 deja escrito que `superficie_declarada` va verbatim porque **no concuerda con el perímetro que la misma fuente dibuja**. |
