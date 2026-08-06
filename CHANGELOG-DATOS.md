@@ -32,6 +32,90 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.9 — Las interconexiones eléctricas, y la mitad que no se sitúa
+
+Entra **`electricidad-interconexiones`**: cinco enlaces que cruzan una frontera,
+con Portugal, Francia (dos), Andorra y Marruecos. Ocho capas.
+
+### El hallazgo
+
+**La lista de proyectos de interés común que se cita en todas partes está
+derogada.** El Reglamento Delegado (UE) 2024/1041 lo sustituye el **Reglamento
+Delegado (UE) 2026/764, de 1 de diciembre de 2025**, publicado en el DOUE el 9 de
+abril de 2026 y en vigor desde el 29.
+
+Se archivan las dos y se comparan sobre las copias: para España la lista **sí
+cambia** —sale «LOS GUAJARES», entran «CHR IRENE» y «PSP CONSO II»—. Las cuatro
+interconexiones eléctricas siguen igual en ambas, así que **el contenido de esta
+capa no habría cambiado**; lo que habría cambiado es el instrumento citado. Se
+cita el vigente y la derogada se archiva con ese nombre.
+
+### La decisión de geometría
+
+**Un enlace tiene dos extremos y el atlas solo puede situar uno.** Ningún
+instrumento publica el trazado, y la subestación de enfrente —Cantegrit, Beni
+Harchane, la frontera andorrana— está en un país cuyo nomenclátor este atlas no
+ha comprobado. Una recta entre las dos sería un esquema; una recta hasta una
+coordenada extranjera que no se puede citar sería inventar la mitad.
+
+Así que el registro es **un punto en el extremo español** y el de fuera va
+**nombrado y sin coordenada**, en un campo obligatorio para que la mitad que
+falta se lea en la ficha.
+
+Y el punto no es la subestación: es **el lugar que el instrumento nombra**. En
+cuatro de los cinco casos la subestación todavía no existe, así que la precisión
+es `paraje`, no `exacta`.
+
+### Añadido
+
+- **`electricidad-interconexiones` — 5 registros**, todos `proyectada`.
+- El **Reglamento Delegado (UE) 2026/764**, su antecesor derogado y un extracto
+  del **Plan de desarrollo de la red de transporte 2021-2026** (MITECO, Acuerdo
+  de Consejo de Ministros), más la copia del NGBE que sitúa los cinco puntos.
+- Contrato **1.13.0**.
+
+### Corregido
+
+- **El municipio de Olza.** El contraste con el IGN cazó que su nombre oficial es
+  «Cendea de Olza/Oltza Zendea». Se usa la forma del IGN.
+- **Un punto mal elegido, antes de publicarse.** La búsqueda por recuadro devolvía
+  «Cortijo del Puerto de la Cruz» —una edificación a 600 m del paso de montaña que
+  da nombre a la subestación— porque la coincidencia era por subcadena. Así se
+  elige mal un punto sin enterarse; la captura exige ahora etiqueta exacta.
+
+### Huecos
+
+- **Las interconexiones YA EN SERVICIO no están en esta capa.** El plan las nombra
+  de pasada —habla de un «tercer eje» con Marruecos, y sus tablas citan Arkale,
+  Hernani-Argia y Baixas-Vic— pero no las inventaría con sus extremos. Quien
+  publica ese inventario es **Red Eléctrica, sociedad cotizada**, y por R3 no
+  sostiene un confirmado. Declaradas, no omitidas.
+- **El estado de ejecución no se sabe.** Lo que se publica es lo que dicen los
+  instrumentos de planificación, no un parte de obra: ninguna fuente archivada
+  acredita en qué punto está hoy cada enlace. Las cinco van `proyectada` y
+  ninguna pasa de `parcial`.
+- **La red de transporte sigue sin publicarse, y es por licencia.** El mallado lo
+  publica Red Eléctrica y no hay cartografía compatible con CC BY 4.0.
+  `red-electrica` se retitula «Red eléctrica (transporte)» y sigue declarada y
+  vacía.
+- **Fontefría no se sitúa.** El NGBE no nombra ese lugar y la subestación no
+  existe; el registro del enlace con Portugal se sitúa en Beariz, que sí está
+  nombrado, y lo dice.
+- **La capacidad de intercambio no se publica.** Ni la de cada enlace ni el
+  famoso porcentaje de interconexión: la cifra la da Red Eléctrica y esta tanda
+  no ha archivado ninguna fuente reguladora que la sostenga.
+
+### Y una nota sobre el archivo
+
+El Plan de desarrollo de la red de transporte son **535 páginas y 355 MB**. No
+cabe en GitHub y no tiene sentido guardarlo entero, así que se archiva un
+**extracto de las catorce páginas que sostienen la cita**, sin retocar, con las
+páginas y la URL del completo dichas dentro del propio fichero. Son 27 MB porque
+las fichas de actuación llevan sus mapas embebidos. Recortarlo más habría sido
+citar algo que nadie puede comprobar.
+
+---
+
 ## datos-v2026.08.8 — Los derechos mineros, y el punto → polígono que NO se hace
 
 Entra **`minerales-derechos`**: 106 derechos del Catastro Minero con su

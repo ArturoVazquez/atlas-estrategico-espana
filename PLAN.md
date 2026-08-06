@@ -233,7 +233,22 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 
 ## Horizonte (post-v1, por orden acordado)
 
-Red eléctrica e interconexiones → renovable por provincia → agua embalsada →
+~~Red eléctrica e interconexiones~~ → renovable por provincia → agua embalsada →
 centros de datos → H2Med → PERTE acotado → intangibles (clase `analisis`,
 ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya señales
 reales con las que diseñarlo.
+
+**La primera casilla, a medias y dicho:** las **interconexiones** están hechas
+(release `datos-v2026.08.9`, cinco enlaces proyectados). La **red de transporte
+no**, y no es por falta de ganas: el mallado lo publica Red Eléctrica, que es
+sociedad cotizada —`corporativa` por §6.1, sin poder sostener un confirmado por
+R3— y no hay cartografía de la red bajo licencia compatible con CC BY 4.0. Se
+queda declarada y vacía con ese motivo escrito, que es para lo que sirve la
+marca. Es la misma frontera que ya marcó Enagás en la capa de gas: **el atlas se
+detiene donde la fuente deja de poder sostenerlo.**
+
+Y queda apuntado, para quien retome esto: **el H2Med ya tiene instrumento**. La
+lista de la Unión vigente lo recoge como proyecto 9.1.4, «Interconector de
+hidrógeno España-Francia (BarMar)», junto con el interconector con Portugal
+(9.1.2) y las infraestructuras interiores de los dos países. La fuente está
+archivada en esta tanda.
