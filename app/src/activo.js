@@ -14,6 +14,7 @@
 const TABLA = {
   "minerales-proyectos": (p) => p.fase === "produccion",
   nuclear: (p) => p.fase === "produccion",
+  "gas-regasificacion": (p) => p.fase === "produccion",
   "minerales-dominios": (p) => p.caracter === "activo" || p.caracter === "mixto",
   "cables-submarinos": (p) => p.fase === "produccion",
   // `recurso-eolico`, `recurso-solar` y el tablero NO APLICAN: son recurso o

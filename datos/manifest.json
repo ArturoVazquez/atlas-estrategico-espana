@@ -1,14 +1,14 @@
 {
   "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
 
-  "_estado": "F3 empezada. Tienen datos `minerales-proyectos`, `nuclear` y `limites-soberania`; las otras doce siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+  "_estado": "F3 empezada. Tienen datos `minerales-proyectos`, `nuclear`, `limites-soberania` y `gas-regasificacion`; las otras once siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 
   "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
 
-  "schema_version": "1.7.0",
-  "release": "2026.08.3",
+  "schema_version": "1.8.0",
+  "release": "2026.08.4",
 
   "capas": [
     {
@@ -62,7 +62,15 @@
       "titulo": "Gas y regasificación",
       "arbol": "energia",
       "grupo": "dotacion",
-      "en_preparacion": true
+      "geometria": "puntos",
+      "registro": "verificado",
+      "ambito": "espana",
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/gas-regasificacion.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Atlas Estratégico de España"
     },
     {
       "id": "nuclear",

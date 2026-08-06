@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.7.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.8.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -297,6 +297,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 |---|---|---|
 | `minerales-proyectos` | `fase` (§10, vocabulario) | `fase == "produccion"` |
 | `nuclear` *(1.6)* | `fase` | `fase == "produccion"` (reactor en explotación) |
+| `gas-regasificacion` *(1.8)* | `fase` | `fase == "produccion"` (planta en servicio) |
 | `minerales-dominios` | `caracter` (§10, vocabulario) | `caracter ∈ {activo, mixto}` |
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
@@ -526,6 +527,7 @@ existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado
 - *minerales-proyectos*: `estrategico_ue` · `produccion_singular` · `en_disputa`
 - *nuclear* *(1.6)*: `en_operacion` · `en_cese` · `desmantelamiento`
 - *limites-soberania* *(1.7)*: `reclamado_por_espana` · `reclamado_a_espana`
+- *gas-regasificacion* *(1.8)*: `regasificacion` · `logistica_gnl`
 - *minerales-dominios*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
@@ -580,6 +582,24 @@ reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` 
 > tienen autorizaciones, fechas y potencias distintas: son dos hechos, no uno.
 > Comparten coordenada, y eso se dice — separarlos en el mapa exigiría una
 > fuente que sitúe cada edificio, y no la hay (§6.6).
+
+**gas-regasificacion** *(1.8)* (`dotacion`, puntos, verificado):
+`operador` (✔; +`__v`,`__f`) · `municipio` (✔) · `provincia` (✔) ·
+**`fase`** (✔, vocabulario; +`__v`,`__f`) · `puesta_en_servicio` (+`__v`,`__f`) ·
+`capacidad_almacenamiento_m3` (+`__v`,`__f`) ·
+`capacidad_emision_nm3h` (+`__v`,`__f`) · `claves[]`
+
+> **Los dos campos de capacidad existen y van a quedarse vacíos.** No es un
+> descuido: al abrir la capa se comprobó que **nadie los publica en documento
+> accesible**. Ni el informe de supervisión del sistema gasista de la CNMC —que
+> sí trae mínimos técnicos y días de operación por planta— ni las páginas de los
+> operadores traen la capacidad de almacenamiento en m³ de cada terminal, que es
+> justamente la cifra que todo el mundo repite. Los campos se declaran para que
+> el hueco tenga dónde alojarse el día que aparezca el instrumento.
+>
+> **Ojo con la fuente que se dé por buena aquí.** Enagás es una sociedad
+> cotizada: por §6.1 sus publicaciones son `corporativa` y por **R3** no pueden
+> sostener un `confirmado`. Lo primario es el BOE y la CNMC.
 
 **limites-soberania** *(1.7)* (`dotacion`, puntos, verificado):
 `administrado_por` (✔; +`__v`,`__f`) · `reclamado_por` (✔; +`__v`,`__f`) ·
@@ -724,6 +744,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.8.0** | 2026-08-06 | **Aditiva.** Entra `gas-regasificacion` (§10) con su `categoria` (§9) y su fila en la tabla de `activo` (§6.5). Trae dos campos —`capacidad_almacenamiento_m3` y `capacidad_emision_nm3h`— que **nacen vacíos a propósito**: al abrir la capa se comprobó que ni la CNMC ni los operadores publican en documento accesible la capacidad de las siete terminales, que es la cifra que todo el mundo repite. El campo existe para que el hueco tenga dónde alojarse. Queda escrito además, porque no lo estaba, que **Enagás es una sociedad cotizada** y por tanto fuente `corporativa`: lo primario aquí es el BOE y la CNMC. |
 | **1.7.0** | 2026-08-06 | **Aditiva.** Entra `limites-soberania` (§10), la capa del tablero, con la doctrina **D5 puesta en datos**: dos campos simétricos —`administrado_por` y `reclamado_por`— con los que Gibraltar y Ceuta se describen con la misma estructura, y una `categoria` de dos valores (§9) que dice **quién reclama, no quién tiene razón**. Los instrumentos que cada parte invoca van en `claves[]`, atribuidos, de modo que una posición sin documento se ve como lo que es. No toca §6.5: el tablero ya figuraba como «no aplica», y esta es la primera capa que ejercita esa rama — su `activo` es `null` y el filtro de explotación no la esconde nunca. |
 | **1.6.1** | 2026-08-06 | **Corrección.** §7.5 da **un día de tolerancia** a la comprobación de fechas futuras. Lo destapó el propio CI al publicar la capa `nuclear`: los registros se fecharon a las 00:47 hora española, y el runner —que corre en **UTC**— aún estaba en el día anterior, así que veía toda la capa fechada en el futuro y bloqueaba. No era un dato mal puesto: era una regla que decía «el futuro» sin decir de quién es el ahora, y una fecha ISO no lleva huso. La comprobación sigue cazando un 2027 escrito donde iba 2017; deja de arbitrar un desfase de dos horas. |
 | **1.6.0** | 2026-08-06 | **Aditiva.** Entra la capa `nuclear` (§10), la primera que estrena el mecanismo sin ser la primera capa del atlas: `grupo`, `potencia_mw`, `tecnologia`, `titulares[]`, `fase` y **dos campos de fecha** —`autorizacion_hasta`, de la orden del BOE, y `cierre_acordado`, del calendario de 2019—, que son hechos distintos y en España no coinciden. Su `categoria` en §9 y su fila en la tabla de `activo` de §6.5, sin la cual un reactor no respondería al filtro de explotación, que es justo la pregunta que sí se le hace. La regla de un registro **por reactor** aunque compartan emplazamiento, y por qué comparten coordenada, queda escrita en §10. |

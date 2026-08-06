@@ -1,0 +1,438 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "gas-regasificacion",
+    "schema_version": "1.8.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "gas-regasificacion:barcelona",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.17744,
+          41.38229
+        ]
+      },
+      "properties": {
+        "slug": "barcelona",
+        "nombre": "Planta de Barcelona",
+        "categoria": "regasificacion",
+        "descripcion": "Terminal de GNL en el puerto de Barcelona, una de las tres de titularidad directa de Enagás.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio, del Nomenclátor Geográfico Básico de España; el IGN NO nombra ninguna de las siete terminales (ver el hueco f9 y la nota)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "operador": "Enagás Transporte, S.A.U.",
+        "operador__v": "no_verificado",
+        "municipio": "Barcelona",
+        "provincia": "Barcelona",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [
+          {
+            "k": "Días por debajo del mínimo técnico en 2025",
+            "v": "9 días, según el informe de supervisión de la CNMC. Es un dato oficial por planta que no aparece en ninguna fuente divulgativa",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "CNMC — Informe de supervisión de la gestión técnica del sistema gasista, año 2025 (IS/DE/005/26)",
+            "fecha": "2026-03-24",
+            "url": "https://www.cnmc.es/sites/default/files/6446186.pdf",
+            "archivo": "fuentes/2026-08-06_cnmc_supervision-gestion-tecnica-sistema-gasista-2025.pdf"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "La capacidad de almacenamiento en m³ de GNL y la de emisión en Nm³/h de esta planta: no publicadas en documento accesible. El informe de supervisión de la CNMC trae mínimos técnicos y días de operación por planta, pero no capacidades; las páginas de los operadores tampoco. Es la cifra que todo el mundo repite y ninguna fuente alcanzable acredita."
+          }
+        ],
+        "nota": "La coordenada es la del municipio: el Nomenclátor del IGN no nombra la terminal. Se barrieron 67 topónimos en el recuadro del puerto y ninguno es la planta."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "gas-regasificacion:cartagena",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.98493,
+          37.60089
+        ]
+      },
+      "properties": {
+        "slug": "cartagena",
+        "nombre": "Planta de Cartagena",
+        "categoria": "regasificacion",
+        "descripcion": "Terminal de GNL en el valle de Escombreras, junto al complejo industrial y energético del puerto de Cartagena.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio, del Nomenclátor Geográfico Básico de España; el IGN NO nombra ninguna de las siete terminales (ver el hueco f9 y la nota)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "operador": "Enagás Transporte, S.A.U.",
+        "operador__v": "no_verificado",
+        "municipio": "Cartagena",
+        "provincia": "Murcia",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [
+          {
+            "k": "Días por debajo del mínimo técnico en 2025",
+            "v": "5 días, según el informe de supervisión de la CNMC. Es un dato oficial por planta que no aparece en ninguna fuente divulgativa",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "CNMC — Informe de supervisión de la gestión técnica del sistema gasista, año 2025 (IS/DE/005/26)",
+            "fecha": "2026-03-24",
+            "url": "https://www.cnmc.es/sites/default/files/6446186.pdf",
+            "archivo": "fuentes/2026-08-06_cnmc_supervision-gestion-tecnica-sistema-gasista-2025.pdf"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "La capacidad de almacenamiento en m³ de GNL y la de emisión en Nm³/h de esta planta: no publicadas en documento accesible. El informe de supervisión de la CNMC trae mínimos técnicos y días de operación por planta, pero no capacidades; las páginas de los operadores tampoco. Es la cifra que todo el mundo repite y ninguna fuente alcanzable acredita."
+          }
+        ],
+        "nota": "Coordenada municipal por el mismo motivo que el resto de la capa: el IGN no nombra la terminal."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "gas-regasificacion:huelva",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.8934,
+          37.22838
+        ]
+      },
+      "properties": {
+        "slug": "huelva",
+        "nombre": "Planta de Huelva",
+        "categoria": "regasificacion",
+        "descripcion": "Terminal de GNL en la desembocadura del Tinto y el Odiel, en el polo químico onubense.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio, del Nomenclátor Geográfico Básico de España; el IGN NO nombra ninguna de las siete terminales (ver el hueco f9 y la nota)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "operador": "Enagás Transporte, S.A.U.",
+        "operador__v": "no_verificado",
+        "municipio": "Palos de la Frontera",
+        "provincia": "Huelva",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [
+          {
+            "k": "Días por debajo del mínimo técnico en 2025",
+            "v": "17 días, según el informe de supervisión de la CNMC. Es un dato oficial por planta que no aparece en ninguna fuente divulgativa",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "CNMC — Informe de supervisión de la gestión técnica del sistema gasista, año 2025 (IS/DE/005/26)",
+            "fecha": "2026-03-24",
+            "url": "https://www.cnmc.es/sites/default/files/6446186.pdf",
+            "archivo": "fuentes/2026-08-06_cnmc_supervision-gestion-tecnica-sistema-gasista-2025.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "BOE — Resolución de la DGPEyM sobre la planta de GNL de Palos de la Frontera (Huelva) (BOE-B-2007-107111)",
+            "fecha": "2007-01-01",
+            "url": "https://www.boe.es/buscar/doc.php?id=BOE-B-2007-107111",
+            "archivo": "fuentes/2026-08-06_boe_resolucion-2007-planta-palos-de-la-frontera-huelva.html"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "La capacidad de almacenamiento en m³ de GNL y la de emisión en Nm³/h de esta planta: no publicadas en documento accesible. El informe de supervisión de la CNMC trae mínimos técnicos y días de operación por planta, pero no capacidades; las páginas de los operadores tampoco. Es la cifra que todo el mundo repite y ninguna fuente alcanzable acredita."
+          }
+        ],
+        "nota": "El municipio NO es Huelva sino Palos de la Frontera, y lo acredita una resolución del BOE que se refiere a «la planta de recepción, almacenamiento y regasificación de Gas Natural licuado de Palos de la Frontera (Huelva)». Es el tipo de detalle que la prensa redondea a «Huelva».",
+        "municipio__v": "confirmado",
+        "municipio__f": "f2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "gas-regasificacion:bilbao",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.0889,
+          43.3459
+        ]
+      },
+      "properties": {
+        "slug": "bilbao",
+        "nombre": "Bahía de Bizkaia Gas",
+        "categoria": "regasificacion",
+        "descripcion": "Terminal de GNL en el puerto de Bilbao, participada al 50 % por Enagás. Es la única de las siete que no registró en 2025 ningún día por debajo de su mínimo técnico, junto con Sagunto.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio, del Nomenclátor Geográfico Básico de España; el IGN NO nombra ninguna de las siete terminales (ver el hueco f9 y la nota)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "operador": "Bahía de Bizkaia Gas, S.L.",
+        "operador__v": "no_verificado",
+        "municipio": "Zierbena",
+        "provincia": "Bizkaia",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [
+          {
+            "k": "Días por debajo del mínimo técnico en 2025",
+            "v": "0 días, según el informe de supervisión de la CNMC. Es un dato oficial por planta que no aparece en ninguna fuente divulgativa",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "CNMC — Informe de supervisión de la gestión técnica del sistema gasista, año 2025 (IS/DE/005/26)",
+            "fecha": "2026-03-24",
+            "url": "https://www.cnmc.es/sites/default/files/6446186.pdf",
+            "archivo": "fuentes/2026-08-06_cnmc_supervision-gestion-tecnica-sistema-gasista-2025.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "BOE — Resolución de 29 de junio de 2026 de la DGPEyM sobre instalaciones de Bahía de Bizkaia Gas en Ziérbena, Bizkaia (BOE-A-2026-15444)",
+            "fecha": "2026-06-29",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-15444",
+            "archivo": "fuentes/2026-08-06_boe_resolucion-2026-bbg-zierbena.html"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "La capacidad de almacenamiento en m³ de GNL y la de emisión en Nm³/h de esta planta: no publicadas en documento accesible. El informe de supervisión de la CNMC trae mínimos técnicos y días de operación por planta, pero no capacidades; las páginas de los operadores tampoco. Es la cifra que todo el mundo repite y ninguna fuente alcanzable acredita."
+          }
+        ],
+        "nota": "El municipio es Zierbena, no Bilbao, y lo acredita una resolución del BOE de 2026 que sitúa la planta «en Ziérbena, Bizkaia». El Nomenclátor del IGN lo escribe sin tilde.",
+        "municipio__v": "confirmado",
+        "municipio__f": "f2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "gas-regasificacion:sagunto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.27854,
+          39.68004
+        ]
+      },
+      "properties": {
+        "slug": "sagunto",
+        "nombre": "Saggas",
+        "categoria": "regasificacion",
+        "descripcion": "Terminal de GNL en el puerto de Sagunto, participada mayoritariamente por Enagás.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio, del Nomenclátor Geográfico Básico de España; el IGN NO nombra ninguna de las siete terminales (ver el hueco f9 y la nota)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "operador": "Planta de Regasificación de Sagunto, S.A. (Saggas)",
+        "operador__v": "no_verificado",
+        "municipio": "Sagunt/Sagunto",
+        "provincia": "Valencia",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [
+          {
+            "k": "Días por debajo del mínimo técnico en 2025",
+            "v": "0 días, según el informe de supervisión de la CNMC. Es un dato oficial por planta que no aparece en ninguna fuente divulgativa",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "CNMC — Informe de supervisión de la gestión técnica del sistema gasista, año 2025 (IS/DE/005/26)",
+            "fecha": "2026-03-24",
+            "url": "https://www.cnmc.es/sites/default/files/6446186.pdf",
+            "archivo": "fuentes/2026-08-06_cnmc_supervision-gestion-tecnica-sistema-gasista-2025.pdf"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "La capacidad de almacenamiento en m³ de GNL y la de emisión en Nm³/h de esta planta: no publicadas en documento accesible. El informe de supervisión de la CNMC trae mínimos técnicos y días de operación por planta, pero no capacidades; las páginas de los operadores tampoco. Es la cifra que todo el mundo repite y ninguna fuente alcanzable acredita."
+          }
+        ],
+        "nota": "Coordenada municipal: el IGN no nombra la terminal. Ningún día por debajo del mínimo técnico en 2025. El municipio se escribe «Sagunt/Sagunto», que es la denominación oficial bilingüe que usa el Nomenclátor: lo cazó el contraste geográfico al no cuadrar con el «Sagunto» a secas que se había escrito."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "gas-regasificacion:mugardos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.25498,
+          43.46044
+        ]
+      },
+      "properties": {
+        "slug": "mugardos",
+        "nombre": "Reganosa",
+        "categoria": "regasificacion",
+        "descripcion": "Terminal de GNL en la ría de Ferrol, la única del noroeste peninsular.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio, del Nomenclátor Geográfico Básico de España; el IGN NO nombra ninguna de las siete terminales (ver el hueco f9 y la nota)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "operador": "Regasificadora del Noroeste, S.A. (Reganosa)",
+        "operador__v": "no_verificado",
+        "municipio": "Mugardos",
+        "provincia": "A Coruña",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [
+          {
+            "k": "Días por debajo del mínimo técnico en 2025",
+            "v": "15 días, según el informe de supervisión de la CNMC. Es un dato oficial por planta que no aparece en ninguna fuente divulgativa",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "CNMC — Informe de supervisión de la gestión técnica del sistema gasista, año 2025 (IS/DE/005/26)",
+            "fecha": "2026-03-24",
+            "url": "https://www.cnmc.es/sites/default/files/6446186.pdf",
+            "archivo": "fuentes/2026-08-06_cnmc_supervision-gestion-tecnica-sistema-gasista-2025.pdf"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "La capacidad de almacenamiento en m³ de GNL y la de emisión en Nm³/h de esta planta: no publicadas en documento accesible. El informe de supervisión de la CNMC trae mínimos técnicos y días de operación por planta, pero no capacidades; las páginas de los operadores tampoco. Es la cifra que todo el mundo repite y ninguna fuente alcanzable acredita."
+          }
+        ],
+        "nota": "Coordenada municipal. Se barrieron 648 topónimos en el recuadro de la ría y ninguno nombra la planta."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "gas-regasificacion:musel",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.66213,
+          43.54505
+        ]
+      },
+      "properties": {
+        "slug": "musel",
+        "nombre": "Musel E-Hub",
+        "categoria": "logistica_gnl",
+        "descripcion": "Terminal de El Musel, en Gijón: construida como planta de regasificación, hibernada durante años y operativa desde 2023 como centro logístico de GNL con topes de emisión fijados por instrumento.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio, del Nomenclátor Geográfico Básico de España; el IGN NO nombra ninguna de las siete terminales (ver el hueco f9 y la nota)",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "operador": "Musel Energy Hub, S.L.U.",
+        "operador__v": "no_verificado",
+        "municipio": "Gijón",
+        "provincia": "Asturias",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [
+          {
+            "k": "Topes de emisión fijados por instrumento",
+            "v": "La capacidad máxima de regasificación no puede superar los 45 GWh/día, conforme a la Orden TED/578/2023, ni los 11.744 GWh/año, según la resolución de 26 de julio de 2024 de la DGPEyM",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Días por debajo del mínimo técnico en 2025",
+            "v": "27 días, según el informe de supervisión de la CNMC. Es un dato oficial por planta que no aparece en ninguna fuente divulgativa",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "CNMC — Informe de supervisión de la gestión técnica del sistema gasista, año 2025 (IS/DE/005/26)",
+            "fecha": "2026-03-24",
+            "url": "https://www.cnmc.es/sites/default/files/6446186.pdf",
+            "archivo": "fuentes/2026-08-06_cnmc_supervision-gestion-tecnica-sistema-gasista-2025.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Orden TED/578/2023, de 7 de junio, por la que se establecen las condiciones técnicas para la prestación de servicios logísticos de GNL en la planta de regasificación del puerto de El Musel",
+            "fecha": "2023-06-07",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-13747",
+            "archivo": "fuentes/2026-08-06_boe_orden-ted-578-2023-servicios-logisticos-el-musel.html"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Resolución de 17 de agosto de 2023, de la DGPEyM, por la que se autoriza la transmisión de la titularidad de la planta de El Musel a favor de Musel Energy Hub, S.L.U.",
+            "fecha": "2023-08-17",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-18687",
+            "archivo": "fuentes/2026-08-06_boe_resolucion-2023-titularidad-el-musel-musel-energy-hub.html"
+          },
+          {
+            "id": "f4",
+            "tipo": "primaria",
+            "titulo": "Resolución de 26 de julio de 2024, de la DGPEyM, por la que se adapta la capacidad de regasificación máxima anual de la planta de El Musel",
+            "fecha": "2024-07-26",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-15568",
+            "archivo": "fuentes/2026-08-06_boe_resolucion-2024-capacidad-regasificacion-el-musel.html"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "La capacidad de almacenamiento en m³ de GNL y la de emisión en Nm³/h de esta planta: no publicadas en documento accesible. El informe de supervisión de la CNMC trae mínimos técnicos y días de operación por planta, pero no capacidades; las páginas de los operadores tampoco. Es la cifra que todo el mundo repite y ninguna fuente alcanzable acredita."
+          }
+        ],
+        "nota": "Es el registro singular de la capa y el único cuya capacidad está acreditada: no por lo que publique su operador, sino porque una orden ministerial y una resolución le fijan un techo. Por eso su categoría es `logistica_gnl` y no `regasificacion`."
+      }
+    }
+  ]
+}

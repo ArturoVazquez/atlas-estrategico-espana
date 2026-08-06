@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/gas-regasificacion.schema.json",
+  "title": "Extensión de capa · gas-regasificacion",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Las siete plantas de GNL del sistema gasista español, una por registro.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "El Nomenclátor del IGN NO nombra ninguna de las siete terminales, así que el punto es el del municipio y `geo_precision` lo dice. Comprobado por recuadro en los siete puertos."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["operador", "municipio", "provincia", "fase"],
+            "properties": {
+              "operador": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Quién explota la planta. Ojo: Enagás es una sociedad cotizada, así que lo que publique sobre sí misma es `corporativa` (§6.1) y por R3 no sostiene un confirmado."
+              },
+              "municipio": { "type": "string", "minLength": 1 },
+              "provincia": { "type": "string", "minLength": 1 },
+              "fase": {
+                "type": "string",
+                "description": "Campo CONTROLADO del que se deriva `activo` (§6.5). Se comprueba contra el vocabulario `fase`."
+              },
+              "puesta_en_servicio": {
+                "type": "string",
+                "format": "date",
+                "description": "Fecha de entrada en servicio, cuando la acredite un instrumento."
+              },
+              "capacidad_almacenamiento_m3": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Capacidad de almacenamiento de GNL en m³. NACE VACÍO A PROPÓSITO: al abrir la capa se comprobó que ni el informe de supervisión de la CNMC ni las páginas de los operadores publican esta cifra por planta, que es justo la que todo el mundo repite. El campo existe para que el hueco tenga dónde alojarse."
+              },
+              "capacidad_emision_nm3h": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Capacidad de emisión a la red en Nm³/h. Mismo caso que la anterior. El Musel es la excepción del sistema: sus topes están fijados por instrumento, pero en GWh y no en Nm³/h, así que van en `claves` y no aquí — un campo no debe cambiar de unidad según el registro."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
