@@ -56,7 +56,7 @@ export function crearFicha(vocabularios) {
   function abrir(feature, entrada, vecinos = []) {
     const p = feature.properties || {};
     const fuentes = p.fuentes || [];
-    const cat = colorDe(p.categoria);
+    const cat = colorDe(entrada.id, p.categoria);
     const catRotulo = rotulo(
       indexar(vocabularios.categoria[entrada.id]),
       p.categoria,

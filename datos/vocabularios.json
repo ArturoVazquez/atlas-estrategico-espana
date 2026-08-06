@@ -1,6 +1,6 @@
 {
-  "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación: el visor no reordena ni traduce, lee de aquí.",
-  "schema_version": "1.8.0",
+  "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
+  "schema_version": "1.9.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -95,26 +95,36 @@
 
   "categoria": {
     "minerales-proyectos": [
-      { "valor": "estrategico_ue", "etiqueta": "Proyecto Estratégico UE (CRMA)" },
-      { "valor": "produccion_singular", "etiqueta": "Producción singular en la UE" },
-      { "valor": "en_disputa", "etiqueta": "Yacimiento en disputa" }
+      { "valor": "estrategico_ue", "etiqueta": "Proyecto Estratégico UE (CRMA)",
+        "color": "#96361F" },
+      { "valor": "produccion_singular", "etiqueta": "Producción singular en la UE",
+        "color": "#31614E" },
+      { "valor": "en_disputa", "etiqueta": "Yacimiento en disputa",
+        "color": "#9C7A14" }
     ],
     "gas-regasificacion": [
       { "valor": "regasificacion", "etiqueta": "Planta de regasificación",
+        "color": "#8A5B2A",
         "def": "Recibe GNL por barco, lo almacena y lo devuelve a estado gaseoso para la red." },
       { "valor": "logistica_gnl", "etiqueta": "Terminal logística de GNL",
+        "color": "#B5915F",
         "def": "Autorizada como regasificadora, opera como centro logístico con tope de emisión fijado por instrumento." }
     ],
     "limites-soberania": [
       { "valor": "reclamado_por_espana", "etiqueta": "Reclamado por España",
+        "color": "#5E5470",
         "def": "España sostiene una reclamación sobre un territorio que administra otro." },
       { "valor": "reclamado_a_espana", "etiqueta": "Reclamado a España",
+        "color": "#8A7C9B",
         "def": "Otro Estado sostiene una reclamación sobre un territorio que administra España." }
     ],
     "nuclear": [
-      { "valor": "en_operacion", "etiqueta": "En operación" },
-      { "valor": "en_cese", "etiqueta": "En cese de explotación" },
-      { "valor": "desmantelamiento", "etiqueta": "En desmantelamiento" }
+      { "valor": "en_operacion", "etiqueta": "En operación",
+        "color": "#2F5D7C" },
+      { "valor": "en_cese", "etiqueta": "En cese de explotación",
+        "color": "#6E7E8A" },
+      { "valor": "desmantelamiento", "etiqueta": "En desmantelamiento",
+        "color": "#98A3AB" }
     ],
     "minerales-dominios": [
       { "valor": "activo", "etiqueta": "Producción activa" },

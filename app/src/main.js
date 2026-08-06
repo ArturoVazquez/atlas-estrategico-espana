@@ -6,7 +6,7 @@
 import { BASEMAP_ES_DEMO } from "./config.js";
 import { cargar, indexar, rotulo } from "./datos.js";
 import { crearFicha } from "./ficha.js";
-import { anadirCapa, aplicarFiltro, colorDe, crearMapa } from "./mapa.js";
+import { anadirCapa, aplicarFiltro, colorDe, crearMapa, fijarColores } from "./mapa.js";
 import { construirPanel } from "./panel.js";
 
 const estado = { filtro: "todo", encendidas: new Set(), capas: [] };
@@ -31,6 +31,8 @@ async function arrancar() {
   }
 
   const { manifiesto, vocabularios, capas } = datos;
+  // Los colores del mapa salen del vocabulario, no del código.
+  fijarColores(vocabularios.categoria);
   const ficha = crearFicha(vocabularios);
 
   // ── la cabecera dice qué release se está mirando ──────────────────────
@@ -61,8 +63,10 @@ async function arrancar() {
       estado.capas.push({ ...capa, ids });
       estado.encendidas.add(capa.entrada.id);
 
-      for (const id of ids) {
-        if (!id.endsWith(":nucleo")) continue;
+      // Se pincha el núcleo de los puntos y el relleno de las zonas. El halo y
+      // el borde no: son adorno del mismo registro y duplicarían el manejador.
+      for (const { id } of ids) {
+        if (!id.endsWith(":nucleo") && !id.endsWith(":relleno")) continue;
         // OJO: no se usa `e.features[0]`. MapLibre serializa a TEXTO las
         // propiedades que son arrays u objetos al pasarlas por el pipeline de
         // teselas, así que `materias`, `fuentes` y `claves` llegarían como
@@ -90,7 +94,6 @@ async function arrancar() {
       }
     }
     refrescar();
-    leyenda(capas, vocabularios);
   });
 
   // ── el panel, construido desde el manifiesto ──────────────────────────
@@ -108,30 +111,44 @@ async function arrancar() {
   function refrescar() {
     if (!mapa.isStyleLoaded() && !estado.capas.length) return;
     aplicarFiltro(mapa, estado.capas, estado.filtro, estado.encendidas);
+    // La leyenda se rehace con el estado: apagar una capa retira su bloque.
+    leyenda(estado.capas, vocabularios, estado.encendidas);
   }
 }
 
-/** La leyenda sale de los vocabularios de cada capa, no de una lista aparte. */
-function leyenda(capas, vocabularios) {
+/**
+ * La leyenda, AGRUPADA POR CAPA.
+ *
+ * Con una capa daba igual; con cuatro era una lista plana de nueve entradas sin
+ * dueño, donde «En operación» y «Reclamado a España» aparecían al mismo nivel
+ * como si fueran del mismo asunto. Cada capa tiene su vocabulario de categorías
+ * y la leyenda ahora lo respeta: un bloque por capa encendida, y solo con las
+ * categorías que ese fichero trae de verdad.
+ */
+function leyenda(capas, vocabularios, encendidas) {
   const caja = document.getElementById("leyenda");
-  const vistos = new Set();
-  const filas = [];
+  const bloques = [];
 
   for (const { entrada, coleccion } of capas) {
+    if (!encendidas.has(entrada.id)) continue;
     const indice = indexar(vocabularios.categoria[entrada.id]);
+    const vistos = new Set();
+    const filas = [];
     for (const f of coleccion.features) {
       const c = f.properties?.categoria;
       if (!c || vistos.has(c)) continue;
       vistos.add(c);
       filas.push(
-        `<div class="l-item"><span class="l-dot" style="background:${colorDe(c)}"></span>` +
+        `<div class="l-item"><span class="l-dot" style="background:${colorDe(entrada.id, c)}"></span>` +
         `${rotulo(indice, c)}</div>`
       );
     }
+    if (filas.length) {
+      bloques.push(`<div class="l-capa"><h3>${entrada.titulo}</h3>${filas.join("")}</div>`);
+    }
   }
 
-  if (!filas.length) return;
-  caja.innerHTML = `<h2>Categorías</h2>${filas.join("")}`;
+  caja.innerHTML = bloques.length ? `<h2>Leyenda</h2>${bloques.join("")}` : "";
 }
 
 arrancar();

@@ -12,23 +12,39 @@ import { activo, pasaFiltro } from "./activo.js";
 import { ATRIBUCION, ENCUADRE } from "./config.js";
 import { estiloMapa } from "./estilo-mapa.js";
 
-/** Colores por categoría, con los tokens del canon visual. */
-const COLOR_CATEGORIA = {
-  estrategico_ue: "#96361F",
-  produccion_singular: "#31614E",
-  en_disputa: "#9C7A14",
-};
-const COLOR_OTRO = "#6E6B60";
+/**
+ * El color de cada categoría lo dice `vocabularios.json`, no este fichero.
+ *
+ * Estuvo aquí, cableado, mientras solo había una capa. Con cuatro se vio el
+ * fallo de un vistazo: nuclear, gas y el tablero se pintaban todos del MISMO
+ * gris, porque el código solo conocía las tres categorías de minerales y lo
+ * demás caía en el color por defecto. Cuatro capas, indistinguibles.
+ *
+ * Es el mismo vicio que ya se quitó del panel y de la ficha: código que conoce
+ * las capas de antemano. El vocabulario dice de sí mismo que el visor «no
+ * reordena, no traduce y no elige colores».
+ */
+const COLOR_SIN_DECLARAR = "#6E6B60";
 
-export function colorDe(categoria) {
-  return COLOR_CATEGORIA[categoria] || COLOR_OTRO;
+let VOCABULARIO_CATEGORIA = {};
+
+/** Lo llama el arranque, una vez, con `vocabularios.categoria`. */
+export function fijarColores(categoriasPorCapa) {
+  VOCABULARIO_CATEGORIA = categoriasPorCapa || {};
+}
+
+export function colorDe(idCapa, categoria) {
+  const lista = VOCABULARIO_CATEGORIA[idCapa] || [];
+  return lista.find((v) => v.valor === categoria)?.color || COLOR_SIN_DECLARAR;
 }
 
 /** La expresión de color, construida desde los valores que traen los datos. */
-function expresionColor(categorias) {
+function expresionColor(idCapa, categorias) {
   const casos = [];
-  for (const c of categorias) casos.push(c, colorDe(c));
-  return casos.length ? ["match", ["get", "categoria"], ...casos, COLOR_OTRO] : COLOR_OTRO;
+  for (const c of categorias) casos.push(c, colorDe(idCapa, c));
+  return casos.length
+    ? ["match", ["get", "categoria"], ...casos, COLOR_SIN_DECLARAR]
+    : COLOR_SIN_DECLARAR;
 }
 
 export function crearMapa(contenedor) {
@@ -64,10 +80,67 @@ export function anadirCapa(mapa, { entrada, coleccion }) {
   const categorias = [
     ...new Set(coleccion.features.map((f) => f.properties?.categoria).filter(Boolean)),
   ];
+  // Cada capa de MapLibre recuerda a qué tipo de geometría atiende: el filtro de
+  // explotación lo reescribe después y necesita conservarlo. Guardarlo aquí
+  // evita que `aplicarFiltro` tenga que adivinarlo por el nombre del id.
   const ids = [];
+  const anotar = (id, geom) => ids.push({ id, geom });
 
-  // Por ahora solo puntos: es la única geometría que hay publicada. Cuando
-  // lleguen polígonos y líneas (F3) entran aquí, mirando `entrada.geometria`.
+  const color = expresionColor(entrada.id, categorias);
+  // Una capa ILUSTRATIVA no puede parecer medida (R5, y la doctrina de §6.6
+  // aplicada al dibujo): va translúcida y con el borde discontinuo. Una
+  // verificada va maciza. La diferencia tiene que verse sin leer la leyenda,
+  // porque en un mapa gana lo que se ve.
+  const ilustrativa = entrada.registro === "ilustrativo";
+
+  if (entrada.geometria === "poligonos" || entrada.geometria === "mixta") {
+    const relleno = `${entrada.id}:relleno`;
+    const borde = `${entrada.id}:borde`;
+
+    mapa.addLayer({
+      id: relleno,
+      type: "fill",
+      source: fuente,
+      filter: ["==", ["geometry-type"], "Polygon"],
+      paint: { "fill-color": color, "fill-opacity": ilustrativa ? 0.1 : 0.22 },
+    });
+
+    mapa.addLayer({
+      id: borde,
+      type: "line",
+      source: fuente,
+      filter: ["==", ["geometry-type"], "Polygon"],
+      paint: {
+        "line-color": color,
+        "line-width": ilustrativa ? 1.1 : 1.6,
+        "line-opacity": ilustrativa ? 0.75 : 1,
+        ...(ilustrativa ? { "line-dasharray": [3, 2] } : {}),
+      },
+    });
+
+    anotar(relleno, "Polygon");
+    anotar(borde, "Polygon");
+  }
+
+  if (entrada.geometria === "lineas" || entrada.geometria === "mixta") {
+    const trazado = `${entrada.id}:trazado`;
+    mapa.addLayer({
+      id: trazado,
+      type: "line",
+      source: fuente,
+      filter: ["==", ["geometry-type"], "LineString"],
+      paint: {
+        "line-color": color,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 4, 1.2, 12, 3],
+        "line-opacity": ilustrativa ? 0.8 : 1,
+        ...(ilustrativa ? { "line-dasharray": [4, 2] } : {}),
+      },
+    });
+    anotar(trazado, "LineString");
+  }
+
+  // Los puntos van los ÚLTIMOS a propósito: se pintan encima de zonas y
+  // trazados, que es donde tienen que estar para poder pincharse.
   if (entrada.geometria === "puntos" || entrada.geometria === "mixta") {
     const halo = `${entrada.id}:halo`;
     const nucleo = `${entrada.id}:nucleo`;
@@ -92,13 +165,14 @@ export function anadirCapa(mapa, { entrada, coleccion }) {
       filter: ["==", ["geometry-type"], "Point"],
       paint: {
         "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4.5, 12, 9],
-        "circle-color": expresionColor(categorias),
+        "circle-color": color,
         "circle-stroke-width": 1.2,
         "circle-stroke-color": "#FBFAF5",
       },
     });
 
-    ids.push(halo, nucleo);
+    anotar(halo, "Point");
+    anotar(nucleo, "Point");
   }
 
   return { fuente, ids };
@@ -122,12 +196,12 @@ export function aplicarFiltro(mapa, capas, filtro, encendidas) {
       .filter((f) => pasaFiltro(filtro, activo(entrada.id, f.properties || {})))
       .map((f) => f.properties?.slug);
 
-    for (const id of ids) {
+    for (const { id, geom } of ids) {
       if (!mapa.getLayer(id)) continue;
       mapa.setLayoutProperty(id, "visibility", visible ? "visible" : "none");
       mapa.setFilter(id, [
         "all",
-        ["==", ["geometry-type"], "Point"],
+        ["==", ["geometry-type"], geom],
         ["in", ["get", "slug"], ["literal", permitidos]],
       ]);
     }
