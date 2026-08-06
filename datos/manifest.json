@@ -7,8 +7,8 @@
 
   "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
 
-  "schema_version": "1.15.0",
-  "release": "2026.08.11",
+  "schema_version": "1.16.0",
+  "release": "2026.08.12",
 
   "capas": [
     {
@@ -190,8 +190,14 @@
       "grupo": "actividad",
       "geometria": "mixta",
       "registro": "verificado",
+      "_ambito": "`mundo` porque BarMar llega a lon 4,93 (Marsella) y el recuadro de España acaba en 4,4. NO se ensancha el recuadro de §7.4 —eso debilitaría la comprobación de todas las demás capas—, se declara el ámbito de esta, que es lo que §3 prevé. Mismo caso que `espacios-maritimos`.",
       "ambito": "mundo",
-      "en_preparacion": true
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/hidrogeno-red.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Comisión Europea (CINEA) · Atlas Estratégico de España"
     },
 
     {
