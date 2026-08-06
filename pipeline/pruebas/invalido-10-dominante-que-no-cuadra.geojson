@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "generacion-electrica-provincia", "schema_version": "1.14.0", "verificado_a": "2026-08-06" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "generacion-electrica-provincia:provincia-de-prueba",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [[-4.0, 40.0], [-3.0, 40.0], [-3.0, 41.0], [-4.0, 41.0], [-4.0, 40.0]]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "provincia-de-prueba",
+        "nombre": "Provincia de prueba",
+        "categoria": "hidraulica",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "cuadrado de prueba",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "provincia": "Provincia de prueba",
+        "anio": 2024,
+        "caracter_dato": "provisional",
+        "nuclear_gwh": 0,
+        "eolica_gwh": 100,
+        "solar_fv_gwh": 50,
+        "solar_termica_gwh": 0,
+        "mareomotriz_gwh": 0,
+        "combustibles_gwh": 10,
+        "cogeneracion_gwh": 5,
+        "hidraulica_gwh": 20,
+        "total_gwh": 185,
+        "fuentes": [
+          { "id": "f1", "tipo": "hueco", "titulo": "Cifras inventadas para la prueba: no salen de ninguna estadística." }
+        ],
+        "nota": "VIOLA la comprobación de §10: se declara «hidraulica» y la tecnología que más produjo es la eólica, con 100 GWh frente a 20. Todo lo demás cuadra a propósito —las ocho suman el total publicado, la provincia no se repite, la geometría es limpia—, porque lo que este fichero prueba es que el DERIVADO se vigila. `categoria` es un valor calculado a partir de las cifras del propio registro, y escribir un derivado a mano es la doble fuente de verdad que D3 descartó; se escribe igualmente porque da color al mapa, y se puede escribir solo porque esto lo desmiente."
+      }
+    }
+  ]
+}

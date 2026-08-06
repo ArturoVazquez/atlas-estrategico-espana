@@ -8,9 +8,7 @@
   "properties": {
     "features": {
       "type": "array",
-      "minItems": 52,
-      "maxItems": 52,
-      "description": "Las 52 provincias, ni una más ni una menos. El IGN devuelve 53 unidades de tercer orden: la que sobra es «Territorios no asociados a ninguna provincia», que NO tiene hoja en la estadística. Se excluye por ausencia de fuente. Fijar el número aquí es lo que convierte un emparejamiento fallido en un error del CI y no en una provincia que falta sin que nadie lo note.",
+      "description": "Una entrada por provincia: 52 en la release publicada. El IGN devuelve 53 unidades de tercer orden y la que sobra es «Territorios no asociados a ninguna provincia», que NO tiene hoja en la estadística; se excluye por ausencia de fuente. El número NO se fija aquí a propósito: un `minItems: 52` haría imposible el fixture de una sola provincia con el que se prueban las comprobaciones de §10, y las pruebas exigen un incumplimiento por fichero. Lo que sí vigila el CI, y atrapa el mismo fallo, está en `comprobar_generacion()`: provincia duplicada y descuadre entre las ocho tecnologías y el total.",
       "items": {
         "type": "object",
         "properties": {

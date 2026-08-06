@@ -67,6 +67,13 @@ CASOS: dict[str, tuple[set[str], int]] = {
     "invalido-76-vocabulario.geojson":                 ({"§7.6"},   1),
     "aviso-77-fuente-sin-archivar.geojson":            ({"§7.7"},   0),
     "invalido-78-capa-fantasma.geojson":               ({"§7.8"},   1),
+
+    # La comprobación propia de `generacion-electrica-provincia` (§10): su
+    # `categoria` es la tecnología DOMINANTE, o sea un derivado de las cifras del
+    # propio registro. Se escribe en el fichero porque da color al mapa, y solo
+    # se puede escribir porque el CI lo desmiente. Este caso declara «hidraulica»
+    # con la eólica al quíntuple.
+    "invalido-10-dominante-que-no-cuadra.geojson":     ({"§10"},    1),
 }
 
 LINEA = re.compile(r"^\s+(BLOQUEA|AVISA)\s+(\S+)\s")

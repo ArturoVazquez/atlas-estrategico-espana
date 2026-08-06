@@ -475,6 +475,92 @@ def comprobar_archivo_fuentes(doc: dict) -> list[Hallazgo]:
     return out
 
 
+# Las ocho tecnologías de `generacion-electrica-provincia`, en el orden en que
+# la fuente las lista. El nombre del campo es el valor de `categoria` más
+# `_gwh`, y esa coincidencia NO es casual: es lo que permite comprobar el
+# dominante sin una tabla de traducción que se pudra aparte de los datos.
+TECNOLOGIAS = ("nuclear", "eolica", "solar_fv", "solar_termica", "mareomotriz",
+               "combustibles", "cogeneracion", "hidraulica")
+
+# Ocho cifras y un total, todos redondeados a dos decimales: el arrastre máximo
+# del redondeo son nueve medios céntimo de GWh. 0,05 deja sitio de sobra y sigue
+# sin tragarse un error de verdad, que en esta capa se mide en cientos de GWh.
+TOLERANCIA_CUADRE = 0.05
+
+
+def comprobar_generacion(doc: dict) -> list[Hallazgo]:
+    """§10 · Las dos comprobaciones propias de `generacion-electrica-provincia`.
+
+    **El dominante.** `categoria` es la tecnología que más produjo, o sea un
+    valor DERIVADO de las cifras del propio registro — la doble fuente de verdad
+    que D3 descartó. Se escribe igualmente porque es quien da color al mapa, y se
+    puede escribir porque esto lo desmiente: `categoria` tiene que ser
+    exactamente el argmax. Un derivado solo se guarda si algo lo vigila.
+
+    **El cuadre.** Las ocho tecnologías tienen que sumar el `total_gwh` que
+    publica la fuente. No es una redundancia: el total viene de la MISMA hoja que
+    las ocho partes, así que si no cuadran es que el emparejamiento entre hojas y
+    provincias se torció, y esa es la avería silenciosa de esta capa — números
+    reales, todos primarios, colgados de la provincia equivocada.
+
+    **La provincia repetida.** Es la otra cara del cuadre y atrapa lo que el
+    esquema no puede: si dos registros dicen ser la misma provincia, una
+    provincia se ha quedado fuera de la capa. El número exacto de registros NO
+    se fija en el esquema —haría imposible el fixture de una sola provincia, y
+    las pruebas exigen un incumplimiento por fichero—, así que el fallo se caza
+    por aquí.
+
+    Un empate en el máximo se denuncia en vez de resolverse a la primera: con
+    dos tecnologías iguales no hay dominante, y elegir una sería inventarlo.
+    """
+    out = []
+    vistas: dict[str, str] = {}
+    for f in doc.get("features", []):
+        props = f.get("properties") or {}
+        prov = props.get("provincia")
+        if prov:
+            if prov in vistas:
+                out.append(Hallazgo(
+                    BLOQUEA, "§10", f.get("id", "(sin id)"),
+                    f"«{prov}» ya la declara {vistas[prov]}. Dos registros para la "
+                    f"misma provincia significan que otra se quedó fuera."))
+            vistas[prov] = f.get("id", "(sin id)")
+
+    for f in doc.get("features", []):
+        props = f.get("properties") or {}
+        donde = f.get("id", "(sin id)")
+
+        valores = {t: props.get(f"{t}_gwh") for t in TECNOLOGIAS}
+        if any(v is None for v in valores.values()):
+            continue  # ya lo denuncia el esquema (§7.1); aquí no se repite
+
+        techo = max(valores.values())
+        empatados = sorted(t for t, v in valores.items() if v == techo)
+        if len(empatados) > 1:
+            out.append(Hallazgo(
+                BLOQUEA, "§10", donde,
+                f"Empate en el máximo entre {', '.join(empatados)} ({techo} GWh). "
+                f"Sin dominante no hay `categoria`, y elegir una sería inventarla."))
+        elif props.get("categoria") != empatados[0]:
+            out.append(Hallazgo(
+                BLOQUEA, "§10", donde,
+                f"Se declara «{props.get('categoria')}» y la tecnología que más "
+                f"produjo es «{empatados[0]}» ({techo} GWh). `categoria` es la "
+                f"dominante y se deriva de estas mismas cifras: corregir la "
+                f"categoría, o revisar de qué provincia son los números."))
+
+        total = props.get("total_gwh")
+        if total is not None:
+            suma = sum(valores.values())
+            if abs(suma - total) > TOLERANCIA_CUADRE:
+                out.append(Hallazgo(
+                    BLOQUEA, "§10", donde,
+                    f"Las ocho tecnologías suman {suma:.2f} GWh y el total publicado "
+                    f"es {total:.2f}. Vienen de la misma hoja: si no cuadran, lo que "
+                    f"falló es el emparejamiento entre hojas y provincias."))
+    return out
+
+
 def comprobar_r8(docs: dict[str, dict]) -> list[Hallazgo]:
     """§6.5 · R8 — la única regla que compara DOS capas entre sí.
 
@@ -572,6 +658,10 @@ def validar_capa(doc: dict, ruta: Path, manifiesto: dict, voc: dict) -> list[Hal
         *comprobar_fechas(doc),
         *comprobar_vocabularios(doc, capa, voc),
         *comprobar_archivo_fuentes(doc),
+        # Mecánica de UNA capa, no doctrina de todas: por eso va aquí, colgada de
+        # su `id`, y no como regla R en §6.4. Del mismo rango que las
+        # prohibiciones `"not": {}` de los esquemas.
+        *(comprobar_generacion(doc) if capa == "generacion-electrica-provincia" else []),
     ]
 
 
