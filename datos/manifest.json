@@ -1,14 +1,14 @@
 {
   "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
 
-  "_estado": "F3 cerrada. Tienen datos `minerales-proyectos`, `minerales-derechos`, `electricidad-interconexiones`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `limites-soberania` y `espacios-maritimos`; las otras diez siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+  "_estado": "F3 cerrada. Tienen datos `minerales-proyectos`, `minerales-derechos`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `limites-soberania` y `espacios-maritimos`; las otras nueve siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 
   "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
 
-  "schema_version": "1.13.0",
-  "release": "2026.08.9",
+  "schema_version": "1.14.0",
+  "release": "2026.08.10",
 
   "capas": [
     {
@@ -137,7 +137,16 @@
       "titulo": "Generación eléctrica por provincia",
       "arbol": "energia",
       "grupo": "actividad",
-      "en_preparacion": true
+      "geometria": "poligonos",
+      "registro": "verificado",
+      "ambito": "espana",
+      "fondo": true,
+      "cadencia_revision_dias": 400,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/generacion-electrica-provincia.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "MITECO · Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
     {
       "id": "agua-embalsada",
