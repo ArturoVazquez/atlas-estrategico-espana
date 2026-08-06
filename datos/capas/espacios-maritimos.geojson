@@ -14,8 +14,12 @@
         "coordinates": [
           [
             [
-              -15.6,
-              27.3
+              -13.3,
+              28.2
+            ],
+            [
+              -14.3,
+              27.45
             ],
             [
               -13.85,
@@ -34,12 +38,12 @@
               29.6
             ],
             [
-              -13.95,
-              29.75
+              -13.25,
+              29.55
             ],
             [
-              -15.6,
-              27.3
+              -13.3,
+              28.2
             ]
           ]
         ]
@@ -52,7 +56,7 @@
         "estado_registro": "vigente",
         "verif": "parcial",
         "geo_precision": "ilustrativa",
-        "geo_fuente": "esquema trazado a mano del corredor entre el archipiélago y la costa africana, comprobado punto a punto contra la línea de costa del mapa base para que no pise tierra; ningún instrumento dibuja esta zona",
+        "geo_fuente": "esquema trazado a mano del corredor entre el archipiélago y la costa africana, comprobado contra la línea de costa —lados e interior, 1.177 muestras— para que no pise tierra ni por África ni por las islas; ningún instrumento dibuja esta zona",
         "fecha_alta": "2026-08-06",
         "fecha_verificacion": "2026-08-06",
         "estado_juridico": "Sin delimitación acordada",
