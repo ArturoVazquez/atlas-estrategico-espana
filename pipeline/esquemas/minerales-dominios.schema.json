@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/minerales-dominios.schema.json",
+  "title": "Extensión de capa · minerales-dominios",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Es la primera capa de polígonos del atlas y la única cuyo trazado NO lo firma nadie: por eso es `registro: ilustrativo` en el manifiesto, y por eso R5 le prohíbe verificar campo por campo. Dibuja dónde, no cuánto ni de quién.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["Polygon", "MultiPolygon"],
+                "description": "Un dominio es una comarca, no un punto. MultiPolygon se admite de antemano porque un distrito puede venir en dos manchas separadas (Eugui y Rubián están a 600 km) — hoy ninguno lo usa."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["materias", "sym"],
+            "properties": {
+              "materias": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "minLength": 1 },
+                "description": "Las materias del distrito, en español y sin símbolo químico. Obligatorio: un dominio mineral sin mineral no es nada."
+              },
+              "distritos": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 },
+                "description": "Los enclaves que dan nombre al dominio. NO son geometría: son nombres, y quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Enumerarlos aquí sin coordenada es honesto; fabricarles una, no."
+              },
+              "sym": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Etiqueta corta de mapa, con símbolos químicos: «Cu · Zn · Pb · Ag». Es rótulo, no dato: `materias` es la lista que se lee, `sym` la que cabe."
+              },
+              "provincia": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Solo cuando el dominio cabe en una. Casi ninguno cabe —la Faja Pirítica son dos, Galicia tres— y entonces se omite en vez de elegir una a dedo. El ámbito en prosa va en `descripcion`."
+              }
+            },
+            "not": {
+              "required": ["fase"],
+              "$comment": "§6.5 y la nota de §9: un dominio no tiene fase, tiene carácter, y su carácter va en `categoria`. Escribir `fase` aquí sería importar el vocabulario de un expediente a una comarca."
+            }
+          }
+        }
+      }
+    }
+  }
+}

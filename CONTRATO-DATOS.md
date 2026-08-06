@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.9.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.10.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -273,10 +273,19 @@ error de esquema genérico.
 | **R5** | `registro: ilustrativo` en el manifiesto ⇒ la capa no declara `__v` por campo y toda su geometría es `geo_precision: ilustrativa`; su ficha lo dice. |
 | **R6** *(1.1)* | Todo `__v` y todo `__f` acompañan a un campo que existe, y todo `__f` apunta a un `id` que existe en `fuentes`. Un metadato huérfano es un dato que nadie sostiene. |
 | **R7** *(1.1)* | Ningún fichero de datos contiene el campo `activo`: es **derivado** (§6.5). Escribirlo a mano es la doble fuente de verdad que D3 descartó. |
+| **R8** *(1.1, con diente desde 1.10)* | Un polígono de `minerales-dominios` con `categoria ∈ {desarrollo, historico}` **no puede contener** un registro de `minerales-proyectos` con `fase == "produccion"`. Su explicación larga está en §6.5, porque nació de cerrar el matiz abierto de D3. |
 | **R9** *(1.3)* | `geo_precision ∈ {exacta, paraje}` ⇒ el registro declara `geo_fuente`, y su `geo_fuente__f` apunta a una fuente `primaria`. Una precisión que promete cartografía tiene que citarla (§6.6). |
 
-**R8 no está en esta tabla** y no es un descuido: es la única regla sin diente
-todavía, y vive con su explicación en §6.5. Esta tabla es lo que el CI comprueba.
+**Esta tabla es lo que el CI comprueba, y desde la 1.10 no le falta ninguna.**
+R8 estuvo fuera desde la 1.1 —escrita, normativa y sin diente— porque necesitaba
+la capa `minerales-dominios` para tener contra qué comprobarse. Ya existe, y con
+ella se acaba el único renglón en el que este documento afirmaba algo que no
+podía sostener.
+
+**R8 es también la única regla que cruza dos ficheros.** Se comprueba cuando
+ambas capas entran en la misma pasada del validador, que es siempre en CI: sin
+argumentos, `validar.py` recorre todas las capas del manifiesto que tienen
+`fichero`.
 
 R2 y R3 son la misma frontera vista desde los dos lados, y así se validan: R2
 comprueba que el confirmado tiene detrás una primaria; R3, que ninguna prensa o
@@ -298,7 +307,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `minerales-proyectos` | `fase` (§10, vocabulario) | `fase == "produccion"` |
 | `nuclear` *(1.6)* | `fase` | `fase == "produccion"` (reactor en explotación) |
 | `gas-regasificacion` *(1.8)* | `fase` | `fase == "produccion"` (planta en servicio) |
-| `minerales-dominios` | `caracter` (§10, vocabulario) | `caracter ∈ {activo, mixto}` |
+| `minerales-dominios` *(1.10)* | `categoria` (§9, vocabulario) | `categoria ∈ {activo, mixto}` |
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
 | `tablero` (límites y soberanía) | — | **no aplica**, por el mismo motivo. |
@@ -321,7 +330,7 @@ D3 dejó anotado el problema: al filtrar «en explotación», un dominio marcado
 
 La salida **no** es hacer que `activo` del dominio mire dentro de sí. Eso
 enmascararía el problema al pintar, dejando el dato mal en el fichero. Si un
-dominio alberga un registro en producción, entonces su `caracter` correcto es
+dominio alberga un registro en producción, entonces su `categoria` correcta es
 `mixto` —que existe precisamente para eso— y declararlo `desarrollo` es
 sencillamente un **error de dato**.
 
@@ -329,15 +338,16 @@ Así que se convierte en una comprobación, no en una derivación:
 
 | | Regla |
 |---|---|
-| **R8** *(1.1)* | Un polígono de `minerales-dominios` con `caracter ∈ {desarrollo, historico}` **no puede contener** un registro de `minerales-proyectos` con `fase == "produccion"`. Si lo contiene, su `caracter` es `mixto` o `activo`. |
+| **R8** *(1.1)* | Un polígono de `minerales-dominios` con `categoria ∈ {desarrollo, historico}` **no puede contener** un registro de `minerales-proyectos` con `fase == "produccion"`. Si lo contiene, su `categoria` es `mixto` o `activo`. |
 
 Esto atrapa la mentira en el fichero en lugar de disimularla en pantalla, que es
 la doctrina del proyecto entera en miniatura.
 
-> **Estado de R8:** normativa desde la 1.1, **implementada en `validar.py` cuando
-> exista la capa `minerales-dominios`** (fase F3 del plan). Es la única regla de
-> este documento que hoy no tiene diente, y queda dicho aquí en vez de
-> descubrirse por su ausencia. Las ocho restantes corren desde F0.
+> **R8 tiene diente desde la 1.10** *(2026-08-06)*, cuando nació la capa
+> `minerales-dominios` que le faltaba. Durante nueve versiones este documento
+> llevó aquí escrito que no lo tenía: la nota se retira porque ya sería falsa, no
+> porque estorbara. Es la única regla de coherencia que compara dos capas entre
+> sí, y por eso vive en `main()` y no en `validar_capa()`.
 
 ---
 
@@ -491,13 +501,16 @@ vigilante con falsos positivos se apaga, y entonces no vigila nada.
 | Punto → polígono del mismo registro | menor de capa | mismo `id`, `geo_precision` y `geo_fuente` actualizados |
 | Declarar una rama `en_preparacion` *(1.1)* | menor de manifiesto | solo `id`, `titulo`, `arbol`, `grupo`; **sin `fichero`** |
 | Una rama `en_preparacion` nace con datos *(1.1)* | menor de manifiesto | se retira la marca y se añaden `fichero`, `geometria`, `registro`, `version`, `verificado_a` |
-| Añadir una regla de coherencia `R*` *(1.1)* | menor de contrato | entra con su implementación en `validar.py`, **o con su estado declarado** si aún no la tiene (como R8) |
+| Añadir una regla de coherencia `R*` *(1.1)* | menor de contrato | entra con su implementación en `validar.py`, **o con su estado declarado** si aún no la tiene |
 | Renombrar/eliminar campo o cambiar semántica | **mayor de contrato** | prohibido sin migración documentada |
 
 **El contrato no puede mentir sobre sí mismo.** Una regla escrita aquí que el CI
 no comprueba es prosa disfrazada de garantía — el fallo exacto que este documento
-existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado
-(hoy: solo R8), y por eso §7 separa lo que avisa de lo que bloquea.
+existe para evitar. Por eso toda `R*` sin diente lleva su estado escrito al lado,
+y por eso §7 separa lo que avisa de lo que bloquea. **Desde la 1.10 no hay
+ninguna**: R8, que fue la última, se implementó al nacer la capa que le faltaba.
+La puerta se queda abierta —una regla puede volver a adelantarse a sus datos—
+pero se cruza declarándolo, nunca en silencio.
 
 ---
 
@@ -536,7 +549,7 @@ vocabulario.
 - *nuclear* *(1.6)*: `en_operacion` · `en_cese` · `desmantelamiento`
 - *limites-soberania* *(1.7)*: `reclamado_por_espana` · `reclamado_a_espana`
 - *gas-regasificacion* *(1.8)*: `regasificacion` · `logistica_gnl`
-- *minerales-dominios*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
+- *minerales-dominios* *(1.10)*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
 
@@ -544,9 +557,17 @@ vocabulario.
 > `categoria` dice **qué clase de cosa es** un registro (por qué está en el
 > atlas); `fase` dice **en qué punto de su vida está** (§6.5). Una mina puede ser
 > `estrategico_ue` y estar en `tramitacion`, o dejar de estarlo sin cambiar de
-> categoría. Que `minerales-dominios` use `caracter` con valores parecidos a
-> `fase` es deliberado: un dominio no tiene fases, tiene carácter — describe una
-> comarca entera, no un expediente.
+> categoría.
+>
+> **`minerales-dominios` no tiene `fase`, y eso es deliberado** *(1.10)*: un
+> dominio no es un expediente, es una comarca. Su carácter —viva, histórica, en
+> desarrollo, en disputa— *es* la clase de cosa que es, así que va en `categoria`
+> y no en un campo aparte. Hasta la 1.9 el contrato llamaba `caracter` a ese
+> campo mientras archivaba sus valores bajo `categoria`, lo que habría publicado
+> **dos campos con los mismos cinco valores**: exactamente la doble fuente de
+> verdad que D3 descartó. Se unifican antes de que la capa exista, que es cuando
+> sale gratis — el mismo momento y el mismo motivo por los que la 1.1 pudo
+> introducir `fase`.
 
 ---
 
@@ -631,9 +652,15 @@ reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` 
 > **Nada de esto tiene `fase`**: el tablero figura como «no aplica» en §6.5, así
 > que su `activo` es `null` y el filtro de explotación no lo esconde nunca.
 
-**minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado):
-`materias[]` (✔) · `caracter` (✔, vocabulario) · `distritos[]` · `sym` (etiqueta
-corta de mapa)
+**minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado) *(1.10)*:
+`materias[]` · `distritos[]` · `sym` (etiqueta corta de mapa: «Cu · Zn · Pb»)
+
+> El carácter del dominio va en **`categoria`** (§9), no en un campo propio — ver
+> la nota de §9. Y ninguno de estos campos lleva `✔`: la capa es `ilustrativo`,
+> y **R5 prohíbe la verificación por campo** en una capa que dibuja dónde, no
+> cuánto ni de quién. El día que un dominio ascienda a cartografía de fuente
+> primaria, R5 obliga a que ascienda **la capa entera**: es regla de capa, no de
+> registro, así que el ascenso parcial parte la capa en dos en vez de mezclarlas.
 
 **cables-submarinos** (`dotacion`, mixta, ilustrativo→verificado):
 `sistemas[]` · `destinos[]` · `operadores[]` (cuando se verifique) ·
@@ -752,6 +779,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.10.0** | 2026-08-06 | **Aditiva, y cierra el único renglón en el que este documento no se sostenía a sí mismo.** Nace la capa `minerales-dominios` (§10) y con ella **R8 gana su diente**: entra en la tabla de §6.4, se retira la nota de estado de §6.5 y §8 deja de citarla como el ejemplo vivo de regla sin implementar. Desde hoy **ninguna regla del contrato es prosa**. La capa unifica el `caracter` de §10 con el `categoria` del núcleo, que archivaban los MISMOS cinco valores en dos campos: renombrado nominalmente mayor por §8, gratis de hecho porque la capa no tenía datos publicados — el mismo argumento con el que la 1.1 introdujo `fase`. Los cinco valores estrenan `color` (§9). |
 | **1.9.0** | 2026-08-06 | **Aditiva.** Cada categoría de §9 lleva ahora su **`color`**. Lo destapó tener cuatro capas encendidas a la vez: nuclear, gas y el tablero se pintaban del MISMO gris, porque la paleta vivía cableada en el visor y solo conocía las tres categorías de `minerales-proyectos`. Es el mismo vicio —código que conoce las capas de antemano— que ya se había quitado del panel y de la ficha. Consecuencia asumida: el color es dato, así que cambiarlo exige una release. |
 | **1.8.0** | 2026-08-06 | **Aditiva.** Entra `gas-regasificacion` (§10) con su `categoria` (§9) y su fila en la tabla de `activo` (§6.5). Trae dos campos —`capacidad_almacenamiento_m3` y `capacidad_emision_nm3h`— que **nacen vacíos a propósito**: al abrir la capa se comprobó que ni la CNMC ni los operadores publican en documento accesible la capacidad de las siete terminales, que es la cifra que todo el mundo repite. El campo existe para que el hueco tenga dónde alojarse. Queda escrito además, porque no lo estaba, que **Enagás es una sociedad cotizada** y por tanto fuente `corporativa`: lo primario aquí es el BOE y la CNMC. |
 | **1.7.0** | 2026-08-06 | **Aditiva.** Entra `limites-soberania` (§10), la capa del tablero, con la doctrina **D5 puesta en datos**: dos campos simétricos —`administrado_por` y `reclamado_por`— con los que Gibraltar y Ceuta se describen con la misma estructura, y una `categoria` de dos valores (§9) que dice **quién reclama, no quién tiene razón**. Los instrumentos que cada parte invoca van en `claves[]`, atribuidos, de modo que una posición sin documento se ve como lo que es. No toca §6.5: el tablero ya figuraba como «no aplica», y esta es la primera capa que ejercita esa rama — su `activo` es `null` y el filtro de explotación no la esconde nunca. |

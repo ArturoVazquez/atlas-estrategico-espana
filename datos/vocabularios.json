@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -127,11 +127,21 @@
         "color": "#98A3AB" }
     ],
     "minerales-dominios": [
-      { "valor": "activo", "etiqueta": "Producción activa" },
-      { "valor": "historico", "etiqueta": "Distrito histórico" },
-      { "valor": "desarrollo", "etiqueta": "En desarrollo" },
-      { "valor": "disputa", "etiqueta": "En disputa" },
-      { "valor": "mixto", "etiqueta": "Activo y en desarrollo" }
+      { "valor": "activo", "etiqueta": "Producción activa",
+        "color": "#8A5A3C",
+        "def": "El distrito produce hoy. Deriva activo = true (§6.5)." },
+      { "valor": "mixto", "etiqueta": "Activo y en desarrollo",
+        "color": "#A17C4E",
+        "def": "Produce y además alberga proyectos por abrir. Existe para el caso que R8 vigila: un dominio que contiene una mina viva no puede llamarse `desarrollo`." },
+      { "valor": "desarrollo", "etiqueta": "En desarrollo",
+        "color": "#5C7355",
+        "def": "Potencial reconocido y proyectos en marcha, sin producción en el distrito." },
+      { "valor": "disputa", "etiqueta": "En disputa",
+        "color": "#8A5566",
+        "def": "El aprovechamiento está discutido —judicial, ambiental o socialmente— y por eso no avanza." },
+      { "valor": "historico", "etiqueta": "Distrito histórico",
+        "color": "#7A7466",
+        "def": "Fue de los grandes y hoy no produce. No se borra: la memoria del territorio es dato." }
     ],
     "cables-submarinos": [
       { "valor": "aterrizaje", "etiqueta": "Punto de aterrizaje" },

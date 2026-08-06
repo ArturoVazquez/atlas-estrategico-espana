@@ -21,13 +21,14 @@
         "geo_fuente": "mano alzada",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
-        "caracter": "activo",
-        "caracter__v": "parcial",
-        "caracter__f": "f1",
+        "materias": ["Cobre"],
+        "materias__v": "parcial",
+        "materias__f": "f1",
+        "sym": "Cu",
         "fuentes": [
           { "id": "f1", "tipo": "primaria", "titulo": "Documento oficial", "fecha": "2025-03-25" }
         ],
-        "nota": "VIOLA R5, dos veces. La capa `minerales-dominios` está declarada `ilustrativo` en el manifiesto: un trazado a mano alzada no puede llevar verificación por campo (`caracter__v`) ni declararse `geo_precision: municipio`. Dibuja dónde, no cuánto ni de quién. Es la regla que impide que una mancha bonita se lea como un límite medido."
+        "nota": "VIOLA R5, dos veces. La capa `minerales-dominios` está declarada `ilustrativo` en el manifiesto: un trazado a mano alzada no puede llevar verificación por campo (`materias__v`) ni declararse `geo_precision: municipio`. Dibuja dónde, no cuánto ni de quién. Es la regla que impide que una mancha bonita se lea como un límite medido."
       }
     }
   ]

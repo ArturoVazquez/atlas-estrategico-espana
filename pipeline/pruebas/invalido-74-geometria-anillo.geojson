@@ -21,7 +21,8 @@
         "geo_fuente": "mano alzada",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
-        "caracter": "activo",
+        "materias": ["Cobre"],
+        "sym": "Cu",
         "fuentes": [{ "id": "f1", "tipo": "primaria", "titulo": "Documento oficial" }],
         "nota": "VIOLA §7.4. RFC 7946 pide el anillo exterior en sentido antihorario. Muchos visores lo perdonan y otros pintan el polígono del revés — el hueco relleno y el relleno hueco. Es de esos fallos que se ven en producción y en ningún sitio antes."
       }
