@@ -1,0 +1,25 @@
+/* Los tokens del atlas, en un solo sitio.
+   Vivían dentro de `estilo.css`, que además hace `overflow:hidden` sobre el
+   body y todo lo demás que un mapa a pantalla completa necesita — nada de eso
+   sirve en una página de texto. Al nacer «Método» había dos salidas: copiar los
+   ocho colores, o sacarlos aquí. Copiarlos es la segunda fuente de verdad que
+   este proyecto lleva toda la semana quitando de otros sitios. */
+
+:root{
+  --papel:#F1EFE9; --mar:#DCE2E2; --tierra:#FBFAF5; --limite:#D3D0C5;
+  --tinta:#26251F; --tinta-suave:#6E6B60; --tinta-tenue:#98948a;
+  --crma:#96361F; --singular:#31614E; --disputa:#9C7A14;
+  --panel:#FBFAF6; --linea:#DAD7CC;
+  --serif: "Charter","Bitstream Charter",Georgia,"Times New Roman",serif;
+  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono: ui-monospace,"SF Mono","Cascadia Mono","Consolas",monospace;
+}
+
+/* «Saltar al contenido»: lo comparten las dos páginas y es nivel A de WCAG
+   (2.4.1), así que no puede vivir en la hoja de una sola. */
+.saltar{
+  position:fixed;top:-60px;left:12px;z-index:60;background:var(--tinta);color:var(--papel);
+  padding:8px 14px;border-radius:2px;font-family:var(--mono);font-size:11px;text-decoration:none;
+  transition:top .12s;
+}
+.saltar:focus{top:12px}

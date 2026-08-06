@@ -28,11 +28,23 @@ export function rotulo(indice, valor, porDefecto = valor) {
   return indice.get(valor)?.etiqueta ?? porDefecto;
 }
 
-export async function cargar() {
+/**
+ * El catálogo: manifiesto y vocabularios, SIN las capas.
+ *
+ * Lo pide la página «Método», que describe el atlas y no lo dibuja: cargarle las
+ * siete colecciones para enseñar una tabla de rótulos serían megabytes por nada.
+ * `cargar()` lo reutiliza, así que la ruta de lectura sigue siendo una sola.
+ */
+export async function cargarCatalogo() {
   const [manifiesto, vocabularios] = await Promise.all([
     json("manifest.json"),
     json("vocabularios.json"),
   ]);
+  return { manifiesto, vocabularios };
+}
+
+export async function cargar() {
+  const { manifiesto, vocabularios } = await cargarCatalogo();
 
   const publicadas = manifiesto.capas.filter((c) => c.fichero && !c.en_preparacion);
 
