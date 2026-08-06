@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.13.0",
+  "schema_version": "1.14.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -112,6 +112,29 @@
       { "valor": "proyectada", "etiqueta": "Proyectada",
         "color": "#94B3A6",
         "def": "Recogida en un instrumento de planificación o en la lista de la Unión, sin obra empezada." }
+    ],
+    "_generacion-electrica-provincia": "La TECNOLOGÍA DOMINANTE de la provincia: la que más produjo. No se escribe a ojo — validar.py exige que sea exactamente el argmax de las ocho cifras del propio registro, así que un dominante mal puesto rompe el CI. El orden es el de producción neta nacional, de mayor a menor: no es alfabético ni caprichoso.",
+    "generacion-electrica-provincia": [
+      { "valor": "eolica", "etiqueta": "Eólica",
+        "color": "#5A8296" },
+      { "valor": "solar_fv", "etiqueta": "Solar fotovoltaica",
+        "color": "#BF9130" },
+      { "valor": "nuclear", "etiqueta": "Nuclear",
+        "color": "#2F5D7C",
+        "def": "Mismo azul que la capa `nuclear`: es el mismo hecho visto por dos ventanas, y conviene que se reconozca." },
+      { "valor": "combustibles", "etiqueta": "Combustibles",
+        "color": "#6E5A4A",
+        "def": "Térmicas no cogeneradoras. La fuente NO desglosa biomasa ni residuos: van aquí dentro, y por eso el atlas no calcula ninguna cuota renovable." },
+      { "valor": "hidraulica", "etiqueta": "Hidráulica",
+        "color": "#2E7D74" },
+      { "valor": "cogeneracion", "etiqueta": "Cogeneración",
+        "color": "#8A7C4E",
+        "def": "Electricidad y calor a la vez, casi siempre asociada a industria. Como en `combustibles`, la biomasa que haya va aquí sin separar." },
+      { "valor": "solar_termica", "etiqueta": "Solar térmica",
+        "color": "#A6631F" },
+      { "valor": "mareomotriz", "etiqueta": "Mareomotriz y olas",
+        "color": "#6FA8A0",
+        "def": "Declarada porque la fuente la publica, no porque domine en ninguna provincia. Una categoría del vocabulario no promete que exista un registro que la use." }
     ],
     "gas-regasificacion": [
       { "valor": "regasificacion", "etiqueta": "Planta de regasificación",

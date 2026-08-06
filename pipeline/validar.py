@@ -76,7 +76,11 @@ def vocabularios() -> dict:
         "geo_precision": valores(v["registro"]["geo_precision"]),
         "fase": valores(v["registro"]["fase"]),
         "fuente_tipo": valores(v["fuente"]["tipo"]),
-        "categoria": {c: valores(l) for c, l in v["categoria"].items()},
+        # Las claves que empiezan por `_` son comentarios, no capas: es la
+        # convención del propio fichero (su primera clave es un `"_"`), y aquí
+        # dentro hacía falta porque el porqué de una categoría se lee mejor al
+        # lado de sus colores que en otro documento.
+        "categoria": {c: valores(l) for c, l in v["categoria"].items() if not c.startswith("_")},
     }
 
 

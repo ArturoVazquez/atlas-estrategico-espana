@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/generacion-electrica-provincia.schema.json",
+  "title": "Extensión de capa · generacion-electrica-provincia",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). La mezcla de generación eléctrica de cada provincia, tal como la publica MITECO. Es la primera COROPLETA del atlas: el registro no es una instalación, es un territorio, y de ahí salen casi todas sus rarezas — no lleva `fase`, su `activo` no aplica, y su `categoria` es un derivado que se comprueba contra las cifras del propio registro.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "minItems": 52,
+      "maxItems": 52,
+      "description": "Las 52 provincias, ni una más ni una menos. El IGN devuelve 53 unidades de tercer orden: la que sobra es «Territorios no asociados a ninguna provincia», que NO tiene hoja en la estadística. Se excluye por ausencia de fuente. Fijar el número aquí es lo que convierte un emparejamiento fallido en un error del CI y no en una provincia que falta sin que nadie lo note.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "MultiPolygon",
+                "description": "MultiPolygon incluso para una provincia de una sola pieza: la mitad de ellas tienen islas o enclaves y mezclar Polygon con MultiPolygon en la misma capa solo complica a todo consumidor."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": [
+              "anio", "caracter_dato", "provincia", "total_gwh",
+              "nuclear_gwh", "eolica_gwh", "solar_fv_gwh", "solar_termica_gwh",
+              "mareomotriz_gwh", "combustibles_gwh", "cogeneracion_gwh", "hidraulica_gwh"
+            ],
+            "properties": {
+              "anio": {
+                "type": "integer",
+                "minimum": 1958,
+                "description": "El año al que se refieren las cifras, NO el de publicación. La estadística anual se difunde en noviembre del año siguiente, así que los dos nunca coinciden y confundirlos envejece el dato un año de golpe."
+              },
+              "caracter_dato": {
+                "enum": ["provisional", "definitivo"],
+                "description": "MITECO titula su propio fichero «DATOS PROVISIONALES A FECHA 27/11/2025». Un provisional que se calla se lee como definitivo, así que va como campo y no como nota al pie."
+              },
+              "provincia": { "type": "string", "minLength": 1 },
+
+              "total_gwh": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Producción neta total. Va publicado aunque sea la suma de las otras ocho: es la cifra que la fuente da como total y sirve de cuadre — validar.py comprueba que las ocho suman esto."
+              },
+              "nuclear_gwh": { "type": "number", "minimum": 0 },
+              "eolica_gwh": { "type": "number", "minimum": 0 },
+              "solar_fv_gwh": { "type": "number", "minimum": 0 },
+              "solar_termica_gwh": { "type": "number", "minimum": 0 },
+              "mareomotriz_gwh": { "type": "number", "minimum": 0 },
+              "combustibles_gwh": { "type": "number", "minimum": 0 },
+              "cogeneracion_gwh": { "type": "number", "minimum": 0 },
+              "hidraulica_gwh": { "type": "number", "minimum": 0 },
+
+              "potencia_instalada_mw": {
+                "not": {},
+                "description": "PROHIBIDO, y es el asunto entero de esta capa. Nadie publica potencia instalada por provincia con licencia compatible: MITECO desagrega generación y no potencia; la CNMC da potencia pero solo por comunidad autónoma y bajo CC BY-SA (ShareAlike, vetada por datos/LICENCIA-DATOS.md); y Red Eléctrica llega a provincia pero es `corporativa` y R3 le prohíbe sostener un `confirmado`. El hueco va DECLARADO en las 52 fichas. Prohibirlo aquí impide que un día alguien lo rellene con la cifra de un informe corporativo, que es como se pierden estas capas."
+              },
+              "renovable_gwh": {
+                "not": {},
+                "description": "PROHIBIDO. La fuente NO desglosa biomasa ni residuos: van dentro de `combustibles` y `cogeneracion`, así que ninguna suma de los campos publicados es «lo renovable» — sería una cifra corta presentada como completa. Los ocho campos están; quien quiera una cuota la deriva sabiendo lo que le falta, que es exactamente lo que la `nota` de cada ficha advierte."
+              },
+              "fase": {
+                "not": {},
+                "description": "PROHIBIDO: una provincia no tiene fases de vida. Su `activo` no se deriva de nada porque la pregunta «¿está en explotación?» no se le hace a un territorio (§6.5)."
+              },
+              "municipio": {
+                "not": {},
+                "description": "PROHIBIDO: el registro ES la provincia entera. Un municipio aquí solo podría ser la capital, y ponerla sugeriría que el dato es suyo."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

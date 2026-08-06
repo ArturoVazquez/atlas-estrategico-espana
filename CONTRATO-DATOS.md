@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.13.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.14.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -133,6 +133,7 @@ fichero y su entrada aquí. La app construye el panel desde el manifiesto.
 | `geometria` | `puntos` · `poligonos` · `lineas` · `mixta` |
 | `registro` | `verificado` (fichas con doctrina completa) · `ilustrativo` (dibuja dónde, no cuánto ni de quién) · **(1.1)** `analisis` (investigación u opinión **sellada como tal**, con su `debate_url` al hilo donde se defiende — nunca se presenta como hecho) |
 | `cadencia_revision_dias` | umbral tras el cual la capa se considera caducada; `vigilar.py` avisa cada semana (§7) y el visor lo mostrará |
+| `fondo` | **(1.14)** `true` = la capa **cubre el territorio entero** y se dibuja al fondo, cediendo el clic a cualquier registro que tenga encima. Lo declara el manifiesto, no el código: sin esta marca, una coropleta que tapa España robaría la ficha a las ocho capas que hay debajo, y el visor tendría que conocerla por su nombre para evitarlo. Se omite en todas las demás. |
 | `version` | semver de la **capa**: parche = corrección de valores; menor = registros o campos nuevos; mayor = cambio de esquema |
 | `en_preparacion` | **(1.1)** `true` = rama declarada pero sin datos. **El mapa declara su horizonte** (D4): el panel la pinta en gris, no cargable. Una entrada `en_preparacion` solo exige `id`, `titulo`, `arbol` y `grupo`; el resto de campos se rellenan cuando la capa nace. |
 
@@ -313,6 +314,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
+| `generacion-electrica-provincia` *(1.14)* | — | **no aplica**. El registro no es una instalación: es una **provincia**, y a un territorio no se le pregunta si está en explotación. Lo que generó no la pone «en explotación» ni la deja fuera: la pregunta es de otra clase de objeto. Devuelve `null`, y por eso el filtro no esconde ni una sola de las 52. |
 
 Una capa cuya fila diga «no aplica» devuelve `null`, no `false`. La diferencia
 importa: `false` afirma que algo está parado; `null` dice que la pregunta no se
@@ -571,6 +573,9 @@ vocabulario.
 - *minerales-dominios* *(1.10)*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *minerales-derechos* *(1.12)*: `vigente` · `en_tramite` · `extinguido`
 - *electricidad-interconexiones* *(1.13)*: `en_servicio` · `en_construccion` · `proyectada`
+- *generacion-electrica-provincia* *(1.14)*: `eolica` · `solar_fv` · `solar_termica` ·
+  `hidraulica` · `nuclear` · `combustibles` · `cogeneracion` · `mareomotriz` —
+  la **tecnología dominante** de la provincia
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
 
@@ -774,8 +779,57 @@ mapa: «Cu · Zn · Pb»)
 **recurso-eolico / recurso-solar** (`dotacion`, polígonos, ilustrativo):
 `distritos[]` · `justificacion` (por qué la zona)
 
-*(Capas futuras —renovable instalada por provincia, PERTE— entran por §8 con su
-apartado aquí y su esquema en `pipeline/esquemas/`.)*
+**generacion-electrica-provincia** *(1.14)* (`actividad`, polígonos, verificado,
+`fondo`): `anio` (✔) · `caracter_dato` · `provincia` · `total_gwh` (✔) y las ocho
+tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh` ·
+`eolica_gwh` · `solar_fv_gwh` · `solar_termica_gwh` · `mareomotriz_gwh` ·
+`combustibles_gwh` · `cogeneracion_gwh` · `hidraulica_gwh`
+
+> **Esta capa nació de una casilla que no se podía cumplir.** El horizonte pedía
+> **potencia instalada** por provincia, y no la sostiene ninguna fuente primaria
+> con licencia compatible: MITECO desagrega por provincia la **generación**, no la
+> potencia; la **CNMC** publica potencia pero solo por comunidad autónoma y bajo
+> **CC BY-SA 4.0**, ShareAlike y por tanto vetada por `datos/LICENCIA-DATOS.md`; y
+> **Red Eléctrica** llega a provincia pero es `corporativa` (§6.1) y R3 le prohíbe
+> sostener un `confirmado`. Se publica lo que sí se sostiene y la potencia queda
+> como **hueco declarado en las 52 fichas**, con sus tres motivos.
+>
+> **Que la CNMC quede fuera es lo que merece recordarse.** Es el regulador —fuente
+> primaria de manual— y no entra por su LICENCIA. Hasta la 1.13 el atlas solo
+> había chocado con una licencia contagiosa en fuente privada (TeleGeography en
+> los cables). También pasa con las públicas, y la prueba está archivada.
+>
+> **Se publica la mezcla entera, no solo lo renovable**, y no es una ampliación
+> caprichosa: sin los combustibles y sin el total no se puede leer qué peso tiene
+> lo renovable, que es la pregunta. Hay además una razón que lo zanja: **la fuente
+> no desglosa biomasa ni residuos** —van dentro de `combustibles` y
+> `cogeneracion`—, así que una capa titulada «renovable» no podría decir cuánta
+> hay. **El atlas no escribe ninguna cuota renovable**: los ocho campos están, y
+> quien la quiera la deriva, con la advertencia en la `nota` de cada ficha.
+>
+> **`caracter_dato` no es adorno.** El fichero de MITECO se titula «DATOS
+> PROVISIONALES A FECHA 27/11/2025» y eso se publica tal cual. Un provisional que
+> se calla se lee como definitivo.
+>
+> **`categoria` es la tecnología dominante, y se comprueba.** Es un valor derivado
+> de los números del propio registro, o sea la doble fuente de verdad que D3
+> descartó — salvo que se pueda verificar, y aquí se puede: `validar.py` exige que
+> `categoria` sea **exactamente el argmax** de las ocho tecnologías, y un
+> dominante que no cuadre con sus propias cifras rompe el CI. No es regla R nueva:
+> R1–R9 son doctrina de todo el atlas y esto es mecánica de una capa, del mismo
+> rango que las prohibiciones `"not": {}` de los esquemas.
+>
+> **La geometría va generalizada y la ficha lo dice.** Los límites son del IGN
+> (Orden FOM/2807/2015, compatible con CC BY 4.0), pero la respuesta completa son
+> 1.188.710 vértices y 186 MB. Se publican simplificados (Douglas–Peucker, ~200 m),
+> así que **el polígono ya no es el del IGN** y su `geo_precision` es
+> `ilustrativa` — permitida en capa `verificado` desde la 1.11, y obligada aquí
+> por §6.6: en un mapa gana lo que se ve, y un borde afinado afirmaría una
+> exactitud que la simplificación ya no tiene. La generalización **no puede borrar
+> islas**: la tolerancia se aplica a la escala de cada anillo, no plana.
+
+*(Capas futuras —PERTE acotado, agua embalsada, centros de datos, H2Med— entran
+por §8 con su apartado aquí y su esquema en `pipeline/esquemas/`.)*
 
 ---
 
@@ -884,6 +938,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.14.0** | 2026-08-06 | **Aditiva.** Nace `generacion-electrica-provincia` (§10), la primera **coropleta** del atlas: 52 provincias con su mezcla de generación por tecnología. Nace **de una casilla imposible** — el horizonte pedía potencia INSTALADA por provincia y no la sostiene nadie con licencia compatible: MITECO desagrega generación, no potencia; **la CNMC publica potencia pero bajo CC BY-SA**, ShareAlike, vetada por `datos/LICENCIA-DATOS.md`; REE llega a provincia y es `corporativa` (R3). Que el atlas se detenga ante la **licencia de un organismo público** es lo nuevo: hasta hoy solo le había pasado con fuente privada. §3 estrena `fondo`, marca de manifiesto para la capa que cubre el territorio entero y **cede el clic** a las que tiene encima — sin ella el visor tendría que conocerla por su nombre. §6.5 le da su fila: «no aplica», porque una provincia no es una instalación. §9 sus ocho categorías, que son la **tecnología dominante** y por eso se comprueban contra el argmax de las cifras del propio registro: un derivado solo se escribe si el CI puede desmentirlo. La geometría del IGN va **generalizada** —186 MB no se publican— y por eso su `geo_precision` es `ilustrativa`, no por dudar del IGN sino porque el borde publicado ya no es el suyo. |
 | **1.13.0** | 2026-08-06 | **Aditiva.** Nace `electricidad-interconexiones` (§10): los enlaces eléctricos que cruzan una frontera, con su punto en el extremo español y el de fuera **nombrado y sin coordenada** — un enlace tiene dos extremos y el atlas solo puede situar uno, y eso se dice en vez de disimularlo con una recta. §6.5 le da su fila (`activo` cuando `en_servicio`), §9 su categoría. Deja escrito por qué la red de transporte NO entra: la publica Red Eléctrica, que es sociedad cotizada, y no hay cartografía del mallado bajo licencia compatible con CC BY 4.0 — la misma frontera que marcó Enagás en la capa de gas. |
 | **1.12.0** | 2026-08-06 | **Aditiva.** Nace `minerales-derechos` (§10): los derechos del Catastro Minero cuyo titular es un promotor que el atlas ya registra, con su perímetro y **el primer `geo_precision: exacta` del atlas**. §6.6 gana la enmienda que obligó a escribir la propia fuente: «del objeto mismo» quiere decir **del objeto que la fuente define y de ningún otro** — el catastro define DERECHOS, no minas, y un proyecto que tiene un derecho no hereda su geometría ni su precisión. Por eso `minerales-proyectos` **no** pasa de punto a polígono, contra lo que PLAN.md preveía: elegir cuál de los cincuenta derechos de TOLSA «es» el proyecto de sepiolita sería una atribución sin fuente. Las dos capas se solapan en el mapa y el lector ve el solape, que sí es un hecho. Y §10 deja escrito que `superficie_declarada` va verbatim porque **no concuerda con el perímetro que la misma fuente dibuja**. |
 | **1.11.0** | 2026-08-06 | **Aditiva.** Nace `espacios-maritimos` (§10), la capa del mar del tablero, con su `categoria` (§9) y su fila de §6.5 —«no aplica», como el resto del tablero—. Estrena el `ambito: mundo` para geometría real: la plataforma continental más allá de las 200 millas **cae fuera del recuadro de §7.4 por definición**, así que se declara el ámbito de la capa y **no se ensancha el recuadro**, que habría debilitado la comprobación de las otras seis. Deja escrito, donde ya confundió una vez, que **R5 va de la capa hacia la geometría y no al revés**: una capa `verificado` puede contener un registro `geo_precision: ilustrativa`, y eso es lo que permite dibujar la zona sin delimitación acordada sin dictar ninguna frontera (D5). |
