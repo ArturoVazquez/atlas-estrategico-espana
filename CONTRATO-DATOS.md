@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.16.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.17.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -258,6 +258,31 @@ consultable con GDAL sin adaptadores. Las dos excepciones estructuradas son
 > geometría que puede no coincidir con el trazado final — y esa advertencia no la
 > degrada a `corporativa`, la coloca en `geo_precision: proyectada` (§6.6).
 
+> **Un registro obliga a publicar, no a certificar** *(1.17)*. La consecuencia
+> práctica de lo anterior, y hace falta escribirla porque cambia **cómo se
+> redacta** una ficha, no si la fuente vale. Un registro publica lo que sus
+> registrados le declaran — eso es lo que es un registro, y vale igual para el
+> Catastro Minero que para la plataforma PCI-PMI. Sigue siendo `primaria`.
+>
+> Lo que cambia es que, cuando quien declara es una empresa, su texto trae tres
+> cosas mezcladas: **el proyecto**, **la ambición** y **el argumento de venta**.
+> La regla de escritura:
+>
+> - **Al campo numérico va la cifra del proyecto que la ficha define.** Nada más.
+> - **La ambición y la ampliación futura van a `claves`, verbatim**, con su
+>   condicional intacto si lo tiene. Un «1 GW de aquí a 2030 si las condiciones
+>   de mercado son favorables» no es un dato de potencia: es una frase con una
+>   condición dentro, y borrar la condición al escribir el número la convierte en
+>   otra cosa.
+> - **La evaluación promocional no se publica en absoluto.** «Impacto positivo
+>   significativo en el empleo» y «cuota del 38 % del mercado español» no son
+>   hechos del objeto que la capa registra; son adjetivos y contexto comercial.
+>
+> El caso que obligó a escribirlo: el valle asturiano de hidrógeno declara **1 GW
+> de ambición** y **150 MW de proyecto**, en el mismo párrafo. La cifra que suele
+> circular es la primera. La que publica el atlas es la segunda, y la primera está
+> en su ficha, entera y con su «si».
+
 ### 6.2 Verificación por campo
 
 Los campos **sensibles** llevan compañeros con sufijo reservado `__v` (estado) y
@@ -349,6 +374,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
 | `centros-datos` *(1.15)* | `fase` | `fase == "produccion"` (el centro presta servicio). Un campus **autorizado y sin construir no está en explotación**, por muchos gigavatios-hora que prometa su declaración ambiental. |
 | `hidrogeno-red` *(1.16)* | `fase` | `fase == "produccion"` (el tramo, la compresora o la caverna prestan servicio). Hoy **ninguno de los diez**: la red entera está en tramitación, y eso es lo que el filtro debe enseñar. |
+| `hidrogeno-produccion` *(1.17)* | `fase` | `fase == "produccion"` (la planta electroliza hoy). Hoy **ninguna de las siete**. Ojo con la palabra: aquí `produccion` es la fase del expediente, no «producir hidrógeno» en abstracto — una planta con todos los permisos y sin construir sigue sin producir nada. |
 | `generacion-electrica-provincia` *(1.14)* | — | **no aplica**. El registro no es una instalación: es una **provincia**, y a un territorio no se le pregunta si está en explotación. Lo que generó no la pone «en explotación» ni la deja fuera: la pregunta es de otra clase de objeto. Devuelve `null`, y por eso el filtro no esconde ni una sola de las 52. |
 
 Una capa cuya fila diga «no aplica» devuelve `null`, no `false`. La diferencia
@@ -642,6 +668,10 @@ vocabulario.
 - *minerales-derechos* *(1.12)*: `vigente` · `en_tramite` · `extinguido`
 - *electricidad-interconexiones* *(1.13)*: `en_servicio` · `en_construccion` · `proyectada`
 - *centros-datos* *(1.15)*: `en_servicio` · `autorizado` · `en_tramitacion`
+- *hidrogeno-produccion* *(1.17)*: `electrolizador` — **un solo valor**, y es
+  deliberado: las siete son la misma clase de cosa y la fuente las sirve en la
+  misma capa. Lo que las distingue —en qué punto están— ya lo llevan `fase` y
+  `estado_pci`. Precedente: `recurso-eolico`, con `zona` a secas
 - *hidrogeno-red* *(1.16)*: `hidroducto` · `estacion_compresion` · `almacenamiento`
   — aquí `categoria` dice **qué pieza de la red es**, no en qué estado está: el
   estado ya lo llevan `fase` y `estado_pci`, y las tres piezas se leen de un
@@ -993,6 +1023,50 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > red**, y de promotores distintos; el acto que da el perímetro de esta capa no
 > habilita a Enagás para ellos. Cuando entren, entrarán en capa propia.
 
+**hidrogeno-produccion** *(1.17)* (`actividad`, puntos, verificado): `promotor`
+(✔) · `pci_codigo` (✔) · `estado_pci` (✔) · `puesta_en_servicio_prevista`
+(+`__v`,`__f`) · `fase` · `potencia_mw` (+`__v`,`__f`) · `produccion_t_anio`
+(+`__v`,`__f`) · `claves[]`
+
+> **Un registro por planta, y son siete, no cinco.** La lista de la Unión tiene
+> cinco proyectos españoles de electrólisis, pero dos de ellos **nombran y sitúan
+> dos plantas cada uno**: el valle asturiano (Aboño y el futuro centro de Soto de
+> Ribera) y ValdoEume (Mugardos y As Pontes). La plataforma dibuja siete puntos,
+> uno por planta. Es §6.6 otra vez: el registro es del objeto que la fuente
+> define, y aquí define plantas.
+>
+> **Las dos distancias que la fuente declara cuadran con sus propios puntos**, y
+> por eso el emparejamiento planta↔punto no es una conjetura: Aboño y Soto están
+> a 29,3 km en línea recta y la ficha dice «unos 40 km» —que es distancia por
+> carretera—; Mugardos y As Pontes, a 28,0 km, unidos según la ficha por un
+> hidroducto de 36 km. Un tubo mide más que la recta; si midiera menos, habría
+> algo que revisar.
+>
+> **`potencia_mw` es la del proyecto definido, nunca la de la ambición** (§6.1,
+> enmienda 1.17). Lo que publica cada registro y lo que se queda en `claves`:
+>
+> | Registro | `potencia_mw` | A `claves`, no al campo |
+> |---|---|---|
+> | Huelva (Moeve) | 1.000 | Las tres fases: 400 MW en 2028, 200 y 400 en 2030 |
+> | Aboño (EDP) | **150** | El «1 GW de ambición **si las condiciones de mercado son favorables**», y los 350 MW que le añadiría una segunda fase |
+> | Soto de Ribera (EDP) | — **hueco** | Sus 500 MW son los de un «futuro centro»: no hay proyecto definido que sostenga un número |
+> | Mugardos (Triskelion) | 77 | — |
+> | As Pontes (H2Pole) | 100 | La ampliación del valle «hasta 500 MW» en 2035 |
+> | Catalina | 500 | La ampliación futura «hasta 2 GW» |
+> | ErasmoPower2X | 650 | — |
+>
+> **Y una suma de la fuente que no cierra, publicada como tal.** El valle
+> asturiano dice que su segunda fase «aportará 1 GW» y la desglosa en 350 MW
+> (Aboño) + 500 MW (Soto), que son 850. Con los 150 de la primera fase el total
+> sí da 1.000. El atlas no elige cuál de las dos lecturas vale: transcribe el
+> párrafo y señala que no cuadra, como ya hizo con los provinciales de MITECO y
+> con las dos superficies del centro de datos de Zaragoza.
+>
+> **`inversion_meur` y `empleos` están prohibidos** en el esquema. La plataforma
+> no publica coste, y las cifras que circulan son de nota de prensa; el empleo es
+> siempre previsión del promotor. Misma prohibición, y por el mismo motivo, que
+> ya lleva `centros-datos`.
+
 *(Capas futuras —PERTE acotado, agua embalsada— entran por §8 con su
 apartado aquí y su esquema en `pipeline/esquemas/`.)*
 
@@ -1103,6 +1177,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.17.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-produccion` (§10): las siete plantas de electrólisis españolas de la lista de la Unión — **siete, no cinco**, porque dos de los cinco proyectos nombran y sitúan dos plantas cada uno. §6.1 gana la consecuencia práctica de la enmienda 1.16, y esta cambia **cómo se redacta una ficha**, no si la fuente vale: **un registro obliga a publicar, no a certificar**. Cuando quien declara es una empresa, su texto trae tres cosas mezcladas —el proyecto, la ambición y el argumento de venta— y solo la primera llega a un campo numérico; la ambición va a `claves` **verbatim y con su condicional intacto**, y la evaluación promocional no se publica. El caso que lo obligó: el valle asturiano declara **1 GW de ambición y 150 MW de proyecto en el mismo párrafo**, y la cifra que circula por ahí es la primera. §9 estrena un vocabulario de **un solo valor** (`electrolizador`), como ya hacía `recurso-eolico`. §6.5 le da su fila, con el aviso de que aquí `fase: produccion` es el peldaño del expediente y no «producir hidrógeno» en abstracto. **No nace ninguna regla `R*`**: las que hacen falta ya existen, y añadir una por no romper la racha sería exactamente la prosa disfrazada de garantía que §8 prohíbe. |
 | **1.16.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-red` (§10) —la capa que se llamaba `h2med` y no podía seguir llamándose así: de sus 3.268 km, **2.634 son la red troncal española**, que no es el H2Med—. El perímetro no lo elige el atlas: lo fija el Acuerdo del Consejo de Ministros de 30-07-2024 (BOE-A-2024-19047), que habilita a Enagás para **cinco** proyectos, dos de ellos —las cavernas de sal 9.24.1 y 9.24.2— que el relato público del H2Med **no menciona nunca**. §6.1 gana el reverso de la enmienda 1.15: si aquella dijo que el comunicado de un gobierno no es primario, esta dice que **un registro que una norma OBLIGA a publicar sí lo es**, aunque viva en una web — la plataforma de transparencia PCI-PMI existe por el **artículo 23 del Reglamento (UE) 2022/869**, que enumera de la a) a la g) lo que debe contener, empezando por la información geográfica. Con dos cautelas que vienen con ella: la obligación **no alcanza a lo que se sirve junto** (la capa PLATTS del mismo visor es de S&P Global y no entra), y un registro **puede publicar y advertir a la vez**. Esa advertencia —«la representación GIS no prejuzga y puede no coincidir con el trazado final»— obliga a estrenar un valor de `geo_precision`: **`proyectada`** (§5, §6.6, §9), dentro de **R9**. Ninguno de los cinco anteriores servía, y por el mismo motivo que hizo nacer `generalizada` en la 1.14: `ilustrativa` habría hecho mentir a la ficha —«trazado a mano alzada»— sobre cartografía que nadie dibujó a mano. La distinción que conserva es de **tiempo**, no de detalle: las otras cuatro dicen cuánto se afina un contorno; `proyectada` dice que **el terreno todavía no puede desmentirlo**. Y nace **R10**: en una capa con lineales, `longitud_km` cuadra con su propia geometría al 15 %. Sale de una trampa real — el servicio publica un `SHAPE.LEN` en metros de **Web Mercator**, inflado por la latitud hasta un 38 %, con el que BarMar «mide» 518 km en vez de 382. La regla no persigue un decimal: persigue un cambio de unidad o de proyección. |
 | **1.15.0** | 2026-08-06 | **Aditiva.** Nace `centros-datos` (§10) con una regla de entrada estrecha y explícita: **entra el centro que un acto administrativo nombra**, y nada más. La casilla obligó a decidirlo porque **España no tiene registro público de centros de datos** —la base europea del art. 12 de la Directiva 2023/1791 se publica agregada por Estado miembro, MITECO no lleva censo y las cifras de mercado son de la patronal—. §6.1 gana la enmienda que faltaba: **una nota de prensa de una administración no es `primaria`**; lo primario es el acto, no su anuncio. La escribió el caso catalán, con sus «26 proyectos y 2.000 MW» sin un solo expediente detrás: hasta ahora el atlas solo había tenido que rechazar fuentes privadas, y la trampa pública es peor porque parece oficial. §10 deja además fuera a los tres solicitantes de centros de datos que el concurso de capacidad de demanda **sí nombra** —CPD4GREEN, Benbros DC y ACS DC Infra, los tres excluidos—: esa resolución define una solicitud en un nudo, no un centro en un sitio, que es el límite de §6.6 aplicado por segunda vez. §6.5 y §9 dan su fila y sus tres categorías. |
 | **1.14.0** | 2026-08-06 | **Aditiva.** Nace `generacion-electrica-provincia` (§10), la primera **coropleta** del atlas: 52 provincias con su mezcla de generación por tecnología. Nace **de una casilla imposible** — el horizonte pedía potencia INSTALADA por provincia y no la sostiene nadie con licencia compatible: MITECO desagrega generación, no potencia; **la CNMC publica potencia pero bajo CC BY-SA**, ShareAlike, vetada por `datos/LICENCIA-DATOS.md`; REE llega a provincia y es `corporativa` (R3). Que el atlas se detenga ante la **licencia de un organismo público** es lo nuevo: hasta hoy solo le había pasado con fuente privada. §3 estrena `fondo`, marca de manifiesto para la capa que cubre el territorio entero y **cede el clic** a las que tiene encima — sin ella el visor tendría que conocerla por su nombre. §6.5 le da su fila: «no aplica», porque una provincia no es una instalación. §9 sus ocho categorías, que son la **tecnología dominante** y por eso se comprueban contra el argmax de las cifras del propio registro: un derivado solo se escribe si el CI puede desmentirlo. La geometría del IGN va **generalizada** —186 MB no se publican— y eso obliga a estrenar un valor de `geo_precision`: **`generalizada`** (§6.6, §9), dentro de **R9**. Se intentó con `ilustrativa` y la ficha quedó mintiendo, porque ese valor está definido como «trazado a mano alzada» y el límite de una provincia no lo es. De dónde sale un borde y cuánto se ha tocado son dos preguntas distintas. |

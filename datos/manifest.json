@@ -1,14 +1,14 @@
 {
   "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
 
-  "_estado": "F3 cerrada. Tienen datos `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `limites-soberania` y `espacios-maritimos` — once; las otras siete siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+  "_estado": "F3 cerrada. Tienen datos `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `limites-soberania` y `espacios-maritimos` — doce; las otras seis siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 
   "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
 
-  "schema_version": "1.16.0",
-  "release": "2026.08.12",
+  "schema_version": "1.17.0",
+  "release": "2026.08.13",
 
   "capas": [
     {
@@ -147,6 +147,22 @@
       "fichero": "capas/generacion-electrica-provincia.geojson",
       "licencia": "CC-BY-4.0",
       "atribucion": "MITECO · Instituto Geográfico Nacional · Atlas Estratégico de España"
+    },
+    {
+      "_": "Va en `energia` y no en `conectividad` junto a `hidrogeno-red`, y no es despiste: el árbol no es un índice temático. Una planta que PRODUCE un vector energético es energía; el corredor que lo MUEVE es conectividad, que es donde la demo v4 puso el H2Med.",
+      "id": "hidrogeno-produccion",
+      "titulo": "Producción de hidrógeno (PCI)",
+      "arbol": "energia",
+      "grupo": "actividad",
+      "geometria": "puntos",
+      "registro": "verificado",
+      "ambito": "espana",
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/hidrogeno-produccion.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Comisión Europea (CINEA) · Atlas Estratégico de España"
     },
     {
       "id": "agua-embalsada",

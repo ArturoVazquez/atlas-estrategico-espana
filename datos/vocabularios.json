@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.16.0",
+  "schema_version": "1.17.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -151,6 +151,12 @@
       { "valor": "en_tramitacion", "etiqueta": "En tramitación",
         "color": "#A6A2B4",
         "def": "Expediente abierto —información pública, evaluación en curso— y sin resolver." }
+    ],
+    "_hidrogeno-produccion": "Un solo valor, y es deliberado: las siete plantas son la misma clase de cosa y la fuente las sirve en la misma capa. Lo que las distingue —en qué punto de su vida están— ya lo llevan `fase` y `estado_pci`, y meterlo también aquí sería la doble fuente de verdad que D3 descartó. Precedente de vocabulario de un valor: `recurso-eolico`, con `zona` a secas.",
+    "hidrogeno-produccion": [
+      { "valor": "electrolizador", "etiqueta": "Electrolizador",
+        "color": "#3E7A6B",
+        "def": "Planta que parte agua con electricidad renovable para producir hidrógeno. Lo que la capa registra es la planta, no el valle ni el proyecto que la envuelve." }
     ],
     "_hidrogeno-red": "Aquí `categoria` dice QUÉ PIEZA de la red es cada registro, no en qué estado está: el estado lo llevan `fase` y `estado_pci`. Se pudo hacer así porque el estado de esta capa es hoy el mismo para los diez —ninguno existe—, y porque las tres piezas se distinguen solas en el mapa: la primera es línea y las otras dos, punto.",
     "hidrogeno-red": [

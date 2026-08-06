@@ -176,6 +176,7 @@ const ROTULOS = {
   capacidad_mt_anio: "Capacidad (Mt/año)",
   potencia_mw: "Potencia (MW)",
   volumen_util_gwh: "Volumen útil (GWh)",
+  produccion_t_anio: "Producción declarada (t/año)",
 };
 
 function rotularCampo(clave) {

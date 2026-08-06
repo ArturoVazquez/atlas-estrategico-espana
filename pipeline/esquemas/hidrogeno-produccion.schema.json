@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/hidrogeno-produccion.schema.json",
+  "title": "Extensión de capa · hidrogeno-produccion",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Las plantas de electrólisis españolas que están en la lista de la Unión (grupo 9.15). Un registro por PLANTA y no por proyecto: dos de los cinco proyectos nombran y sitúan dos plantas cada uno, y la plataforma dibuja un punto por planta. La descripción técnica la redacta el promotor y el registro la publica sin certificarla — de ahí la regla de escritura de §6.1 (1.17): al campo numérico va la cifra del proyecto definido, y la ambición se queda en `claves`.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "Un punto por planta, el que publica la plataforma. Ninguna de las siete está construida, así que no hay perímetro que pedir: cuando una resolución publique el suyo, ese registro sube a Polygon con el mismo `id` (§8)."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["promotor", "pci_codigo", "estado_pci", "fase", "puesta_en_servicio_prevista"],
+            "properties": {
+              "promotor": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Los promotores que declara la plataforma, con su forma societaria y su país, separados por « · ». Se conserva el nombre societario aunque la marca comercial sea otra: la ficha de Huelva la firma «Moeve S.A. (previously known as Cepsa)»."
+              },
+              "pci_codigo": {
+                "type": "string",
+                "pattern": "^9\\.[0-9]+\\.[0-9]+$",
+                "description": "El número del proyecto en la lista de la Unión. NO es único por registro en esta capa: dos plantas de un mismo proyecto lo comparten, y eso es precisamente lo que dice que son el mismo proyecto."
+              },
+              "estado_pci": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La palabra LITERAL de la plataforma («Permitting»). Va aparte de `fase` por el mismo motivo que en `hidrogeno-red`: el vocabulario del atlas tiene cinco peldaños y el de la Comisión no es el mismo."
+              },
+              "puesta_en_servicio_prevista": {
+                "type": "string",
+                "pattern": "^[0-9]{4}(-[0-9]{2})?(-[0-9]{2})?$",
+                "description": "Fecha PREVISTA, no fecha ocurrida — por eso no se llama `fecha_*`: §7.5 exige que ninguna fecha esté en el futuro y toda esta capa lo está. Formato ISO parcial porque la fuente unas veces da el mes y otras solo el año."
+              },
+              "fase": { "type": "string" },
+              "potencia_mw": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Capacidad de electrólisis DEL PROYECTO QUE LA FICHA DEFINE. Nunca la ambición ni la ampliación futura: esas van a `claves` verbatim y con su condicional intacto (§6.1, enmienda 1.17). El caso que lo obligó: el valle asturiano declara 1 GW de ambición y 150 MW de proyecto en el mismo párrafo, y aquí va 150."
+              },
+              "produccion_t_anio": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Toneladas de hidrógeno al año que declara la ficha para esta planta. Se omite cuando la fuente da una cifra conjunta para varias plantas: repartirla sería inventarla, y escribirla entera en cada una la duplicaría."
+              },
+
+              "inversion_meur": {
+                "not": {},
+                "description": "PROHIBIDO. El artículo 23 del TEN-E obliga a publicar los costes «excepto toda información sensible desde el punto de vista comercial», y en la práctica la plataforma no los da para estos proyectos. Las cifras que circulan —245 M€ para ErasmoPower2X— son de nota de prensa: `prensa` o `corporativa`, que R3 no admite."
+              },
+              "empleos": {
+                "not": {},
+                "description": "PROHIBIDO, igual que en `centros-datos` y por lo mismo. El empleo que aparece en estas fichas es previsión del promotor y llega envuelto en adjetivo («un impacto positivo significativo en el empleo de esta zona rural»). Es argumento de venta, no un hecho del objeto que la capa registra."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

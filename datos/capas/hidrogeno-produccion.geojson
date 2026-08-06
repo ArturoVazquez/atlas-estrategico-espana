@@ -1,0 +1,674 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "hidrogeno-produccion",
+    "schema_version": "1.17.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "hidrogeno-produccion:huelva-moeve",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.89846,
+          37.18577
+        ]
+      },
+      "properties": {
+        "slug": "huelva-moeve",
+        "nombre": "Valle andaluz del hidrógeno verde — Huelva",
+        "categoria": "electrolizador",
+        "descripcion": "La mayor capacidad de electrólisis declarada en España para un solo emplazamiento: mil megavatios junto a los parques energéticos de Moeve, en Palos de la Frontera.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "punto de la planta publicado por la plataforma de transparencia PCI-PMI, el registro que el artículo 23 del Reglamento (UE) 2022/869 obliga a mantener",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Moeve S.A. (antes Cepsa) (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "pci_codigo": "9.15.4",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2030-12",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f2",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f2",
+        "potencia_mw": 1000,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f2",
+        "claves": [
+          {
+            "k": "Las tres fases, como las declara la ficha",
+            "v": "«Los 1.000 MW previstos en Huelva se desarrollarán por fases: Fase 1: 400 MW – COD 2028 (ONUBA, e-amoniaco); Fase 2: 200 MW – COD 2030 (THARSIS, e-metanol y eSAF); Fase 3: 400 MW – COD 2030 (en desarrollo).» El campo de potencia publica el total del proyecto; las fases van aquí porque cada una tiene su propia fecha y su propio destino.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "La ficha se contradice sobre la decisión de inversión",
+            "v": "El mismo párrafo dice «se espera la FID de ONUBA para el primer trimestre de 2026» y, a continuación, «la FID de 300 MW del subproyecto ONUBA fue tomada está prevista para el Q1en febrero de 2026». La frase está a medio corregir en el original. Se transcribe tal cual: es la prueba de qué clase de texto es una ficha de registro — lo escribe el promotor y nadie lo edita.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Por qué esta fuente es primaria, y qué no garantiza",
+            "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
+            "verif": "confirmado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión — lista de la Unión de proyectos de interés común y proyectos de interés mutuo (2.ª lista)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2025-12-01",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA, Comisión Europea), ficha del proyecto y su representación geográfica",
+            "url": "https://ec.europa.eu/energy/infrastructure/transparency_platform/map-viewer/main.html",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ce_pci-transparencia-electrolizadores-espana.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Reglamento (UE) 2022/869 (TEN-E), artículo 23 «Información y publicidad» — la norma que obliga a mantener la plataforma",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
+            "fecha": "2022-05-30",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          }
+        ],
+        "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hidrogeno-produccion:abono-edp",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7214,
+          43.55165
+        ]
+      },
+      "properties": {
+        "slug": "abono-edp",
+        "nombre": "Aboño — Asturias H2 Valley",
+        "categoria": "electrolizador",
+        "descripcion": "La primera fase del valle asturiano: 150 MW junto a la central térmica de Aboño, con los permisos ambientales y de conexión ya obtenidos según su ficha.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "punto de la planta publicado por la plataforma de transparencia PCI-PMI, el registro que el artículo 23 del Reglamento (UE) 2022/869 obliga a mantener",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "H2 Aboño, S.A. (grupo EDP) (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "pci_codigo": "9.15.5",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2032-12-31",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f2",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f2",
+        "potencia_mw": 150,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f2",
+        "claves": [
+          {
+            "k": "Mil megavatios de ambición, ciento cincuenta de proyecto",
+            "v": "«El grupo EDP tiene la ambición de desarrollar 1 GW de electrólisis en la región de Asturias para 2030, si las condiciones de mercado son favorables. El proyecto Asturias H2 Valley comprende un electrolizador de 150 MW en su fase inicial.» Las dos cifras están en el mismo párrafo. El atlas publica la segunda, porque es la del proyecto definido; la primera se queda aquí, con su condicional intacto.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Los dos centros, y la suma que no cierra",
+            "v": "«La segunda fase se repartirá entre dos centros: el de Aboño (que añade 350 MW de electrólisis a la fase inicial) y el futuro centro de Soto (con 500 MW de electrólisis en la central térmica de EDP en Soto de Ribera, a unos 40 km de Aboño). Estos dos centros se unirán mediante un hidroducto de alta capacidad. En total, esta segunda fase aportará 1 GW de capacidad de electrólisis, con una producción anual estimada de 0,126 Mt/año repartida a partes iguales entre las dos ubicaciones.» 350 más 500 son 850, no 1.000. El atlas no elige cuál de las dos lecturas vale: transcribe y señala.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Los 40 km declarados cuadran con los puntos publicados",
+            "v": "Las dos coordenadas que publica la fuente están a 29,3 km en línea recta, lo que encaja con «unos 40 km» dados por carretera. Es lo que confirma que estos dos puntos son Aboño y Soto de Ribera y no otra cosa: el de Aboño cae en Gijón y el otro, en Ribera de Arriba, que es donde está la central de Soto.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Por qué esta fuente es primaria, y qué no garantiza",
+            "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
+            "verif": "confirmado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión — lista de la Unión de proyectos de interés común y proyectos de interés mutuo (2.ª lista)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2025-12-01",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA, Comisión Europea), ficha del proyecto y su representación geográfica",
+            "url": "https://ec.europa.eu/energy/infrastructure/transparency_platform/map-viewer/main.html",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ce_pci-transparencia-electrolizadores-espana.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Reglamento (UE) 2022/869 (TEN-E), artículo 23 «Información y publicidad» — la norma que obliga a mantener la plataforma",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
+            "fecha": "2022-05-30",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          }
+        ],
+        "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hidrogeno-produccion:soto-de-ribera-edp",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.88282,
+          43.3158
+        ]
+      },
+      "properties": {
+        "slug": "soto-de-ribera-edp",
+        "nombre": "Soto de Ribera — Asturias H2 Valley",
+        "categoria": "electrolizador",
+        "descripcion": "El segundo centro del valle asturiano, en la central térmica de EDP en Soto de Ribera. La ficha lo llama «futuro» y no lo dimensiona como proyecto: por eso su potencia es un hueco declarado.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "proyectada",
+        "geo_fuente": "punto de la planta publicado por la plataforma de transparencia PCI-PMI, el registro que el artículo 23 del Reglamento (UE) 2022/869 obliga a mantener",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "H2 Aboño, S.A. (grupo EDP) (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "pci_codigo": "9.15.5",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2032-12-31",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f2",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f2",
+        "claves": [
+          {
+            "k": "Mil megavatios de ambición, ciento cincuenta de proyecto",
+            "v": "«El grupo EDP tiene la ambición de desarrollar 1 GW de electrólisis en la región de Asturias para 2030, si las condiciones de mercado son favorables. El proyecto Asturias H2 Valley comprende un electrolizador de 150 MW en su fase inicial.» Las dos cifras están en el mismo párrafo. El atlas publica la segunda, porque es la del proyecto definido; la primera se queda aquí, con su condicional intacto.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Los dos centros, y la suma que no cierra",
+            "v": "«La segunda fase se repartirá entre dos centros: el de Aboño (que añade 350 MW de electrólisis a la fase inicial) y el futuro centro de Soto (con 500 MW de electrólisis en la central térmica de EDP en Soto de Ribera, a unos 40 km de Aboño). Estos dos centros se unirán mediante un hidroducto de alta capacidad. En total, esta segunda fase aportará 1 GW de capacidad de electrólisis, con una producción anual estimada de 0,126 Mt/año repartida a partes iguales entre las dos ubicaciones.» 350 más 500 son 850, no 1.000. El atlas no elige cuál de las dos lecturas vale: transcribe y señala.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Los 40 km declarados cuadran con los puntos publicados",
+            "v": "Las dos coordenadas que publica la fuente están a 29,3 km en línea recta, lo que encaja con «unos 40 km» dados por carretera. Es lo que confirma que estos dos puntos son Aboño y Soto de Ribera y no otra cosa: el de Aboño cae en Gijón y el otro, en Ribera de Arriba, que es donde está la central de Soto.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Por qué esta fuente es primaria, y qué no garantiza",
+            "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
+            "verif": "confirmado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión — lista de la Unión de proyectos de interés común y proyectos de interés mutuo (2.ª lista)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2025-12-01",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA, Comisión Europea), ficha del proyecto y su representación geográfica",
+            "url": "https://ec.europa.eu/energy/infrastructure/transparency_platform/map-viewer/main.html",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ce_pci-transparencia-electrolizadores-espana.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Reglamento (UE) 2022/869 (TEN-E), artículo 23 «Información y publicidad» — la norma que obliga a mantener la plataforma",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
+            "fecha": "2022-05-30",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          },
+          {
+            "id": "f9",
+            "tipo": "hueco",
+            "titulo": "Potencia de esta planta: la ficha le atribuye 500 MW como «futuro centro» de una segunda fase, no como proyecto definido. Un número de ambición no se escribe en un campo de potencia (§6.1, enmienda 1.17): queda en las claves, con su literal."
+          }
+        ],
+        "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hidrogeno-produccion:mugardos-triskelion",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.23695,
+          43.46268
+        ]
+      },
+      "properties": {
+        "slug": "mugardos-triskelion",
+        "nombre": "Mugardos (Triskelion) — ValdoEume",
+        "categoria": "electrolizador",
+        "descripcion": "La planta de 77 MW del valle ValdoEume en la ría de Ferrol, promovida por Reganosa y Forestal del Atlántico.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "punto de la planta publicado por la plataforma de transparencia PCI-PMI, el registro que el artículo 23 del Reglamento (UE) 2022/869 obliga a mantener",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "H2Pole, S.L. (grupo Reganosa) (ES) · Forestal del Atlántico (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "pci_codigo": "9.15.6",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2035",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f2",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f2",
+        "potencia_mw": 77,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f2",
+        "claves": [
+          {
+            "k": "El punto no cae en ningún término municipal",
+            "v": "La coordenada que publica la fuente queda en la ría, a 1,34 km de la villa de Mugardos, que es el municipio donde su ficha sitúa la planta. Y a 1,5 km de la planta de regasificación de Reganosa que este atlas ya publica en «Gas y regasificación», del mismo grupo promotor. Contrastado contra el callejero del IGN.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Las dos plantas del valle, como las nombra la ficha",
+            "v": "«Reganosa y Forestal del Atlántico, del grupo Gadisa, promueven la iniciativa del valle de hidrógeno ValdoEume, que incluye una primera fase de 177 MW con una producción de hasta 27.000 t/año de hidrógeno RFNBO con dos plantas de electrólisis situadas en los municipios de Mugardos (instalación Triskelion, 77 MW) y As Pontes (instalación H2Pole, 100 MW), unidas por un hidroducto de 36 km.»",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Las 27.000 toneladas son de las dos juntas, y por eso no se publican aquí",
+            "v": "La ficha da una sola cifra de producción para la primera fase del valle. Repartirla entre las dos plantas sería inventarla; escribirla entera en cada una la duplicaría. Se queda dicha aquí y el campo se omite.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "La ampliación a 2035 NO va en el campo de potencia",
+            "v": "«En las siguientes etapas de implantación, ValdoEume podrá ampliarse hasta una capacidad total de electrólisis de 500 MW para producir 75.000 t/año de hidrógeno renovable en 2035.» Es la ampliación del valle entero, sin reparto por planta.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Los 36 km del hidroducto cuadran con los puntos publicados",
+            "v": "Las dos plantas están a 28,0 km en línea recta y la ficha declara un hidroducto de 36 km entre ellas. Un tubo mide más que la recta; si midiera menos, habría algo que revisar.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Por qué esta fuente es primaria, y qué no garantiza",
+            "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
+            "verif": "confirmado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión — lista de la Unión de proyectos de interés común y proyectos de interés mutuo (2.ª lista)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2025-12-01",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA, Comisión Europea), ficha del proyecto y su representación geográfica",
+            "url": "https://ec.europa.eu/energy/infrastructure/transparency_platform/map-viewer/main.html",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ce_pci-transparencia-electrolizadores-espana.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Reglamento (UE) 2022/869 (TEN-E), artículo 23 «Información y publicidad» — la norma que obliga a mantener la plataforma",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
+            "fecha": "2022-05-30",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          }
+        ],
+        "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hidrogeno-produccion:as-pontes-h2pole",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.89064,
+          43.45461
+        ]
+      },
+      "properties": {
+        "slug": "as-pontes-h2pole",
+        "nombre": "As Pontes (H2Pole) — ValdoEume",
+        "categoria": "electrolizador",
+        "descripcion": "La planta de 100 MW del valle ValdoEume en As Pontes de García Rodríguez, unida a la de Mugardos por un hidroducto propio.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "punto de la planta publicado por la plataforma de transparencia PCI-PMI, el registro que el artículo 23 del Reglamento (UE) 2022/869 obliga a mantener",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "H2Pole, S.L. (grupo Reganosa) (ES) · Forestal del Atlántico (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "pci_codigo": "9.15.6",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2035",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f2",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f2",
+        "potencia_mw": 100,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f2",
+        "claves": [
+          {
+            "k": "Las dos plantas del valle, como las nombra la ficha",
+            "v": "«Reganosa y Forestal del Atlántico, del grupo Gadisa, promueven la iniciativa del valle de hidrógeno ValdoEume, que incluye una primera fase de 177 MW con una producción de hasta 27.000 t/año de hidrógeno RFNBO con dos plantas de electrólisis situadas en los municipios de Mugardos (instalación Triskelion, 77 MW) y As Pontes (instalación H2Pole, 100 MW), unidas por un hidroducto de 36 km.»",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Las 27.000 toneladas son de las dos juntas, y por eso no se publican aquí",
+            "v": "La ficha da una sola cifra de producción para la primera fase del valle. Repartirla entre las dos plantas sería inventarla; escribirla entera en cada una la duplicaría. Se queda dicha aquí y el campo se omite.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "La ampliación a 2035 NO va en el campo de potencia",
+            "v": "«En las siguientes etapas de implantación, ValdoEume podrá ampliarse hasta una capacidad total de electrólisis de 500 MW para producir 75.000 t/año de hidrógeno renovable en 2035.» Es la ampliación del valle entero, sin reparto por planta.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Los 36 km del hidroducto cuadran con los puntos publicados",
+            "v": "Las dos plantas están a 28,0 km en línea recta y la ficha declara un hidroducto de 36 km entre ellas. Un tubo mide más que la recta; si midiera menos, habría algo que revisar.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Por qué esta fuente es primaria, y qué no garantiza",
+            "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
+            "verif": "confirmado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión — lista de la Unión de proyectos de interés común y proyectos de interés mutuo (2.ª lista)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2025-12-01",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA, Comisión Europea), ficha del proyecto y su representación geográfica",
+            "url": "https://ec.europa.eu/energy/infrastructure/transparency_platform/map-viewer/main.html",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ce_pci-transparencia-electrolizadores-espana.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Reglamento (UE) 2022/869 (TEN-E), artículo 23 «Información y publicidad» — la norma que obliga a mantener la plataforma",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
+            "fecha": "2022-05-30",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          }
+        ],
+        "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hidrogeno-produccion:catalina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.40322,
+          41.00052
+        ]
+      },
+      "properties": {
+        "slug": "catalina",
+        "nombre": "Catalina — Andorra (Teruel)",
+        "categoria": "electrolizador",
+        "descripcion": "Quinientos megavatios de electrólisis con 1,1 GW de renovables dedicadas, en la comarca de Andorra: el proyecto que quiere sustituir la térmica de carbón por un polo de hidrógeno.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "punto de la planta publicado por la plataforma de transparencia PCI-PMI, el registro que el artículo 23 del Reglamento (UE) 2022/869 obliga a mantener",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "CI ETF I Renato Ptx Holdco, S.L.U. (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "pci_codigo": "9.15.7",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2030-11",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f2",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f2",
+        "potencia_mw": 500,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f2",
+        "produccion_t_anio": 48000,
+        "produccion_t_anio__v": "confirmado",
+        "produccion_t_anio__f": "f2",
+        "claves": [
+          {
+            "k": "Lo que declara la ficha",
+            "v": "«El proyecto Catalina desplegará un electrolizador de 500 MW integrado con aproximadamente 1,1 GW de generación renovable dedicada (eólica terrestre y solar fotovoltaica). Esta configuración permitirá producir en torno a 48.000 toneladas al año de hidrógeno verde durante la primera década de operación.» También declara acceso a red de ~130 MW para exportar y ~200 MW para importar.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "La ampliación futura NO va en el campo de potencia",
+            "v": "«El proyecto contempla además una ampliación futura hasta alcanzar los 2 GW de capacidad de electrólisis.» Es una intención sin fecha ni fase: cuatro veces lo publicado. Se queda aquí, con sus palabras.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Cómo se conectaría a la red troncal",
+            "v": "«El electrolizador se conectará mediante un hidroducto dedicado de 40 km a la red troncal española de hidrógeno (PIC 9.1.3).» Esa red es la capa «Red de hidrógeno (PCI)» de este mismo atlas.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Por qué esta fuente es primaria, y qué no garantiza",
+            "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
+            "verif": "confirmado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión — lista de la Unión de proyectos de interés común y proyectos de interés mutuo (2.ª lista)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2025-12-01",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA, Comisión Europea), ficha del proyecto y su representación geográfica",
+            "url": "https://ec.europa.eu/energy/infrastructure/transparency_platform/map-viewer/main.html",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ce_pci-transparencia-electrolizadores-espana.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Reglamento (UE) 2022/869 (TEN-E), artículo 23 «Información y publicidad» — la norma que obliga a mantener la plataforma",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
+            "fecha": "2022-05-30",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          }
+        ],
+        "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hidrogeno-produccion:erasmopower2x",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.57702,
+          38.99012
+        ]
+      },
+      "properties": {
+        "slug": "erasmopower2x",
+        "nombre": "ErasmoPower2X — Saceruela (Ciudad Real)",
+        "categoria": "electrolizador",
+        "descripcion": "Seiscientos cincuenta megavatios de electrólisis y e-metanol en un municipio manchego de poco más de quinientos habitantes, con 1,2 GW de fotovoltaica propia declarada.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "punto de la planta publicado por la plataforma de transparencia PCI-PMI, el registro que el artículo 23 del Reglamento (UE) 2022/869 obliga a mantener",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "ERASMO P2X S.L. (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f2",
+        "pci_codigo": "9.15.8",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2030",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f2",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f2",
+        "potencia_mw": 650,
+        "potencia_mw__v": "confirmado",
+        "potencia_mw__f": "f2",
+        "produccion_t_anio": 80000,
+        "produccion_t_anio__v": "parcial",
+        "produccion_t_anio__f": "f2",
+        "claves": [
+          {
+            "k": "Lo que declara la ficha",
+            "v": "«Producirá hasta 80.000 toneladas anuales de hidrógeno verde, apoyado en una planta de electrólisis de 650 MW, una instalación solar fotovoltaica de 1,2 GW, 890 MW de PPA eólicos y la posibilidad de usar una batería integrada.»",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "La producción se publica como techo, porque así la declara",
+            "v": "La ficha dice «hasta 80.000 toneladas», no «80.000 toneladas». Se publica la cifra y se marca el campo como parcial: un techo no es una previsión.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "La red troncal le pasa al lado",
+            "v": "«Integrado en la red troncal nacional de hidrógeno, desarrollada por Enagás Infraestructuras y situada a menos de 1 km de la ubicación de las plantas.» La plataforma dibuja además un conector de 2,0 km medidos sobre el elipsoide entre la planta y esa red.",
+            "verif": "confirmado",
+            "fuente": "f2"
+          },
+          {
+            "k": "Por qué esta fuente es primaria, y qué no garantiza",
+            "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
+            "verif": "confirmado",
+            "fuente": "f3"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento Delegado (UE) 2026/764 de la Comisión — lista de la Unión de proyectos de interés común y proyectos de interés mutuo (2.ª lista)",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2026-80523",
+            "fecha": "2025-12-01",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2026-764-lista-pci-pmi.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA, Comisión Europea), ficha del proyecto y su representación geográfica",
+            "url": "https://ec.europa.eu/energy/infrastructure/transparency_platform/map-viewer/main.html",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ce_pci-transparencia-electrolizadores-espana.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "primaria",
+            "titulo": "Reglamento (UE) 2022/869 (TEN-E), artículo 23 «Información y publicidad» — la norma que obliga a mantener la plataforma",
+            "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
+            "fecha": "2022-05-30",
+            "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          }
+        ],
+        "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
+      }
+    }
+  ]
+}
