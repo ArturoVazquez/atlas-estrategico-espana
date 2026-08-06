@@ -1,0 +1,110 @@
+/* Papel y tinta, como el visor, pero esto es un documento: se desplaza, se lee
+   de arriba abajo y tiene una medida de línea. Comparte los tokens y nada más. */
+
+@import "./tokens.css";
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--papel);color:var(--tinta);font-family:var(--serif);
+  font-size:16px;line-height:1.62;
+}
+
+header{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:14px 22px 12px;border-bottom:1px solid var(--linea);
+}
+.masthead .eyebrow{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--tinta-suave);margin-bottom:3px;
+}
+.masthead .titulo{font-size:clamp(19px,3vw,27px);letter-spacing:.045em}
+.masthead .capa{color:var(--tinta-suave);font-style:italic;letter-spacing:.01em}
+.volver,footer a{
+  font-family:var(--mono);font-size:11px;color:var(--tinta-suave);
+  text-decoration:none;border-bottom:1px solid var(--linea);white-space:nowrap;
+}
+.volver:hover,footer a:hover{color:var(--tinta);border-color:var(--tinta-suave)}
+
+main{max-width:41em;margin:0 auto;padding:38px 22px 20px}
+main:focus-visible{outline:2px solid var(--tinta);outline-offset:6px}
+
+h1{
+  font-weight:normal;font-size:clamp(26px,4.4vw,34px);line-height:1.22;
+  letter-spacing:.01em;margin-bottom:18px;
+}
+h2{
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--tinta-suave);
+  margin:0 0 14px;padding-top:16px;border-top:1px solid var(--linea);
+}
+h3{
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--tinta-tenue);margin:16px 0 6px;
+}
+section{margin-top:38px}
+p{margin-bottom:14px}
+p.entradilla{font-size:18px;line-height:1.55}
+a{color:var(--crma);text-decoration:none;border-bottom:1px solid rgba(150,54,31,.28)}
+a:hover{border-color:var(--crma)}
+code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+     border:1px solid var(--linea);border-radius:2px;padding:.06em .32em}
+
+/* La frase que gobierna cada sección: se destaca sin gritar. */
+p.regla{
+  border-left:2px solid var(--limite);padding:2px 0 2px 14px;
+  color:var(--tinta-suave);font-size:15px;
+}
+
+/* -------- tablas de definiciones (del vocabulario) -------- */
+.tabla{
+  border:1px solid var(--linea);border-radius:3px;background:var(--panel);
+  margin:0 0 18px;overflow:hidden;
+}
+.tabla .fila{display:grid;grid-template-columns:13em 1fr;gap:0 16px;
+             padding:11px 15px;border-top:1px solid var(--linea)}
+.tabla .fila:first-child{border-top:0}
+.tabla .k{font-family:var(--sans);font-size:13.5px;font-weight:600;line-height:1.45}
+.tabla .d{font-size:14.5px;color:var(--tinta-suave);line-height:1.5}
+.sostiene{
+  display:block;font-family:var(--mono);font-size:9.5px;font-weight:400;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--singular);margin-top:3px;
+}
+
+/* -------- inventario de capas (del manifiesto) -------- */
+.capas{margin-bottom:18px}
+.recuento{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--tinta-suave);margin-bottom:6px;
+}
+.arbol{margin-bottom:12px}
+.capa{
+  display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:5px 0;border-bottom:1px dotted var(--linea);font-size:15px;
+}
+.capa .s{
+  font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  color:var(--tinta-suave);white-space:nowrap;text-align:right;
+}
+.capa.gris{color:var(--tinta-tenue);font-style:italic}
+.capa.gris .s{color:var(--tinta-tenue)}
+
+/* -------- listas -------- */
+ul,ol{margin:0 0 16px;padding-left:1.25em}
+li{margin-bottom:11px}
+ul.huecos li::marker,ul.limites li::marker{color:var(--tinta-tenue)}
+ol.pasos li::marker{font-family:var(--mono);font-size:.82em;color:var(--tinta-suave)}
+
+.fallo{padding:14px 15px;font-size:14.5px;color:var(--crma)}
+
+footer{
+  max-width:41em;margin:0 auto;padding:16px 22px 34px;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-top:1px solid var(--linea);
+  font-family:var(--mono);font-size:10.5px;color:var(--tinta-suave);
+}
+
+@media (max-width:560px){
+  .tabla .fila{grid-template-columns:1fr;gap:3px}
+  .capa{flex-direction:column;gap:1px}
+  .capa .s{text-align:left}
+}

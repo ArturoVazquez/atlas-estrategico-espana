@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Método · Atlas Estratégico de España</title>
+<meta name="description" content="Cómo se lee un dato del atlas, qué sostiene cada afirmación, cómo se corrige y qué no puede garantizar.">
+<link rel="stylesheet" href="/src/metodo.css">
+</head>
+<body>
+
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header>
+  <div class="masthead">
+    <div class="eyebrow">Atlas Estratégico</div>
+    <div class="titulo">ESPAÑA <span class="capa">— método</span></div>
+  </div>
+  <a class="volver" href="/">← al mapa</a>
+</header>
+
+<main id="contenido" tabindex="-1">
+
+  <h1>Cómo está hecho este atlas</h1>
+
+  <p class="entradilla">
+    El atlas <b>registra hechos con fuente y marca lo que no sabe</b>. No
+    interpreta, no pronostica y no opina: la interpretación vive en
+    <a href="https://www.eltercioviejo.com">El Tercio</a>, que es un foro y sabe
+    hacerlo. Aquí cada dato lleva su procedencia, su fecha y su estado de
+    verificación, y <b>lo que falta aparece como hueco, no como relleno</b>.
+  </p>
+
+  <p>
+    Lo que sigue no es una declaración de intenciones: es lo que comprueba una
+    máquina en cada cambio. Las reglas están escritas uña a uña en el
+    <a href="https://github.com/ArturoVazquez/atlas-estrategico-espana/blob/main/CONTRATO-DATOS.md">contrato
+    de datos</a>, que manda sobre el código, y <b>ninguna de ellas es prosa</b>:
+    las nueve las verifica la integración continua antes de que un dato entre.
+  </p>
+
+  <!-- ── del vocabulario ─────────────────────────────────────────────── -->
+  <section>
+    <h2>Cómo se lee un dato</h2>
+    <p>
+      Cada registro declara si está confirmado, y también lo declaran por
+      separado sus campos delicados. Un promotor puede estar confirmado y su
+      fecha de puesta en servicio no estarlo, y la ficha lo dice campo a campo.
+    </p>
+    <div id="estados" class="tabla"></div>
+
+    <p>
+      Y cada afirmación cita la fuente que la sostiene, <b>clasificada por lo que
+      esa fuente puede sostener</b>:
+    </p>
+    <div id="fuentes" class="tabla"></div>
+
+    <p class="regla">
+      Solo una fuente <b>primaria</b> sostiene un dato confirmado. Un anuncio de
+      empresa o una noticia se registran con su origen —tienen valor, y por eso
+      están— pero <b>no ascienden a hecho</b>. Cuando una fuente se cita, se
+      archiva: las URLs se pudren; la copia archivada, no.
+    </p>
+  </section>
+
+  <!-- ── escrito a mano: esto no es dato ─────────────────────────────── -->
+  <section>
+    <h2>Los huecos no son un defecto</h2>
+    <p>
+      Un hueco es una fuente que falta, <b>dicha en voz alta</b> y con su sitio en
+      la ficha. Es el mecanismo central del atlas, no una nota al pie: rellenar un
+      hueco con algo verosímil es el peor fallo que este proyecto puede cometer,
+      porque un dato inventado que parece razonable no lo detecta nadie.
+    </p>
+    <p>Tres de los que hay publicados ahora mismo, tal cual se leen en sus fichas:</p>
+    <ul class="huecos">
+      <li>
+        <b>Las centrales nucleares.</b> El calendario de cierre acordado en 2019
+        resultó no tener documento público —es un protocolo privado—, así que en
+        cinco de los siete reactores la fecha <b>va vacía y declarada</b>, en vez
+        de rellenarse con la que cita todo el mundo.
+      </li>
+      <li>
+        <b>Los dieciséis dominios minerales.</b> Ninguno tiene cartografía de
+        fuente primaria: son trazados a mano alzada, y <b>la capa entera es el
+        hueco declarado</b>. Se dibujan translúcidos y con el borde discontinuo
+        para que no se lean como un límite medido.
+      </li>
+      <li>
+        <b>El monte Tropic.</b> Se registra dónde está y cómo se llama, con la
+        autoridad hidrográfica que lo nombra. <b>No</b> se publican las leyes de
+        telurio y cobalto que circulan: vienen de campañas científicas que este
+        atlas no ha archivado.
+      </li>
+    </ul>
+    <p class="regla">
+      Señalar un hueco —un dato que damos por bueno sin fuente primaria— vale
+      tanto como aportar uno nuevo. Probablemente más.
+    </p>
+  </section>
+
+  <!-- ── del manifiesto ──────────────────────────────────────────────── -->
+  <section>
+    <h2>Qué hay publicado hoy</h2>
+    <p>
+      El visor no lee la rama viva: sirve una <b>release etiquetada</b>. Lo que se
+      ve abajo es exactamente lo que sirve la release
+      <b id="release">…</b>, leído de su propio manifiesto.
+    </p>
+    <div id="capas" class="capas"></div>
+    <p class="regla">
+      Las ramas en gris están <b>declaradas y vacías</b>. El mapa enseña su propio
+      horizonte a propósito: una capa que se va a hacer figura antes de tener un
+      solo dato, para que el silencio no se confunda con que no exista.
+    </p>
+  </section>
+
+  <!-- ── escrito a mano ──────────────────────────────────────────────── -->
+  <section>
+    <h2>Cómo se corrige un dato</h2>
+    <ol class="pasos">
+      <li>
+        Abre una <i>issue</i> señalando el registro por su identificador —por
+        ejemplo <code>minerales-proyectos:aguablanca</code>— y <b>qué fuente
+        sostiene la corrección</b>. Una corrección sin fuente no se puede aplicar:
+        es la única regla dura.
+      </li>
+      <li>
+        Si tienes la fuente primaria a mano, un <i>pull request</i> sobre los
+        datos con el documento archivado va más rápido. La validación te dirá si
+        la doctrina se cumple antes de que nadie lo revise.
+      </li>
+      <li>
+        <b>Nada se borra.</b> Un registro que deja de ser válido cambia de estado
+        —vigente a histórico o retirado— y conserva su historia entera en Git.
+      </li>
+    </ol>
+    <p>
+      Todo esto ocurre en
+      <a href="https://github.com/ArturoVazquez/atlas-estrategico-espana">el
+      repositorio</a>, que es público desde el primer commit.
+    </p>
+  </section>
+
+  <section>
+    <h2>Lo que este atlas no puede garantizar</h2>
+    <p>
+      Dicho aquí y no en la letra pequeña, porque son los límites reales de lo que
+      hay arriba.
+    </p>
+    <ul class="limites">
+      <li>
+        <b>Una cita puede estar muerta y responder que está viva.</b> Una guardia
+        semanal comprueba que las fuentes sigan en pie, pero EUR-Lex y el IGME
+        devuelven «200 OK» sirviendo una página de error. Cuando la URL promete un
+        PDF el engaño se detecta; cuando no, no hay forma barata de distinguirlo,
+        y la guardia dice cuántas citas quedan sin comprobar de verdad. Es la
+        razón entera de que exista el archivo documental.
+      </li>
+      <li>
+        <b>Una fuente oficial puede contradecirse consigo misma.</b> Dos derechos
+        del Catastro Minero tienen hoy dos situaciones jurídicas distintas según
+        qué exportación se descargue, el mismo día y del mismo registro. Cuando
+        pasa, el atlas <b>publica el desacuerdo y baja el campo a parcial</b>: no
+        elige por su cuenta cuál de los dos vale.
+      </li>
+      <li>
+        <b>Una descarga oficial puede venir mutilada sin avisar.</b> La exportación
+        en CSV de ese mismo catastro corta la lista de vértices a 424 caracteres,
+        y un polígono al que le falta una esquina cierra igual y parece correcto.
+        Toda la geometría sale del shapefile por eso.
+      </li>
+      <li>
+        <b>Un dato tiene la precisión que declara, no la que aparenta.</b> Un punto
+        pintado sobre buena cartografía afirma exactitud aunque la ficha diga lo
+        contrario, y en un mapa gana lo que se ve. Por eso la precisión geográfica
+        es un campo obligatorio con su propia fuente, y «centroide del municipio»
+        es un resultado legítimo dicho en voz alta.
+      </li>
+      <li id="li-basemap" hidden>
+        <b>El mapa base es de demostración.</b> Mientras el pie del visor lo
+        advierta, el fondo cartográfico se sirve desde un depósito de pruebas
+        ajeno que no responde de nada. Es lo último que queda por cerrar.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Licencias y cadencia</h2>
+    <p>
+      El <b>código</b> es MIT; los <b>datos</b>, CC BY 4.0 — reutilización libre,
+      incluida la comercial, citando la procedencia. Esa elección impide
+      incorporar conjuntos con licencia contagiosa, y obliga a reconstruir desde
+      fuente primaria lo que no se pueda usar.
+    </p>
+    <p>
+      Cada release lleva su entrada en el registro de cambios: qué cambió, por qué
+      y con qué evidencia — <b>y qué sigue sin saberse</b>, que es una sección
+      obligatoria. Una release que no declara lo que ignora está afirmando que lo
+      sabe todo.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <span>El atlas registra; la interpretación vive en El Tercio.</span>
+  <a href="/">← volver al mapa</a>
+</footer>
+
+<script type="module" src="/src/metodo.js"></script>
+</body>
+</html>
