@@ -1,0 +1,453 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "centros-datos",
+    "schema_version": "1.15.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "centros-datos:aws-car-zaragoza",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.87732,
+          41.65621
+        ]
+      },
+      "properties": {
+        "slug": "aws-car-zaragoza",
+        "nombre": "Centro de datos AWS CAR (Zaragoza)",
+        "categoria": "autorizado",
+        "descripcion": "Uno de los cinco centros de datos del Plan de Interés General «Expansión Región AWS en Aragón». El acto lo identifica como «CAR».",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España; el acto sitúa el emplazamiento por su polígono industrial, que el nomenclátor no nombra",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Amazon Data Services Spain, SL (AWS España)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "codigo_promotor": "CAR",
+        "consumo_gwh_anio": 3279.7,
+        "consumo_gwh_anio__v": "confirmado",
+        "consumo_gwh_anio__f": "f1",
+        "superficie_ha": 143.2,
+        "superficie_ha__v": "confirmado",
+        "superficie_ha__f": "f1",
+        "fase": "tramitacion",
+        "instrumento": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+        "municipio": "Zaragoza",
+        "provincia": "Zaragoza",
+        "claves": [
+          {
+            "k": "Dónde lo sitúa el acto",
+            "v": "El terreno se encuentra ubicado junto al polígono industrial «Empresarium» y cuenta con una superficie total de 144,1 ha.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El conjunto del plan",
+            "v": "Cinco centros de datos: VDG1 y VDG2 (Villanueva de Gállego), WQA (Huesca), BDE (El Burgo de Ebro) y CAR (Zaragoza). Las necesidades de electricidad del conjunto ascenderían a 10.848,2 GWh/año.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+            "url": "https://www.boa.aragon.es/cgi-bin/EBOA/BRSCGI?CMD=VEROBJ&MLKOB=1406588900808",
+            "fecha": "2025-07-16",
+            "archivo": "fuentes/2026-08-06_boa_inaga-declaracion-ambiental-piga-expansion-aws-aragon.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional, servicio OGC API-Features",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-centros-datos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Potencia TI en MW: ningún acto administrativo la publica. La cifra con la que se compara el sector la dan la patronal y los propios operadores, que son fuente corporativa y no pueden sostener un confirmado (R3)."
+          }
+        ],
+        "nota": "El consumo NO está medido: es la demanda anual a plena capacidad que el promotor declaró y el órgano ambiental evaluó, para un centro que todavía no existe. Los cinco del plan suman 10.848,2 GWh/año según el propio acto. Puesto al lado de la capa de generación por provincia —la otra cifra también primaria—, eso equivale al 48 % de todo lo que Aragón generó en 2024 y al 71 % de lo que generó la provincia de Zaragoza. El atlas registra los dos números y no saca la conclusión: eso se debate en El Tercio, no aquí."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "centros-datos:aws-vdg1-villanueva-de-gallego",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.82173,
+          41.76777
+        ]
+      },
+      "properties": {
+        "slug": "aws-vdg1-villanueva-de-gallego",
+        "nombre": "Centro de datos AWS VDG1 (Villanueva de Gállego)",
+        "categoria": "autorizado",
+        "descripcion": "Uno de los cinco centros de datos del Plan de Interés General «Expansión Región AWS en Aragón». El acto lo identifica como «VDG1».",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España; el acto sitúa el emplazamiento por su polígono industrial, que el nomenclátor no nombra",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Amazon Data Services Spain, SL (AWS España)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "codigo_promotor": "VDG1",
+        "consumo_gwh_anio": 756.9,
+        "consumo_gwh_anio__v": "confirmado",
+        "consumo_gwh_anio__f": "f1",
+        "superficie_ha": 13.1,
+        "superficie_ha__v": "confirmado",
+        "superficie_ha__f": "f1",
+        "fase": "tramitacion",
+        "instrumento": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+        "municipio": "Villanueva de Gállego",
+        "provincia": "Zaragoza",
+        "claves": [
+          {
+            "k": "Dónde lo sitúa el acto",
+            "v": "La superficie ocupada por el centro de datos VDG1 asciende a 13,1 ha y la de VDG2 a 83,3 ha.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El conjunto del plan",
+            "v": "Cinco centros de datos: VDG1 y VDG2 (Villanueva de Gállego), WQA (Huesca), BDE (El Burgo de Ebro) y CAR (Zaragoza). Las necesidades de electricidad del conjunto ascenderían a 10.848,2 GWh/año.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+            "url": "https://www.boa.aragon.es/cgi-bin/EBOA/BRSCGI?CMD=VEROBJ&MLKOB=1406588900808",
+            "fecha": "2025-07-16",
+            "archivo": "fuentes/2026-08-06_boa_inaga-declaracion-ambiental-piga-expansion-aws-aragon.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional, servicio OGC API-Features",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-centros-datos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Potencia TI en MW: ningún acto administrativo la publica. La cifra con la que se compara el sector la dan la patronal y los propios operadores, que son fuente corporativa y no pueden sostener un confirmado (R3)."
+          }
+        ],
+        "nota": "El consumo NO está medido: es la demanda anual a plena capacidad que el promotor declaró y el órgano ambiental evaluó, para un centro que todavía no existe. Los cinco del plan suman 10.848,2 GWh/año según el propio acto. Puesto al lado de la capa de generación por provincia —la otra cifra también primaria—, eso equivale al 48 % de todo lo que Aragón generó en 2024 y al 71 % de lo que generó la provincia de Zaragoza. El atlas registra los dos números y no saca la conclusión: eso se debate en El Tercio, no aquí."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "centros-datos:aws-vdg2-villanueva-de-gallego",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.82173,
+          41.76777
+        ]
+      },
+      "properties": {
+        "slug": "aws-vdg2-villanueva-de-gallego",
+        "nombre": "Centro de datos AWS VDG2 (Villanueva de Gállego)",
+        "categoria": "autorizado",
+        "descripcion": "Uno de los cinco centros de datos del Plan de Interés General «Expansión Región AWS en Aragón». El acto lo identifica como «VDG2».",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España; el acto sitúa el emplazamiento por su polígono industrial, que el nomenclátor no nombra",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Amazon Data Services Spain, SL (AWS España)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "codigo_promotor": "VDG2",
+        "consumo_gwh_anio": 2775.0,
+        "consumo_gwh_anio__v": "confirmado",
+        "consumo_gwh_anio__f": "f1",
+        "superficie_ha": 83.3,
+        "superficie_ha__v": "confirmado",
+        "superficie_ha__f": "f1",
+        "fase": "tramitacion",
+        "instrumento": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+        "municipio": "Villanueva de Gállego",
+        "provincia": "Zaragoza",
+        "claves": [
+          {
+            "k": "Dónde lo sitúa el acto",
+            "v": "La superficie ocupada por el centro de datos VDG1 asciende a 13,1 ha y la de VDG2 a 83,3 ha.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El conjunto del plan",
+            "v": "Cinco centros de datos: VDG1 y VDG2 (Villanueva de Gállego), WQA (Huesca), BDE (El Burgo de Ebro) y CAR (Zaragoza). Las necesidades de electricidad del conjunto ascenderían a 10.848,2 GWh/año.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+            "url": "https://www.boa.aragon.es/cgi-bin/EBOA/BRSCGI?CMD=VEROBJ&MLKOB=1406588900808",
+            "fecha": "2025-07-16",
+            "archivo": "fuentes/2026-08-06_boa_inaga-declaracion-ambiental-piga-expansion-aws-aragon.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional, servicio OGC API-Features",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-centros-datos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Potencia TI en MW: ningún acto administrativo la publica. La cifra con la que se compara el sector la dan la patronal y los propios operadores, que son fuente corporativa y no pueden sostener un confirmado (R3)."
+          }
+        ],
+        "nota": "El consumo NO está medido: es la demanda anual a plena capacidad que el promotor declaró y el órgano ambiental evaluó, para un centro que todavía no existe. Los cinco del plan suman 10.848,2 GWh/año según el propio acto. Puesto al lado de la capa de generación por provincia —la otra cifra también primaria—, eso equivale al 48 % de todo lo que Aragón generó en 2024 y al 71 % de lo que generó la provincia de Zaragoza. El atlas registra los dos números y no saca la conclusión: eso se debate en El Tercio, no aquí."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "centros-datos:aws-wqa-huesca",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.40902,
+          42.14063
+        ]
+      },
+      "properties": {
+        "slug": "aws-wqa-huesca",
+        "nombre": "Centro de datos AWS WQA (Huesca)",
+        "categoria": "autorizado",
+        "descripcion": "Uno de los cinco centros de datos del Plan de Interés General «Expansión Región AWS en Aragón». El acto lo identifica como «WQA».",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España; el acto sitúa el emplazamiento por su polígono industrial, que el nomenclátor no nombra",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Amazon Data Services Spain, SL (AWS España)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "codigo_promotor": "WQA",
+        "consumo_gwh_anio": 2270.6,
+        "consumo_gwh_anio__v": "confirmado",
+        "consumo_gwh_anio__f": "f1",
+        "superficie_ha": 56.7,
+        "superficie_ha__v": "confirmado",
+        "superficie_ha__f": "f1",
+        "fase": "tramitacion",
+        "instrumento": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+        "municipio": "Huesca",
+        "provincia": "Huesca",
+        "claves": [
+          {
+            "k": "Dónde lo sitúa el acto",
+            "v": "El terreno se encuentra ubicado en el polígono industrial Parque Tecnológico Walqa. El centro de datos ocupa una superficie de 56,7 ha.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El conjunto del plan",
+            "v": "Cinco centros de datos: VDG1 y VDG2 (Villanueva de Gállego), WQA (Huesca), BDE (El Burgo de Ebro) y CAR (Zaragoza). Las necesidades de electricidad del conjunto ascenderían a 10.848,2 GWh/año.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+            "url": "https://www.boa.aragon.es/cgi-bin/EBOA/BRSCGI?CMD=VEROBJ&MLKOB=1406588900808",
+            "fecha": "2025-07-16",
+            "archivo": "fuentes/2026-08-06_boa_inaga-declaracion-ambiental-piga-expansion-aws-aragon.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional, servicio OGC API-Features",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-centros-datos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Potencia TI en MW: ningún acto administrativo la publica. La cifra con la que se compara el sector la dan la patronal y los propios operadores, que son fuente corporativa y no pueden sostener un confirmado (R3)."
+          }
+        ],
+        "nota": "El consumo NO está medido: es la demanda anual a plena capacidad que el promotor declaró y el órgano ambiental evaluó, para un centro que todavía no existe. Los cinco del plan suman 10.848,2 GWh/año según el propio acto. Puesto al lado de la capa de generación por provincia —la otra cifra también primaria—, eso equivale al 48 % de todo lo que Aragón generó en 2024 y al 71 % de lo que generó la provincia de Zaragoza. El atlas registra los dos números y no saca la conclusión: eso se debate en El Tercio, no aquí."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "centros-datos:aws-bde-el-burgo-de-ebro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.74121,
+          41.57265
+        ]
+      },
+      "properties": {
+        "slug": "aws-bde-el-burgo-de-ebro",
+        "nombre": "Centro de datos AWS BDE (El Burgo de Ebro)",
+        "categoria": "autorizado",
+        "descripcion": "Uno de los cinco centros de datos del Plan de Interés General «Expansión Región AWS en Aragón». El acto lo identifica como «BDE».",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España; el acto sitúa el emplazamiento por su polígono industrial, que el nomenclátor no nombra",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Amazon Data Services Spain, SL (AWS España)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "codigo_promotor": "BDE",
+        "consumo_gwh_anio": 1766.0,
+        "consumo_gwh_anio__v": "confirmado",
+        "consumo_gwh_anio__f": "f1",
+        "superficie_ha": 43.7,
+        "superficie_ha__v": "confirmado",
+        "superficie_ha__f": "f1",
+        "fase": "tramitacion",
+        "instrumento": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+        "municipio": "El Burgo de Ebro",
+        "provincia": "Zaragoza",
+        "claves": [
+          {
+            "k": "Dónde lo sitúa el acto",
+            "v": "El terreno se encuentra ubicado junto al polígono industrial «El Espartal» de El Burgo de Ebro. La ubicación del centro de datos previsto, de 43,7 ha, se encuentra a una distancia de 400 metros al norte del centro de datos existente en El Burgo de Ebro, propiedad del promotor.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El conjunto del plan",
+            "v": "Cinco centros de datos: VDG1 y VDG2 (Villanueva de Gállego), WQA (Huesca), BDE (El Burgo de Ebro) y CAR (Zaragoza). Las necesidades de electricidad del conjunto ascenderían a 10.848,2 GWh/año.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+            "url": "https://www.boa.aragon.es/cgi-bin/EBOA/BRSCGI?CMD=VEROBJ&MLKOB=1406588900808",
+            "fecha": "2025-07-16",
+            "archivo": "fuentes/2026-08-06_boa_inaga-declaracion-ambiental-piga-expansion-aws-aragon.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional, servicio OGC API-Features",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-centros-datos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Potencia TI en MW: ningún acto administrativo la publica. La cifra con la que se compara el sector la dan la patronal y los propios operadores, que son fuente corporativa y no pueden sostener un confirmado (R3)."
+          }
+        ],
+        "nota": "El consumo NO está medido: es la demanda anual a plena capacidad que el promotor declaró y el órgano ambiental evaluó, para un centro que todavía no existe. Los cinco del plan suman 10.848,2 GWh/año según el propio acto. Puesto al lado de la capa de generación por provincia —la otra cifra también primaria—, eso equivale al 48 % de todo lo que Aragón generó en 2024 y al 71 % de lo que generó la provincia de Zaragoza. El atlas registra los dos números y no saca la conclusión: eso se debate en El Tercio, no aquí."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "centros-datos:aws-el-burgo-de-ebro-existente",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.74121,
+          41.57265
+        ]
+      },
+      "properties": {
+        "slug": "aws-el-burgo-de-ebro-existente",
+        "nombre": "Centro de datos AWS de El Burgo de Ebro (existente)",
+        "categoria": "en_servicio",
+        "descripcion": "El único centro de datos ya construido que un acto administrativo menciona en esta capa. Aparece de pasada, al situar el proyectado: no tiene expediente propio entre los archivados.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Amazon Data Services Spain, SL (AWS España)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "fase": "produccion",
+        "instrumento": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+        "municipio": "El Burgo de Ebro",
+        "provincia": "Zaragoza",
+        "claves": [
+          {
+            "k": "Lo que dice el acto, y es todo lo que dice",
+            "v": "«La ubicación del centro de datos previsto, de 43,7 ha, se encuentra a una distancia de 400 metros al norte del centro de datos existente en El Burgo de Ebro, propiedad del promotor.»",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
+            "url": "https://www.boa.aragon.es/cgi-bin/EBOA/BRSCGI?CMD=VEROBJ&MLKOB=1406588900808",
+            "fecha": "2025-07-16",
+            "archivo": "fuentes/2026-08-06_boa_inaga-declaracion-ambiental-piga-expansion-aws-aragon.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional, servicio OGC API-Features",
+            "url": "https://api-features.ign.es/collections/namedplace",
+            "fecha": "2026-08-06",
+            "archivo": "fuentes/2026-08-06_ign_ngbe-toponimos-centros-datos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "Superficie, consumo y fecha de entrada en servicio de este centro: el acto lo menciona para situar otro, y no lo dimensiona. Sin expediente propio archivado, no hay cifra que publicar."
+          }
+        ],
+        "nota": "Se registra porque un acto administrativo afirma que existe, y eso es un hecho con fuente. Todo lo demás —cuánto ocupa, cuánto consume, desde cuándo— es hueco: el atlas prefiere un registro con tres huecos declarados a no registrar lo que sabe que está ahí."
+      }
+    }
+  ]
+}
