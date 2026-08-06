@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.11.0",
+  "schema_version": "1.12.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -136,6 +136,17 @@
         "color": "#6E7E8A" },
       { "valor": "desmantelamiento", "etiqueta": "En desmantelamiento",
         "color": "#98A3AB" }
+    ],
+    "minerales-derechos": [
+      { "valor": "vigente", "etiqueta": "Derecho vigente",
+        "color": "#7A2E1C",
+        "def": "Otorgado, declarado o autorizado. Que el título esté vivo NO dice que se esté explotando: por eso esta capa figura como «no aplica» en §6.5." },
+      { "valor": "en_tramite", "etiqueta": "En tramitación",
+        "color": "#B06A3C",
+        "def": "Expediente abierto de otorgamiento o autorización. Todavía no hay título." },
+      { "valor": "extinguido", "etiqueta": "Caducado o cancelado",
+        "color": "#8C8375",
+        "def": "El título se extinguió. Se publica igual: la memoria no se borra, y un permiso de tierras raras caducado es un hecho del territorio." }
     ],
     "minerales-dominios": [
       { "valor": "activo", "etiqueta": "Producción activa",

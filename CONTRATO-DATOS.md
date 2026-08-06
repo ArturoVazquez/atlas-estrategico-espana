@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.11.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.12.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -308,6 +308,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `nuclear` *(1.6)* | `fase` | `fase == "produccion"` (reactor en explotación) |
 | `gas-regasificacion` *(1.8)* | `fase` | `fase == "produccion"` (planta en servicio) |
 | `minerales-dominios` *(1.10)* | `categoria` (§9, vocabulario) | `categoria ∈ {activo, mixto}` |
+| `minerales-derechos` *(1.12)* | — | **no aplica**. Un título otorgado NO dice que se esté explotando: se puede tener una concesión décadas sin abrir una mina. Va en el grupo `actividad` porque alguien lo sostiene y puede caducar, pero la pregunta del filtro no se le hace. |
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
@@ -367,7 +368,7 @@ su copia archivada, igual que la que sostiene un promotor.
 
 | Lo que da la fuente | `geo_precision` |
 |---|---|
-| Perímetro o coordenadas **del objeto**: catastro minero, o la resolución que lo autoriza | `exacta` |
+| Perímetro o coordenadas **del objeto mismo**: catastro minero, o la resolución que lo autoriza | `exacta` |
 | Topónimo de un nomenclátor oficial: primaria para el **nombre del lugar**, no para el perímetro de la instalación | `paraje` |
 | Nada localizable, o fuente con licencia incompatible (`datos/LICENCIA-DATOS.md`) | `municipio` — se queda ahí, y lo dice |
 | Trazado a mano alzada | `ilustrativa` |
@@ -384,6 +385,22 @@ derecho ninguno (las dos cosas, comprobadas sobre el catastro minero al abrir
 esta capa). Consecuencia práctica, y conviene decirla entera: **mientras una
 capa sea de puntos, `exacta` es inalcanzable por construcción.** Se llega a ella
 ascendiendo la geometría a polígono (§8), no reetiquetando el punto.
+
+**«Del objeto mismo» quiere decir del objeto que la fuente define, y de ningún
+otro** *(1.12)*. La frase parecía obvia hasta que hubo que aplicarla: el catastro
+minero define **derechos**, no minas. El perímetro de un derecho es exacto
+**sobre el derecho** —es su envolvente administrativa de cuadrículas, y ahí no
+hay margen de error— y **no dice dónde está la instalación**. Un proyecto que
+tiene ese derecho no hereda su geometría ni su precisión:
+
+- **`minerales-derechos` es `exacta`**: la geometría ES el derecho.
+- **`minerales-proyectos` sigue en `paraje` y `municipio`**: son proyectos, y el
+  derecho que cada uno tiene no lo dice ningún documento. Un titular puede
+  acumular decenas de derechos —TOLSA tiene medio centenar solo en Madrid— y
+  elegir cuál «es» el proyecto sería una atribución sin fuente.
+
+Las dos capas se dibujan encima la una de la otra y **el lector ve el solape**,
+que es un hecho, en vez de leer una identificación que nadie ha firmado.
 
 **El CRS es parte de la cita, no un detalle de taller.** Los derechos mineros
 españoles vienen históricamente en **ED50**, y ED50→ETRS89 en la Península
@@ -551,6 +568,7 @@ vocabulario.
 - *espacios-maritimos* *(1.11)*: `sin_delimitar` · `limite_declarado` · `recurso_afectado`
 - *gas-regasificacion* *(1.8)*: `regasificacion` · `logistica_gnl`
 - *minerales-dominios* *(1.10)*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
+- *minerales-derechos* *(1.12)*: `vigente` · `en_tramite` · `extinguido`
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
 
@@ -682,6 +700,30 @@ mundo`): `estado_juridico` (✔; +`__v`,`__f`) · `partes[]` · `instrumento` ·
 > capa hacia la geometría —capa ilustrativa ⇒ toda su geometría ilustrativa— y
 > **no al revés**; R9 solo vigila `exacta` y `paraje`. Queda escrito aquí porque
 > el malentendido contrario ya aplazó esta capa una vez.
+
+**minerales-derechos** *(1.12)* (`actividad`, polígonos, verificado):
+`titular` (✔) · `tipo_derecho` · `situacion` (✔) · `n_registro` ·
+`sustancia_principal` · `sustancias[]` · `superficie_declarada` · `provincia`
+
+> **Qué entra y qué no, dicho como regla y no como criterio.** Publicar los casi
+> cuatro mil derechos de ocho provincias sería un volcado, no curación; elegirlos
+> a ojo sería sesgo. La regla es mecánica: **entran los derechos cuyo titular es
+> uno de los promotores que el atlas ya registra** en `minerales-proyectos`. Se
+> puede repetir, se puede discutir, y no depende de qué me parezca importante.
+>
+> **Los extinguidos se publican.** Que los tres permisos de tierras raras de
+> Quantum Minería en el Campo de Montiel figuren **caducados** es exactamente el
+> tipo de hecho que el atlas existe para registrar, y la memoria no se borra
+> (principio 3).
+>
+> **`superficie_declarada` va VERBATIM y sin `__v`, y no concuerda con el
+> perímetro.** Medido sobre los 106 derechos, cada unidad vale ~0,30 km² con el
+> código «C» y ~0,22 km² con el código «H» —que el catastro rotula «hectáreas», y
+> una hectárea es 0,01 km²—. El atlas **no elige** cuál de los dos datos de la
+> misma fuente vale: publica el perímetro, que es el que esa fuente dibuja, y
+> deja el campo dicho con su desacuerdo. Traducir «H» por «hectáreas» habría
+> publicado un número veintidós veces menor que el área que el propio catastro
+> traza.
 
 **minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado) *(1.10)*:
 `ambito_territorial` · `materias[]` · `distritos[]` · `sym` (etiqueta corta de
@@ -818,6 +860,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.12.0** | 2026-08-06 | **Aditiva.** Nace `minerales-derechos` (§10): los derechos del Catastro Minero cuyo titular es un promotor que el atlas ya registra, con su perímetro y **el primer `geo_precision: exacta` del atlas**. §6.6 gana la enmienda que obligó a escribir la propia fuente: «del objeto mismo» quiere decir **del objeto que la fuente define y de ningún otro** — el catastro define DERECHOS, no minas, y un proyecto que tiene un derecho no hereda su geometría ni su precisión. Por eso `minerales-proyectos` **no** pasa de punto a polígono, contra lo que PLAN.md preveía: elegir cuál de los cincuenta derechos de TOLSA «es» el proyecto de sepiolita sería una atribución sin fuente. Las dos capas se solapan en el mapa y el lector ve el solape, que sí es un hecho. Y §10 deja escrito que `superficie_declarada` va verbatim porque **no concuerda con el perímetro que la misma fuente dibuja**. |
 | **1.11.0** | 2026-08-06 | **Aditiva.** Nace `espacios-maritimos` (§10), la capa del mar del tablero, con su `categoria` (§9) y su fila de §6.5 —«no aplica», como el resto del tablero—. Estrena el `ambito: mundo` para geometría real: la plataforma continental más allá de las 200 millas **cae fuera del recuadro de §7.4 por definición**, así que se declara el ámbito de la capa y **no se ensancha el recuadro**, que habría debilitado la comprobación de las otras seis. Deja escrito, donde ya confundió una vez, que **R5 va de la capa hacia la geometría y no al revés**: una capa `verificado` puede contener un registro `geo_precision: ilustrativa`, y eso es lo que permite dibujar la zona sin delimitación acordada sin dictar ninguna frontera (D5). |
 | **1.10.0** | 2026-08-06 | **Aditiva, y cierra el único renglón en el que este documento no se sostenía a sí mismo.** Nace la capa `minerales-dominios` (§10) y con ella **R8 gana su diente**: entra en la tabla de §6.4, se retira la nota de estado de §6.5 y §8 deja de citarla como el ejemplo vivo de regla sin implementar. Desde hoy **ninguna regla del contrato es prosa**. La capa unifica el `caracter` de §10 con el `categoria` del núcleo, que archivaban los MISMOS cinco valores en dos campos: renombrado nominalmente mayor por §8, gratis de hecho porque la capa no tenía datos publicados — el mismo argumento con el que la 1.1 introdujo `fase`. Los cinco valores estrenan `color` (§9). |
 | **1.9.0** | 2026-08-06 | **Aditiva.** Cada categoría de §9 lleva ahora su **`color`**. Lo destapó tener cuatro capas encendidas a la vez: nuclear, gas y el tablero se pintaban del MISMO gris, porque la paleta vivía cableada en el visor y solo conocía las tres categorías de `minerales-proyectos`. Es el mismo vicio —código que conoce las capas de antemano— que ya se había quitado del panel y de la ficha. Consecuencia asumida: el color es dato, así que cambiarlo exige una release. |
