@@ -19,6 +19,7 @@ escribe. No corrige. No adivina.
 from __future__ import annotations
 
 import json
+import math
 import re
 import sys
 from dataclasses import dataclass
@@ -42,6 +43,11 @@ ESQUEMAS = Path(__file__).resolve().parent / "esquemas"
 BBOX_ESPANA = (-18.3, 27.5, 4.4, 43.9)
 
 DECIMALES_MAX = 5          # §4 · ~1 m. Más que eso es ruido en el diff.
+
+# R10 (1.16) · Ancha a propósito: una longitud declarada «~400 km» y una
+# geometría que mide 382 es concordancia, no error. Lo que caza es el salto de
+# categoría — un factor 1,3 de Web Mercator, o kilómetros escritos en metros.
+TOLERANCIA_LONGITUD = 0.15
 SUFIJO_META = re.compile(r"^(?P<base>[a-z][a-z0-9_]*)__(?P<clase>[vf])$")
 
 BLOQUEA = "BLOQUEA"
@@ -93,6 +99,32 @@ def coordenadas(geom: dict):
             for hijo in nodo:
                 yield from bajar(hijo)
     yield from bajar(geom.get("coordinates", []))
+
+
+def longitud_geodesica(geom: dict) -> float:
+    """Kilómetros de un LineString/MultiLineString sobre la esfera (R10, 1.16).
+
+    Haversine con el radio medio de la Tierra. No se usa Web Mercator a
+    propósito, que es justo el error que R10 persigue: en esa proyección una
+    línea a 43° de latitud «mide» un 38 % más de lo que mide en el mundo.
+    """
+    tipo = geom.get("type")
+    if tipo == "LineString":
+        tramos = [geom.get("coordinates", [])]
+    elif tipo == "MultiLineString":
+        tramos = geom.get("coordinates", [])
+    else:
+        return 0.0
+
+    radio = 6371.0088  # km, radio medio (IUGG)
+    total = 0.0
+    for tramo in tramos:
+        for (lon1, lat1, *_), (lon2, lat2, *_) in zip(tramo, tramo[1:]):
+            f1, f2 = math.radians(lat1), math.radians(lat2)
+            h = (math.sin((f2 - f1) / 2) ** 2
+                 + math.cos(f1) * math.cos(f2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2)
+            total += 2 * radio * math.asin(math.sqrt(h))
+    return total
 
 
 def anillos(geom: dict):
@@ -291,7 +323,10 @@ def comprobar_doctrina(doc: dict, registro_capa: str) -> list[Hallazgo]:
         # dos: promete cartografía. Que el borde publicado esté simplificado
         # no rebaja de dónde sale, y una simplificación sin fuente citada es
         # un trazado a mano alzada con mejor nombre.
-        if props.get("geo_precision") in ("exacta", "paraje", "generalizada"):
+        # `proyectada` (1.16) entra también, y no por analogía: es la que más lo
+        # necesita. Dice que el terreno todavía no puede desmentir el trazado, así
+        # que la ÚNICA garantía que le queda al lector es saber quién lo dibujó.
+        if props.get("geo_precision") in ("exacta", "paraje", "generalizada", "proyectada"):
             precision, fid = props.get("geo_precision"), props.get("geo_fuente__f")
             if not props.get("geo_fuente"):
                 out.append(Hallazgo(BLOQUEA, "R9", donde,
@@ -313,6 +348,24 @@ def comprobar_doctrina(doc: dict, registro_capa: str) -> list[Hallazgo]:
                                     f"catastro minero, nomenclátor oficial o la resolución "
                                     f"que lo autoriza. Si no la hay, la geometría es "
                                     f"«municipio», y eso es un resultado legítimo (§6.6)."))
+
+        # R10 (1.16) · Lo declarado contra lo dibujado. Solo mira los registros
+        # que declaran `longitud_km` y traen una geometría lineal; los demás no
+        # tienen nada que cuadrar y se saltan sin ruido.
+        declarada = props.get("longitud_km")
+        if isinstance(declarada, (int, float)) and declarada > 0:
+            medida = longitud_geodesica(f.get("geometry") or {})
+            if medida > 0:
+                desvio = abs(medida - declarada) / declarada
+                if desvio > TOLERANCIA_LONGITUD:
+                    out.append(Hallazgo(
+                        BLOQUEA, "R10", donde,
+                        f"Declara {declarada:g} km y su geometría mide "
+                        f"{medida:.0f} km sobre el elipsoide ({desvio:.0%} de "
+                        f"desvío, tolerancia {TOLERANCIA_LONGITUD:.0%}). Un "
+                        f"desvío así no es un redondeo: suele ser una longitud "
+                        f"copiada de un campo en metros de Web Mercator, que "
+                        f"vienen inflados por la latitud (§10)."))
 
         # R3 también gobierna las `claves`: llevan su propio verif y su fuente.
         for i, clave in enumerate(props.get("claves", [])):

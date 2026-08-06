@@ -183,10 +183,14 @@
       "atribucion": "INAGA (Gobierno de Aragón) · Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
     {
-      "id": "h2med",
-      "titulo": "Corredor H2Med",
+      "_": "Era `h2med`, «Corredor H2Med», y se renombra antes de publicar nada porque el nombre habría sido inexacto desde el primer día: de los 3.268 km que la capa dibuja, 2.634 son la RED TRONCAL ESPAÑOLA, que no es el H2Med. Renombrar sale gratis porque el id nunca publicó registros: §8 protege los ids con datos, no los del horizonte. Y cambia de grupo: `dotacion` es «una condición permanente del territorio» y una red que Enagás está tramitando es «una empresa que alguien sostiene y puede abandonar», que es la definición de `actividad` — igual que su hermana `electricidad-interconexiones`.",
+      "id": "hidrogeno-red",
+      "titulo": "Red de hidrógeno (PCI)",
       "arbol": "conectividad",
-      "grupo": "dotacion",
+      "grupo": "actividad",
+      "geometria": "mixta",
+      "registro": "verificado",
+      "ambito": "mundo",
       "en_preparacion": true
     },
 

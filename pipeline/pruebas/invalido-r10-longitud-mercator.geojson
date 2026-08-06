@@ -1,0 +1,56 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "hidrogeno-red",
+    "schema_version": "1.16.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "hidrogeno-red:barmar",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[2.15, 41.34], [3.5, 42.4], [4.93, 43.41]]
+      },
+      "properties": {
+        "slug": "barmar",
+        "nombre": "H2Med/BarMar — interconector de hidrógeno España-Francia",
+        "categoria": "hidroducto",
+        "descripcion": "Conducción submarina de hidrógeno entre Barcelona y Marsella, proyecto 9.1.4 de la lista de la Unión.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "trazado publicado por la plataforma de transparencia PCI-PMI",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f1",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Enagás Infraestructuras de Hidrógeno (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "pci_codigo": "9.1.4",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2032-12-31",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f1",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "longitud_km": 440,
+        "longitud_km__v": "confirmado",
+        "longitud_km__f": "f1",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA), proyecto 9.1.4",
+            "fecha": "2026-08-06"
+          }
+        ],
+        "nota": "VIOLA R10. La geometría mide 324 km sobre el elipsoide y el registro declara 440: un 26 % de desvío, que no es un redondeo ni una diferencia de trazado. Es el error concreto que R10 existe para cazar — la fuente sirve un campo de longitud (`SHAPE.LEN`) en metros de WEB MERCATOR, una proyección que a estas latitudes estira las distancias entre un 26 % y un 38 %. Copiarlo sin mirar publica una cifra que parece de la fuente, viene de la fuente y es falsa. La tolerancia del 15 % es ancha a propósito: una longitud declarada «~400 km» junto a una geometría de 382 tiene que pasar en verde, porque la fuente redondea y el trazado todavía puede cambiar. Lo que no puede pasar es un factor 1,3."
+      }
+    }
+  ]
+}

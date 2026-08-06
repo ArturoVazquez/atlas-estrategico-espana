@@ -55,6 +55,18 @@ CASOS: dict[str, tuple[set[str], int]] = {
     "invalido-r9-exacta-sin-fuente.geojson":           ({"R9"},     1),
     "invalido-r9-exacta-con-corporativa.geojson":      ({"R9"},     1),
 
+    # La tercera fixture de R9 (1.16) no repite las otras dos: prueba que el
+    # valor NUEVO de `geo_precision` está dentro de la regla. `proyectada` es la
+    # que más lo necesita —cuando el objeto no existe, saber quién dibujó la
+    # línea es la única garantía que queda— y era la más fácil de dejar fuera,
+    # porque se añade en un enum y R9 vive en otro sitio.
+    "invalido-r9-proyectada-sin-fuente.geojson":       ({"R9"},     1),
+
+    # R10 (1.16) · Lo declarado contra lo dibujado. Sale de una trampa real: la
+    # fuente sirve la longitud en metros de Web Mercator, inflados por la
+    # latitud hasta un 38 %. Este caso declara 440 km sobre una geometría de 324.
+    "invalido-r10-longitud-mercator.geojson":          ({"R10"},    1),
+
     # Las comprobaciones de §7 que no son reglas de doctrina. F0 no las exigía;
     # están porque un control que nadie ejercita puede llevar meses roto sin que
     # se note, y este validador es lo único que separa el atlas de la

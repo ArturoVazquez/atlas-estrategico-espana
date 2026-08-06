@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.15.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.16.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -190,7 +190,7 @@ anglosajón) se asume y queda anotado aquí.
 | `descripcion` | string | – | 1–3 frases de contexto |
 | `estado_registro` | enum | ✔ | `vigente` · `historico` · `retirado` |
 | `verif` | enum | ✔ | `confirmado` · `parcial` · `no_verificado` — estado global del registro |
-| `geo_precision` | enum | ✔ | `exacta` · `paraje` · **(1.14)** `generalizada` · `municipio` · `ilustrativa` |
+| `geo_precision` | enum | ✔ | `exacta` · `paraje` · **(1.14)** `generalizada` · **(1.16)** `proyectada` · `municipio` · `ilustrativa` |
 | `geo_fuente` | string | – | de dónde sale la geometría (p. ej. `catastro minero`, `mano alzada`). **(1.3)** admite `__v`/`__f` como cualquier campo sensible — ver §6.6 |
 | `fecha_alta` | fecha ISO | ✔ | cuándo entró el registro en el atlas |
 | `fecha_verificacion` | fecha ISO | ✔ | última pasada de verificación humana |
@@ -239,6 +239,24 @@ consultable con GDAL sin adaptadores. Las dos excepciones estructuradas son
 > habría convertido una previsión en un hecho, que es la única cosa que este
 > atlas no puede hacer. Cuando el acto llegue, el registro entra; hasta entonces,
 > la fuente es `prensa` y el registro no puede ser `confirmado`.
+
+> **Un registro que una norma obliga a publicar SÍ es `primaria`, aunque viva en
+> una web** *(1.16)*. El reverso de lo anterior, y hacía falta escribirlo porque
+> la regla «el acto, no el anuncio» mal aplicada dejaría fuera fuentes buenas. La
+> **plataforma de transparencia PCI-PMI** de la Comisión no es divulgación: existe
+> por el **artículo 23 del Reglamento (UE) 2022/869**, que obliga a publicar
+> «información general actualizada, **por ejemplo, información geográfica**, para
+> cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el
+> registro. La prueba está en el propio artículo: enumera de la a) a la g) lo que
+> la plataforma **debe** contener.
+>
+> Dos cautelas que vienen con ella, y que valen para cualquier registro de este
+> tipo. **Primera: la obligación de publicar no alcanza a todo lo que se sirve
+> junto.** El mismo visor sirve la capa `PLATTS` (S&P Global), que es de tercero y
+> comercial: no la cubre ni el artículo 23 ni la Decisión 2011/833/UE, y no entra.
+> **Segunda: un registro puede publicar y advertir a la vez.** Esta advierte de su
+> geometría que puede no coincidir con el trazado final — y esa advertencia no la
+> degrada a `corporativa`, la coloca en `geo_precision: proyectada` (§6.6).
 
 ### 6.2 Verificación por campo
 
@@ -289,7 +307,8 @@ error de esquema genérico.
 | **R6** *(1.1)* | Todo `__v` y todo `__f` acompañan a un campo que existe, y todo `__f` apunta a un `id` que existe en `fuentes`. Un metadato huérfano es un dato que nadie sostiene. |
 | **R7** *(1.1)* | Ningún fichero de datos contiene el campo `activo`: es **derivado** (§6.5). Escribirlo a mano es la doble fuente de verdad que D3 descartó. |
 | **R8** *(1.1, con diente desde 1.10)* | Un polígono de `minerales-dominios` con `categoria ∈ {desarrollo, historico}` **no puede contener** un registro de `minerales-proyectos` con `fase == "produccion"`. Su explicación larga está en §6.5, porque nació de cerrar el matiz abierto de D3. |
-| **R9** *(1.3; `generalizada` desde 1.14)* | `geo_precision ∈ {exacta, paraje, generalizada}` ⇒ el registro declara `geo_fuente`, y su `geo_fuente__f` apunta a una fuente `primaria`. Una precisión que promete cartografía tiene que citarla (§6.6). |
+| **R9** *(1.3; `generalizada` desde 1.14, `proyectada` desde 1.16)* | `geo_precision ∈ {exacta, paraje, generalizada, proyectada}` ⇒ el registro declara `geo_fuente`, y su `geo_fuente__f` apunta a una fuente `primaria`. Una precisión que promete cartografía tiene que citarla (§6.6). |
+| **R10** *(1.16)* | En una capa con lineales, un registro que declare `longitud_km` **cuadra con su propia geometría** al 15 %, medida sobre el elipsoide. La tolerancia es ancha a propósito: no persigue un decimal, persigue un cambio de unidad o de proyección (§10, `hidrogeno-red`). |
 
 **Esta tabla es lo que el CI comprueba, y desde la 1.10 no le falta ninguna.**
 R8 estuvo fuera desde la 1.1 —escrita, normativa y sin diente— porque necesitaba
@@ -329,6 +348,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
 | `centros-datos` *(1.15)* | `fase` | `fase == "produccion"` (el centro presta servicio). Un campus **autorizado y sin construir no está en explotación**, por muchos gigavatios-hora que prometa su declaración ambiental. |
+| `hidrogeno-red` *(1.16)* | `fase` | `fase == "produccion"` (el tramo, la compresora o la caverna prestan servicio). Hoy **ninguno de los diez**: la red entera está en tramitación, y eso es lo que el filtro debe enseñar. |
 | `generacion-electrica-provincia` *(1.14)* | — | **no aplica**. El registro no es una instalación: es una **provincia**, y a un territorio no se le pregunta si está en explotación. Lo que generó no la pone «en explotación» ni la deja fuera: la pregunta es de otra clase de objeto. Devuelve `null`, y por eso el filtro no esconde ni una sola de las 52. |
 
 Una capa cuya fila diga «no aplica» devuelve `null`, no `false`. La diferencia
@@ -389,6 +409,7 @@ su copia archivada, igual que la que sostiene un promotor.
 | Perímetro o coordenadas **del objeto mismo**: catastro minero, o la resolución que lo autoriza | `exacta` |
 | Topónimo de un nomenclátor oficial: primaria para el **nombre del lugar**, no para el perímetro de la instalación | `paraje` |
 | Perímetro del objeto mismo, de fuente cartográfica primaria, **simplificado por el atlas** para poder publicarse *(1.14)* | `generalizada` |
+| Trazado o emplazamiento **previsto**, publicado por la fuente primaria que además **advierte ella misma** de que puede no ser el definitivo *(1.16)* | `proyectada` |
 | Nada localizable, o fuente con licencia incompatible (`datos/LICENCIA-DATOS.md`) | `municipio` — se queda ahí, y lo dice |
 | Trazado a mano alzada | `ilustrativa` |
 
@@ -407,6 +428,25 @@ distintas**, y solo la segunda separa una simplificación declarada de un dibujo
 Por eso `generalizada` entra en **R9** como las otras dos que prometen
 cartografía: la simplificación tiene que citar qué simplificó. Lo que NO concede
 es exactitud — un borde generalizado no sirve para medir, y su ficha lo dice.
+
+**`proyectada` es lo que todavía no existe, dicho por quien lo va a construir**
+*(1.16)*. Nació del mismo modo que `generalizada`, y por el mismo error evitado:
+la geometría de la red de hidrógeno la publica la plataforma de transparencia de
+la Comisión —registro obligatorio por el artículo 23 del TEN-E, no una web de
+cortesía—, y esa misma plataforma advierte de su propio trazado que «no prejuzga
+y puede no coincidir con el trazado final del proyecto». Ninguno de los valores
+anteriores dice eso: `exacta` promete el objeto mismo cuando el objeto **aún no
+está construido**, `generalizada` culpa al atlas de una simplificación que aquí
+no ha hecho, y `ilustrativa` volvería a hacer mentir a la ficha —«trazado a mano
+alzada»— sobre cartografía que nadie ha dibujado a mano.
+
+La distinción que conserva es de **tiempo**, no de detalle: las otras cuatro
+responden a «cuánto se afina esto»; `proyectada` responde a «¿existe ya?». Un
+hidroducto que se pondrá en servicio en 2032 tiene una geometría tan precisa
+como quiera su promotor y sigue sin poder desmentirla el terreno, porque el
+terreno todavía no la tiene. Entra en **R9** con las otras que prometen
+cartografía, y **no concede exactitud**: sobre una `proyectada` no se mide, se
+lee una intención con fuente.
 
 **Un punto representativo no hereda la precisión del polígono del que sale.**
 Un perímetro de fuente primaria concede `exacta` **a ese perímetro**, no a un
@@ -578,8 +618,8 @@ vocabulario.
 
 - `verif`: `confirmado` · `parcial` · `no_verificado`
 - `estado_registro`: `vigente` · `historico` · `retirado`
-- `geo_precision`: `exacta` · `paraje` · `generalizada` *(1.14)* · `municipio` ·
-  `ilustrativa` — qué fuente concede cada uno, en §6.6
+- `geo_precision`: `exacta` · `paraje` · `generalizada` *(1.14)* · `proyectada`
+  *(1.16)* · `municipio` · `ilustrativa` — qué fuente concede cada uno, en §6.6
 - `fuente.tipo`: `primaria` · `prensa` · `corporativa` · `hueco`
 - `fase` *(1.1)*: `produccion` · `desarrollo` · `tramitacion` · `parado` · `cerrado`
 
@@ -602,11 +642,22 @@ vocabulario.
 - *minerales-derechos* *(1.12)*: `vigente` · `en_tramite` · `extinguido`
 - *electricidad-interconexiones* *(1.13)*: `en_servicio` · `en_construccion` · `proyectada`
 - *centros-datos* *(1.15)*: `en_servicio` · `autorizado` · `en_tramitacion`
+- *hidrogeno-red* *(1.16)*: `hidroducto` · `estacion_compresion` · `almacenamiento`
+  — aquí `categoria` dice **qué pieza de la red es**, no en qué estado está: el
+  estado ya lo llevan `fase` y `estado_pci`, y las tres piezas se leen de un
+  vistazo en el mapa porque son línea, punto y punto
 - *generacion-electrica-provincia* *(1.14)*: `eolica` · `solar_fv` · `solar_termica` ·
   `hidraulica` · `nuclear` · `combustibles` · `cogeneracion` · `mareomotriz` —
   la **tecnología dominante** de la provincia
 - *cables-submarinos*: `aterrizaje` · `trazado`
 - *recurso-eolico* / *recurso-solar*: `zona`
+
+> **`proyectada` existe en dos vocabularios distintos, y es a propósito**
+> *(1.16)*. Es `categoria` en `electricidad-interconexiones` (qué clase de enlace
+> es) y `geo_precision` en cualquier capa (qué clase de geometría es). No chocan:
+> viven en ramas separadas de `vocabularios.json` y quieren decir lo mismo —
+> **esto todavía no está construido**—, cada una aplicada a su objeto. Se dejó la
+> palabra en vez de inventar un sinónimo peor.
 
 > **`fase` y `categoria` no son lo mismo, aunque compartan palabras.**
 > `categoria` dice **qué clase de cosa es** un registro (por qué está en el
@@ -890,7 +941,59 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > manera de seguir un centro concreto a través de los sucesivos expedientes,
 > porque el nombre comercial no aparece y el municipio se repite.
 
-*(Capas futuras —PERTE acotado, agua embalsada, H2Med— entran por §8 con su
+**hidrogeno-red** *(1.16)* (`actividad`, **mixta**, verificado, `ambito: mundo`):
+`promotor` (✔) · `pci_codigo` (✔) · `estado_pci` (✔) ·
+`puesta_en_servicio_prevista` (+`__v`,`__f`) · `fase` · `longitud_km`
+(+`__v`,`__f`) · `diametro_mm` (+`__v`,`__f`) · `capacidad_mt_anio`
+(+`__v`,`__f`) · `potencia_mw` (+`__v`,`__f`) · `volumen_util_gwh`
+(+`__v`,`__f`) · `claves[]`
+
+> **La capa se llamaba `h2med` y se renombra**, porque el nombre habría sido
+> inexacto desde el primer día: de sus 3.268 km, **2.634 son la red troncal
+> española**, que no es el H2Med. §8 protege los ids que han publicado registros,
+> y este no había publicado ninguno — el mismo caso de `renovable-provincia`.
+>
+> **El perímetro de la capa lo fija un acto español, no el gusto del atlas.** El
+> Acuerdo del Consejo de Ministros de 30 de julio de 2024 (BOE-A-2024-19047)
+> habilita a Enagás para **cinco** proyectos, y esos cinco son la capa: 9.1.2
+> (CelZa), 9.1.3 (red troncal), 9.1.4 (BarMar) y los almacenamientos 9.24.1 y
+> 9.24.2. Los dos últimos son el hallazgo silencioso: **el relato público del
+> H2Med no los menciona nunca**, y son dos cavernas de sal en Cantabria y en la
+> cuenca vasco-cantábrica.
+>
+> **Un registro por objeto que la fuente define, no por tramo dibujado** (§6.6).
+> La plataforma trocea la troncal en 14 polilíneas por conveniencia de dibujo;
+> el objeto que el reglamento define es **un** proyecto, así que va como un
+> `MultiLineString`. Las estaciones de compresión sí son objetos aparte —la
+> descripción técnica las nombra una a una— y por eso tienen registro propio.
+>
+> **`estado_pci` va aparte de `fase`, y no es redundancia.** Es la palabra
+> literal de la plataforma (`Permitting`, `Under consideration`). Aplanarla a
+> `fase` borraría la única diferencia que la fuente marca entre los dos
+> almacenamientos: uno está en tramitación y el otro «en consideración», que no
+> es ninguno de los cinco valores de `fase` y no se va a fingir que lo sea.
+>
+> **`longitud_km` es la que declara la prosa de la fuente, jamás la que mide el
+> atlas.** El servicio publica un campo `SHAPE.LEN` que **está en metros de Web
+> Mercator**, inflados por la latitud entre un 26 % y un 38 %: BarMar «mide» 518
+> km ahí y 382 sobre el elipsoide, contra los «~400 km» que declara su propia
+> ficha técnica. Ese campo no entra nunca. La medición del atlas sirve para
+> **contrastar**, y de ahí sale **R10** (§6.4): si lo declarado y lo dibujado se
+> separan más de un 15 %, alguien ha confundido unidad o proyección.
+>
+> **Los cinco tramos que el reglamento excluye no se dibujan** —Coruña-Zamora,
+> Huelva-Algeciras, Zamora-Haro, Guitiriz-Zamora y la conexión Castilla-La
+> Mancha–Madrid, todos «inversiones que no reúnen los requisitos» del anexo—, y
+> **tampoco los dibuja la Comisión**: se comprobó tramo a tramo contra la
+> geometría publicada y ninguna de las cinco aparece. Las dos fuentes primarias
+> concuerdan, y eso también es un dato.
+>
+> **Los cinco electrolizadores españoles quedan fuera** (9.15.4 a 9.15.8), aunque
+> la misma plataforma los sirve con geometría y promotor. Son **producción, no
+> red**, y de promotores distintos; el acto que da el perímetro de esta capa no
+> habilita a Enagás para ellos. Cuando entren, entrarán en capa propia.
+
+*(Capas futuras —PERTE acotado, agua embalsada— entran por §8 con su
 apartado aquí y su esquema en `pipeline/esquemas/`.)*
 
 ---
@@ -1000,6 +1103,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.16.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-red` (§10) —la capa que se llamaba `h2med` y no podía seguir llamándose así: de sus 3.268 km, **2.634 son la red troncal española**, que no es el H2Med—. El perímetro no lo elige el atlas: lo fija el Acuerdo del Consejo de Ministros de 30-07-2024 (BOE-A-2024-19047), que habilita a Enagás para **cinco** proyectos, dos de ellos —las cavernas de sal 9.24.1 y 9.24.2— que el relato público del H2Med **no menciona nunca**. §6.1 gana el reverso de la enmienda 1.15: si aquella dijo que el comunicado de un gobierno no es primario, esta dice que **un registro que una norma OBLIGA a publicar sí lo es**, aunque viva en una web — la plataforma de transparencia PCI-PMI existe por el **artículo 23 del Reglamento (UE) 2022/869**, que enumera de la a) a la g) lo que debe contener, empezando por la información geográfica. Con dos cautelas que vienen con ella: la obligación **no alcanza a lo que se sirve junto** (la capa PLATTS del mismo visor es de S&P Global y no entra), y un registro **puede publicar y advertir a la vez**. Esa advertencia —«la representación GIS no prejuzga y puede no coincidir con el trazado final»— obliga a estrenar un valor de `geo_precision`: **`proyectada`** (§5, §6.6, §9), dentro de **R9**. Ninguno de los cinco anteriores servía, y por el mismo motivo que hizo nacer `generalizada` en la 1.14: `ilustrativa` habría hecho mentir a la ficha —«trazado a mano alzada»— sobre cartografía que nadie dibujó a mano. La distinción que conserva es de **tiempo**, no de detalle: las otras cuatro dicen cuánto se afina un contorno; `proyectada` dice que **el terreno todavía no puede desmentirlo**. Y nace **R10**: en una capa con lineales, `longitud_km` cuadra con su propia geometría al 15 %. Sale de una trampa real — el servicio publica un `SHAPE.LEN` en metros de **Web Mercator**, inflado por la latitud hasta un 38 %, con el que BarMar «mide» 518 km en vez de 382. La regla no persigue un decimal: persigue un cambio de unidad o de proyección. |
 | **1.15.0** | 2026-08-06 | **Aditiva.** Nace `centros-datos` (§10) con una regla de entrada estrecha y explícita: **entra el centro que un acto administrativo nombra**, y nada más. La casilla obligó a decidirlo porque **España no tiene registro público de centros de datos** —la base europea del art. 12 de la Directiva 2023/1791 se publica agregada por Estado miembro, MITECO no lleva censo y las cifras de mercado son de la patronal—. §6.1 gana la enmienda que faltaba: **una nota de prensa de una administración no es `primaria`**; lo primario es el acto, no su anuncio. La escribió el caso catalán, con sus «26 proyectos y 2.000 MW» sin un solo expediente detrás: hasta ahora el atlas solo había tenido que rechazar fuentes privadas, y la trampa pública es peor porque parece oficial. §10 deja además fuera a los tres solicitantes de centros de datos que el concurso de capacidad de demanda **sí nombra** —CPD4GREEN, Benbros DC y ACS DC Infra, los tres excluidos—: esa resolución define una solicitud en un nudo, no un centro en un sitio, que es el límite de §6.6 aplicado por segunda vez. §6.5 y §9 dan su fila y sus tres categorías. |
 | **1.14.0** | 2026-08-06 | **Aditiva.** Nace `generacion-electrica-provincia` (§10), la primera **coropleta** del atlas: 52 provincias con su mezcla de generación por tecnología. Nace **de una casilla imposible** — el horizonte pedía potencia INSTALADA por provincia y no la sostiene nadie con licencia compatible: MITECO desagrega generación, no potencia; **la CNMC publica potencia pero bajo CC BY-SA**, ShareAlike, vetada por `datos/LICENCIA-DATOS.md`; REE llega a provincia y es `corporativa` (R3). Que el atlas se detenga ante la **licencia de un organismo público** es lo nuevo: hasta hoy solo le había pasado con fuente privada. §3 estrena `fondo`, marca de manifiesto para la capa que cubre el territorio entero y **cede el clic** a las que tiene encima — sin ella el visor tendría que conocerla por su nombre. §6.5 le da su fila: «no aplica», porque una provincia no es una instalación. §9 sus ocho categorías, que son la **tecnología dominante** y por eso se comprueban contra el argmax de las cifras del propio registro: un derivado solo se escribe si el CI puede desmentirlo. La geometría del IGN va **generalizada** —186 MB no se publican— y eso obliga a estrenar un valor de `geo_precision`: **`generalizada`** (§6.6, §9), dentro de **R9**. Se intentó con `ilustrativa` y la ficha quedó mintiendo, porque ese valor está definido como «trazado a mano alzada» y el límite de una provincia no lo es. De dónde sale un borde y cuánto se ha tocado son dos preguntas distintas. |
 | **1.13.0** | 2026-08-06 | **Aditiva.** Nace `electricidad-interconexiones` (§10): los enlaces eléctricos que cruzan una frontera, con su punto en el extremo español y el de fuera **nombrado y sin coordenada** — un enlace tiene dos extremos y el atlas solo puede situar uno, y eso se dice en vez de disimularlo con una recta. §6.5 le da su fila (`activo` cuando `en_servicio`), §9 su categoría. Deja escrito por qué la red de transporte NO entra: la publica Red Eléctrica, que es sociedad cotizada, y no hay cartografía del mallado bajo licencia compatible con CC BY 4.0 — la misma frontera que marcó Enagás en la capa de gas. |

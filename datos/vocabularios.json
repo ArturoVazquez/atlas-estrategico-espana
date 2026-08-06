@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.15.0",
+  "schema_version": "1.16.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -27,6 +27,8 @@
         "def": "El lugar concreto, por topónimo de nomenclátor oficial: primaria para el NOMBRE del lugar, no para el perímetro del objeto. Exige fuente primaria (R9, §6.6)." },
       { "valor": "generalizada", "etiqueta": "Generalizada",
         "def": "Perímetro del objeto mismo, de fuente cartográfica primaria, SIMPLIFICADO por el atlas para poder publicarse. Su procedencia es tan buena como la de una coordenada exacta; su borde, no: está afinado y no sirve para medir. Exige fuente primaria (R9, §6.6)." },
+      { "valor": "proyectada", "etiqueta": "Proyectada",
+        "def": "Trazado o emplazamiento PREVISTO, publicado por la fuente primaria que además advierte ella misma de que puede no ser el definitivo. No dice cuánto se ha afinado un contorno: dice que el terreno todavía no puede desmentirlo. Sobre una geometría proyectada no se mide. Exige fuente primaria (R9, §6.6)." },
       { "valor": "municipio", "etiqueta": "Centroide municipal",
         "def": "El municipio, no la ubicación. No sirve para medir distancias. Es el hueco del principio 1 aplicado a la geometría: un resultado legítimo, dicho en voz alta." },
       { "valor": "ilustrativa", "etiqueta": "Ilustrativa",
@@ -149,6 +151,18 @@
       { "valor": "en_tramitacion", "etiqueta": "En tramitación",
         "color": "#A6A2B4",
         "def": "Expediente abierto —información pública, evaluación en curso— y sin resolver." }
+    ],
+    "_hidrogeno-red": "Aquí `categoria` dice QUÉ PIEZA de la red es cada registro, no en qué estado está: el estado lo llevan `fase` y `estado_pci`. Se pudo hacer así porque el estado de esta capa es hoy el mismo para los diez —ninguno existe—, y porque las tres piezas se distinguen solas en el mapa: la primera es línea y las otras dos, punto.",
+    "hidrogeno-red": [
+      { "valor": "hidroducto", "etiqueta": "Hidroducto",
+        "color": "#46527D",
+        "def": "El tubo: un proyecto de conducción de hidrógeno de la lista de la Unión, con todos sus tramos en una sola geometría." },
+      { "valor": "estacion_compresion", "etiqueta": "Estación de compresión",
+        "color": "#6D77A0",
+        "def": "La máquina que empuja el hidrógeno por el tubo. Es objeto aparte porque la fuente la nombra y la sitúa aparte." },
+      { "valor": "almacenamiento", "etiqueta": "Almacenamiento",
+        "color": "#9AA1C0",
+        "def": "Caverna de sal para almacenamiento estacional. Lo que el corredor guarda cuando sobra y devuelve cuando falta." }
     ],
     "gas-regasificacion": [
       { "valor": "regasificacion", "etiqueta": "Planta de regasificación",

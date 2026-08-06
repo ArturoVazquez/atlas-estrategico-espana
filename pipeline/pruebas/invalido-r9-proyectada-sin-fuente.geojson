@@ -1,0 +1,51 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "hidrogeno-red",
+    "schema_version": "1.16.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "hidrogeno-red:barmar",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[2.15, 41.34], [3.5, 42.4], [4.93, 43.41]]
+      },
+      "properties": {
+        "slug": "barmar",
+        "nombre": "H2Med/BarMar — interconector de hidrógeno España-Francia",
+        "categoria": "hidroducto",
+        "descripcion": "Conducción submarina de hidrógeno entre Barcelona y Marsella, proyecto 9.1.4 de la lista de la Unión.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "proyectada",
+        "geo_fuente": "trazado publicado por la plataforma de transparencia PCI-PMI",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "promotor": "Enagás Infraestructuras de Hidrógeno (ES)",
+        "promotor__v": "confirmado",
+        "promotor__f": "f1",
+        "pci_codigo": "9.1.4",
+        "estado_pci": "Permitting",
+        "puesta_en_servicio_prevista": "2032-12-31",
+        "puesta_en_servicio_prevista__v": "confirmado",
+        "puesta_en_servicio_prevista__f": "f1",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Plataforma de transparencia PCI-PMI (CINEA), proyecto 9.1.4",
+            "fecha": "2026-08-06"
+          }
+        ],
+        "nota": "VIOLA R9, por la mitad que la 1.16 le añadió. Declara «geo_precision: proyectada» —una geometría que el terreno todavía no puede desmentir, porque el tubo no existe— y describe su origen en prosa sin atarlo a ninguna fuente: falta «geo_fuente__f». Es el caso donde más duele, y por eso `proyectada` entró en R9 en vez de quedarse fuera como `municipio` o `ilustrativa`: cuando el objeto no está construido, la única garantía que le queda al lector es saber QUIÉN dibujó la línea. El registro tiene la fuente primaria a mano (f1) y la invoca para el promotor, la fase y la fecha; lo único que no cita es la geometría, que es lo que el mapa va a dibujar a tamaño de 380 kilómetros."
+      }
+    }
+  ]
+}
