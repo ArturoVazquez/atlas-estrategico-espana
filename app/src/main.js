@@ -6,7 +6,7 @@
 import { BASEMAP_ES_DEMO } from "./config.js";
 import { cargar, indexar, rotulo } from "./datos.js";
 import { crearFicha } from "./ficha.js";
-import { anadirCapa, aplicarFiltro, colorDe, crearMapa, elevarPuntos, fijarColores } from "./mapa.js";
+import { anadirCapa, aplicarFiltro, colorDe, crearMapa, elevarPuntos, fijarColores, hundirFondo } from "./mapa.js";
 import { construirPanel } from "./panel.js";
 
 const estado = { filtro: "todo", encendidas: new Set(), capas: [] };
@@ -79,7 +79,12 @@ async function arrancar() {
           // registró después se queda con la ficha. Así que una zona cede
           // cuando debajo del cursor hay un punto — que es lo que el usuario
           // creía estar pinchando.
-          if (id.endsWith(":relleno") && puntosBajo(mapa, e.point).length) return;
+          // Una capa de FONDO cubre el país entero y cede ante cualquier otra
+          // que tenga encima: sin esto, pinchar un derecho minero abriría la
+          // ficha de su provincia, porque los dos manejadores se disparan y gana
+          // el que se registró después. Hundirla arregla el dibujo, no el clic.
+          if (capa.entrada.fondo && registrosBajo(mapa, e.point, { excluir: capa.entrada.id }).length) return;
+          if (id.endsWith(":relleno") && registrosBajo(mapa, e.point, { soloPuntos: true }).length) return;
           const buscar = (s) => capa.coleccion.features.find((f) => f.properties.slug === s);
           const slug = e.features[0]?.properties?.slug;
           const original = buscar(slug);
@@ -99,7 +104,10 @@ async function arrancar() {
         mapa.on("mouseleave", id, () => (mapa.getCanvas().style.cursor = ""));
       }
     }
-    // Con todas puestas: los puntos por encima de las zonas, siempre.
+    // Con todas puestas: primero al fondo lo que el manifiesto marca como
+    // fondo, y después los puntos arriba del todo. En ese orden, porque lo
+    // segundo tiene que ganar a lo primero.
+    hundirFondo(mapa, estado.capas);
     elevarPuntos(mapa, estado.capas);
     refrescar();
   });
@@ -124,13 +132,27 @@ async function arrancar() {
   }
 }
 
-/** Los registros de punto que hay ahora mismo bajo el cursor, de cualquier capa. */
-function puntosBajo(mapa, punto) {
-  const nucleos = estado.capas
+/**
+ * Los registros PINCHABLES que hay ahora mismo bajo el cursor.
+ *
+ * Sirve a las dos cesiones del clic, que son la misma idea aplicada dos veces:
+ * lo pequeño gana a lo grande, porque es lo que el usuario creía estar
+ * pinchando. `soloPuntos` mira nada más los núcleos —para que una zona ceda ante
+ * un punto—; `excluir` deja fuera una capa entera —para que la de fondo ceda
+ * ante cualquier otra—. Solo devuelve lo que está pintado: `queryRenderedFeatures`
+ * ya respeta la visibilidad, así que una capa apagada no roba nada.
+ */
+function registrosBajo(mapa, punto, { soloPuntos = false, excluir = null } = {}) {
+  const capas = estado.capas
+    .filter((c) => c.entrada.id !== excluir)
     .flatMap((c) => c.ids)
-    .filter(({ id, geom }) => geom === "Point" && id.endsWith(":nucleo") && mapa.getLayer(id))
+    .filter(({ id, geom }) =>
+      mapa.getLayer(id) &&
+      (soloPuntos
+        ? geom === "Point" && id.endsWith(":nucleo")
+        : id.endsWith(":nucleo") || id.endsWith(":relleno")))
     .map(({ id }) => id);
-  return nucleos.length ? mapa.queryRenderedFeatures(punto, { layers: nucleos }) : [];
+  return capas.length ? mapa.queryRenderedFeatures(punto, { layers: capas }) : [];
 }
 
 /**

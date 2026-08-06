@@ -102,7 +102,16 @@ export function anadirCapa(mapa, { entrada, coleccion }) {
       type: "fill",
       source: fuente,
       filter: ["==", ["geometry-type"], "Polygon"],
-      paint: { "fill-color": color, "fill-opacity": ilustrativa ? 0.14 : 0.22 },
+      // Una capa de FONDO va más opaca, y no es capricho: está la más baja de
+      // todas, así que no tapa nada del atlas, y a 0,22 —el valor bueno para una
+      // zona suelta sobre el mapa base— las ocho tecnologías se volvían el mismo
+      // pastel y la leyenda prometía colores que el mapa no daba. Es el mismo
+      // fallo que ya se corrigió en los dominios minerales, esta vez por
+      // opacidad y no por borde.
+      paint: {
+        "fill-color": color,
+        "fill-opacity": entrada.fondo ? 0.46 : ilustrativa ? 0.14 : 0.22,
+      },
     });
 
     // Lo que dice «esto no está medido» es el TRAZO DISCONTINUO, no la palidez.
@@ -201,6 +210,28 @@ export function elevarPuntos(mapa, capas) {
   for (const { ids } of capas)
     for (const { id, geom } of ids)
       if (geom === "Point" && mapa.getLayer(id)) mapa.moveLayer(id);
+}
+
+/**
+ * Hunde al fondo las capas que el manifiesto marca con `fondo: true` (§3).
+ *
+ * `elevarPuntos()` resolvió punto-sobre-zona. Esto resuelve el caso que trajo la
+ * primera COROPLETA: `generacion-electrica-provincia` cubre España entera, y en
+ * el manifiesto va después de los derechos y los dominios mineros — o sea que se
+ * pintaba encima de ellos y se los quedaba.
+ *
+ * La regla vuelve a no ser «esta capa bajo aquella», que sería código que conoce
+ * las capas: es el manifiesto quien declara que una capa es fondo, y aquí solo
+ * se obedece. Se mueven todas sus capas de MapLibre delante de la primera de la
+ * primera capa que NO es fondo, así que su orden relativo se conserva.
+ */
+export function hundirFondo(mapa, capas) {
+  const primera = capas.find((c) => !c.entrada.fondo)?.ids?.[0]?.id;
+  if (!primera) return;
+  for (const { entrada, ids } of capas) {
+    if (!entrada.fondo) continue;
+    for (const { id } of ids) if (mapa.getLayer(id)) mapa.moveLayer(id, primera);
+  }
 }
 
 /**

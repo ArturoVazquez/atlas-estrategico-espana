@@ -74,7 +74,7 @@ export function crearFicha(vocabularios) {
       ${p.nombre_oficial && p.nombre_oficial !== p.nombre
         ? `<div class="ficha-oficial">en el documento oficial: ${escapar(p.nombre_oficial)}</div>`
         : ""}
-      ${lugar ? `<div class="ficha-lugar">${escapar(lugar)}</div>` : ""}
+      ${lugar && lugar !== p.nombre ? `<div class="ficha-lugar">${escapar(lugar)}</div>` : ""}
       ${badge(p.verif)}
       ${p.descripcion ? `<div class="ficha-desc">${escapar(p.descripcion)}</div>` : ""}
       ${materias ? `<div class="materias">${materias}</div>` : ""}
@@ -154,6 +154,17 @@ const NUCLEO = new Set([
 const ROTULOS = {
   ambito_territorial: "Ámbito territorial",
   sym: "Símbolos",
+  anio: "Año",
+  caracter_dato: "Carácter del dato",
+  nuclear_gwh: "Nuclear (GWh)",
+  eolica_gwh: "Eólica (GWh)",
+  solar_fv_gwh: "Solar fotovoltaica (GWh)",
+  solar_termica_gwh: "Solar térmica (GWh)",
+  mareomotriz_gwh: "Mareomotriz y olas (GWh)",
+  combustibles_gwh: "Combustibles (GWh)",
+  cogeneracion_gwh: "Cogeneración (GWh)",
+  hidraulica_gwh: "Hidráulica (GWh)",
+  total_gwh: "Total (GWh)",
 };
 
 function rotularCampo(clave) {
@@ -168,9 +179,16 @@ function camposDeCapa(p, fuentes, fase, campo) {
     if (NUCLEO.has(clave) || clave.includes("__")) continue;
     if (valor === null || valor === undefined || valor === "") continue;
     // `fase` es el único que se traduce, porque es vocabulario controlado (§6.5).
+    // Los `_gwh` se formatean a la española —miles y dos decimales— porque son
+    // cifras de cinco dígitos que sin puntos no se leen. Va por SUFIJO de campo
+    // y no por capa, igual que el `_fecha` de abajo, y no se aplica a todo
+    // número: un `anio` con separador de miles diría «2.024».
     const texto = clave === "fase"
       ? rotulo(fase, valor, valor)
-      : Array.isArray(valor) ? valor.join(" · ") : String(valor);
+      : Array.isArray(valor) ? valor.join(" · ")
+      : clave.endsWith("_gwh") && typeof valor === "number"
+        ? valor.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        : String(valor);
     // Un `_fecha` acompaña al campo anterior: se cuelga de él como metadato.
     if (clave.endsWith("_fecha")) continue;
     const extra = p[`${clave}_fecha`] ? `dato de ${p[`${clave}_fecha`]}` : "";
