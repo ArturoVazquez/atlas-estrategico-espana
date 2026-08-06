@@ -158,6 +158,12 @@ header{
 .fuente .f-tipo{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-tenue);border:1px solid var(--linea);border-radius:2px;padding:0 4px;margin-left:4px}
 .fuente.hueco{color:var(--tinta-suave);font-style:italic}
 .ficha-nota{margin-top:16px;font-family:var(--serif);font-style:italic;font-size:12.5px;line-height:1.5;color:var(--tinta-suave);border-left:2px solid var(--linea);padding-left:11px}
+.debate{
+  display:block;margin-top:18px;padding-top:12px;border-top:1px solid var(--linea);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  color:var(--crma);text-decoration:none;
+}
+.debate:hover{text-decoration:underline}
 
 footer{
   position:fixed;left:0;right:0;bottom:0;z-index:14;

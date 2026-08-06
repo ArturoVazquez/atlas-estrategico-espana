@@ -95,7 +95,8 @@ export function crearFicha(vocabularios) {
       }</div>` : ""}
 
       <div class="fuentes"><h4>Fuentes</h4>${fuentes.map((f) => pintarFuente(f, tipoFuente)).join("")}</div>
-      ${p.nota ? `<div class="ficha-nota">${escapar(p.nota)}</div>` : ""}`;
+      ${p.nota ? `<div class="ficha-nota">${escapar(p.nota)}</div>` : ""}
+      ${debate(p.debate_url)}`;
 
     for (const b of cuerpo.querySelectorAll(".vecino")) {
       b.addEventListener("click", () => {
@@ -200,6 +201,25 @@ function precisionGeografica(p, precision, fuentes) {
     (meta ? `<div class="campo-meta">${escapar(meta)}</div>` : "") +
     `</div>`
   );
+}
+
+/**
+ * El enlace al hilo donde se debate este registro (§5, `debate_url`).
+ *
+ * Estaba en el contrato y en `nucleo.schema.json` desde el principio, y la ficha
+ * **se lo tragaba en silencio**: `debate_url` figura en el conjunto NUCLEO —el
+ * de los campos que no se listan como fila— y no se pintaba en ningún otro
+ * sitio. El día que un registro trajera su hilo, el enlace no habría aparecido y
+ * nadie se habría enterado, que es la forma más cara de perder un dato.
+ *
+ * Va al PIE y separado, no como una fila más: es la salida de la ficha hacia el
+ * foro, no un atributo del registro. Y el atlas no interpreta — por eso el
+ * rótulo dice dónde se discute, no qué se concluye.
+ */
+function debate(url) {
+  if (!url) return "";
+  return `<a class="debate" href="${escapar(url)}" target="_blank" rel="noopener">` +
+         `Se debate en El Tercio →</a>`;
 }
 
 /** Un hueco se pinta COMO hueco: en cursiva, sin enlace y sin disimulo. */
