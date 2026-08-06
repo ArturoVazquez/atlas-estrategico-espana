@@ -168,6 +168,14 @@ const ROTULOS = {
   codigo_promotor: "Código en el acto",
   consumo_gwh_anio: "Consumo declarado (GWh/año)",
   superficie_ha: "Superficie (ha)",
+  pci_codigo: "Proyecto de la lista de la Unión",
+  estado_pci: "Estado según la Comisión",
+  puesta_en_servicio_prevista: "Puesta en servicio prevista",
+  longitud_km: "Longitud declarada (km)",
+  diametro_mm: "Diámetro (mm)",
+  capacidad_mt_anio: "Capacidad (Mt/año)",
+  potencia_mw: "Potencia (MW)",
+  volumen_util_gwh: "Volumen útil (GWh)",
 };
 
 function rotularCampo(clave) {

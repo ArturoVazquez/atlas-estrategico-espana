@@ -11,6 +11,15 @@ import { construirPanel } from "./panel.js";
 
 const estado = { filtro: "todo", encendidas: new Set(), capas: [] };
 
+// Las subcapas que abren ficha, una por clase de geometría. `:halo` y `:borde`
+// quedan fuera a propósito: son adorno del mismo registro.
+//
+// `:trazado` faltaba, y no era teórico: «Límite exterior de la plataforma
+// continental al oeste de Canarias» llevaba publicado desde su release con la
+// ficha inalcanzable, porque era la única línea del atlas y nadie fue a
+// pincharla. Una lista con nombre lo hace difícil de olvidar otra vez.
+const PINCHABLES = [":nucleo", ":relleno", ":trazado"];
+
 function fallo(mensaje) {
   document.getElementById("sello-capas").textContent = "no se pudieron cargar los datos";
   document.getElementById("pie-aviso").textContent = mensaje;
@@ -63,10 +72,11 @@ async function arrancar() {
       estado.capas.push({ ...capa, ids });
       estado.encendidas.add(capa.entrada.id);
 
-      // Se pincha el núcleo de los puntos y el relleno de las zonas. El halo y
-      // el borde no: son adorno del mismo registro y duplicarían el manejador.
+      // Se pincha el núcleo de los puntos, el relleno de las zonas y el trazado
+      // de las líneas. El halo y el borde no: son adorno del mismo registro y
+      // duplicarían el manejador.
       for (const { id } of ids) {
-        if (!id.endsWith(":nucleo") && !id.endsWith(":relleno")) continue;
+        if (!PINCHABLES.some((sufijo) => id.endsWith(sufijo))) continue;
         // OJO: no se usa `e.features[0]`. MapLibre serializa a TEXTO las
         // propiedades que son arrays u objetos al pasarlas por el pipeline de
         // teselas, así que `materias`, `fuentes` y `claves` llegarían como
@@ -84,20 +94,28 @@ async function arrancar() {
           // ficha de su provincia, porque los dos manejadores se disparan y gana
           // el que se registró después. Hundirla arregla el dibujo, no el clic.
           if (capa.entrada.fondo && registrosBajo(mapa, e.point, { excluir: capa.entrada.id }).length) return;
-          if (id.endsWith(":relleno") && registrosBajo(mapa, e.point, { soloPuntos: true }).length) return;
+          // Zonas y trazados ceden ante un punto que tengan encima, por lo mismo:
+          // el punto es lo pequeño, y quien lo pincha lo está apuntando.
+          if (!id.endsWith(":nucleo") && registrosBajo(mapa, e.point, { soloPuntos: true }).length) return;
           const buscar = (s) => capa.coleccion.features.find((f) => f.properties.slug === s);
           const slug = e.features[0]?.properties?.slug;
           const original = buscar(slug);
           if (!original) return;
           // Registros que comparten EXACTAMENTE la coordenada: dos reactores de
           // una misma central. Sin esto, el de abajo no se podría abrir nunca.
-          const [lon, lat] = original.geometry.coordinates;
-          const vecinos = capa.coleccion.features.filter(
-            (f) =>
-              f.properties.slug !== slug &&
-              f.geometry?.coordinates?.[0] === lon &&
-              f.geometry?.coordinates?.[1] === lat
-          );
+          // Solo tiene sentido entre PUNTOS: en una línea, `coordinates[0]` es
+          // otro array y la comparación nunca sería cierta — parecería que
+          // funciona sin hacer nada.
+          const vecinos =
+            original.geometry?.type !== "Point"
+              ? []
+              : capa.coleccion.features.filter(
+                  (f) =>
+                    f.properties.slug !== slug &&
+                    f.geometry?.type === "Point" &&
+                    f.geometry.coordinates[0] === original.geometry.coordinates[0] &&
+                    f.geometry.coordinates[1] === original.geometry.coordinates[1]
+                );
           ficha.abrir(original, capa.entrada, vecinos);
         });
         mapa.on("mouseenter", id, () => (mapa.getCanvas().style.cursor = "pointer"));
@@ -150,7 +168,7 @@ function registrosBajo(mapa, punto, { soloPuntos = false, excluir = null } = {})
       mapa.getLayer(id) &&
       (soloPuntos
         ? geom === "Point" && id.endsWith(":nucleo")
-        : id.endsWith(":nucleo") || id.endsWith(":relleno")))
+        : PINCHABLES.some((sufijo) => id.endsWith(sufijo))))
     .map(({ id }) => id);
   return capas.length ? mapa.queryRenderedFeatures(punto, { layers: capas }) : [];
 }
