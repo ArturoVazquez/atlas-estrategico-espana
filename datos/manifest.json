@@ -43,6 +43,22 @@
     },
 
     {
+      "id": "minerales-derechos",
+      "titulo": "Derechos mineros",
+      "arbol": "minerales",
+      "grupo": "actividad",
+      "geometria": "poligonos",
+      "registro": "verificado",
+      "ambito": "espana",
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/minerales-derechos.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Catastro Minero (MITECO) · Atlas Estratégico de España"
+    },
+
+    {
       "id": "recurso-eolico",
       "titulo": "Recurso eólico",
       "arbol": "energia",
