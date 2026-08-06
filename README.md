@@ -13,10 +13,10 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **once capas publicadas**, release `datos-v2026.08.12`, visor
+**Estado:** **doce capas publicadas**, release `datos-v2026.08.13`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
 (nuclear, gas y regasificación, interconexiones eléctricas, generación por
-provincia); conectividad (centros de datos, red de hidrógeno); y el tablero
+provincia, producción de hidrógeno); conectividad (centros de datos, red de hidrógeno); y el tablero
 (límites y soberanía, espacios marítimos). Las demás ramas están **declaradas y
 vacías**, que es su forma de decir la verdad.
 
@@ -63,7 +63,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las once capas con datos, por si sirve de índice:
+Las doce capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -74,6 +74,7 @@ Las once capas con datos, por si sirve de índice:
 | `gas-regasificacion` | verificada | Las siete plantas de GNL |
 | `electricidad-interconexiones` | verificada | Los enlaces que cruzan frontera, con el extremo de fuera nombrado y sin coordenada |
 | `generacion-electrica-provincia` | verificada | Las 52 provincias y su mezcla de generación por tecnología |
+| `hidrogeno-produccion` | verificada | Las siete plantas de electrólisis de la lista de la Unión |
 | `centros-datos` | verificada | Los centros que un acto administrativo nombra, sitúa y dimensiona |
 | `hidrogeno-red` | verificada | Los cinco proyectos de hidrógeno de la lista de la Unión, y sus compresoras |
 | `limites-soberania` | verificada | Ocho territorios, con quién administra y quién reclama |

@@ -235,8 +235,8 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
 embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → ~~H2Med~~ →
-electrolizadores (NUEVA, ver abajo) → PERTE acotado →
-intangibles (clase `analisis`, ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
+~~electrolizadores~~ → subasta del Banco Europeo del Hidrógeno (NUEVA, ver
+abajo) → PERTE acotado → intangibles (clase `analisis`, ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
 señales reales con las que diseñarlo.
 
 **La segunda casilla, cumplida por otro nombre** (release `datos-v2026.08.10`).
@@ -247,6 +247,41 @@ potencia pero solo por comunidad autónoma y **bajo CC BY-SA**, que
 que R3 no admite. Se publica lo que sí se sostiene —la mezcla de generación de
 las 52 provincias— y la potencia queda como hueco declarado en las 52 fichas.
 **La casilla se renombra; no se disfraza.**
+
+**La quinta casilla, y la que menos código pidió** (release
+`datos-v2026.08.13`). `hidrogeno-produccion`: **siete** plantas de electrólisis
+—no cinco proyectos—, 2.477 MW publicados. Casi todo el trabajo fue de lectura,
+no de construcción.
+
+Lo que deja escrito:
+
+- **Un registro obliga a publicar, no a certificar** (§6.1 del contrato, enmienda
+  1.17). No degrada la fuente —un registro ES lo que sus registrados declaran,
+  igual el Catastro Minero que la plataforma PCI-PMI— pero cambia **cómo se
+  redacta una ficha** cuando quien declara es una empresa: **al campo numérico va
+  el proyecto; la ambición va a la clave, verbatim y con su condicional; el
+  argumento de venta no se publica**. Con eso, el valle asturiano publica 150 MW
+  y no el gigavatio que circula por ahí.
+- **Acotar mal una consulta fabrica hallazgos falsos.** La primera mirada, sin
+  filtro por código, tomó por duplicados dos puntos que eran dos plantas
+  distintas, y con ello estuvo a punto de publicarse una «contradicción» de la
+  fuente que no existía. La consulta acotada la deshizo. **Antes de denunciar a
+  una fuente, comprobar la propia consulta.**
+- **Un índice de lista es una forma barata de mudar una planta de provincia.**
+  Aboño y Soto de Ribera salieron cambiados entre sí porque el orden lo fijaba el
+  `OBJECTID` del servicio. El constructor lleva ahora una aserción por coordenada
+  verificada: si el servicio reordena, revienta en vez de mentir.
+
+**Casilla nueva en el horizonte: la subasta del Banco Europeo del Hidrógeno.** Es
+la pista más golosa que ha salido de esta tanda y NO se tocó, porque es otro
+instrumento —una ayuda, no una lista de infraestructuras— y necesita su propia
+fuente oficial. Lo que se sabe, para quien lo retome: de los **15 adjudicatarios
+de la segunda subasta, 8 son españoles**, y hay indicios (en prensa, sin
+confirmar) de que **solo 6 de los 15 llegaron a firmar el contrato**. Si eso se
+sostiene con la fuente de CINEA, es exactamente la clase de hecho que este atlas
+existe para registrar: la distancia entre lo adjudicado y lo firmado. Habría que
+localizar la lista oficial de resultados —la página de CINEA que se probó devolvió
+404— y comprobar si nombra proyectos o solo países.
 
 **La cuarta casilla, y resultó ser más grande que su nombre** (release
 `datos-v2026.08.12`). Se llamaba «H2Med» y la capa se publica como

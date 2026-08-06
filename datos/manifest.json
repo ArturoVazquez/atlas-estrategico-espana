@@ -1,7 +1,7 @@
 {
   "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
 
-  "_estado": "F3 cerrada. Tienen datos `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `limites-soberania` y `espacios-maritimos` — doce; las otras seis siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+  "_estado": "F3 cerrada. Tienen datos `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `limites-soberania` y `espacios-maritimos` — doce; las otras siete siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 

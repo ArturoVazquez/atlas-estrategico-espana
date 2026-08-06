@@ -32,6 +32,96 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.13 — Siete electrolizadores, y la diferencia entre un proyecto y una ambición
+
+Entra **`hidrogeno-produccion`**: las plantas de electrólisis españolas que están
+en la lista de la Unión. Duodécima capa. **Siete registros, no cinco**, y esa es
+la primera cosa que hay que explicar.
+
+### El hallazgo
+
+**Un registro obliga a publicar, no a certificar.** La plataforma de
+transparencia PCI-PMI es fuente primaria —lo fijó la release anterior: existe por
+el artículo 23 del TEN-E— pero lo que publica de cada proyecto lo redacta **su
+promotor**. En la capa anterior eso apenas se notaba, porque el promotor era
+Enagás bajo mandato del Consejo de Ministros. Aquí son empresas privadas, y su
+texto trae tres cosas mezcladas: **el proyecto, la ambición y el argumento de
+venta**.
+
+El caso que obligó a escribir la regla cabe en un párrafo:
+
+> «El grupo EDP tiene la **ambición** de desarrollar **1 GW** de electrólisis en
+> la región de Asturias para 2030, **si las condiciones de mercado son
+> favorables**. El proyecto Asturias H2 Valley comprende un electrolizador de
+> **150 MW** en su fase inicial.»
+
+La cifra que circula es la primera. **La que publica el atlas es la segunda**, y
+la primera está en su ficha, entera y con su «si». Es la enmienda 1.17 del
+contrato: al campo numérico va la cifra del proyecto definido; la ambición y la
+ampliación futura van a `claves` verbatim y con su condicional intacto; la
+evaluación promocional —«un impacto positivo significativo en el empleo», «el
+38 % del mercado español»— **no se publica en absoluto**.
+
+**Y son siete plantas, no cinco proyectos.** Dos de los cinco nombran y sitúan
+dos plantas cada uno: el valle asturiano (Aboño y el futuro centro de Soto de
+Ribera) y ValdoEume (Mugardos, 77 MW, y As Pontes, 100 MW). La plataforma dibuja
+siete puntos, uno por planta, y el registro es del objeto que la fuente define
+(§6.6).
+
+### Añadido
+
+- `hidrogeno-produccion` — siete registros: Huelva (Moeve, 1.000 MW), Aboño
+  (EDP, 150), Soto de Ribera (EDP, sin cifra), Mugardos (Triskelion, 77), As
+  Pontes (H2Pole, 100), Catalina (500) y ErasmoPower2X (650). **2.477 MW
+  publicados.**
+- Una fuente nueva archivada: la captura de los cinco proyectos 9.15.x en la
+  plataforma PCI-PMI.
+
+### Lo que se comprobó, y salió bien
+
+**Las dos distancias que la fuente declara cuadran con sus propios puntos**, y
+eso es lo que confirma qué planta es cada punto: Aboño y Soto están a **29,3 km**
+en línea recta contra los «unos 40 km» que declara la ficha —distancia por
+carretera—; Mugardos y As Pontes, a **28,0 km**, unidas según la ficha por un
+hidroducto de 36 km. Un tubo mide más que la recta.
+
+Esa comprobación deshizo además un falso hallazgo. El punto de Ribera de Arriba
+parecía contradecir a su propia ficha, que sitúa el proyecto «en Carreño y
+Gijón». Con los dos puntos a la vista se ve que uno **es** Aboño (cae en Gijón) y
+el otro es Soto de Ribera, que la misma descripción nombra. **No había
+contradicción: había una consulta mal acotada.**
+
+### Corregido
+
+- Nada de releases anteriores. La enmienda 1.17 **describe** cómo se leía ya
+  `hidrogeno-red`; no la enmienda, porque allí no había ambiciones que separar.
+
+### Huecos
+
+- **La potencia de Soto de Ribera.** Sus 500 MW son los de un «futuro centro» de
+  una segunda fase, no los de un proyecto definido. Es el primer hueco del atlas
+  que **crea una regla de redacción y no la ausencia de la fuente**: la cifra
+  existe, está en su clave, y no se escribe donde diría otra cosa.
+- **La producción del valle ValdoEume.** La ficha da 27.000 t/año para la primera
+  fase de las **dos** plantas juntas. Repartirla sería inventarla; escribirla
+  entera en cada una la duplicaría. Se queda en clave y el campo se omite.
+- **La producción de ErasmoPower2X se publica como techo**, porque así la declara
+  la fuente: «hasta 80.000 toneladas». El campo va como `parcial`.
+- **Ninguna cifra de inversión ni de empleo**, y no por descuido: los dos campos
+  están **prohibidos** en el esquema. El artículo 23 permite no publicar coste
+  por sensibilidad comercial, y las cifras que circulan —245 M€ para
+  ErasmoPower2X— son de nota de prensa.
+- **Dos sumas de la propia fuente que no cierran.** El valle asturiano dice que
+  su segunda fase «aportará 1 GW» y la desglosa en 350 + 500 = 850. Y la ficha de
+  Huelva tiene una frase a medio corregir en el original, con la decisión de
+  inversión a la vez «prevista» y «tomada». Se transcriben tal cual: son la
+  prueba de qué clase de texto es una ficha de registro.
+- **Un punto que no cae en ningún término municipal**: el de Mugardos queda en la
+  ría, a 1,34 km de la villa — y a 1,5 km de la planta de Reganosa que este mismo
+  atlas publica en `gas-regasificacion`, del mismo grupo promotor.
+
+---
+
 ## datos-v2026.08.12 — La red de hidrógeno, y el trazado de lo que aún no existe
 
 Entra **`hidrogeno-red`** con diez registros y **3.268 km dibujados**. Undécima
