@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "minerales-dominios", "schema_version": "1.10.0", "verificado_a": "2026-08-06" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:comarca-que-se-dice-dormida",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[-7.0, 37.4], [-6.0, 37.4], [-6.0, 38.0], [-7.0, 38.0], [-7.0, 37.4]]
+        ]
+      },
+      "properties": {
+        "slug": "comarca-que-se-dice-dormida",
+        "nombre": "Comarca que se dice dormida y no lo está",
+        "categoria": "desarrollo",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "materias": ["Cobre"],
+        "sym": "Cu",
+        "fuentes": [
+          { "id": "f1", "tipo": "hueco", "titulo": "Sin cartografía de fuente primaria para este perímetro." }
+        ],
+        "nota": "VIOLA R8, pero SOLO en compañía de `invalido-r8-mina-en-produccion.geojson`. Por sí mismo este fichero es impecable, y ese es exactamente el motivo por el que R8 existe y por el que vive fuera de `validar_capa()`: la mentira no está en ningún fichero, está en el par. Un dominio que alberga una mina viva es «mixto», no «desarrollo»."
+      }
+    }
+  ]
+}

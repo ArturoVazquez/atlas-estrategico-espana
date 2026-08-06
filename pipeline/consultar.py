@@ -38,6 +38,13 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+# `dentro()` nació aquí y se mudó a `validar.py` cuando R8 la necesitó (contrato
+# 1.10): el validador es el que corre en CI y el que no toca la red. Se importa
+# en vez de copiarse — dos ray-castings que tienen que dar el mismo resultado
+# acaban no dándolo, y el desacuerdo se descubre pintando.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from validar import dentro  # noqa: E402
+
 RAIZ = Path(__file__).resolve().parent.parent
 CACHE = RAIZ / ".cache"
 
@@ -86,35 +93,11 @@ def recuadro(x0: float, y0: float, x1: float, y1: float) -> list[tuple]:
 
 
 # ─────────────────────────── punto en polígono ───────────────────────────
-
-def dentro(lon: float, lat: float, geom: dict) -> bool:
-    """Ray casting: exterior sí, huecos no.
-
-    Esta función decide si una coordenada se acepta, así que se prueba aparte y
-    offline. Hace falta porque el `bbox` de la API del IGN devuelve lo que ROZA
-    el recuadro, no lo que lo contiene: preguntar por un punto en un trifinio
-    devuelve tres municipios, y solo uno es la respuesta.
-    """
-    def en_anillo(anillo) -> bool:
-        d = False
-        for i in range(len(anillo)):
-            x1, y1 = anillo[i][:2]
-            x2, y2 = anillo[(i + 1) % len(anillo)][:2]
-            if (y1 > lat) != (y2 > lat):
-                if lon < x1 + (lat - y1) * (x2 - x1) / (y2 - y1):
-                    d = not d
-        return d
-
-    tipo = geom.get("type")
-    poligonos = geom.get("coordinates", [])
-    if tipo == "Polygon":
-        poligonos = [poligonos]
-    elif tipo != "MultiPolygon":
-        return False
-
-    return any(en_anillo(p[0]) and not any(en_anillo(h) for h in p[1:])
-               for p in poligonos if p)
-
+#
+# `dentro()` se importa de `validar.py` (ver la cabecera). Aquí hace falta
+# porque el `bbox` de la API del IGN devuelve lo que ROZA el recuadro, no lo que
+# lo contiene: preguntar por un punto en un trifinio devuelve tres municipios, y
+# solo uno es la respuesta.
 
 def municipio(lon: float, lat: float) -> list[str]:
     """El municipio que CONTIENE el punto, no los que le pasan cerca."""

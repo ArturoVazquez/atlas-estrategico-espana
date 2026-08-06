@@ -2,9 +2,8 @@
 """Validador del Atlas Estratégico de España — el contrato con dientes.
 
 Comprueba las siete verificaciones de CONTRATO-DATOS.md §7 sobre las reglas de
-doctrina R1–R7 y R9 de §6.4. Corre en CI en cada PR que toque `datos/`.
-(R8 es la única sin diente: necesita la capa `minerales-dominios`, F3. Lo dice
-el propio contrato en §6.5, para que no se descubra por su ausencia.)
+doctrina R1–R9 de §6.4 — las nueve, desde el contrato 1.10. Corre en CI en cada
+PR que toque `datos/`.
 
     python pipeline/validar.py                    # todas las capas del manifiesto
     python pipeline/validar.py fichero.geojson    # una o varias, sueltas
@@ -117,6 +116,36 @@ def campos_meta(props: dict):
             yield m["base"], m["clase"], valor, clave
 
 
+def dentro(lon: float, lat: float, geom: dict) -> bool:
+    """Ray casting: exterior sí, huecos no.
+
+    Vive aquí, y no en `consultar.py` que fue donde nació, por dos motivos: este
+    fichero es el que corre en CI y el que no toca la red, y sobre todo porque
+    dos copias de un algoritmo que TIENEN que coincidir acaban no coincidiendo.
+    `consultar.py` la importa de aquí; sus pruebas la siguen ejercitando, que es
+    lo que la mantiene honesta (se probó con mutaciones deliberadas).
+    """
+    def en_anillo(anillo) -> bool:
+        d = False
+        for i in range(len(anillo)):
+            x1, y1 = anillo[i][:2]
+            x2, y2 = anillo[(i + 1) % len(anillo)][:2]
+            if (y1 > lat) != (y2 > lat):
+                if lon < x1 + (lat - y1) * (x2 - x1) / (y2 - y1):
+                    d = not d
+        return d
+
+    tipo = geom.get("type")
+    poligonos = geom.get("coordinates", [])
+    if tipo == "Polygon":
+        poligonos = [poligonos]
+    elif tipo != "MultiPolygon":
+        return False
+
+    return any(en_anillo(p[0]) and not any(en_anillo(h) for h in p[1:])
+               for p in poligonos if p)
+
+
 # ─────────────────────────── comprobaciones ───────────────────────────
 
 def comprobar_esquemas(doc: dict, capa: str) -> list[Hallazgo]:
@@ -193,7 +222,7 @@ def comprobar_doctrina(doc: dict, registro_capa: str) -> list[Hallazgo]:
         if "activo" in props:
             out.append(Hallazgo(BLOQUEA, "R7", donde,
                                 "El campo «activo» no se escribe: se deriva de «fase» "
-                                "o de «caracter» (§6.5). Escribirlo a mano son dos "
+                                "o de «categoria» (§6.5). Escribirlo a mano son dos "
                                 "fuentes de verdad que acabarán contradiciéndose."))
 
         # §6.2 · el doble guion bajo es espacio reservado del contrato.
@@ -442,6 +471,54 @@ def comprobar_archivo_fuentes(doc: dict) -> list[Hallazgo]:
     return out
 
 
+def comprobar_r8(docs: dict[str, dict]) -> list[Hallazgo]:
+    """§6.5 · R8 — la única regla que compara DOS capas entre sí.
+
+    Un dominio `desarrollo` o `historico` no puede contener una mina en
+    producción. Si la contiene, su `categoria` correcta es `mixto` o `activo`, y
+    lo que hay es un error de dato.
+
+    Nació de cerrar el matiz abierto de D3: al filtrar «en explotación» el
+    dominio desaparecía aunque albergase una mina viva. La salida NO fue que el
+    dominio mirase dentro de sí al pintar —eso disimula el fallo en pantalla y
+    lo deja escrito mal en el fichero—, sino atraparlo aquí.
+
+    Por vivir entre dos ficheros no cabe en `validar_capa()`: se comprueba
+    cuando las dos capas entran en la misma pasada, que sin argumentos es
+    siempre. Con una sola de las dos, calla — no puede saber si la otra existe y
+    está bien, y una regla que grita por lo que no ha visto no se respeta mucho
+    tiempo.
+    """
+    dominios, proyectos = docs.get("minerales-dominios"), docs.get("minerales-proyectos")
+    if not dominios or not proyectos:
+        return []
+
+    vivas = [
+        f for f in proyectos.get("features", [])
+        if (f.get("properties") or {}).get("fase") == "produccion"
+    ]
+
+    out = []
+    for d in dominios.get("features", []):
+        props = d.get("properties") or {}
+        if props.get("categoria") not in ("desarrollo", "historico"):
+            continue
+        dentro_de = [
+            (p.get("properties") or {}).get("slug")
+            for p in vivas if dentro(*(p.get("geometry") or {}).get("coordinates", (0, 0))[:2],
+                                     d.get("geometry") or {})
+        ]
+        if dentro_de:
+            out.append(Hallazgo(
+                BLOQUEA, "R8", d.get("id", "(sin id)"),
+                f"El dominio se declara «{props.get('categoria')}» y contiene "
+                f"{len(dentro_de)} registro(s) de minerales-proyectos en producción "
+                f"({', '.join(sorted(filter(None, dentro_de)))}). Un dominio que "
+                f"alberga una mina viva es «mixto», o «activo» si no le queda nada "
+                f"por abrir. Corregir el dominio, no la mina."))
+    return out
+
+
 def comprobar_manifiesto(manifiesto: dict) -> list[Hallazgo]:
     """§7.8 · El manifiesto no puede prometer capas que no están."""
     out = []
@@ -472,12 +549,7 @@ def comprobar_manifiesto(manifiesto: dict) -> list[Hallazgo]:
 
 # ─────────────────────────── orquestación ───────────────────────────
 
-def validar_capa(ruta: Path, manifiesto: dict, voc: dict) -> list[Hallazgo]:
-    try:
-        doc = cargar(ruta)
-    except json.JSONDecodeError as e:
-        return [Hallazgo(BLOQUEA, "§7.1", ruta.name, f"JSON inválido: {e}")]
-
+def validar_capa(doc: dict, ruta: Path, manifiesto: dict, voc: dict) -> list[Hallazgo]:
     capa = doc.get("atlas", {}).get("capa")
     entrada = next((c for c in manifiesto.get("capas", []) if c.get("id") == capa), None)
     if entrada is None:
@@ -513,11 +585,24 @@ def main(argv: list[str]) -> int:
     else:
         rutas = [DATOS / c["fichero"] for c in manifiesto["capas"] if c.get("fichero")]
 
+    # Los documentos se guardan por capa porque R8 los necesita a la vez: es la
+    # única regla que compara dos ficheros, y por eso vive aquí y no dentro de
+    # `validar_capa()`, que solo ve una colección.
+    docs: dict[str, dict] = {}
+
     for ruta in rutas:
         if not ruta.exists():
             hallazgos[str(ruta)] = [Hallazgo(BLOQUEA, "§7.8", ruta.name, "No existe.")]
             continue
-        hallazgos[ruta.name] = validar_capa(ruta, manifiesto, voc)
+        try:
+            doc = cargar(ruta)
+        except json.JSONDecodeError as e:
+            hallazgos[ruta.name] = [Hallazgo(BLOQUEA, "§7.1", ruta.name, f"JSON inválido: {e}")]
+            continue
+        docs[doc.get("atlas", {}).get("capa")] = doc
+        hallazgos[ruta.name] = validar_capa(doc, ruta, manifiesto, voc)
+
+    hallazgos["entre capas · R8"] = comprobar_r8(docs)
 
     bloqueos = avisos = 0
     for fichero, lista in hallazgos.items():

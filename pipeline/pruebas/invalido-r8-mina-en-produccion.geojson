@@ -1,0 +1,37 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "minerales-proyectos",
+    "schema_version": "1.2.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-proyectos:mina-viva",
+      "geometry": { "type": "Point", "coordinates": [-6.5, 37.7] },
+      "properties": {
+        "slug": "mina-viva",
+        "nombre": "Mina que sigue produciendo",
+        "categoria": "produccion_singular",
+        "descripcion": "Extrae hoy, dentro de un dominio que se declara dormido.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "municipio",
+        "geo_fuente": "centroide municipal",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "materias": ["cobre"],
+        "tipo_proyecto": ["extraccion"],
+        "municipio": "Un municipio cualquiera",
+        "provincia": "Huelva",
+        "fase": "produccion",
+        "claves": [],
+        "fuentes": [
+          { "id": "f1", "tipo": "primaria", "titulo": "Documento oficial", "fecha": "2026-01-15" }
+        ],
+        "nota": "La compañera de `invalido-r8-dominio-desarrollo.geojson`. Este fichero es válido a solas: una mina en producción no incumple nada. El punto (-6.5, 37.7) cae dentro del polígono del dominio, y ahí está la violación de R8 — que no es de ninguno de los dos ficheros, sino de lo que dicen juntos."
+      }
+    }
+  ]
+}

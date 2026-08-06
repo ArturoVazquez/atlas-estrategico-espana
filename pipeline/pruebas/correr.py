@@ -39,11 +39,19 @@ CASOS: dict[str, tuple[set[str], int]] = {
     "invalido-r6-metadato-huerfano.geojson":           ({"R6"},     1),
     "invalido-r7-activo-escrito-a-mano.geojson":       ({"R7"},     1),
 
+    # R8 es la única regla que compara DOS capas, así que su caso son dos
+    # ficheros en la misma llamada: un dominio «desarrollo» y, dentro de él, una
+    # mina en producción. Por separado los dos son válidos — que es justo lo que
+    # hace a R8 necesaria: ningún fichero miente a solas, la mentira está en el
+    # par. Tuvo diente desde el contrato 1.10; hasta entonces vivía escrita en
+    # §6.5 y sin comprobarse.
+    "invalido-r8-dominio-desarrollo.geojson + "
+    "invalido-r8-mina-en-produccion.geojson":          ({"R8"},     1),
+
     # R9 va con DOS fixtures porque la regla tiene dos mitades y solo una es
     # obvia. La segunda es la que justifica que R9 exista: sin ella, R2 y R3
     # dejaban pasar una geometría «exacta» apoyada en una fuente corporativa,
-    # con solo declararla «parcial». (R8 no tiene fixture: no tiene diente
-    # todavía — necesita `minerales-dominios`, y el contrato lo dice en §6.5.)
+    # con solo declararla «parcial».
     "invalido-r9-exacta-sin-fuente.geojson":           ({"R9"},     1),
     "invalido-r9-exacta-con-corporativa.geojson":      ({"R9"},     1),
 
@@ -64,9 +72,9 @@ CASOS: dict[str, tuple[set[str], int]] = {
 LINEA = re.compile(r"^\s+(BLOQUEA|AVISA)\s+(\S+)\s")
 
 
-def correr(fixture: Path) -> tuple[int, set[str]]:
+def correr(fixtures: list[Path]) -> tuple[int, set[str]]:
     proc = subprocess.run(
-        [sys.executable, str(VALIDAR), str(fixture)],
+        [sys.executable, str(VALIDAR), *(str(f) for f in fixtures)],
         capture_output=True, text=True, encoding="utf-8",
     )
     salida = (proc.stdout or "") + (proc.stderr or "")
@@ -79,12 +87,14 @@ def main() -> int:
     print("Pruebas del contrato con dientes\n")
 
     for nombre, (esperados, salida_esperada) in CASOS.items():
-        fixture = AQUI / nombre
-        if not fixture.exists():
-            fallos.append(f"{nombre}: el fixture no existe")
+        # Un caso puede necesitar DOS ficheros: R8 compara dos capas, así que no
+        # existe un fixture que la viole a solas.
+        fixtures = [AQUI / n for n in nombre.split(" + ")]
+        if faltantes := [f.name for f in fixtures if not f.exists()]:
+            fallos.append(f"{nombre}: no existe(n) {', '.join(faltantes)}")
             continue
 
-        codigo, hallados = correr(fixture)
+        codigo, hallados = correr(fixtures)
 
         problemas = []
         if codigo != salida_esperada:
