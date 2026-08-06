@@ -141,9 +141,22 @@ const NUCLEO = new Set([
   "fuentes", "claves", "nota", "debate_url", "municipio", "provincia",
 ]);
 
-/** `autorizacion_hasta` → «Autorización hasta». Sin tabla por capa: si hiciera
- *  falta una, volveríamos a tener código que conoce las capas de antemano. */
+/**
+ * `autorizacion_hasta` → «Autorización hasta».
+ *
+ * Sin tabla POR CAPA: si hiciera falta una, volveríamos a tener código que
+ * conoce las capas de antemano. La excepción de abajo no lo es — son nombres de
+ * CAMPO, valen para cualquier capa que los use, y existen porque las claves van
+ * en `[a-z0-9_]` y de ahí no sale una tilde. «AMBITO» en versalitas se lee mal
+ * y el atlas escribe en español.
+ */
+const ROTULOS = {
+  ambito_territorial: "Ámbito territorial",
+  sym: "Símbolos",
+};
+
 function rotularCampo(clave) {
+  if (ROTULOS[clave]) return ROTULOS[clave];
   const t = clave.replace(/_/g, " ");
   return t.charAt(0).toUpperCase() + t.slice(1).replace(/\bmw\b/gi, "(MW)");
 }

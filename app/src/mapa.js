@@ -102,9 +102,15 @@ export function anadirCapa(mapa, { entrada, coleccion }) {
       type: "fill",
       source: fuente,
       filter: ["==", ["geometry-type"], "Polygon"],
-      paint: { "fill-color": color, "fill-opacity": ilustrativa ? 0.1 : 0.22 },
+      paint: { "fill-color": color, "fill-opacity": ilustrativa ? 0.14 : 0.22 },
     });
 
+    // Lo que dice «esto no está medido» es el TRAZO DISCONTINUO, no la palidez.
+    // Con una capa de juguete el relleno al 0.1 y el borde al 0.75 parecían bien;
+    // con los dieciséis dominios de verdad, las categorías se volvían el mismo
+    // beige y la leyenda prometía cinco colores que el mapa no daba. El borde
+    // recupera su opacidad entera: la discontinuidad ya hace ese trabajo, y
+    // apagar el color encima no aclaraba nada — solo escondía el dato.
     mapa.addLayer({
       id: borde,
       type: "line",
@@ -112,8 +118,7 @@ export function anadirCapa(mapa, { entrada, coleccion }) {
       filter: ["==", ["geometry-type"], "Polygon"],
       paint: {
         "line-color": color,
-        "line-width": ilustrativa ? 1.1 : 1.6,
-        "line-opacity": ilustrativa ? 0.75 : 1,
+        "line-width": ilustrativa ? 1.3 : 1.6,
         ...(ilustrativa ? { "line-dasharray": [3, 2] } : {}),
       },
     });
@@ -176,6 +181,26 @@ export function anadirCapa(mapa, { entrada, coleccion }) {
   }
 
   return { fuente, ids };
+}
+
+/**
+ * Sube TODOS los puntos por encima de TODAS las zonas y trazados.
+ *
+ * `anadirCapa` ya pone los puntos los últimos dentro de su capa, pero eso no
+ * basta en cuanto hay dos capas: el orden entre ellas lo fija el manifiesto, y
+ * ahí `minerales-proyectos` va antes que `minerales-dominios`. Resultado: la
+ * mancha del dominio se pintaba ENCIMA de las minas y se las quedaba, de modo
+ * que pinchar Las Cruces abría la ficha de la Faja Pirítica. Justo del revés.
+ *
+ * La regla no es «esta capa sobre aquella» —eso sería código que conoce las
+ * capas— sino una de geometría: **un punto siempre por encima de una superficie**,
+ * porque si no, no se puede pinchar. Se aplica una vez, al final, cuando ya
+ * están todas.
+ */
+export function elevarPuntos(mapa, capas) {
+  for (const { ids } of capas)
+    for (const { id, geom } of ids)
+      if (geom === "Point" && mapa.getLayer(id)) mapa.moveLayer(id);
 }
 
 /**

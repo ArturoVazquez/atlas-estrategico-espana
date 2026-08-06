@@ -6,7 +6,7 @@
 import { BASEMAP_ES_DEMO } from "./config.js";
 import { cargar, indexar, rotulo } from "./datos.js";
 import { crearFicha } from "./ficha.js";
-import { anadirCapa, aplicarFiltro, colorDe, crearMapa, fijarColores } from "./mapa.js";
+import { anadirCapa, aplicarFiltro, colorDe, crearMapa, elevarPuntos, fijarColores } from "./mapa.js";
 import { construirPanel } from "./panel.js";
 
 const estado = { filtro: "todo", encendidas: new Set(), capas: [] };
@@ -74,6 +74,12 @@ async function arrancar() {
         // registro original en la colección cargada, que es la que vino de la
         // release y conserva sus tipos.
         mapa.on("click", id, (e) => {
+          // Subir los puntos arriba arregla el DIBUJO, no el clic: MapLibre
+          // avisa a todas las capas que hay bajo el cursor, y la que se
+          // registró después se queda con la ficha. Así que una zona cede
+          // cuando debajo del cursor hay un punto — que es lo que el usuario
+          // creía estar pinchando.
+          if (id.endsWith(":relleno") && puntosBajo(mapa, e.point).length) return;
           const buscar = (s) => capa.coleccion.features.find((f) => f.properties.slug === s);
           const slug = e.features[0]?.properties?.slug;
           const original = buscar(slug);
@@ -93,6 +99,8 @@ async function arrancar() {
         mapa.on("mouseleave", id, () => (mapa.getCanvas().style.cursor = ""));
       }
     }
+    // Con todas puestas: los puntos por encima de las zonas, siempre.
+    elevarPuntos(mapa, estado.capas);
     refrescar();
   });
 
@@ -114,6 +122,15 @@ async function arrancar() {
     // La leyenda se rehace con el estado: apagar una capa retira su bloque.
     leyenda(estado.capas, vocabularios, estado.encendidas);
   }
+}
+
+/** Los registros de punto que hay ahora mismo bajo el cursor, de cualquier capa. */
+function puntosBajo(mapa, punto) {
+  const nucleos = estado.capas
+    .flatMap((c) => c.ids)
+    .filter(({ id, geom }) => geom === "Point" && id.endsWith(":nucleo") && mapa.getLayer(id))
+    .map(({ id }) => id);
+  return nucleos.length ? mapa.queryRenderedFeatures(punto, { layers: nucleos }) : [];
 }
 
 /**
