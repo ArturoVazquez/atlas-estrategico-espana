@@ -32,6 +32,61 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.4 — Gas y regasificación, y la cifra que nadie publica
+
+Cuarta capa. Con ella **F3 cumple su criterio de hecho**: las tres capas que
+pedía por su nombre —límites y soberanía, nuclear, gas y regasificación— están
+publicadas, y ninguna ficha tiene prensa sosteniendo un confirmado.
+
+### Añadido
+
+- **`gas-regasificacion`** — las siete plantas de GNL del sistema gasista:
+  Barcelona, Cartagena, Huelva, Bilbao, Sagunto, Mugardos y El Musel.
+
+### Huecos
+
+El hallazgo de esta tanda es lo que **no se pudo escribir**:
+
+- **La capacidad de almacenamiento en m³ de GNL no está en ninguna fuente
+  alcanzable.** Es la cifra que aparece en cualquier artículo sobre las
+  terminales españolas, y no la publica ni el informe de supervisión del sistema
+  gasista de la CNMC —descargado y revisado entero— ni las páginas de los
+  operadores. Los dos campos de capacidad se declaran en el contrato y **nacen
+  vacíos**, con su hueco en las siete fichas.
+- **Enagás es una sociedad cotizada.** PLAN.md decía «fuentes Enagás/CNMC» sin
+  notarlo: por §6.1 lo que Enagás publica sobre sí misma es `corporativa` y por
+  **R3** no puede sostener un confirmado. Queda escrito en §10.
+
+### Lo que sí quedó acreditado, y no lo compila nadie
+
+- **Los topes de El Musel**, el único cuya capacidad está fijada por
+  instrumento: 45 GWh/día (Orden TED/578/2023) y 11.744 GWh/año (resolución de
+  26 de julio de 2024). Por eso su categoría es `logistica_gnl`: se construyó
+  como regasificadora, se hibernó y opera como centro logístico.
+- **Los días de 2025 por debajo del mínimo técnico**, planta a planta: Musel 27,
+  Huelva 17, Mugardos 15, Barcelona 9, Cartagena 5, y **cero** en Bilbao y
+  Sagunto.
+- **Dos municipios que la prensa redondea:** la planta «de Huelva» está en
+  **Palos de la Frontera** y la «de Bilbao» en **Zierbena**, y lo acredita en
+  ambos casos una resolución del BOE.
+
+### Geometría
+
+Precisión de **municipio** en las siete, dicho en cada ficha: **el Nomenclátor
+del IGN no nombra ninguna terminal**. Se barrieron los siete puertos —67
+topónimos en Barcelona, 648 en la ría de Ferrol— y las únicas coincidencias eran
+palabras que contienen «gas» por casualidad: *Pocilgas*, *Refradigas*, *Arangas*.
+
+El contraste geográfico cazó de paso que el municipio se llama oficialmente
+**«Sagunt/Sagunto»**, no «Sagunto» a secas.
+
+### Contrato
+
+Sube a **1.8.0**: §10 con el apartado de la capa, §9 con su `categoria` y §6.5
+con su fila en la tabla de `activo`.
+
+---
+
 ## datos-v2026.08.3 — El tablero: ocho territorios, ningún veredicto
 
 Tercera capa, y la que da al atlas su carácter. El árbol **El tablero** estaba

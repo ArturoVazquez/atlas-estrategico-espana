@@ -128,7 +128,13 @@ contradiría el motivo por el que se decidió autoalojarlo.
   - **Pendiente:** las **zonas sin delimitar** (Canarias–Marruecos y el monte
     Tropic) y las **leyes marroquíes 37-17 y 38-17**, que son su instrumento.
     Piden polígono `ilustrativo` y activan R5 sobre la capa: segunda tanda.
-- **Gas y regasificación**: las plantas de GNL con fuente Enagás/CNMC.
+- ~~**Gas y regasificación**: las plantas de GNL con fuente Enagás/CNMC.~~
+  **HECHA el 2026-08-06**, release `datos-v2026.08.4`. Ojo con cómo estaba
+  escrita esta línea: **Enagás es una sociedad cotizada**, así que es fuente
+  `corporativa` y por R3 no sostiene un confirmado. Lo primario es el BOE y la
+  CNMC. Y la capacidad de almacenamiento en m³ —la cifra que todo el mundo
+  cita— **no la publica nadie en documento accesible**: queda como hueco
+  declarado en las siete fichas.
 - ~~**Nuclear**: los 7 reactores con calendario de cierre; fuentes CSN/MITECO.~~
   **HECHA el 2026-08-06**, release `datos-v2026.08.2`. Un registro por reactor,
   con dos campos de fecha: lo **autorizado** (orden del BOE) y lo **acordado**
@@ -152,8 +158,16 @@ contradiría el motivo por el que se decidió autoalojarlo.
   no existen**, así que la guardia solo comprueba de verdad las URLs que prometen
   formato, y dice cuántas no puede.
 
-**Hecho cuando:** las tres capas validan con su esquema propio y ninguna ficha
-publicada contiene prensa sosteniendo un confirmado.
+~~**Hecho cuando:** las tres capas validan con su esquema propio y ninguna ficha
+publicada contiene prensa sosteniendo un confirmado.~~ **CUMPLIDO el
+2026-08-06**: cuatro capas publicadas y validando, y ninguna cifra no primaria
+sostiene un confirmado en ninguna de ellas.
+
+**Lo que queda de F3, fuera de su criterio:** los **dominios minerales** —que
+son los que darían diente a **R8**, la única regla del contrato sin
+implementar— y las **aguas sin delimitar** del tablero, con las leyes marroquíes
+37-17 y 38-17. Las dos piden geometría de polígono, que el visor todavía no
+dibuja.
 
 ## F4 · Despliegue e integración editorial
 
