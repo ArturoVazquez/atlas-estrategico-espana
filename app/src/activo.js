@@ -15,7 +15,9 @@ const TABLA = {
   "minerales-proyectos": (p) => p.fase === "produccion",
   nuclear: (p) => p.fase === "produccion",
   "gas-regasificacion": (p) => p.fase === "produccion",
-  "minerales-dominios": (p) => p.caracter === "activo" || p.caracter === "mixto",
+  // La única que no mira `fase`: un dominio no es un expediente, es una comarca,
+  // y su carácter ES la clase de cosa que es. Va en `categoria` (contrato 1.10).
+  "minerales-dominios": (p) => p.categoria === "activo" || p.categoria === "mixto",
   "cables-submarinos": (p) => p.fase === "produccion",
   // `recurso-eolico`, `recurso-solar` y el tablero NO APLICAN: son recurso o
   // condición del territorio, no explotación. Ausentes de la tabla a propósito.

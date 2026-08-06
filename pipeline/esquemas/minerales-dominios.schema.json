@@ -22,8 +22,13 @@
           },
           "properties": {
             "type": "object",
-            "required": ["materias", "sym"],
+            "required": ["ambito_territorial", "materias", "sym"],
             "properties": {
+              "ambito_territorial": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Dónde cae el dominio, en prosa: «Huelva y el norte de Sevilla». Aquí NO hay `municipio` ni `provincia` —los campos del núcleo que usan las demás capas— porque casi ningún dominio cabe en una provincia y elegir una a dedo sería inventar. No confundir con el `ambito` del manifiesto, que es de capa (espana/mundo) y dice contra qué recuadro se valida la geometría."
+              },
               "materias": {
                 "type": "array",
                 "minItems": 1,
@@ -41,9 +46,8 @@
                 "description": "Etiqueta corta de mapa, con símbolos químicos: «Cu · Zn · Pb · Ag». Es rótulo, no dato: `materias` es la lista que se lee, `sym` la que cabe."
               },
               "provincia": {
-                "type": "string",
-                "minLength": 1,
-                "description": "Solo cuando el dominio cabe en una. Casi ninguno cabe —la Faja Pirítica son dos, Galicia tres— y entonces se omite en vez de elegir una a dedo. El ámbito en prosa va en `descripcion`."
+                "not": {},
+                "description": "PROHIBIDO en esta capa: usa `ambito_territorial`. La Faja Pirítica son dos provincias y Galicia tres; escribir una sola aquí sería el hueco relleno con verosimilitud, que es el peor fallo posible del atlas."
               }
             },
             "not": {

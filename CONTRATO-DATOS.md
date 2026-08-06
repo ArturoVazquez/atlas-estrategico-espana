@@ -653,8 +653,16 @@ reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` 
 > que su `activo` es `null` y el filtro de explotación no lo esconde nunca.
 
 **minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado) *(1.10)*:
-`materias[]` · `distritos[]` · `sym` (etiqueta corta de mapa: «Cu · Zn · Pb»)
+`ambito_territorial` · `materias[]` · `distritos[]` · `sym` (etiqueta corta de
+mapa: «Cu · Zn · Pb»)
 
+> **Esta capa no lleva `municipio` ni `provincia`, y es a propósito**: casi
+> ningún dominio cabe en una provincia —la Faja Pirítica son dos, Galicia tres—,
+> así que dice su ámbito entero en prosa (`ambito_territorial`) en vez de elegir
+> una a dedo. Su esquema PROHÍBE `provincia` para que la tentación no vuelva. No
+> confundir con el `ambito` del manifiesto, que es de capa y dice contra qué
+> recuadro se valida la geometría (§3).
+>
 > El carácter del dominio va en **`categoria`** (§9), no en un campo propio — ver
 > la nota de §9. Y ninguno de estos campos lleva `✔`: la capa es `ilustrativo`,
 > y **R5 prohíbe la verificación por campo** en una capa que dibuja dónde, no

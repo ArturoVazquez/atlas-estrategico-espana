@@ -1,0 +1,1013 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "minerales-dominios",
+    "schema_version": "1.10.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:faja-piritica",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -7.52,
+              37.42
+            ],
+            [
+              -6.05,
+              37.42
+            ],
+            [
+              -5.9,
+              37.72
+            ],
+            [
+              -6.5,
+              37.98
+            ],
+            [
+              -7.52,
+              37.82
+            ],
+            [
+              -7.52,
+              37.42
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "faja-piritica",
+        "nombre": "Faja Pirítica",
+        "categoria": "activo",
+        "descripcion": "Una de las mayores provincias de sulfuros masivos del planeta: más de dos siglos de minería de cobre y polimetálicos, hoy de nuevo en el centro de la estrategia europea del cobre.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Huelva y el norte de Sevilla",
+        "materias": [
+          "Cobre",
+          "Zinc",
+          "Plomo",
+          "Plata",
+          "Pirita"
+        ],
+        "sym": "Cu · Zn · Pb · Ag",
+        "distritos": [
+          "Riotinto",
+          "Tharsis",
+          "Aznalcóllar",
+          "Las Cruces (Gerena)",
+          "Sotiel"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:estano-litio-galicia",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -9.1,
+              42.2
+            ],
+            [
+              -7.9,
+              42.0
+            ],
+            [
+              -7.1,
+              42.3
+            ],
+            [
+              -7.2,
+              43.15
+            ],
+            [
+              -8.5,
+              43.35
+            ],
+            [
+              -9.2,
+              43.0
+            ],
+            [
+              -9.1,
+              42.2
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "estano-litio-galicia",
+        "nombre": "Estaño–litio de Galicia",
+        "categoria": "mixto",
+        "descripcion": "Granitos y pegmatitas con estaño, tantalio, wolframio y litio: el distrito concentra buena parte del potencial español en metales de la transición digital.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Ourense, Pontevedra y A Coruña",
+        "materias": [
+          "Estaño",
+          "Tantalio",
+          "Litio",
+          "Wolframio",
+          "Cuarzo de alta pureza"
+        ],
+        "sym": "Sn · Ta · Li · W",
+        "distritos": [
+          "Penouta (Sn–Ta)",
+          "Doade–Beariz (Li)",
+          "San Finx (W–Sn)",
+          "Serrabal (cuarzo)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:wolframio-del-oeste",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.85,
+              40.45
+            ],
+            [
+              -5.9,
+              40.35
+            ],
+            [
+              -5.75,
+              41.0
+            ],
+            [
+              -6.75,
+              41.15
+            ],
+            [
+              -6.85,
+              40.45
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "wolframio-del-oeste",
+        "nombre": "Wolframio del oeste",
+        "categoria": "activo",
+        "descripcion": "Cinturón wolframífero del zócalo salmantino, reactivado por la demanda de defensa y herramienta; incluye el distrito de uranio de Ciudad Rodrigo, hoy paralizado.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Salamanca y Zamora",
+        "materias": [
+          "Wolframio",
+          "Estaño"
+        ],
+        "sym": "W · Sn",
+        "distritos": [
+          "Barruecopardo (W, activa)",
+          "Los Santos (W)",
+          "Morille",
+          "Retortillo (U, paralizado)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:litio-wolframio-extremadura",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.9,
+              38.9
+            ],
+            [
+              -5.9,
+              38.9
+            ],
+            [
+              -5.8,
+              39.55
+            ],
+            [
+              -6.55,
+              39.95
+            ],
+            [
+              -7.1,
+              39.5
+            ],
+            [
+              -6.9,
+              38.9
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "litio-wolframio-extremadura",
+        "nombre": "Litio–wolframio de Extremadura",
+        "categoria": "desarrollo",
+        "descripcion": "Pegmatitas y filones del oeste con litio, wolframio y estaño; concentra tres de los siete proyectos españoles de la primera lista estratégica europea.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Cáceres y el norte de Badajoz",
+        "materias": [
+          "Litio",
+          "Wolframio",
+          "Estaño"
+        ],
+        "sym": "Li · W · Sn",
+        "distritos": [
+          "Las Navas (Cañaveral)",
+          "Valdeflórez (Cáceres)",
+          "La Parrilla (Almoharín)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:ossa-morena",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.7,
+              37.9
+            ],
+            [
+              -5.6,
+              38.0
+            ],
+            [
+              -5.7,
+              38.35
+            ],
+            [
+              -6.6,
+              38.3
+            ],
+            [
+              -6.7,
+              37.9
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "ossa-morena",
+        "nombre": "Ossa-Morena",
+        "categoria": "desarrollo",
+        "descripcion": "Banda del zócalo de Ossa-Morena con las únicas mineralizaciones de níquel magmático explotadas en España.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Sur de Badajoz y la sierra de Huelva y Sevilla",
+        "materias": [
+          "Níquel",
+          "Cobre",
+          "Cobalto",
+          "PGM"
+        ],
+        "sym": "Ni · Cu · PGM",
+        "distritos": [
+          "Aguablanca (Monesterio)",
+          "Cala (Fe–Cu, histórico)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:oro-del-noroeste",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -7.05,
+              42.55
+            ],
+            [
+              -6.2,
+              42.6
+            ],
+            [
+              -6.0,
+              43.2
+            ],
+            [
+              -7.2,
+              43.3
+            ],
+            [
+              -7.05,
+              42.55
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "oro-del-noroeste",
+        "nombre": "Oro del noroeste",
+        "categoria": "activo",
+        "descripcion": "Cinturón aurífero explotado desde Roma —Las Médulas— y de nuevo activo en el occidente asturiano.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Occidente de Asturias y León",
+        "materias": [
+          "Oro",
+          "Cobre"
+        ],
+        "sym": "Au · Cu",
+        "distritos": [
+          "El Valle-Boinás y Carlés (activas)",
+          "Salave (Tapia, en tramitación)",
+          "Las Médulas (histórico romano)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:fluorita-de-asturias",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -5.4,
+              43.33
+            ],
+            [
+              -4.95,
+              43.33
+            ],
+            [
+              -5.0,
+              43.52
+            ],
+            [
+              -5.45,
+              43.52
+            ],
+            [
+              -5.4,
+              43.33
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "fluorita-de-asturias",
+        "nombre": "Fluorita de Asturias",
+        "categoria": "activo",
+        "descripcion": "Filones de espato flúor de la franja Berbes–Caravia; la fluorita figura en la lista europea de materias primas críticas.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Costa oriental asturiana",
+        "materias": [
+          "Fluorita"
+        ],
+        "sym": "CaF₂",
+        "distritos": [
+          "Berbes",
+          "Caravia",
+          "La Collada"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:zinc-cantabrico",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.35,
+              43.2
+            ],
+            [
+              -3.7,
+              43.2
+            ],
+            [
+              -3.75,
+              43.42
+            ],
+            [
+              -4.4,
+              43.42
+            ],
+            [
+              -4.35,
+              43.2
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "zinc-cantabrico",
+        "nombre": "Zinc cantábrico",
+        "categoria": "historico",
+        "descripcion": "Distrito de zinc-plomo sobre calizas que sostuvo la mina de Reocín, una de las grandes de Europa, cerrada en 2003.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Cantabria",
+        "materias": [
+          "Zinc",
+          "Plomo"
+        ],
+        "sym": "Zn · Pb",
+        "distritos": [
+          "Reocín",
+          "Áliva (Picos de Europa)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:magnesita-de-eugui",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.68,
+              42.9
+            ],
+            [
+              -1.35,
+              42.9
+            ],
+            [
+              -1.38,
+              43.08
+            ],
+            [
+              -1.7,
+              43.08
+            ],
+            [
+              -1.68,
+              42.9
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "magnesita-de-eugui",
+        "nombre": "Magnesita de Eugui",
+        "categoria": "activo",
+        "descripcion": "Carbonatos magnésicos en explotación continua; junto con Rubián (Lugo) forma la producción española de magnesita, materia prima crítica.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Navarra, y Rubián en Lugo",
+        "materias": [
+          "Magnesita"
+        ],
+        "sym": "MgCO₃",
+        "distritos": [
+          "Eugui (Navarra)",
+          "Rubián (Lugo)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:potasas-del-bages",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1.6,
+              41.63
+            ],
+            [
+              2.0,
+              41.63
+            ],
+            [
+              2.0,
+              41.9
+            ],
+            [
+              1.6,
+              41.9
+            ],
+            [
+              1.6,
+              41.63
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "potasas-del-bages",
+        "nombre": "Potasas del Bages",
+        "categoria": "activo",
+        "descripcion": "La cuenca potásica catalana alberga la única producción española de potasa, insumo estratégico de la cadena de fertilizantes.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Cuenca potásica catalana, en Barcelona",
+        "materias": [
+          "Potasa",
+          "Sal"
+        ],
+        "sym": "K · sal",
+        "distritos": [
+          "Súria",
+          "Sallent"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:mercurio-de-almaden",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -5.05,
+              38.6
+            ],
+            [
+              -4.68,
+              38.6
+            ],
+            [
+              -4.72,
+              38.85
+            ],
+            [
+              -5.08,
+              38.85
+            ],
+            [
+              -5.05,
+              38.6
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "mercurio-de-almaden",
+        "nombre": "Mercurio de Almadén",
+        "categoria": "historico",
+        "descripcion": "El mayor yacimiento de mercurio conocido del mundo, explotado más de dos mil años y cerrado en 2003; hoy Patrimonio Mundial.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Ciudad Real",
+        "materias": [
+          "Mercurio"
+        ],
+        "sym": "Hg",
+        "distritos": [
+          "Almadén",
+          "Almadenejos"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:wolframio-de-alcudia",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.55,
+              38.78
+            ],
+            [
+              -4.15,
+              38.78
+            ],
+            [
+              -4.18,
+              38.98
+            ],
+            [
+              -4.58,
+              38.98
+            ],
+            [
+              -4.55,
+              38.78
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "wolframio-de-alcudia",
+        "nombre": "Wolframio de Alcudia",
+        "categoria": "desarrollo",
+        "descripcion": "Filones de wolframio del entorno de Alcudia; El Moto figura en la primera lista estratégica europea.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Valle de Alcudia y Abenójar, en Ciudad Real",
+        "materias": [
+          "Wolframio"
+        ],
+        "sym": "W",
+        "distritos": [
+          "El Moto (Abenójar)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:tierras-raras-campo-montiel",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -3.75,
+              38.5
+            ],
+            [
+              -3.1,
+              38.5
+            ],
+            [
+              -3.0,
+              38.75
+            ],
+            [
+              -3.6,
+              38.85
+            ],
+            [
+              -3.75,
+              38.5
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "tierras-raras-campo-montiel",
+        "nombre": "Tierras raras del Campo de Montiel",
+        "categoria": "disputa",
+        "descripcion": "Arenas con monacita rica en tierras raras: uno de los escasos potenciales europeos en estos elementos, sin desarrollar.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Campo de Montiel, al sur de Ciudad Real",
+        "materias": [
+          "Tierras raras (monacita)"
+        ],
+        "sym": "REE",
+        "distritos": [
+          "Matamulas (Torrenueva)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:celestina-de-granada",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -3.95,
+              36.95
+            ],
+            [
+              -3.5,
+              36.98
+            ],
+            [
+              -3.45,
+              37.18
+            ],
+            [
+              -3.9,
+              37.15
+            ],
+            [
+              -3.95,
+              36.95
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "celestina-de-granada",
+        "nombre": "Celestina de Granada",
+        "categoria": "activo",
+        "descripcion": "Los depósitos de celestina de la depresión de Granada hacen de España el único productor de estroncio de la Unión Europea.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Depresión de Granada",
+        "materias": [
+          "Estroncio"
+        ],
+        "sym": "Sr",
+        "distritos": [
+          "Montevive (Escúzar)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:arcillas-especiales-tajo",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -3.85,
+              39.95
+            ],
+            [
+              -3.3,
+              40.05
+            ],
+            [
+              -3.35,
+              40.45
+            ],
+            [
+              -3.8,
+              40.4
+            ],
+            [
+              -3.85,
+              39.95
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "arcillas-especiales-tajo",
+        "nombre": "Arcillas especiales",
+        "categoria": "activo",
+        "descripcion": "Arcillas especiales de la cuenca del Tajo; España es el único productor de sepiolita a escala industrial de la UE.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "Cuenca de Madrid y Toledo",
+        "materias": [
+          "Sepiolita",
+          "Bentonita"
+        ],
+        "sym": "sepiolita",
+        "distritos": [
+          "Vicálvaro (Madrid)",
+          "Cuenca del Tajo (Toledo)"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "minerales-dominios:sierra-de-cartagena",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.5,
+              37.5
+            ],
+            [
+              -0.72,
+              37.53
+            ],
+            [
+              -0.78,
+              37.7
+            ],
+            [
+              -1.55,
+              37.65
+            ],
+            [
+              -1.5,
+              37.5
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "slug": "sierra-de-cartagena",
+        "nombre": "Sierra de Cartagena",
+        "categoria": "historico",
+        "descripcion": "Sierra minera de zinc y plomo explotada desde los fenicios; hoy distrito histórico con la bahía de Portmán como pasivo pendiente de restauración.",
+        "estado_registro": "vigente",
+        "verif": "no_verificado",
+        "geo_precision": "ilustrativa",
+        "geo_fuente": "trazado a mano alzada sobre el ámbito descrito",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "ambito_territorial": "La Unión, Portmán y Mazarrón, en Murcia",
+        "materias": [
+          "Zinc",
+          "Plomo"
+        ],
+        "sym": "Zn · Pb",
+        "distritos": [
+          "La Unión",
+          "Portmán",
+          "Mazarrón"
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Sin cartografía de fuente primaria para este perímetro: el trazado es a mano alzada sobre el ámbito descrito, no un límite medido."
+          }
+        ],
+        "nota": "El perímetro NO mide nada: dice aproximadamente dónde, y ni cuánto ni de quién. Los enclaves de `distritos` son nombres, no coordenadas — quien quiera su posición la busca en `minerales-proyectos` o en el nomenclátor. Toda la capa es `ilustrativo`, así que R5 le prohíbe verificar campo por campo; el día que un dominio ascienda a cartografía primaria tendrá que ascender la capa entera, o partirse en dos."
+      }
+    }
+  ]
+}

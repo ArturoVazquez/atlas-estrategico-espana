@@ -34,7 +34,12 @@
       "geometria": "poligonos",
       "registro": "ilustrativo",
       "ambito": "espana",
-      "en_preparacion": true
+      "cadencia_revision_dias": 365,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/minerales-dominios.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Atlas Estratégico de España"
     },
 
     {

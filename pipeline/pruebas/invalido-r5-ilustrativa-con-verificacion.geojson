@@ -21,6 +21,7 @@
         "geo_fuente": "mano alzada",
         "fecha_alta": "2026-08-05",
         "fecha_verificacion": "2026-08-05",
+        "ambito_territorial": "Una comarca de prueba",
         "materias": ["Cobre"],
         "materias__v": "parcial",
         "materias__f": "f1",
