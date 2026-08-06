@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.10.0",
+  "schema_version": "1.11.0",
   "actualizado": "2026-08-06",
 
   "registro": {
@@ -75,7 +75,7 @@
       { "valor": "espana", "etiqueta": "España",
         "def": "Por defecto. La geometría se valida contra el recuadro del territorio, Canarias incluidas." },
       { "valor": "mundo", "etiqueta": "Mundo",
-        "def": "La capa desborda el territorio (p. ej. el idioma). Solo se valida el rango legal de WGS84." }
+        "def": "La capa desborda el territorio (el idioma; o la plataforma continental más allá de las 200 millas, que cae fuera del recuadro por definición). Solo se valida el rango legal de WGS84. Se declara la capa, NO se ensancha el recuadro de §7.4: eso debilitaría la comprobación de todas las demás." }
     ],
     "registro": [
       { "valor": "verificado", "etiqueta": "Verificada",
@@ -109,6 +109,17 @@
       { "valor": "logistica_gnl", "etiqueta": "Terminal logística de GNL",
         "color": "#B5915F",
         "def": "Autorizada como regasificadora, opera como centro logístico con tope de emisión fijado por instrumento." }
+    ],
+    "espacios-maritimos": [
+      { "valor": "sin_delimitar", "etiqueta": "Sin delimitación acordada",
+        "color": "#4A6E82",
+        "def": "Espacio marítimo que dos Estados no han delimitado por acuerdo, y que ambos reconocen como tal en sus propios instrumentos. El perímetro que se dibuja es ilustrativo: trazar la línea sería dictar la delimitación (D5)." },
+      { "valor": "limite_declarado", "etiqueta": "Límite declarado por una parte",
+        "color": "#1F4A66",
+        "def": "Límite que un Estado ha depositado o publicado en un instrumento. Acredita la posición de esa parte, no la razón de nadie: se dibuja atribuido a quien lo declara." },
+      { "valor": "recurso_afectado", "etiqueta": "Recurso en zona sin delimitar",
+        "color": "#9C7A14",
+        "def": "Yacimiento o formación de interés estratégico situado dentro de un espacio sin delimitación acordada. Es el cruce entre el tablero y los minerales." }
     ],
     "limites-soberania": [
       { "valor": "reclamado_por_espana", "etiqueta": "Reclamado por España",

@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.10.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.11.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -310,7 +310,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `minerales-dominios` *(1.10)* | `categoria` (§9, vocabulario) | `categoria ∈ {activo, mixto}` |
 | `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
-| `tablero` (límites y soberanía) | — | **no aplica**, por el mismo motivo. |
+| `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
 
 Una capa cuya fila diga «no aplica» devuelve `null`, no `false`. La diferencia
 importa: `false` afirma que algo está parado; `null` dice que la pregunta no se
@@ -548,6 +548,7 @@ vocabulario.
 - *minerales-proyectos*: `estrategico_ue` · `produccion_singular` · `en_disputa`
 - *nuclear* *(1.6)*: `en_operacion` · `en_cese` · `desmantelamiento`
 - *limites-soberania* *(1.7)*: `reclamado_por_espana` · `reclamado_a_espana`
+- *espacios-maritimos* *(1.11)*: `sin_delimitar` · `limite_declarado` · `recurso_afectado`
 - *gas-regasificacion* *(1.8)*: `regasificacion` · `logistica_gnl`
 - *minerales-dominios* *(1.10)*: `activo` · `historico` · `desarrollo` · `disputa` · `mixto`
 - *cables-submarinos*: `aterrizaje` · `trazado`
@@ -651,6 +652,36 @@ reciclaje, combinables) · `municipio` (✔) · `provincia` (✔) · `promotor` 
 >
 > **Nada de esto tiene `fase`**: el tablero figura como «no aplica» en §6.5, así
 > que su `activo` es `null` y el filtro de explotación no lo esconde nunca.
+
+**espacios-maritimos** *(1.11)* (`dotacion`, **mixta**, verificado, `ambito:
+mundo`): `estado_juridico` (✔; +`__v`,`__f`) · `partes[]` · `instrumento` ·
+`claves[]`
+
+> **La misma doctrina D5, en el mar.** `estado_juridico` es aquí lo que
+> `administrado_por`/`reclamado_por` es en tierra: dice **en qué situación
+> jurídica está el espacio** —sin delimitación acordada, límite declarado por
+> una parte— y `partes[]` dice **a quién concierne**. Como en tierra, cada
+> afirmación va en `claves[]` atribuida a quien la sostiene.
+>
+> **Por qué `ambito: mundo` y no `espana`** *(y no se toca el recuadro de §7.4)*:
+> la plataforma continental más allá de las 200 millas cae **fuera del recuadro
+> del territorio por definición** —los puntos de la presentación española llegan
+> a 24,7° W y 22,6° N—, así que la comprobación de §7.4 que sirve para el resto
+> de capas aquí sería falsa. Ensanchar el recuadro habría debilitado la
+> comprobación de las otras seis; declarar el ámbito real de esta capa no
+> debilita ninguna.
+>
+> **La regla que gobierna esta capa entera:** no se dibuja ninguna frontera ni
+> línea mediana. Se dibuja **lo que un instrumento deposita** —el límite exterior
+> que España presentó ante la CLCS— y, aparte y como `geo_precision:
+> ilustrativa`, **la zona sin delimitación acordada**. Calcular la equidistancia
+> sería dictar el resultado que los propios instrumentos dejan a un acuerdo
+> futuro, y eso es exactamente lo que D5 prohíbe.
+>
+> **Una capa `verificado` PUEDE contener geometría `ilustrativa`.** R5 va de la
+> capa hacia la geometría —capa ilustrativa ⇒ toda su geometría ilustrativa— y
+> **no al revés**; R9 solo vigila `exacta` y `paraje`. Queda escrito aquí porque
+> el malentendido contrario ya aplazó esta capa una vez.
 
 **minerales-dominios** (`dotacion`, polígonos, ilustrativo→verificado) *(1.10)*:
 `ambito_territorial` · `materias[]` · `distritos[]` · `sym` (etiqueta corta de
@@ -787,6 +818,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.11.0** | 2026-08-06 | **Aditiva.** Nace `espacios-maritimos` (§10), la capa del mar del tablero, con su `categoria` (§9) y su fila de §6.5 —«no aplica», como el resto del tablero—. Estrena el `ambito: mundo` para geometría real: la plataforma continental más allá de las 200 millas **cae fuera del recuadro de §7.4 por definición**, así que se declara el ámbito de la capa y **no se ensancha el recuadro**, que habría debilitado la comprobación de las otras seis. Deja escrito, donde ya confundió una vez, que **R5 va de la capa hacia la geometría y no al revés**: una capa `verificado` puede contener un registro `geo_precision: ilustrativa`, y eso es lo que permite dibujar la zona sin delimitación acordada sin dictar ninguna frontera (D5). |
 | **1.10.0** | 2026-08-06 | **Aditiva, y cierra el único renglón en el que este documento no se sostenía a sí mismo.** Nace la capa `minerales-dominios` (§10) y con ella **R8 gana su diente**: entra en la tabla de §6.4, se retira la nota de estado de §6.5 y §8 deja de citarla como el ejemplo vivo de regla sin implementar. Desde hoy **ninguna regla del contrato es prosa**. La capa unifica el `caracter` de §10 con el `categoria` del núcleo, que archivaban los MISMOS cinco valores en dos campos: renombrado nominalmente mayor por §8, gratis de hecho porque la capa no tenía datos publicados — el mismo argumento con el que la 1.1 introdujo `fase`. Los cinco valores estrenan `color` (§9). |
 | **1.9.0** | 2026-08-06 | **Aditiva.** Cada categoría de §9 lleva ahora su **`color`**. Lo destapó tener cuatro capas encendidas a la vez: nuclear, gas y el tablero se pintaban del MISMO gris, porque la paleta vivía cableada en el visor y solo conocía las tres categorías de `minerales-proyectos`. Es el mismo vicio —código que conoce las capas de antemano— que ya se había quitado del panel y de la ficha. Consecuencia asumida: el color es dato, así que cambiarlo exige una release. |
 | **1.8.0** | 2026-08-06 | **Aditiva.** Entra `gas-regasificacion` (§10) con su `categoria` (§9) y su fila en la tabla de `activo` (§6.5). Trae dos campos —`capacidad_almacenamiento_m3` y `capacidad_emision_nm3h`— que **nacen vacíos a propósito**: al abrir la capa se comprobó que ni la CNMC ni los operadores publican en documento accesible la capacidad de las siete terminales, que es la cifra que todo el mundo repite. El campo existe para que el hueco tenga dónde alojarse. Queda escrito además, porque no lo estaba, que **Enagás es una sociedad cotizada** y por tanto fuente `corporativa`: lo primario aquí es el BOE y la CNMC. |
