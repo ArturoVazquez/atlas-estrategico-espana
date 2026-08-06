@@ -36,7 +36,7 @@
         "consumo_gwh_anio__v": "confirmado",
         "consumo_gwh_anio__f": "f1",
         "superficie_ha": 143.2,
-        "superficie_ha__v": "confirmado",
+        "superficie_ha__v": "parcial",
         "superficie_ha__f": "f1",
         "fase": "tramitacion",
         "instrumento": "Declaración ambiental estratégica del Plan de Interés General «Expansión Región AWS en Aragón» (INAGA, resolución de 16 de julio de 2025; BOA n.º 150, de 6 de agosto de 2025)",
@@ -47,6 +47,12 @@
             "k": "Dónde lo sitúa el acto",
             "v": "El terreno se encuentra ubicado junto al polígono industrial «Empresarium» y cuenta con una superficie total de 144,1 ha.",
             "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Dos superficies para el mismo terreno",
+            "v": "El acto da 143,2 ha al calificar el suelo de CAR y 144,1 ha como superficie total del terreno, en el mismo documento. Se publica la primera y se declara el desacuerdo: el atlas no elige por su cuenta cuál de las dos vale.",
+            "verif": "parcial",
             "fuente": "f1"
           },
           {

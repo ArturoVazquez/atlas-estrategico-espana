@@ -165,6 +165,9 @@ const ROTULOS = {
   cogeneracion_gwh: "Cogeneración (GWh)",
   hidraulica_gwh: "Hidráulica (GWh)",
   total_gwh: "Total (GWh)",
+  codigo_promotor: "Código en el acto",
+  consumo_gwh_anio: "Consumo declarado (GWh/año)",
+  superficie_ha: "Superficie (ha)",
 };
 
 function rotularCampo(clave) {
@@ -179,15 +182,18 @@ function camposDeCapa(p, fuentes, fase, campo) {
     if (NUCLEO.has(clave) || clave.includes("__")) continue;
     if (valor === null || valor === undefined || valor === "") continue;
     // `fase` es el único que se traduce, porque es vocabulario controlado (§6.5).
-    // Los `_gwh` se formatean a la española —miles y dos decimales— porque son
-    // cifras de cinco dígitos que sin puntos no se leen. Va por SUFIJO de campo
-    // y no por capa, igual que el `_fecha` de abajo, y no se aplica a todo
-    // número: un `anio` con separador de miles diría «2.024».
+    //
+    // Las CIFRAS se escriben a la española, que es el idioma del atlas: punto de
+    // millar y coma decimal. Se aplica a todo número —una regla, no una lista de
+    // sufijos que hay que ampliar cada vez que nace una capa— con **una sola
+    // excepción, `anio`**, porque un año con separador de miles diría «2.024».
+    // No se fuerzan decimales: así una tensión de 400 kV sigue diciendo «400» y
+    // un consumo de 3279,7 GWh dice «3.279,7».
     const texto = clave === "fase"
       ? rotulo(fase, valor, valor)
       : Array.isArray(valor) ? valor.join(" · ")
-      : clave.endsWith("_gwh") && typeof valor === "number"
-        ? valor.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : typeof valor === "number" && clave !== "anio"
+        ? valor.toLocaleString("es-ES")
         : String(valor);
     // Un `_fecha` acompaña al campo anterior: se cuelga de él como metadato.
     if (clave.endsWith("_fecha")) continue;
