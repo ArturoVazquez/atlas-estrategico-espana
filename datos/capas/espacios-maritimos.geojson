@@ -18,8 +18,16 @@
               27.3
             ],
             [
-              -13.6,
+              -13.85,
               27.1
+            ],
+            [
+              -13.35,
+              27.9
+            ],
+            [
+              -12.6,
+              28.55
             ],
             [
               -11.4,
@@ -44,7 +52,7 @@
         "estado_registro": "vigente",
         "verif": "parcial",
         "geo_precision": "ilustrativa",
-        "geo_fuente": "esquema trazado a mano del corredor entre el archipiélago y la costa africana; ningún instrumento dibuja esta zona",
+        "geo_fuente": "esquema trazado a mano del corredor entre el archipiélago y la costa africana, comprobado punto a punto contra la línea de costa del mapa base para que no pise tierra; ningún instrumento dibuja esta zona",
         "fecha_alta": "2026-08-06",
         "fecha_verificacion": "2026-08-06",
         "estado_juridico": "Sin delimitación acordada",
