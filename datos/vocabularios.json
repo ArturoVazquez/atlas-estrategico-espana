@@ -160,7 +160,7 @@
         "color": "#7A6A4F",
         "def": "Un expediente de inversión con propuesta de ayuda del PERTE, situado en el municipio que declara su propio listado. Es dinero comprometido sobre un plan, no una instalación en marcha." }
     ],
-    "_hidrogeno-produccion": "Un solo valor, y es deliberado: las siete plantas son la misma clase de cosa y la fuente las sirve en la misma capa. Lo que las distingue —en qué punto de su vida están— ya lo llevan `fase` y `estado_pci`, y meterlo también aquí sería la doble fuente de verdad que D3 descartó. Precedente de vocabulario de un valor: `recurso-eolico`, con `zona` a secas.",
+    "_hidrogeno-produccion": "Un solo valor, y es deliberado: las siete plantas son la misma clase de cosa y la fuente las sirve en la misma capa. Lo que las distingue —en qué punto de su vida están— ya lo llevan `fase` y `estado_pci`, y meterlo también aquí sería la doble fuente de verdad que D3 descartó. Precedente de vocabulario de un valor: el de la rama eólica, que entonces se llamaba `recurso-eolico` y tenía `zona` a secas, y que hoy es `parques-eolicos` con `parque_eolico`.",
     "hidrogeno-produccion": [
       { "valor": "electrolizador", "etiqueta": "Electrolizador",
         "color": "#3E7A6B",
@@ -245,11 +245,17 @@
       { "valor": "aterrizaje", "etiqueta": "Punto de aterrizaje" },
       { "valor": "trazado", "etiqueta": "Trazado" }
     ],
-    "recurso-eolico": [
-      { "valor": "zona", "etiqueta": "Zona de recurso" }
+    "_parques-eolicos": "Sustituye al vocabulario de `recurso-eolico`, que tenía un solo valor —`zona`— para unas zonas de recurso que nunca se pudieron dibujar sin inventarlas. Sigue teniendo un solo valor, pero ahora nombra algo que existe y que la fuente clasifica.",
+    "parques-eolicos": [
+      { "valor": "parque_eolico", "etiqueta": "Parque eólico", "color": "#5E7A6B",
+        "def": "El recinto que la BTN clasifica como TIPO 07: «instalación donde se lleva a cabo la producción de energía eléctrica mediante aerogeneradores». El registro es el CONTORNO, no la instalación en su sentido industrial: la fuente no dice potencia, ni titular, ni si está produciendo." }
     ],
-    "recurso-solar": [
-      { "valor": "zona", "etiqueta": "Zona de recurso" }
+    "_plantas-solares": "Dos valores en la misma capa porque la BTN los sirve en la misma tabla y son la misma clase de objeto —un recinto que convierte sol en electricidad—; lo que cambia es CÓMO, y eso es justo lo que un vocabulario de categoría dice. Cuarenta y cinco termosolares no dan para una rama del árbol.",
+    "plantas-solares": [
+      { "valor": "fotovoltaica", "etiqueta": "Fotovoltaica", "color": "#9C7A3E",
+        "def": "TIPO 05 de la BTN: la energía se obtiene directamente de la radiación solar mediante semiconductores. De los 3.165 recintos que la fuente clasifica así, solo 1.206 llevan nombre — y son el 76 % de la superficie, porque los anónimos son los pequeños." },
+      { "valor": "termosolar", "etiqueta": "Termosolar", "color": "#C0913F",
+        "def": "TIPO 08 de la BTN: espejos que concentran la radiación para calentar un fluido que mueve un alternador. Cuarenta y cinco en España, y son las de recinto más grande con diferencia — 138 ha de mediana frente a 4,4 de una fotovoltaica." }
     ],
 
     "_red-electrica": "Dos valores, y los separa la fuente: la BTN captura el tendido como línea y la subestación como recinto, con atributos distintos. No hay un tercero para «torre de alta tensión» aunque el IGN la capture (280.072 de ellas): una torre no es un activo estratégico, es el detalle con el que se dibuja la línea.",
@@ -260,7 +266,7 @@
         "def": "El recinto donde termina al menos un tramo de 220 o 400 kV. El criterio no es del atlas: la norma de captura del IGN obliga a que una línea finalice en subestación, transformador, central, vértice de otra línea o torre." }
     ],
 
-    "_agua-embalsada": "Un solo valor, como `recurso-eolico` y `plan_inversion`. El Boletín Hidrológico no clasifica los embalses, y sacar una clase del uso o del tamaño sería interpretar. Lo que los distingue —cuánta agua cabe y cuánta hay— va en campos.",
+    "_agua-embalsada": "Un solo valor, como `parques-eolicos` y `plan_inversion`. El Boletín Hidrológico no clasifica los embalses, y sacar una clase del uso o del tamaño sería interpretar. Lo que los distingue —cuánta agua cabe y cuánta hay— va en campos.",
     "agua-embalsada": [
       { "valor": "embalse", "etiqueta": "Embalse", "color": "#4A6C7A",
         "def": "Un embalse del parte semanal del Ministerio: su capacidad y el agua que tenía en la fecha del dato. El registro es el AGUA, no la presa ni el vaso." }

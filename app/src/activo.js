@@ -22,8 +22,15 @@ const TABLA = {
   // minero, que es un título y no una obra, y por eso no figura en esta tabla.
   "electricidad-interconexiones": (p) => p.categoria === "en_servicio",
   "cables-submarinos": (p) => p.fase === "produccion",
-  // `recurso-eolico`, `recurso-solar` y el tablero NO APLICAN: son recurso o
-  // condición del territorio, no explotación. Ausentes de la tabla a propósito.
+  // El tablero NO APLICA: una reclamación de soberanía es una condición del
+  // territorio, no una explotación. Ausente de la tabla a propósito.
+  //
+  // `parques-eolicos`, `plantas-solares` y `red-electrica` tampoco están, pero
+  // por un motivo distinto que conviene no confundir (contrato 1.23). Ahí la
+  // pregunta SÍ es de la clase de objeto correcta —a un parque eólico se le
+  // puede preguntar perfectamente si está girando—: lo que pasa es que la
+  // fuente no lo responde. La BTN cartografía el recinto y no dice si produce.
+  // `null` es «no lo sé»; `false` sería afirmar que está parado.
 };
 
 /**

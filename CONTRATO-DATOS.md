@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.22.0 · **Fecha:** 2026-08-07
+**Versión del contrato:** 1.23.0 · **Fecha:** 2026-08-07
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -51,8 +51,8 @@ atlas-estrategico-espana/
 │   └── capas/
 │       ├── minerales-proyectos.geojson
 │       ├── minerales-dominios.geojson
-│       ├── recurso-eolico.geojson
-│       ├── recurso-solar.geojson
+│       ├── parques-eolicos.geojson
+│       ├── plantas-solares.geojson
 │       └── cables-submarinos.geojson
 ├── fuentes/                   ← archivo documental (URLs se pudren; esto no)
 │   └── 2026-07-22_ce_lista-crma-1.pdf     (fecha-captura_emisor_titulo.ext)
@@ -419,7 +419,8 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `electricidad-interconexiones` *(1.13)* | `categoria` (§9) | `categoria == "en_servicio"`. Un enlace en servicio SÍ está en explotación — al contrario que un derecho minero, que es un título y no una obra. |
 | `minerales-derechos` *(1.12)* | — | **no aplica**. Un título otorgado NO dice que se esté explotando: se puede tener una concesión décadas sin abrir una mina. Va en el grupo `actividad` porque alguien lo sostiene y puede caducar, pero la pregunta del filtro no se le hace. |
 | `cables-submarinos` *(1.20)* | `fase` | `fase == "produccion"` (el cable presta servicio). Ojo: el registro es el ATERRIZAJE, y su fase es la del cable que llega a él — un expediente en información pública es `tramitacion` aunque la playa lleve ahí siglos. |
-| `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
+| ~~`recurso-eolico`, `recurso-solar`~~ | — | ~~**no aplica**: son recurso, no explotación.~~ **La fila caducó con las capas** *(1.23)*: dejaron de ser recurso al renombrarse a `parques-eolicos` y `plantas-solares`, y un recinto de instalación SÍ es la clase de objeto a la que la pregunta se le hace. Ver la fila siguiente. |
+| `parques-eolicos`, `plantas-solares` *(1.23)* | — | **no aplica**, pero por el motivo contrario al de arriba y conviene no confundirlos. No es que la pregunta sea de otra clase de objeto —a un parque eólico se le puede preguntar perfectamente si está produciendo—: es que **la fuente no lo responde**. La BTN cartografía el recinto y no dice si gira. Devuelve `null`, y un `false` por falta de dato sería la mentira que R7 evita. Mismo caso que `red-electrica`. |
 | `red-electrica` *(1.22)* | — | **no aplica**, y por partida doble. Un tendido cartografiado no es una instalación que se explote o se deje de explotar: es infraestructura, y la BTN además **no dice si está energizada** — solo que está ahí. Preguntarle a una subestación si está «en explotación» tendría sentido, pero la fuente no lo responde, y **un `false` por falta de dato es exactamente la mentira que R7 evita**. Devuelve `null`. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
 | `centros-datos` *(1.15)* | `fase` | `fase == "produccion"` (el centro presta servicio). Un campus **autorizado y sin construir no está en explotación**, por muchos gigavatios-hora que prometa su declaración ambiental. |
@@ -729,6 +730,7 @@ vigilante con falsos positivos se apaga, y entonces no vigila nada.
 | Declarar una rama `en_preparacion` *(1.1)* | menor de manifiesto | solo `id`, `titulo`, `arbol`, `grupo`; **sin `fichero`** |
 | Una rama `en_preparacion` nace con datos *(1.1)* | menor de manifiesto | se retira la marca y se añaden `fichero`, `geometria`, `registro`, `version`, `verificado_a` |
 | Añadir una regla de coherencia `R*` *(1.1)* | menor de contrato | entra con su implementación en `validar.py`, **o con su estado declarado** si aún no la tiene |
+| **Renombrar el id de una rama sin datos** *(1.23)* | menor de manifiesto | **solo mientras no haya publicado un registro.** Lo que esta sección protege es la estabilidad de las CITAS, y a un id sin datos no lo cita nadie. En cuanto sale una release con registros dentro, la puerta se cierra para siempre. Ya se usó dos veces antes de escribirse: `h2med` → `hidrogeno-red` y `recurso-eolico`/`recurso-solar` → `parques-eolicos`/`plantas-solares` |
 | Renombrar/eliminar campo o cambiar semántica | **mayor de contrato** | prohibido sin migración documentada |
 
 **El contrato no puede mentir sobre sí mismo.** Una regla escrita aquí que el CI
@@ -834,7 +836,12 @@ distinguen mejor citando el artículo que clasificándolo.
   usar** *(1.20)*, y no es olvido: el recorrido de un cable submarino no tiene
   fuente con licencia compatible (TeleGeography es CC BY-NC-SA). Lo que sí
   publica una fuente primaria es dónde toca tierra
-- *recurso-eolico* / *recurso-solar*: `zona`
+- *parques-eolicos* *(1.23)*: `parque_eolico` — un solo valor, heredero directo
+  del `zona` que tenía `recurso-eolico`, con la diferencia de que ahora nombra
+  algo que existe
+- *plantas-solares* *(1.23)*: `fotovoltaica` · `termosolar` — las dos van juntas
+  porque la BTN las sirve en la misma tabla y son la misma clase de objeto; lo
+  que cambia es cómo, que es justo lo que un vocabulario de categoría dice
 - *red-electrica* *(1.22)*: `tendido` · `subestacion` — los dos los
   separa la fuente, que captura la línea y el recinto como objetos
   distintos. No hay un tercero para la torre de alta tensión, aunque el
@@ -1094,8 +1101,78 @@ mapa: «Cu · Zn · Pb»)
 > su punto de contacto único solo ofrece el formulario. Lo que se publica son los
 > aterrizajes que un acto administrativo nombra y sitúa.
 
-**recurso-eolico / recurso-solar** (`dotacion`, polígonos, ilustrativo):
-`distritos[]` · `justificacion` (por qué la zona)
+~~**recurso-eolico / recurso-solar** (`dotacion`, polígonos, ilustrativo):
+`distritos[]` · `justificacion` (por qué la zona)~~
+
+**parques-eolicos** *(1.23)* (`actividad`, polígonos, verificado): —
+**plantas-solares** *(1.23)* (`actividad`, polígonos, verificado): —
+
+> **Estas dos capas no cambiaron de nombre: cambiaron de OBJETO.** Y esa
+> distinción es el contenido entero de la enmienda, porque un renombrado
+> cosmético habría sido peor que dejarlas en gris.
+>
+> **Lo que prometían no existía como dato.** «Recurso» es cuánto sopla el viento
+> o cuánto sol cae, y eso es un **campo continuo**: existe como ráster (Global
+> Wind Atlas, Global Solar Atlas, ambos CC BY 4.0) y no como registros. Convertir
+> ese campo en «zonas de recurso» lo tendría que hacer el atlas, y eso es generar
+> datos. La salida que el propio `PLAN.md` daba por buena —la zonificación
+> ambiental del MITECO, «en shapefile y vectorial»— resultó ser **falsa al
+> comprobarla**: dentro del ZIP vienen dos GeoTIFF y un léeme que dice «los ráster
+> clasificados». La vía de escape tenía el mismo defecto que la vía original.
+>
+> **Lo que sí existe es la instalación**, y la trae la misma BTN que desbloqueó
+> `red-electrica`: `0713S Central eléctrica`, **geometría de superficie**,
+> capturada «por el contorno exterior de su recinto». De ahí los dos ids nuevos.
+>
+> **Renombrar salió gratis, y la regla merece quedar escrita** (§8): un id se
+> puede renombrar **mientras no haya publicado un solo registro**, porque lo que
+> §8 protege es la estabilidad de las citas, y a un id sin datos no lo cita nadie.
+> Precedente exacto: `h2med` → `hidrogeno-red`, renombrado *«antes de publicar
+> nada porque el nombre habría sido inexacto desde el primer día»*. En cuanto sale
+> una release con registros dentro, esa puerta se cierra para siempre.
+>
+> **Los dos cambios que pesan más que el id.** Primero, **`dotacion` →
+> `actividad`**: `dotacion` es «una condición permanente del territorio» y el
+> viento lo es, pero **un parque eólico se desmantela** — «alguien lo sostiene y
+> puede abandonarlo», que es la definición literal de `actividad`. Segundo,
+> **`ilustrativo` → `verificado`**: eran `ilustrativo` porque se las imaginaba
+> dibujadas a mano, con R5 renunciando al `__v`; son perímetros de fuente
+> primaria y van en `geo_precision: exacta`. **Cambiar solo el título habría
+> dejado el mismo error escrito de otra forma.**
+>
+> **Ninguna de las dos añade un solo campo, y es lo que deben hacer.** La BTN da
+> el contorno y el nombre. No da potencia, ni titular, ni fecha de puesta en
+> servicio, ni cuántos molinos hay dentro — las especificaciones dicen
+> literalmente que «no se representan las placas o espejos interiores». Sus
+> esquemas existen para **prohibir**, no para describir: `potencia_mw` y
+> `potencia_instalada_mw` los primeros, porque son la cifra que cualquiera espera
+> de un parque eólico y **no está en la fuente**. Es también el motivo por el que
+> los ids no son `eolica-instalada` / `solar-instalada`: «instalada» arrastra a
+> «potencia instalada» y habría prometido en el título lo que la ficha no cumple.
+>
+> **`superficie_ha` está prohibida por DERIVADA**, como `porcentaje_llenado` en
+> `agua-embalsada` y como `activo` en R7: sale del polígono que la propia capa
+> publica, y el día que la geometría se corrija la cifra escrita a mano mentiría.
+> Estuvo a punto de colarse al construir estas capas bajo el nombre
+> `superficie_recinto_ha`, así que ese también queda cerrado: **rebautizar un
+> derivado no lo deja de derivar**.
+>
+> **La geometría NO se simplifica**, al revés que el tendido de `red-electrica`,
+> y el contraste enseña cuándo simplificar es gratis y cuándo no. Allí la BTN pone
+> un vértice por torre: un tramo recto de cuarenta torres tiene cuarenta vértices
+> y una sola forma, y quitarlos costó el 0,017 % de la longitud. Aquí el contorno
+> **es** el dato: a 25 m de tolerancia se ahorraría el 61 % de los vértices, pero
+> costaría el 0,23 % de superficie y **dejaría 29 parques convertidos en
+> cuadrados**. Se quedan enteros, en `exacta`, y el fichero pesa lo que pesa.
+>
+> **El alcance, con el hueco por delante.** Eólica: **1.382 de 1.389**, el
+> **100 % de la superficie** — los 7 que faltan no llevan nombre y `nombre` es
+> obligatorio. Termosolar: **44 de 45**. Fotovoltaica: **1.206 de 3.165**, que
+> parece un desastre y es el **76 % de la superficie**, porque las anónimas son
+> las pequeñas. Misma forma que `agua-embalsada` (77 % de los embalses, 86 % de la
+> capacidad): **cuando el hueco es de censo y no de magnitud, hay que decir las
+> dos cifras**, porque una sola de ellas engaña en la dirección que le convenga a
+> quien la elija.
 
 **generacion-electrica-provincia** *(1.14)* (`actividad`, polígonos, verificado,
 `fondo`): `anio` (✔) · `caracter_dato` · `provincia` · `total_gwh` (✔) y las ocho
@@ -1582,6 +1659,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.23.0** | 2026-08-07 | **Aditiva.** `recurso-eolico` y `recurso-solar` dejan de existir y nacen `parques-eolicos` y `plantas-solares` (§10). **No es un renombrado: es un cambio de OBJETO**, y decirlo así es el contenido de la enmienda. «Recurso» es cuánto sopla el viento — un **campo continuo** que solo existe como ráster, de modo que convertirlo en zonas lo tendría que hacer el atlas. La salida que el plan daba por buena, la zonificación ambiental del MITECO «en shapefile y vectorial», **resultó falsa al comprobarla**: dentro del ZIP hay dos GeoTIFF y un léeme que dice «los ráster clasificados». Lo que sí existe es la INSTALACIÓN, y la trae la misma BTN que desbloqueó `red-electrica`: `0713S Central eléctrica`, geometría de superficie, capturada «por el contorno exterior de su recinto». **Los dos cambios que pesan más que el id:** de `dotacion` a `actividad` —el viento es una condición permanente del territorio, pero **un parque se desmantela**— y de `ilustrativo` a `verificado` —eran trazos imaginados a mano y son perímetros de fuente primaria—. Cambiar solo el título habría dejado el mismo error escrito de otra forma. §8 estrena la regla que ya se había usado dos veces sin escribirla: **un id se puede renombrar mientras no haya publicado un registro**, porque lo que §8 protege es la estabilidad de las citas y a un id sin datos no lo cita nadie. **Ninguna de las dos capas añade un campo**, y sus esquemas existen para PROHIBIR: `potencia_mw` la primera, que es la cifra que cualquiera espera de un parque eólico y **no está en la fuente** (y es también por lo que los ids no son `eolica-instalada`/`solar-instalada`). `superficie_ha` queda prohibida **por derivada**, como `porcentaje_llenado` en `agua-embalsada`; estuvo a punto de colarse como `superficie_recinto_ha`, así que ese nombre también se cierra — **rebautizar un derivado no lo deja de derivar**. La geometría **no** se simplifica, al revés que el tendido: allí quitar vértices costaba el 0,017 % de la longitud, aquí costaría el 0,23 % de superficie y **dejaría 29 parques convertidos en cuadrados**. Alcance con las dos cifras siempre juntas: eólica 1.382 de 1.389 (**100 % de la superficie**), termosolar 44 de 45, fotovoltaica 1.206 de 3.165 (**76 % de la superficie**, porque las anónimas son las pequeñas). **No nace ninguna regla `R*`.** |
 | **1.22.0** | 2026-08-07 | **Aditiva.** Nace `red-electrica` (§10), y nace derribando un bloqueo que llevaba desde el primer día y que estaba **bien razonado y mal concluido**. El motivo escrito era impecable —el mallado lo publica Red Eléctrica, `corporativa`, y R3 no la deja sostener un `confirmado`— pero descansaba en una premisa que nadie llegó a escribir: *que no lo publica nadie más*. Lo publica el **IGN**, en la Base Topográfica Nacional, tema Energía, con licencia de la Orden FOM/2807/2015 «compatible con CC-BY 4.0» y sin CAPTCHA ni modal. **R3 no se discute: se cambia de emisor.** De ahí la lección que §10 deja anotada — una frase que da por cerrado el mundo tiene que decir dónde miró. **La novedad de fondo es qué clase de fuente es una carta topográfica:** el IGN entraba ya 456 veces en el atlas y siempre como **Nomenclátor**, que es un *registro* y está en la lista de §6.1; la BTN es **cartografía**, sigue siendo `primaria` por ser producción oficial de la agencia del Estado, pero **con el alcance recortado a lo que mide** — de quién es la línea no dice nada, y por eso `titular` y `propietario` están prohibidos en el esquema. **El título también cambió el día de publicar:** «Red eléctrica (transporte)» afirmaba una categoría JURÍDICA que ningún mapa certifica, y pasó a «Tendido de alta tensión (220 y 400 kV)», que es lo que la fuente sostiene — tercera vez en la misma semana que la acotación la impone la fuente y no el gusto (`cables-submarinos` registra aterrizajes; `agua-embalsada`, el agua). Son **dos registros de tendido y no 1.784** porque las 18.505 líneas de la BTN traen `nombre` a nulo y bautizarlas por sus extremos habría fabricado nombres que nadie ha dado; y **657 subestaciones de las 718** en las que termina un tramo de 220/400 kV, con el filtro sacado de la propia norma de captura del IGN y las 61 sin nombre declaradas en vez de omitidas. `longitud_km` va **`parcial` a propósito**: el IGN no publica ninguna longitud, la mide el atlas, y **medir sobre un dato primario no convierte la medida en primaria** — un `confirmado` ahí incumpliría R2. La geometría del tendido va `generalizada` por simplificada a 25 m: el 85 % de los vértices por el 0,017 % de la longitud, porque la BTN captura un vértice por torre y un tramo recto de cuarenta torres no tiene cuarenta formas. §6.5 le da su fila: `activo` **no aplica**, y aquí por un motivo que conviene retener — la fuente **no dice si el tendido está energizado**, y un `false` por falta de dato es justo la mentira que R7 evita. **No nace ninguna regla `R*`.** |
 | **1.21.0** | 2026-08-07 | **Aditiva.** Nace `agua-embalsada` (§10), y nace **por una pregunta mejor formulada**. La ruta obvia —el shapefile del Inventario de Presas y Embalses del SNCZI— está tras un **ALTCHA**, un CAPTCHA de prueba de trabajo que el Ministerio puso a propósito y que no se salta; y otras cinco vías fallaron (URLs viejas a 404, no hay WFS de embalses, el ArcGIS REST del Ministerio no sirve esa capa, el PDF resumen agrega por cuenca). **La sexta fue darse cuenta de que el shapefile no era el dato:** «agua embalsada» no es la geometría del vaso, es el agua que hay dentro, y eso el MITECO lo publica en abierto y sin formulario en el histórico del **Boletín Hidrológico Semanal** — 719.725 partes semanales desde 1988. Se publican **308 embalses de los 401** del Boletín, el **86 % de la capacidad embalsada de España**, y los 93 restantes se declaran uno a uno en el manifiesto. La base **no lleva coordenadas**: la geometría se cose por nombre contra el Nomenclátor del IGN, con una normalización de **cuatro lenguas** —nueve prefijos (`Embalse`, `Pantà`, `Presa`, `Pantano`, `Encoro`, `Balsa`, `Charca`, `Embassament`, `Bassa`) y el sufijo vasco `urtegia` con su genitivo— y **cada punto se verifica** preguntando al servicio del propio Ministerio en qué demarcación cae. Esa vuelta cazó seis emparejamientos que casaban de nombre y señalaban un embalse de otra cuenca, entre ellos un «San Lorenzo» del Ebro que era el de Tenerife. §6.5 le da su fila: `activo` **no aplica**, porque un embalse es una reserva y no una instalación que se explote. El esquema prohíbe `porcentaje_llenado` **por derivado**, igual que R7 con `activo`: sale de dividir las dos cifras que la capa ya publica, y escribirlo sería la doble fuente de verdad que D3 descartó. |
 | **1.20.0** | 2026-08-07 | **Aditiva.** Nace `cables-submarinos` (§10), y nace **distinta de su propio boceto**: el contrato la imaginaba `mixta`, con `sistemas[]`, `destinos[]` y un trazado que dibujar. Las fuentes obligan a otra cosa. **El recorrido de un cable submarino no tiene fuente compatible** —TeleGeography es CC BY-NC-SA, vetada por `datos/LICENCIA-DATOS.md`— y lo que sí publica una fuente primaria es **dónde toca tierra**, porque ocupar dominio público marítimo-terrestre exige un acto administrativo. Un registro por **aterrizaje**, en puntos, con los arrays convertidos en campos planos; la categoría `trazado` (§9) queda declarada y **sin usar**. La acotación no la elige el gusto: los actos de Costas cubren TODO cable que ocupe el dominio, incluidos uno atado al puente de Txatxarramendi y dos que cruzan las rías del Bidasoa y de Oriñón, así que **entra el que une territorios separados por mar** y no el cruce de una ría. Y un cable que atraviesa aguas españolas **sin aterrizar aquí no entra**: lo decidió el Europe India Gateway, 15.000 km por Galicia, el Estrecho y Alborán que tocan tierra en **Gibraltar** (BOE-A-2010-2040) — se archiva, se cita y se queda fuera, como la subasta IF24. `sistema` **admite hueco a propósito**: un acto de Costas autoriza una ocupación, no bautiza un cable, y el expediente de Santander no nombra el sistema; poner ahí un nombre de la prensa sería justo lo que la capa evita, así que va con fuente `tipo: hueco` y R4 lo baja a `parcial`. §6.5 le da su fila, con el aviso de que la `fase` es la del cable y no la de la playa. |

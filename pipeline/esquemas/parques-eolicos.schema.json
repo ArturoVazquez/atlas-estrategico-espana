@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/parques-eolicos.schema.json",
+  "title": "Extensión de capa · parques-eolicos",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Los recintos que la Base Topográfica Nacional clasifica como 0713S / TIPO 07 «PARQUE EÓLICO». Sustituye a la rama `recurso-eolico`, que nunca publicó un registro, y el cambio no es de nombre sino de OBJETO: un recurso es un campo continuo y solo existe como ráster; esto es un recinto con nombre y contorno. ESTE ESQUEMA CASI NO AÑADE CAMPOS, y es lo que debe hacer: la BTN da el contorno y el nombre, y nada más. Su trabajo aquí es PROHIBIR lo que la fuente no dice y todo el mundo espera encontrar.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["Polygon", "MultiPolygon"],
+                "description": "El recinto, capturado por la BTN «por el contorno exterior». No se simplifica —al revés que el tendido de `red-electrica`— porque aquí el contorno ES el dato: a 25 m de tolerancia se ahorraría el 61 % de los vértices, pero costaría el 0,23 % de superficie y dejaría 29 parques convertidos en cuadrados."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "potencia_mw": {
+                "not": {},
+                "description": "PROHIBIDO, y es la prohibición que define la capa. **La BTN no da potencia.** Es la primera cifra que cualquiera espera de un parque eólico y no está en la fuente: cartografiar un recinto no es medir lo que produce. Quien la publica es el promotor (`corporativa`, R3) o el registro administrativo de instalaciones, que es otra fuente y otra capa. Un número aquí sería verosimilitud, que es el peor bug de este atlas."
+              },
+              "potencia_instalada_mw": {
+                "not": {},
+                "description": "PROHIBIDO. Sinónimo del anterior, cerrado por su nombre para que la prohibición no se esquive cambiando la palabra. Es también el motivo por el que la capa NO se llamó `eolica-instalada`: «instalada» arrastra a «potencia instalada», y habría prometido en el título lo que la ficha no puede cumplir."
+              },
+              "n_aerogeneradores": {
+                "not": {},
+                "description": "PROHIBIDO. El objeto 0713S es el RECINTO; sus especificaciones dicen que «no se representan» los elementos interiores. Contar molinos sobre una ortofoto sería el atlas produciendo un dato, no leyéndolo."
+              },
+              "titular": {
+                "not": {},
+                "description": "PROHIBIDO, por el mismo motivo que en `red-electrica`: la BTN cartografía y no dice de quién es nada. Lo publica el promotor, que es `corporativa`, y R3 no la deja sostener un `confirmado`."
+              },
+              "promotor": {
+                "not": {},
+                "description": "PROHIBIDO. Sinónimo de `titular` en este dominio, cerrado por su nombre."
+              },
+              "superficie_ha": {
+                "not": {},
+                "description": "PROHIBIDO por DERIVADO, igual que `porcentaje_llenado` en `agua-embalsada` y que `activo` en R7. La superficie sale del polígono que esta misma capa publica, así que escribirla sería la doble fuente de verdad que D3 descartó: el día que la geometría se corrija, la cifra escrita a mano mentiría. La calcula quien la pinte."
+              },
+              "superficie_recinto_ha": {
+                "not": {},
+                "description": "PROHIBIDO. Es el nombre con el que estuvo a punto de colarse el campo anterior mientras se construía esta capa: rebautizarlo no lo dejaba de derivar del polígono. Queda cerrado para que no vuelva a intentarlo."
+              },
+              "produccion_gwh": {
+                "not": {},
+                "description": "PROHIBIDO. Lo que un parque genera no lo dice ninguna cartografía. La generación eólica que el atlas sí publica es la de `generacion-electrica-provincia`, agregada por provincia y con fuente estadística del MITECO — que es otra pregunta y otra escala."
+              },
+              "fecha_puesta_en_servicio": {
+                "not": {},
+                "description": "PROHIBIDO. La BTN trae `f_alta`, que es cuándo el IGN capturó el recinto — NO cuándo el parque entró en servicio. Confundirlos convertiría una fecha de cartografía en una fecha de explotación."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

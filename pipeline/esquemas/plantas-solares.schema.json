@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/plantas-solares.schema.json",
+  "title": "Extensión de capa · plantas-solares",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Los recintos que la Base Topográfica Nacional clasifica como 0713S / TIPO 05 «FOTOVOLTAICA» y TIPO 08 «TERMOSOLAR». Sustituye a la rama `recurso-solar`, que nunca publicó un registro. Las dos tecnologías van en la misma capa y separadas por `categoria` porque la fuente las sirve en la misma tabla y son la misma clase de objeto —un recinto que convierte sol en electricidad—; lo que las distingue es CÓMO, y eso es exactamente lo que un vocabulario de categoría dice. Cuarenta y cinco termosolares no dan para una rama del árbol.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["Polygon", "MultiPolygon"],
+                "description": "El recinto. Las especificaciones de la BTN son explícitas para estas dos: «No se representan las placas o espejos interiores, sólo se captura el contorno exterior de las instalaciones». Sin simplificar, como en `parques-eolicos`."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "potencia_mw": {
+                "not": {},
+                "description": "PROHIBIDO, y por el mismo motivo que en `parques-eolicos`: la BTN no da potencia. Cartografiar un recinto no es medir lo que produce, y la cifra solo la publica el promotor (`corporativa`, R3)."
+              },
+              "potencia_instalada_mw": {
+                "not": {},
+                "description": "PROHIBIDO. Sinónimo, cerrado por su nombre. Es también el motivo por el que la capa no se llamó `solar-instalada`."
+              },
+              "potencia_pico_mwp": {
+                "not": {},
+                "description": "PROHIBIDO. La variante fotovoltaica del anterior — la potencia pico en corriente continua, que es la cifra con la que se anuncian estas plantas. Cerrada aparte porque tiene nombre propio y unidad propia, y quien quisiera colarla usaría este y no `potencia_mw`."
+              },
+              "n_paneles": {
+                "not": {},
+                "description": "PROHIBIDO. Las especificaciones del objeto dicen literalmente que «no se representan las placas o espejos interiores»: contarlos exigiría que el atlas mirase la ortofoto y produjera el dato."
+              },
+              "titular": {
+                "not": {},
+                "description": "PROHIBIDO. La BTN cartografía y no dice de quién es nada."
+              },
+              "promotor": {
+                "not": {},
+                "description": "PROHIBIDO. Sinónimo de `titular` en este dominio, cerrado por su nombre."
+              },
+              "superficie_ha": {
+                "not": {},
+                "description": "PROHIBIDO por DERIVADO, igual que `porcentaje_llenado` en `agua-embalsada`. Sale del polígono que esta capa publica: escribirla sería la doble fuente de verdad que D3 descartó. La calcula quien la pinte."
+              },
+              "superficie_recinto_ha": {
+                "not": {},
+                "description": "PROHIBIDO. El nombre con el que el campo derivado estuvo a punto de colarse mientras se construía la capa. Rebautizarlo no lo dejaba de derivar."
+              },
+              "produccion_gwh": {
+                "not": {},
+                "description": "PROHIBIDO. La generación solar que el atlas publica es la de `generacion-electrica-provincia`, agregada por provincia y con fuente estadística — otra pregunta y otra escala."
+              },
+              "fecha_puesta_en_servicio": {
+                "not": {},
+                "description": "PROHIBIDO. La BTN trae `f_alta`, que es cuándo el IGN capturó el recinto y no cuándo la planta entró en servicio."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
