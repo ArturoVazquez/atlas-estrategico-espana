@@ -210,6 +210,13 @@ const ROTULOS = {
   // último dato es de 2003, y sin la fecha una reserva no significa nada.
   fecha_dato: "Fecha del parte",
   hidroelectrico: "Uso hidroeléctrico",
+  tension_kv: "Tensión (kV)",
+  n_tramos: "Tramos que agrega",
+  // «Medida» y no «declarada», que es como se rotula `longitud_km` doce líneas
+  // más arriba: el IGN no publica ninguna longitud del tendido, la mide el
+  // atlas. Son dos campos distintos por eso mismo — reusar el nombre habría
+  // hecho que la ficha imprimiese «declarada» sobre un número que nadie declaró.
+  longitud_medida_km: "Longitud medida por el atlas (km)",
 };
 
 function rotularCampo(clave) {

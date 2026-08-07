@@ -124,12 +124,20 @@
       "atribucion": "Atlas Estratégico de España"
     },
     {
-      "_": "Se retitula: era «Red eléctrica e interconexiones» y las interconexiones ya tienen su capa. Lo que sigue faltando es el MALLADO —líneas de 400 kV y subestaciones interiores—, y falta por licencia: quien lo publica es Red Eléctrica, sociedad cotizada, y no hay cartografía de la red compatible con CC BY 4.0 (datos/LICENCIA-DATOS.md).",
+      "_": "Se retituló dos veces. Era «Red eléctrica e interconexiones» hasta que las interconexiones tuvieron su capa, y era «Red eléctrica (transporte)» hasta que se publicó: ese título afirmaba una categoría JURÍDICA que la fuente no certifica. Estuvo en gris porque el mallado lo publica Red Eléctrica, sociedad cotizada, y R3 no deja que una `corporativa` sostenga un confirmado — pero la premisa oculta, que nadie más lo publica, era falsa: el IGN lo cartografía en la Base Topográfica Nacional, con licencia compatible con CC BY 4.0 y sin CAPTCHA. QUÉ SE PUBLICA Y QUÉ NO: dos registros de tendido (400 y 220 kV) que agregan los 1.784 tramos de la BTN, porque los 18.505 tramos vienen SIN NOMBRE y bautizarlos por sus extremos sería inventarlos; y 657 subestaciones de las 718 en las que termina un tramo de esa tensión — las otras 61 quedan fuera porque la fuente tampoco las nombra, y no se omiten en silencio. Del tendido se publica la geometría simplificada a 25 m, que cuesta el 0,017 % de la longitud y ahorra el 85 % de los vértices: la BTN captura un vértice por torre y un tramo recto de 40 torres no tiene 40 formas.",
       "id": "red-electrica",
-      "titulo": "Red eléctrica (transporte)",
+      "titulo": "Tendido de alta tensión (220 y 400 kV)",
       "arbol": "energia",
       "grupo": "dotacion",
-      "en_preparacion": true
+      "geometria": "mixta",
+      "registro": "verificado",
+      "ambito": "espana",
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-07",
+      "version": "1.0.0",
+      "fichero": "capas/red-electrica.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
     {
       "_": "Era `renovable-provincia`, «Renovable instalada por provincia», y se renombra porque esa casilla no la sostiene nadie: MITECO desagrega por provincia la GENERACIÓN, no la potencia; la CNMC da potencia pero solo por comunidad autónoma y bajo CC BY-SA (ShareAlike, vetada por datos/LICENCIA-DATOS.md); y Red Eléctrica llega a provincia siendo `corporativa`, que R3 no admite para un confirmado. Renombrar sale gratis porque el id nunca publicó datos: §8 protege los ids con registros, no los del horizonte.",
