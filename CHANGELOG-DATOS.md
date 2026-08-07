@@ -32,6 +32,46 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.22 — Una capa entera se pintaba del color de reserva
+
+Corrección. **Ninguna capa cambia de registros**; lo que cambia es que dos de
+ellos se puedan ver.
+
+### Corregido
+
+- **`cables-submarinos`** — sus dos categorías nacieron **sin `color`** en la
+  release del 08.17, así que los seis aterrizajes llevaban **una release entera**
+  pintándose con el color de reserva, indistinguibles de cualquier otra capa.
+  `aterrizaje` ya tiene el suyo, de la familia teal de la rama `conectividad` y
+  separado de los violetas de `centros-datos` y los azules de `hidrogeno-red`.
+
+### Añadido
+
+- **`validar.py` comprueba el color** (§9, **avisa y no bloquea**). La exigencia
+  estaba escrita **desde la 1.9** y nadie la verificaba nunca, que es exactamente
+  lo que §8 llama «prosa disfrazada de garantía» — y el precio se pagó tres veces:
+  la primera la cuenta `app/src/mapa.js` («Cuatro capas, indistinguibles»), la
+  última fue esta.
+  - **Avisa y no bloquea** a propósito: el dato es correcto y lo único que se
+    pierde es distinguir la capa. Bloquear pararía la publicación de un registro
+    bueno.
+  - **Una vez por categoría, no por registro.** Una capa de 1.382 parques daría
+    1.382 avisos idénticos, que es la manera más fácil de que un aviso deje de
+    leerse.
+  - **Mira lo que se USA, no lo declarado.** `cables-submarinos:trazado` sigue
+    **sin color, y es deliberado**: el color es «con el que el mapa la pinta», y
+    una categoría que ningún registro usa no pinta nada — elegirlo hoy sería
+    decidir un diseño para algo que no existe. El aviso saltará el día que alguien
+    la use, que es cuando hace falta.
+  - Pruebas **25 → 26**, con el fixture que ejercita justo ese caso.
+
+### Huecos
+
+- Los de la 08.21 siguen abiertos y sin cambios: las **1.959 fotovoltaicas** que
+  la BTN no nombra, y que **por esa fuente no habrá potencia** de ningún parque.
+
+---
+
 ## datos-v2026.08.21 — Un recurso es un campo; una instalación, un recinto
 
 Capas dieciocho y diecinueve. Con ellas **el manifiesto se queda sin ninguna
