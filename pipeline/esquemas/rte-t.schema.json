@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/rte-t.schema.json",
+  "title": "Extensión de capa · rte-t",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Los 77 nodos españoles del Anexo II del Reglamento (UE) 2024/1679. El registro es la DESIGNACIÓN de un nodo por el Reglamento, no la instalación que hay en él: por eso «Valencia» es un registro y no cuatro, aunque el Anexo le reconozca aeropuerto, puerto, terminal y condición de nodo urbano.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "Punto representativo del municipio. `geo_precision: municipio` y no `paraje`: el Reglamento designa un NODO —a veces un área metropolitana entera, a veces una isla— y no sitúa nada dentro de él. El punto existe para poder pinchar el registro, y no sirve para medir."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["nodo_urbano", "municipio"],
+            "properties": {
+              "nodo_urbano": {
+                "type": "boolean",
+                "description": "Si el Anexo II lo marca como nodo urbano. Es el único campo booleano de la capa porque es la única columna del Anexo que no tiene nivel de red: se marca con una «X» y ya. No lo deriva nada (R7 no aplica): está escrito en el documento."
+              },
+              "municipio": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El municipio del IGN sobre el que se sitúa el nodo, con su nombre OFICIAL, que a veces no es el que usa el Reglamento. Cuando hizo falta una equivalencia, va declarada una a una en `claves` con su motivo — 35 de 77 la necesitaron."
+              },
+              "aeropuerto": {
+                "type": "string",
+                "minLength": 1,
+                "description": "VERBATIM de la columna «AEROPUERTO»: «Básica», «Global» y, entre paréntesis, el nombre cuando el Reglamento lo da («Global (Reus)»). No se parte en dos campos: el paréntesis es parte de lo que dice el documento, y separarlo obligaría a decidir qué es nombre y qué es matiz."
+              },
+              "puerto_maritimo": {
+                "type": "string",
+                "minLength": 1,
+                "description": "VERBATIM de la columna «PUERTO MARÍTIMO». Ojo: el nombre entre paréntesis puede no ser el del nodo — Algeciras lleva «Básica (Bahía de Algeciras)», que es como se llama el puerto de interés general."
+              },
+              "puerto_interior": {
+                "type": "string",
+                "minLength": 1,
+                "description": "VERBATIM de la columna «PUERTO INTERIOR». En España lo lleva UN solo nodo, Sevilla, que es el único puerto fluvial del país."
+              },
+              "terminal_ff_carretera": {
+                "type": "string",
+                "minLength": 1,
+                "description": "VERBATIM de la columna «TERMINALES FERROCARRIL-CARRETERA». Puede traer dos niveles a la vez —Valencia: «Básica (Fonteta de Saint Lluís) Global (Silla)»— y se publica entero, sin elegir."
+              },
+
+              "corredor": {
+                "not": {},
+                "description": "PROHIBIDO. Los corredores europeos (Atlántico, Mediterráneo) están en el ANEXO III, que es otra tabla y otro trazado: atribuir un corredor a un nodo desde el Anexo II sería una inferencia del atlas. Cuando se lea el Anexo III será su propio registro o su propio campo, con su cita."
+              },
+              "poblacion": {
+                "not": {},
+                "description": "PROHIBIDO. El Reglamento exige 100.000 habitantes para ser nodo urbano, y la tentación es escribir la cifra al lado. Ese dato es del INE, no de esta fuente, y mezclarlos daría por confirmado por el Reglamento un número que el Reglamento no publica."
+              },
+              "trafico_teus": {
+                "not": {},
+                "description": "PROHIBIDO, igual que en `puertos` y por el mismo motivo: el Anexo II clasifica, no mide."
+              },
+              "red": {
+                "not": {},
+                "description": "PROHIBIDO por DERIVADO. La red del nodo ya es su `categoria`, y se calcula mirando si alguno de sus modos dice «Básica». Escribirla otra vez en un campo sería la doble fuente de verdad que D3 descartó."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

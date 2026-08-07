@@ -68,6 +68,7 @@
       { "valor": "minerales", "etiqueta": "Minerales y materias primas" },
       { "valor": "energia", "etiqueta": "Energía" },
       { "valor": "conectividad", "etiqueta": "Conectividad" },
+      { "valor": "transporte", "etiqueta": "Transporte" },
       { "valor": "tablero", "etiqueta": "El tablero" },
       { "valor": "intangibles", "etiqueta": "Intangibles" }
     ],
@@ -259,6 +260,32 @@
         "def": "TIPO 05 de la BTN: la energía se obtiene directamente de la radiación solar mediante semiconductores. De los 3.165 recintos que la fuente clasifica así, solo 1.206 llevan nombre — y son el 76 % de la superficie, porque los anónimos son los pequeños." },
       { "valor": "termosolar", "etiqueta": "Termosolar", "color": "#C0913F",
         "def": "TIPO 08 de la BTN: espejos que concentran la radiación para calentar un fluido que mueve un alternador. Cuarenta y cinco en España, y son las de recinto más grande con diferencia — 138 ha de mediana frente a 4,4 de una fotovoltaica." }
+    ],
+
+    "_puertos": "Tres valores, y los tres los pone la LEY, no el gusto: el texto refundido de la Ley de Puertos delimita a cada puerto una zona de servicio TERRESTRE y dos zonas de AGUAS, y el servicio de Puertos del Estado las sirve por separado porque son cosas distintas. Un puerto no es un polígono: son tres, y a veces más de tres porque una dársena se delimita aparte.",
+    "puertos": [
+      { "valor": "zona_terrestre", "etiqueta": "Zona de servicio terrestre", "color": "#2C4A63",
+        "def": "El suelo: muelles, explanadas, viales y almacenes. Es lo que casi todo el mundo llama «el puerto»." },
+      { "valor": "zona_i", "etiqueta": "Zona I de aguas", "color": "#4E7495",
+        "def": "Las aguas ABRIGADAS, donde se hace la operación portuaria: atraque, carga y descarga. Es la lámina de agua que las obras de abrigo protegen." },
+      { "valor": "zona_ii", "etiqueta": "Zona II de aguas", "color": "#87A6BE",
+        "def": "Las aguas EXTERIORES: espera, fondeo y maniobra de aproximación. Son con diferencia las de mayor superficie, y por eso el puerto ocupa en el mapa mucho más mar que tierra." }
+    ],
+
+    "_rte-t": "Los valores no son los MODOS —un nodo puede ser a la vez urbano, aeropuerto y puerto, y la categoría es una sola— sino la RED, que es la distinción que hace el propio Reglamento y la única que ordena el mapa: básica o global. Los modos van en campos, uno por columna del Anexo II. El tercer valor no es un hueco: hay nueve nodos que el Reglamento designa SOLO como urbanos, sin infraestructura asignada, y por tanto sin red.",
+    "rte-t": [
+      { "valor": "red_basica", "etiqueta": "Red básica", "color": "#7C3B2E",
+        "def": "Al menos una de sus infraestructuras pertenece a la red BÁSICA, la que el Reglamento manda terminar en 2030. No es una escala de importancia: es un plazo con fuerza legal." },
+      { "valor": "red_global", "etiqueta": "Red global", "color": "#B0705C",
+        "def": "Sus infraestructuras son de la red GLOBAL, con horizonte 2050." },
+      { "valor": "nodo_urbano", "etiqueta": "Solo nodo urbano", "color": "#C9A18E",
+        "def": "El Reglamento lo designa nodo urbano y no le asigna aeropuerto, puerto ni terminal, así que no tiene red. Son nueve, y entran porque un nodo urbano tiene obligaciones propias —el plan de movilidad urbana sostenible del Anexo V—, no por completar la lista." }
+    ],
+
+    "_ferrocarril": "Un solo valor. Adif publica LÍNEAS, tramos y nodos, y de los tres el único que la fuente NOMBRA es la línea: el tramo es un trozo de dibujo entre dos hitos, como pasaba con el tendido eléctrico. Las 2.682 estaciones y bifurcaciones del mismo servicio NO entran todavía, y no por olvido: mezclan estaciones de viajeros con bifurcaciones técnicas («BIF. CANAL DEL DUERO») y harían falta un criterio y una pasada propios.",
+    "ferrocarril": [
+      { "valor": "linea", "etiqueta": "Línea ferroviaria", "color": "#4A4A55",
+        "def": "Una línea de la red de titularidad estatal que administra Adif, cosida de sus tramos. El nombre es el TÉCNICO de Adif y no el comercial: «ALTSASU-CASTEJON DE EBRO», no «línea de Navarra»." }
     ],
 
     "_red-electrica": "Dos valores, y los separa la fuente: la BTN captura el tendido como línea y la subestación como recinto, con atributos distintos. No hay un tercero para «torre de alta tensión» aunque el IGN la capture (280.072 de ellas): una torre no es un activo estratégico, es el detalle con el que se dibuja la línea.",

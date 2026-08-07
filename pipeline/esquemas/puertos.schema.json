@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/puertos.schema.json",
+  "title": "Extensión de capa · puertos",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Las zonas de servicio de los puertos de interés general del Estado, del servicio WFS INSPIRE de Puertos del Estado (CC BY 4.0 declarado por el propio servicio). Un puerto NO es un registro: la ley le delimita una zona terrestre y dos zonas de aguas, y a veces cada dársena aparte, así que 43 puertos dan 164 recintos.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["Polygon", "MultiPolygon"],
+                "description": "El recinto delimitado. Simplificado a 2 m por el atlas —de ahí `geo_precision: generalizada`—: la fuente viene densificada a 4.346 vértices por polígono, detalle de topografía de muelle, y quitar el 89 % costó el 0,002 % de superficie."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["puerto", "autoridad_portuaria", "acto_delimitacion"],
+            "properties": {
+              "puerto": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El puerto de interés general al que pertenece el recinto, con el nombre que le da la fuente. Es la llave que junta las tres zonas de un mismo puerto, que van como registros separados."
+              },
+              "autoridad_portuaria": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La Autoridad Portuaria que lo gestiona. Son 28 para 43 puertos: varias gestionan más de uno, y por eso el nombre de la autoridad NO sirve para identificar al puerto."
+              },
+              "darsena": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La dársena, cuando la fuente delimita una aparte y su nombre no es el del puerto. Se omite cuando coincide, para no repetir el mismo dato en dos campos."
+              },
+              "acto_delimitacion": {
+                "type": "string",
+                "minLength": 1,
+                "description": "VERBATIM del servicio: «DEUP» o «Desafectacion». El atlas NO lo interpreta, y esa abstención es deliberada — la fuente no documenta qué distingue, y la diferencia no es menor, porque desafectar es sacar suelo del dominio público portuario. Si esos 48 polígonos fueran el suelo retirado, publicarlos como puerto diría lo contrario de la verdad. Lo que resuelve la duda no es una suposición del atlas sino el propio publicador: el conjunto se titula «Zonas de servicio portuarias de España» y declara contener la zona terrestre y las zonas I y II. La ambigüedad viene de la norma, donde una misma orden ministerial aprueba «la delimitación de espacios y usos portuarios ... y la desafectación de determinados espacios», y hay espacios desafectados que después se REINCORPORAN."
+              },
+              "fecha_acto": {
+                "type": "string",
+                "pattern": "^[0-9]{2}/[0-9]{2}/[0-9]{4}$",
+                "description": "La fecha del acto, en el formato DD/MM/AAAA de la fuente y sin convertir a ISO. No es `fecha_*` de las de §7.5 —no se comprueba contra el hoy— porque no es una fecha del registro sino un dato copiado."
+              },
+              "superficie_declarada_m2": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "La superficie que DECLARA la fuente, en metros cuadrados y sin `__v`, con el mismo trato que `superficie_declarada` en `minerales-derechos`. Aquí concuerda bien con el perímetro —mediana +0,19 %—, y aun así se publica como declarada y no como medida: el número lo pone la fuente y no el atlas."
+              },
+
+              "trafico_teus": {
+                "not": {},
+                "description": "PROHIBIDO. Puertos del Estado publica estadística de tráfico, pero es OTRO conjunto, con otra periodicidad y otra licencia, y esta capa no lo cita. Poner aquí un TEU sería mezclar dos fuentes en un registro y dar por verificado lo que esta no sostiene."
+              },
+              "trafico_toneladas": {
+                "not": {},
+                "description": "PROHIBIDO, por lo mismo. Y ojo con la tentación: es la cifra con la que se ordenan los puertos en cualquier titular."
+              },
+              "calado_m": {
+                "not": {},
+                "description": "PROHIBIDO. El calado es dato náutico —lo publica el Instituto Hidrográfico de la Marina en las cartas—, no está en esta fuente y además varía por muelle: un solo número por puerto sería falso por construcción."
+              },
+              "concesionario": {
+                "not": {},
+                "description": "PROHIBIDO. Quién explota cada terminal es materia de concesión y no aparece en la delimitación. Escribirlo exigiría otra fuente, y casi siempre sería corporativa."
+              },
+              "superficie_ha": {
+                "not": {},
+                "description": "PROHIBIDO por DERIVADO —igual que en `parques-eolicos`— y además por unidad: la fuente da metros cuadrados y convertirlos crearía un segundo número para el mismo hecho."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

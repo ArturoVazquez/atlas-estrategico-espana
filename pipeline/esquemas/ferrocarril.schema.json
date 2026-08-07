@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/ferrocarril.schema.json",
+  "title": "Extensión de capa · ferrocarril",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Las líneas de la red ferroviaria de titularidad estatal, del servicio WFS INSPIRE de Adif. El registro es la LÍNEA porque es lo único que la fuente nombra: el tramo es un trozo de dibujo entre dos hitos, exactamente como en `red-electrica`.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "MultiLineString",
+                "description": "La línea, cosida de sus tramos. MultiLineString y no LineString porque los tramos de una línea no siempre son contiguos en la fuente, y unirlos a la fuerza inventaría trazado donde no lo hay."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["codigo_linea", "n_tramos"],
+            "properties": {
+              "codigo_linea": {
+                "type": "string",
+                "pattern": "^[0-9]{4}[0-9A-Z]$",
+                "description": "El código de Adif (`RailwayLine_01710` → «01710»). Es la llave estable de la línea, y vale más que el nombre: los nombres son técnicos y se parecen mucho entre sí. SIEMPRE CINCO CARACTERES, y el último puede ser una LETRA: de las 326 líneas hay exactamente una, «0613G», y el patrón nació sin admitirla. La cazó §7.1 en la primera pasada, que es para lo que está: un patrón que solo describe el caso mayoritario es una comprobación que miente."
+              },
+              "n_tramos": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Cuántos objetos `tn-ra:RailwayLink` componen la línea. Es un recuento de la fuente, recontable sobre el GML archivado. OJO A CÓMO SE CUENTA: la lista `net:link` de la línea reclama 188 tramos por duplicado —a alguno lo reclaman siete líneas—, así que el recuento sale del lado del TRAMO, que declara una sola línea. Contarlo por el otro lado daba 47.357 km de red donde hay 24.136."
+              },
+              "longitud_medida_km": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Kilómetros medidos POR EL ATLAS sobre el trazado publicado. Adif no publica longitud en este objeto, así que va `parcial` — misma doctrina que en `red-electrica`: medir sobre un dato primario no convierte la medida en primaria (R2)."
+              },
+
+              "ancho_via": {
+                "not": {},
+                "description": "PROHIBIDO. El ancho —ibérico, estándar, métrico— es la característica que más define esta red y NO está en los objetos que esta capa lee. Vive en `tn-ra:RailwayType`, otra capa del mismo servicio, y traerlo exigiría una pasada propia. Escribirlo de memoria sería inventar el dato más citable de la capa."
+              },
+              "electrificada": {
+                "not": {},
+                "description": "PROHIBIDO, por lo mismo: está en `tn-ra:RailwayElectrification`, que esta pasada no lee."
+              },
+              "velocidad_maxima_kmh": {
+                "not": {},
+                "description": "PROHIBIDO. Existe como `tn-ra:DesignSpeed` en el servicio, y además es velocidad de DISEÑO y no la comercial: dos motivos para no escribirla aquí sin leerla."
+              },
+              "alta_velocidad": {
+                "not": {},
+                "description": "PROHIBIDO, y es la tentación más fuerte de toda la capa. Deducirlo del nombre de la línea o de su trazado sería el atlas clasificando por su cuenta la distinción más política de la red española. Cuando se lea `RailwayType`, entrará con su cita."
+              },
+              "n_vias": {
+                "not": {},
+                "description": "PROHIBIDO. Está en `tn-ra:NumberOfTracks`, sin leer todavía."
+              },
+              "operador": {
+                "not": {},
+                "description": "PROHIBIDO. Adif administra la INFRAESTRUCTURA; quién presta servicio sobre ella (Renfe, Ouigo, Iryo) es otra cosa, cambia por meses y no lo dice esta fuente."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

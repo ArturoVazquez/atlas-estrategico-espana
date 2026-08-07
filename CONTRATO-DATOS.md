@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.24.0 · **Fecha:** 2026-08-07
+**Versión del contrato:** 1.25.0 · **Fecha:** 2026-08-07
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -420,6 +420,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `minerales-derechos` *(1.12)* | — | **no aplica**. Un título otorgado NO dice que se esté explotando: se puede tener una concesión décadas sin abrir una mina. Va en el grupo `actividad` porque alguien lo sostiene y puede caducar, pero la pregunta del filtro no se le hace. |
 | `cables-submarinos` *(1.20)* | `fase` | `fase == "produccion"` (el cable presta servicio). Ojo: el registro es el ATERRIZAJE, y su fase es la del cable que llega a él — un expediente en información pública es `tramitacion` aunque la playa lleve ahí siglos. |
 | ~~`recurso-eolico`, `recurso-solar`~~ | — | ~~**no aplica**: son recurso, no explotación.~~ **La fila caducó con las capas** *(1.23)*: dejaron de ser recurso al renombrarse a `parques-eolicos` y `plantas-solares`, y un recinto de instalación SÍ es la clase de objeto a la que la pregunta se le hace. Ver la fila siguiente. |
+| `puertos`, `rte-t`, `ferrocarril` *(1.25)* | — | **no aplica**, y por tres motivos distintos que conviene no fundir. Una **zona de servicio portuaria** es una delimitación de dominio público: no se explota ni se deja de explotar, se delimita. Un **nodo RTE-T** es una designación de un reglamento, no una instalación — la misma clase de objeto que una provincia. Y una **línea de Adif** sí sería la clase de objeto correcta, pero la fuente no dice si presta servicio: es el caso de `red-electrica`, y un `false` por falta de dato sería la mentira que R7 evita. |
 | `parques-eolicos`, `plantas-solares` *(1.23)* | — | **no aplica**, pero por el motivo contrario al de arriba y conviene no confundirlos. No es que la pregunta sea de otra clase de objeto —a un parque eólico se le puede preguntar perfectamente si está produciendo—: es que **la fuente no lo responde**. La BTN cartografía el recinto y no dice si gira. Devuelve `null`, y un `false` por falta de dato sería la mentira que R7 evita. Mismo caso que `red-electrica`. |
 | `red-electrica` *(1.22)* | — | **no aplica**, y por partida doble. Un tendido cartografiado no es una instalación que se explote o se deje de explotar: es infraestructura, y la BTN además **no dice si está energizada** — solo que está ahí. Preguntarle a una subestación si está «en explotación» tendría sentido, pero la fuente no lo responde, y **un `false` por falta de dato es exactamente la mentira que R7 evita**. Devuelve `null`. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
@@ -855,6 +856,12 @@ distinguen mejor citando el artículo que clasificándolo.
   usar** *(1.20)*, y no es olvido: el recorrido de un cable submarino no tiene
   fuente con licencia compatible (TeleGeography es CC BY-NC-SA). Lo que sí
   publica una fuente primaria es dónde toca tierra
+- *puertos* *(1.25)*: `zona_terrestre` · `zona_i` · `zona_ii` — los tres los pone
+  la LEY de Puertos, que delimita a cada puerto una zona terrestre y dos de aguas
+- *rte-t* *(1.25)*: `red_basica` · `red_global` · `nodo_urbano` — la RED, que es
+  la distinción del Reglamento; los modos van en campos, uno por columna
+- *ferrocarril* *(1.25)*: `linea` — un solo valor: de línea, tramo y nodo, la
+  fuente solo NOMBRA la línea
 - *parques-eolicos* *(1.23)*: `parque_eolico` — un solo valor, heredero directo
   del `zona` que tenía `recurso-eolico`, con la diferencia de que ahora nombra
   algo que existe
@@ -1568,6 +1575,126 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > sería tirar un dato de la fuente—: se publican los dos unidos por « / », y una
 > clave dice que el separador es de la fuente y la barra, del atlas.
 
+**puertos** *(1.25)* (`dotacion`, polígonos, verificado): `puerto` (✔) ·
+`autoridad_portuaria` (✔) · `darsena` · `acto_delimitacion` · `fecha_acto` ·
+`superficie_declarada_m2` · `claves[]`
+
+> **Abre la rama `transporte`**, que el árbol no tenía, y tapa el hueco más
+> grande que le quedaba al atlas: por los puertos de interés general pasa la
+> mayor parte del comercio exterior español.
+>
+> **UN PUERTO NO ES UN REGISTRO.** El texto refundido de la Ley de Puertos le
+> delimita una zona de servicio **terrestre** y **dos de aguas** —la I abrigada,
+> donde se opera; la II exterior, de espera y maniobra—, y a veces cada dársena
+> aparte. Por eso 43 puertos dan **164 recintos**, y por eso en el mapa un puerto
+> ocupa mucho más mar que tierra. Las gestionan **28 Autoridades Portuarias**, así
+> que el nombre de la autoridad NO identifica al puerto.
+>
+> **La decisión delicada, y cómo se resolvió sin suponer nada.** El servicio
+> rotula cada recinto con un `act` que vale «DEUP» o «Desafectacion», y **no
+> documenta qué distingue**. No es un matiz: desafectar es **sacar** suelo del
+> dominio público portuario, y son 48 de 164 — si esos polígonos fueran el suelo
+> retirado, publicarlos como puerto diría lo contrario de la verdad. La duda es
+> real y viene de la norma, donde una misma orden ministerial aprueba «la
+> delimitación de espacios y usos portuarios … y la desafectación de determinados
+> espacios», y hay espacios desafectados que luego se **reincorporan**. Lo
+> resuelve **el propio publicador**: el conjunto se titula «Zonas de servicio
+> portuarias de España» y declara contener la zona terrestre y las zonas I y II.
+> Todo lo que hay dentro es zona de servicio **según quien lo publica**. El campo
+> va **verbatim** y el atlas no lo interpreta. **Cuando la fuente no explica un
+> campo que cambia el sentido del dato, se publica el campo y se declara la
+> abstención.**
+>
+> **Se descartan 24 astillas** —partes que tras redondear a 5 decimales quedan con
+> menos de un metro cuadrado, casi siempre exactamente cero—. Entre todas suman
+> **1,89 m² de 2.200 km²**. Las cazó §7.4 al no poder decidirles el sentido de
+> giro, que es lo que le pasa a un polígono sin superficie.
+>
+> **Y una lección de orden de operaciones**, que costó una tanda: simplificar →
+> redondear → tirar astillas → **orientar**. Orientar antes de redondear no vale,
+> porque el redondeo a 5 decimales puede **voltear el signo** del área de un
+> anillo casi degenerado. **Se orienta lo que se publica, no lo que se calcula.**
+
+**rte-t** *(1.25)* (`dotacion`, puntos, verificado): `nodo_urbano` (✔) ·
+`municipio` · `aeropuerto` (✔) · `puerto_maritimo` (✔) · `puerto_interior` (✔) ·
+`terminal_ff_carretera` (✔) · `claves[]`
+
+> Los **77 nodos españoles** del Anexo II del Reglamento (UE) 2024/1679: 49 nodos
+> urbanos, 38 aeropuertos, 42 puertos marítimos, 1 puerto interior —Sevilla, el
+> único fluvial del país— y 28 terminales ferrocarril-carretera. Cada modo va
+> declarado de la red **básica** (a terminar en 2030) o **global** (2050): no es
+> una escala de importancia, es un calendario con fuerza legal.
+>
+> **De dónde sale la tabla, que fue la mitad del trabajo.** El PDF del DOUE **no
+> se puede parsear**: el modo `layout` avisa de «rotated text» y devuelve
+> incompleto, igual que con el PERTE. Y **el texto plano no vale**, que es lo que
+> hay que entender: aplasta las columnas, y «A Coruña X Global Básica» no dice
+> cuál de los dos valores es el aeropuerto y cuál el puerto. Con cinco columnas
+> posibles eso no es un detalle, es ambigüedad fatal. Lo resuelve el **espejo del
+> BOE**, que sirve el mismo documento en HTML con la tabla en `<td>` de verdad.
+> Misma lección que en `cables-submarinos`: cuando EUR-Lex no se deja, el BOE
+> tiene el DOUE.
+>
+> **Cuadre**, y sin él no se publicaba: 77 filas entre el primer «ES» y el «FR»
+> siguiente, **las 77 con sus siete celdas**, sin nombres repetidos y ninguna sin
+> modo marcado.
+>
+> **La geometría es el municipio, y 35 de 77 necesitaron una equivalencia
+> DECLARADA una a una**: siete «Área Metropolitana de …», una parroquia (San
+> Cibrao, en Cervo), un nodo que son **dos** municipios (Tarragona-Reus), una isla
+> entera (El Hierro, que se sitúa en Valverde) y las formas oficiales bilingües
+> que el Reglamento abrevia — **«Elche/Elx» no existe en el IGN; existe
+> «Elx/Elche»**. Cada equivalencia va en `claves` con su motivo, para poder
+> discutirse una a una en vez de esconderse dentro de un emparejador «listo».
+>
+> **Dos avisos del IGN que esta capa deja pagados.** El primero: **un cero del IGN
+> no prueba ausencia** — el servicio devuelve 200 con la colección vacía cuando se
+> le aprieta, y en el primer barrido «Albacete» y «Santander» salieron como no
+> encontrados. Un vacío se reintenta antes de creérselo. El segundo, más fino:
+> **la media de los vértices de un municipio no está dentro del municipio.**
+> Castelló de la Plana incluye las **islas Columbretes**, a 50 km mar adentro, y
+> el promedio se va al agua; Alicante, igual. Es §6.6 —«el centroide de un derecho
+> multiparte puede caer donde no hay derecho ninguno»— aplicado a un municipio. Se
+> toma un punto de la parte mayor, garantizado dentro, y se comprueba volviendo a
+> preguntar al IGN en qué municipio cae.
+
+**ferrocarril** *(1.25)* (`dotacion`, líneas, verificado): `codigo_linea` (✔) ·
+`n_tramos` (✔) · `longitud_medida_km` · `claves[]`
+
+> **326 líneas y 24.136 km** de la red de titularidad estatal, del servicio WFS
+> INSPIRE de **Adif**, versión 2026/01. Adif es entidad pública empresarial y su
+> metadato declara «sin limitaciones al acceso público» y «no se aplican
+> condiciones de acceso y uso», con atribución: compatible con CC BY 4.0.
+>
+> **El registro es la LÍNEA porque es lo único que la fuente nombra** —el tramo es
+> el trozo que queda entre dos hitos—, exactamente como en `red-electrica`. Y el
+> nombre es el **técnico** de Adif, no el comercial: «ALTSASU-CASTEJON DE EBRO».
+>
+> **El error que estuvo a punto de colarse, y que merece quedar escrito.** El
+> vínculo entre línea y tramo está en el GML **en los dos sentidos, y no son
+> equivalentes**. La lista `net:link` de las líneas reclama **188 tramos por
+> duplicado** —a alguno lo reclaman **siete** líneas—, así que coser por ahí daba
+> **47.357 km** de red. Cada tramo, en cambio, declara **una sola** línea en su
+> `inNetwork`. Se cose por el lado que no puede contar dos veces, y salen 24.136
+> km con los **1.689 tramos usados exactamente una vez**. **Lo delató el total, no
+> el código**: la red de Adif no llega a 25.000 km, y 47.357 era una cifra que no
+> había que creerse. Cuando una capa nueva da un número contrastable con lo que
+> uno ya sabe del mundo, hay que contrastarlo.
+>
+> **Y una trampa de CRS que habría sido peor**: el GML declara
+> `urn:ogc:def:crs:EPSG::4258`, y esa forma de nombrarlo —la URN— obliga al orden
+> de ejes de la autoridad, que para el ETRS89 geográfico es **latitud primero**.
+> Copiar las coordenadas tal cual habría puesto la red ferroviaria española en el
+> golfo de Guinea.
+>
+> **Lo que se queda fuera, dicho:** 29 líneas de las 355 que no tienen ningún
+> tramo que las declare; y las **2.682 estaciones y bifurcaciones** del mismo
+> servicio, que mezclan estaciones de viajeros con nudos técnicos («BIF. CANAL DEL
+> DUERO») y piden criterio propio. El esquema prohíbe además `ancho_via`,
+> `electrificada`, `alta_velocidad` y `n_vias`: **existen en el servicio, en capas
+> que esta pasada no lee**, y escribirlos de memoria sería inventar los datos más
+> citables de la capa.
+
 *(Capas futuras entran por §8 con su apartado aquí y su esquema en
 `pipeline/esquemas/`.)*
 
@@ -1678,6 +1805,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.25.0** | 2026-08-07 | **Aditiva, y la mayor desde la 1.1: nace la rama `transporte`**, que el árbol no tenía, con tres capas — `puertos`, `rte-t` y `ferrocarril` (§10). Tapa el hueco más grande que le quedaba al atlas: por los puertos de interés general pasa la mayor parte del comercio exterior español y hasta hoy no había nada. **Tres lecciones que valen más que las capas.** PRIMERA, de `puertos`: el servicio rotula cada recinto con un campo que vale «DEUP» o «Desafectacion» y **no documenta qué distingue**, siendo que desafectar es SACAR suelo del dominio público —48 de 164 recintos—. No se supone: lo resuelve el propio publicador, que titula el conjunto «Zonas de servicio portuarias de España», y el campo va **verbatim** con la abstención declarada. **Cuando la fuente no explica un campo que cambia el sentido del dato, se publica el campo y se dice que no se interpreta.** SEGUNDA, de `rte-t`: el PDF del DOUE **no se puede parsear** —«rotated text», como en el PERTE— y el texto plano **no vale**, porque aplasta las columnas y «A Coruña X Global Básica» no dice cuál valor es el aeropuerto y cuál el puerto; lo resuelve el **espejo del BOE**, que sirve la tabla en `<td>` de verdad. TERCERA, de `ferrocarril`: el vínculo entre línea y tramo está en el GML **en los dos sentidos y no son equivalentes** —la lista de la línea reclama 188 tramos por duplicado, a alguno siete líneas—, así que coser por el lado equivocado daba **47.357 km** de red donde hay 24.136. **Lo delató el total, no el código**: la red de Adif no llega a 25.000 km. §6.5 les da una fila a las tres, con `activo` **no aplica** por tres motivos distintos que no deben fundirse. Y quedan pagados dos avisos del IGN: **un cero suyo no prueba ausencia** (devuelve 200 vacío cuando se le aprieta, y «Albacete» salió como inexistente) y **la media de los vértices de un municipio no está dentro del municipio** — Castelló de la Plana incluye las islas Columbretes y el promedio se va al mar. **No nace ninguna regla `R*`.** |
 | **1.24.0** | 2026-08-07 | **Aditiva, y de las que no traen capa: una regla vieja gana diente.** §9 exige el `color` de cada categoría **desde la 1.9** y nadie lo comprobaba nunca — que es literalmente lo que §8 llama «prosa disfrazada de garantía». El precio se pagó otra vez y en la misma semana: `cables-submarinos` nació con sus dos categorías **sin color** y estuvo **una release entera** pintándose con el color de reserva, indistinguible de cualquier otra capa, sin que nada lo dijera. Es la **tercera** vez que el mismo fallo entra por la misma puerta: la primera la cuenta `app/src/mapa.js` («Cuatro capas, indistinguibles»). Ahora `validar.py` lo **AVISA y no lo bloquea**, a propósito — el dato es correcto y lo único que se pierde es distinguir la capa; bloquear pararía la publicación de un registro bueno. Se comprueba **una vez por categoría y no por registro**, porque 1.382 avisos idénticos son la manera más fácil de que un aviso deje de leerse. Y se mira lo que se **usa**, no lo declarado: `cables-submarinos:trazado` sigue **sin color a propósito**, porque el color es «con el que el mapa la pinta» y una categoría que no pinta nada no tiene color que declarar — el aviso saltará el día que alguien la use, que es cuando hace falta. Ese es además el fixture que ejercita la comprobación: pruebas **25 → 26**. |
 | **1.23.0** | 2026-08-07 | **Aditiva.** `recurso-eolico` y `recurso-solar` dejan de existir y nacen `parques-eolicos` y `plantas-solares` (§10). **No es un renombrado: es un cambio de OBJETO**, y decirlo así es el contenido de la enmienda. «Recurso» es cuánto sopla el viento — un **campo continuo** que solo existe como ráster, de modo que convertirlo en zonas lo tendría que hacer el atlas. La salida que el plan daba por buena, la zonificación ambiental del MITECO «en shapefile y vectorial», **resultó falsa al comprobarla**: dentro del ZIP hay dos GeoTIFF y un léeme que dice «los ráster clasificados». Lo que sí existe es la INSTALACIÓN, y la trae la misma BTN que desbloqueó `red-electrica`: `0713S Central eléctrica`, geometría de superficie, capturada «por el contorno exterior de su recinto». **Los dos cambios que pesan más que el id:** de `dotacion` a `actividad` —el viento es una condición permanente del territorio, pero **un parque se desmantela**— y de `ilustrativo` a `verificado` —eran trazos imaginados a mano y son perímetros de fuente primaria—. Cambiar solo el título habría dejado el mismo error escrito de otra forma. §8 estrena la regla que ya se había usado dos veces sin escribirla: **un id se puede renombrar mientras no haya publicado un registro**, porque lo que §8 protege es la estabilidad de las citas y a un id sin datos no lo cita nadie. **Ninguna de las dos capas añade un campo**, y sus esquemas existen para PROHIBIR: `potencia_mw` la primera, que es la cifra que cualquiera espera de un parque eólico y **no está en la fuente** (y es también por lo que los ids no son `eolica-instalada`/`solar-instalada`). `superficie_ha` queda prohibida **por derivada**, como `porcentaje_llenado` en `agua-embalsada`; estuvo a punto de colarse como `superficie_recinto_ha`, así que ese nombre también se cierra — **rebautizar un derivado no lo deja de derivar**. La geometría **no** se simplifica, al revés que el tendido: allí quitar vértices costaba el 0,017 % de la longitud, aquí costaría el 0,23 % de superficie y **dejaría 29 parques convertidos en cuadrados**. Alcance con las dos cifras siempre juntas: eólica 1.382 de 1.389 (**100 % de la superficie**), termosolar 44 de 45, fotovoltaica 1.206 de 3.165 (**76 % de la superficie**, porque las anónimas son las pequeñas). **No nace ninguna regla `R*`.** |
 | **1.22.0** | 2026-08-07 | **Aditiva.** Nace `red-electrica` (§10), y nace derribando un bloqueo que llevaba desde el primer día y que estaba **bien razonado y mal concluido**. El motivo escrito era impecable —el mallado lo publica Red Eléctrica, `corporativa`, y R3 no la deja sostener un `confirmado`— pero descansaba en una premisa que nadie llegó a escribir: *que no lo publica nadie más*. Lo publica el **IGN**, en la Base Topográfica Nacional, tema Energía, con licencia de la Orden FOM/2807/2015 «compatible con CC-BY 4.0» y sin CAPTCHA ni modal. **R3 no se discute: se cambia de emisor.** De ahí la lección que §10 deja anotada — una frase que da por cerrado el mundo tiene que decir dónde miró. **La novedad de fondo es qué clase de fuente es una carta topográfica:** el IGN entraba ya 456 veces en el atlas y siempre como **Nomenclátor**, que es un *registro* y está en la lista de §6.1; la BTN es **cartografía**, sigue siendo `primaria` por ser producción oficial de la agencia del Estado, pero **con el alcance recortado a lo que mide** — de quién es la línea no dice nada, y por eso `titular` y `propietario` están prohibidos en el esquema. **El título también cambió el día de publicar:** «Red eléctrica (transporte)» afirmaba una categoría JURÍDICA que ningún mapa certifica, y pasó a «Tendido de alta tensión (220 y 400 kV)», que es lo que la fuente sostiene — tercera vez en la misma semana que la acotación la impone la fuente y no el gusto (`cables-submarinos` registra aterrizajes; `agua-embalsada`, el agua). Son **dos registros de tendido y no 1.784** porque las 18.505 líneas de la BTN traen `nombre` a nulo y bautizarlas por sus extremos habría fabricado nombres que nadie ha dado; y **657 subestaciones de las 718** en las que termina un tramo de 220/400 kV, con el filtro sacado de la propia norma de captura del IGN y las 61 sin nombre declaradas en vez de omitidas. `longitud_km` va **`parcial` a propósito**: el IGN no publica ninguna longitud, la mide el atlas, y **medir sobre un dato primario no convierte la medida en primaria** — un `confirmado` ahí incumpliría R2. La geometría del tendido va `generalizada` por simplificada a 25 m: el 85 % de los vértices por el 0,017 % de la longitud, porque la BTN captura un vértice por torre y un tramo recto de cuarenta torres no tiene cuarenta formas. §6.5 le da su fila: `activo` **no aplica**, y aquí por un motivo que conviene retener — la fuente **no dice si el tendido está energizado**, y un `false` por falta de dato es justo la mentira que R7 evita. **No nace ninguna regla `R*`.** |
