@@ -25,3 +25,15 @@
 *.jpeg  binary
 *.webp  binary
 *.zip   binary
+
+# Y `fuentes/` ENTERO fuera de la normalización, no solo lo que ya era binario.
+#
+# La regla de arriba protegía el PDF y el ZIP y dejaba pasar el HTML, el XML y
+# el CSV — que son la mitad del archivo. Un servidor que sirve CRLF y un git que
+# lo reescribe a LF producen un fichero que YA NO ES el que se descargó: se lee
+# igual y no cuadra byte a byte con el original. Aquí eso no es ruido de diff,
+# es la diferencia entre una copia y una cita.
+#
+# Lo de arriba manda en `datos/` y en el código, donde el diff limpio es el
+# argumento. Aquí manda la fidelidad, y son cosas distintas.
+fuentes/** -text
