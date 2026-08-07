@@ -224,6 +224,22 @@ def mandar_contraste(argv) -> int:
     doc = json.loads(Path(argv[0]).read_text(encoding="utf-8"))
     fallos = 0
 
+    def en_la_orilla(lon: float, lat: float, declarado: str) -> bool:
+        """¿El punto está pegado al municipio que declara, pero fuera del polígono?
+
+        Tira ocho sondas a unos 450 m alrededor. Si alguna cae en el municipio
+        declarado, el punto está en su orilla: el dato es bueno y lo que no llega
+        es el polígono. Si ninguna cae, el ¡REVISAR! se mantiene — esto NO es una
+        excusa general para puntos que no cuadran, solo para los costeros.
+        """
+        paso = 0.004  # ~450 m
+        for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0),
+                       (1, 1), (1, -1), (-1, 1), (-1, -1)):
+            for h in municipio(lon + dx * paso, lat + dy * paso):
+                if h.lower() in declarado.lower():
+                    return True
+        return False
+
     print(f"  {'registro':<20} {'precisión':<11} {'coordenada':<24} municipio")
     print("  " + "-" * 96)
     for f in doc.get("features", []):
@@ -245,6 +261,21 @@ def mandar_contraste(argv) -> int:
             veredicto = "sin municipio declarado"
         elif any(h.lower() in declarado.lower() for h in hallados):
             veredicto = "ok"
+        elif not hallados and en_la_orilla(lon, lat, declarado):
+            # NO CAER EN NINGUNO no es lo mismo que caer en OTRO. Lo segundo es
+            # una contradicción —hay dos datos y se desmienten—; lo primero es
+            # que no hay segundo dato con el que comparar, y en la costa es lo
+            # normal: el IGN sitúa la etiqueta de una playa en la orilla y los
+            # polígonos municipales acaban en la costa. Se comprueba tirando unos
+            # metros tierra adentro; si allí sí cae en el municipio declarado, el
+            # dato está bien y quien no llega es la comprobación.
+            #
+            # Sin esto, `cables-submarinos` —seis playas y puertos— daría dos
+            # falsos ¡REVISAR! en cada pasada. Y una herramienta que grita por lo
+            # que no puede comprobar acaba ignorada, que es como se pierde el
+            # aviso que sí importaba. Mismo motivo que la guarda del HEAD en
+            # `vigilar.py`.
+            veredicto = "en la orilla (el polígono acaba en la costa)"
         else:
             veredicto = "¡REVISAR!"
             fallos += 1
