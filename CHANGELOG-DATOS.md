@@ -32,6 +32,74 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.18 — El agua embalsada no es el vaso, es lo que hay dentro
+
+Entra **`agua-embalsada`**, la decimosexta capa. **308 embalses** con su capacidad
+y su reserva, verificados uno a uno contra la cuenca que les corresponde:
+**49.237 hm³ de capacidad y 34.092 embalsados** en el parte del 4 de agosto de
+2026.
+
+**La capa existe porque la pregunta estaba mal formulada.** La ruta obvia era el
+shapefile del Inventario de Presas y Embalses del SNCZI, y está tras un
+**ALTCHA** —un CAPTCHA de prueba de trabajo que el Ministerio puso a propósito y
+que no se salta—. Otras cinco vías fallaron: URLs viejas a 404, no existe WFS de
+embalses, el ArcGIS REST del Ministerio no sirve esa capa, el PDF resumen agrega
+por cuenca. **La sexta fue darse cuenta de que el shapefile no era el dato:**
+«agua embalsada» no es la geometría del vaso, es el agua que hay dentro, y eso el
+MITECO lo publica en abierto y sin formulario en el histórico del **Boletín
+Hidrológico Semanal** — 719.725 partes desde 1988.
+
+### Añadido
+
+- **`agua-embalsada`** — 308 embalses (292 vigentes, 16 históricos), 73 de uso
+  hidroeléctrico declarado.
+- **Cada punto está verificado contra su demarcación.** El Boletín no lleva
+  coordenadas: la geometría se cose por nombre contra el Nomenclátor del IGN, y
+  como un nombre de embalse **no es único en España**, se le pregunta al servicio
+  del propio Ministerio en qué cuenca cae cada punto. Esa vuelta cazó **seis
+  emparejamientos falsos**, el mejor de ellos un «San Lorenzo» del Ebro que
+  resultaba ser el de Tenerife.
+- **La normalización de nombres es de cuatro lenguas**, y sus reglas salieron de
+  mirar las etiquetas reales: nueve prefijos (`Embalse`, `Pantà`, `Presa`,
+  `Pantano`, `Encoro`, `Balsa`, `Charca`, `Embassament`, `Bassa`) y el sufijo
+  vasco **`urtegia`** con su genitivo (`Añarbeko urtegia` → Añarbe).
+- **Tres embalses rescatados de un falso descarte.** Aldeadávila, Saucelle y
+  Cedillo caían fuera de toda demarcación española porque **el cauce que embalsan
+  es la frontera con Portugal**. Se comprobó mirando la vecindad y entran con su
+  clave explicándolo.
+
+### Huecos
+
+**De los 401 embalses del Boletín se publican 308.** Los 93 que faltan suman
+**7.243 hm³ — el 13 % de la capacidad** — y no se omiten en silencio:
+
+| Motivo | Cuántos |
+|---|---|
+| Sin correspondencia en el Nomenclátor del IGN | 58 |
+| Casan con más de un topónimo y no se puede decidir | 29 |
+| Casaban de nombre con un embalse de **otra cuenca** | 6 |
+
+Los mayores que quedan fuera, para que se vea qué falta:
+
+| Embalse | hm³ | Motivo |
+|---|---|---|
+| Ricobayo | 1.145 | ambiguo |
+| Grado, El | 400 | sin topónimo |
+| Puente Nuevo | 281 | ambiguo |
+| Guadalhorce-Guadalteba | 279 | ambiguo |
+| Aguilar | 247 | sin topónimo |
+| Bao | 238 | sin topónimo |
+
+- **Dieciséis registros son `historico`, no vigentes:** su último parte es
+  anterior a 2026 y la serie llega a agosto. Un dato que dejó de alimentarse no
+  es una lectura de hoy — y no se borra, se marca.
+- **La superficie del vaso no se publica**, y está prohibida en el esquema: vive
+  en el shapefile que esta capa no usa y mide el vaso lleno, no el agua.
+- **`porcentaje_llenado` está prohibido por derivado**, igual que `activo` en R7.
+  Lo calcula quien lo pinte.
+
+---
+
 ## datos-v2026.08.17 — Los cables no se pueden dibujar; los aterrizajes sí
 
 Entra **`cables-submarinos`**, la decimoquinta capa. **Seis aterrizajes**, cada

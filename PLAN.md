@@ -233,8 +233,7 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 
 ## Horizonte (post-v1, por orden acordado)
 
-~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
-embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → ~~H2Med~~ →
+~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → ~~agua embalsada~~ → ~~centros de datos~~ → ~~H2Med~~ →
 ~~electrolizadores~~ → ~~cables submarinos~~ → ~~subasta del Banco Europeo del Hidrógeno~~ (resuelta:
 NO es capa, ver abajo) → ~~PERTE acotado~~ → ~~intangibles~~ (clase `analisis`,
 ámbito mundo). **EL HORIZONTE ACORDADO ESTÁ COMPLETO** (2026-08-07). Lo único
@@ -255,7 +254,11 @@ en gris por olvido**, y ninguna se puede levantar sin romper algo:
 | `red-electrica` | REE es `corporativa` y **R3 le prohíbe sostener un `confirmado`** | Fuente primaria con geometría |
 | `cables-submarinos` | **No hay registro público**, pese a la Ley 11/2022 | Reconstruirla acto por acto |
 
-**`agua-embalsada` — DESBLOQUEADA el 2026-08-07: hay otra puerta, y es mejor.**
+**`agua-embalsada` — LEVANTADA** el 2026-08-07, release `datos-v2026.08.18`, con
+**308 embalses y el 86 % de la capacidad del país**. Lo que sigue cuenta de dónde
+salió y qué se quedó fuera.
+
+**Hubo otra puerta, y era mejor.**
 El shapefile del SNCZI sigue tras el ALTCHA (ver abajo), pero resulta que **ese
 no era el dato**. «Agua embalsada» no es la geometría del vaso: es el agua que
 hay dentro, y eso el MITECO lo publica en abierto y sin formulario.
