@@ -309,19 +309,56 @@ lo tendría que hacer el atlas, y eso es **generar datos**: exactamente lo que
 `CLAUDE.md` llama el peor bug posible de este proyecto. Un recurso es un campo,
 no un registro con fuente.
 
-La salida honesta, si alguna vez se quiere, existe y es **cambiar la pregunta**
+~~La salida honesta, si alguna vez se quiere, existe y es **cambiar la pregunta**
 —como ya pasó tres veces en este horizonte—: el MITECO publica la **zonificación
 ambiental para energías renovables**, eólica y fotovoltaica por separado, en
 shapefile y clasificada en cinco clases de sensibilidad. Es oficial, es vectorial
-y es española. Pero **no es recurso, es restricción**: dice dónde se puede poner
-un parque, no cuánto viento hace. Renombrar la rama es decisión de producto, y de
-Arturo.
+y es española.~~ **ESA SALIDA NO EXISTE, y la afirmación de arriba era falsa**
+(comprobado el 2026-08-07 descargando el ZIP, no leyendo la página): la
+zonificación del MITECO **no es vectorial**. Dentro vienen
+`Clas_ISA_eol_c.tiff` y `Clas_ISA_eol_pb.tiff`, y su propio léeme lo dice —«los
+GeoTIFF descargados contienen los **ráster clasificados**… hay que utilizar la
+opción clasificado»—. O sea que la vía de escape tenía **el mismo defecto que la
+vía original**: vectorizarla la tendría que hacer el atlas. El bloqueo no se
+levanta por ahí; se refuerza.
 
-**`red-electrica`** choca con R3: la geometría de la red de transporte la publica
+Y sí es cierto lo otro: **no es recurso, es restricción** — dice dónde se puede
+poner un parque, no cuánto viento hace.
+
+**La salida que sí existe apareció en el mismo sitio que desbloqueó
+`red-electrica`:** la BTN del IGN trae `0713S Central eléctrica` con **geometría
+de superficie**, capturada «por el contorno exterior de su recinto» — **1.389
+parques eólicos** (1.382 con nombre), **3.165 fotovoltaicas** (1.206 con nombre)
+y **45 termosolares** (44 con nombre). Sigue sin ser recurso: es la instalación,
+o sea `actividad` y no `dotacion`. Renombrar la rama sigue siendo decisión de
+producto, y de Arturo — pero ahora la alternativa no es un premio de consolación.
+
+~~**`red-electrica`** choca con R3: la geometría de la red de transporte la publica
 REE, que es el operador, o sea `corporativa`. No se encontró shapefile abierto del
-MITECO. Lo que sí es primario es la **Planificación de la red de transporte
-2021-2026**, aprobada por Consejo de Ministros, pero eso es la red PLANIFICADA y
-además ya alimenta `electricidad-interconexiones`.
+MITECO.~~ **DESBLOQUEADA el 2026-08-07, y el diagnóstico de arriba era corto de
+miras.** R3 era verdad; la premisa oculta —«nadie más la publica»— no lo era. **El
+IGN sí la publica**, en la Base Topográfica Nacional, tema Energía: un GeoPackage
+nacional de 39,5 MB, descarga directa (`muestraLic: NO`, sin modal ni CAPTCHA) y
+licencia de la **Orden FOM/2807/2015**, declarada «compatible con CC-BY 4.0». El
+emisor deja de ser el operador y R3 no tiene nada que objetar.
+
+Contado sobre el fichero, no sobre la ficha del producto: 18.505 líneas con
+atributo `TENSI_0710`, de las cuales **1.231 a 220 kV y 553 a 400 kV** — o sea
+**1.784 tramos, 31.154 km y 117.306 vértices, unos 2,6 MB de GeoJSON**. Y no es un
+fondo viejo: **169 de esos tramos se dieron de alta en 2026** y 331 en 2025.
+
+Lo que sí es primario, y sigue siéndolo, es la **Planificación de la red de
+transporte 2021-2026**, aprobada por Consejo de Ministros — pero eso es la red
+PLANIFICADA y además ya alimenta `electricidad-interconexiones`.
+
+**Los dos peros, que van por delante de cualquier construcción.** Primero:
+**ninguna línea tiene nombre** — las 18.505 traen `nombre` a nulo, así que un
+registro diría «tramo de 400 kV» y nada más; bautizarlo por sus extremos sería el
+atlas inventando el nombre. Segundo: **la BTN certifica lo que hay en el suelo, no
+la categoría regulatoria** — que una línea sea de 220 kV no la hace jurídicamente
+«red de transporte», y la capa tiene que llamarse por lo que la fuente sostiene.
+Es la misma lección que dejaron `cables-submarinos` (aterrizajes, no cables) y
+`agua-embalsada` (el agua, no el vaso).
 
 **`cables-submarinos` — LEVANTADA** el 2026-08-07, release `datos-v2026.08.17`,
 con seis aterrizajes. Lo que sigue explica de dónde salió y qué le falta. La Ley 11/2022
