@@ -1,0 +1,112 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "perte",
+    "schema_version": "1.18.0",
+    "verificado_a": "2026-08-06"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "perte:beeplanet-factory-orkoien",
+      "geometry": { "type": "Point", "coordinates": [-1.74705, 42.81625] },
+      "properties": {
+        "slug": "beeplanet-factory-orkoien",
+        "nombre": "BeePlanet Factory, S.L. — Orkoien",
+        "categoria": "plan_inversion",
+        "descripcion": "Investigación en gestión térmica y seguridad de almacenamiento estacionario con baterías de segunda vida.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "beneficiario": "BeePlanet Factory S.L.",
+        "cif": "B71340889",
+        "codigo_plan": "VE2-010000-2024-0033",
+        "instrumento": "Propuesta de Resolución Definitiva del PERTE VEC — Sección B, convocatoria 2024",
+        "comision_verificacion": "2025-05-14",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "municipio": "Orkoien",
+        "provincia": "Navarra",
+        "presupuesto_financiable": 894539,
+        "presupuesto_financiable__v": "confirmado",
+        "presupuesto_financiable__f": "f1",
+        "subvencion_propuesta": 447269,
+        "subvencion_propuesta__v": "confirmado",
+        "subvencion_propuesta__f": "f1",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Propuesta de Resolución Definitiva del PERTE VEC — Sección B 2024 (Ministerio de Industria y Turismo)",
+            "fecha": "2025-05-14"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "fecha": "2026-08-06"
+          }
+        ],
+        "nota": "La versión de este expediente según la comisión del 14 de mayo de 2025."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perte:beeplanet-factory-orkoien-revisado",
+      "geometry": { "type": "Point", "coordinates": [-1.74705, 42.81625] },
+      "properties": {
+        "slug": "beeplanet-factory-orkoien-revisado",
+        "nombre": "BeePlanet Factory, S.L. — Orkoien (revisado)",
+        "categoria": "plan_inversion",
+        "descripcion": "El mismo expediente, revisado por una comisión posterior.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "municipio",
+        "geo_fuente": "punto del municipio en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-06",
+        "fecha_verificacion": "2026-08-06",
+        "beneficiario": "BeePlanet Factory S.L.",
+        "cif": "B71340889",
+        "codigo_plan": "VE2-010000-2024-0033",
+        "instrumento": "Propuesta de Resolución Definitiva del PERTE VEC — Sección B, convocatoria 2024",
+        "comision_verificacion": "2025-06-04",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "municipio": "Orkoien",
+        "provincia": "Navarra",
+        "presupuesto_financiable": 894539,
+        "presupuesto_financiable__v": "confirmado",
+        "presupuesto_financiable__f": "f1",
+        "subvencion_propuesta": 626177,
+        "subvencion_propuesta__v": "confirmado",
+        "subvencion_propuesta__f": "f1",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Propuesta de Resolución Definitiva del PERTE VEC — Sección B 2024 (Ministerio de Industria y Turismo)",
+            "fecha": "2025-06-04"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "fecha": "2026-08-06"
+          }
+        ],
+        "nota": "VIOLA la comprobación propia de la capa (§10). Los dos registros declaran el mismo `codigo_plan`, y eso no puede pasar: el listado del Ministerio es un registro por comisiones de verificación en el que un expediente REAPARECE cuando una comisión posterior lo revisa. Vale la última, no las dos. Este caso es el real: BeePlanet pasó de 447.269 € a 626.177 € de subvención propuesta entre el 14 de mayo y el 4 de junio de 2025, y quedarse con las dos apariciones pondría dos veces la misma fábrica en el mapa y sumaría su dinero dos veces. Que la buena es la segunda lo demuestra el propio documento: su acumulado sube exactamente esos 178.908 € de diferencia."
+      }
+    }
+  ]
+}

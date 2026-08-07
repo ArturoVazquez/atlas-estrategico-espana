@@ -7,7 +7,7 @@
 
   "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
 
-  "schema_version": "1.17.0",
+  "schema_version": "1.18.0",
   "release": "2026.08.14",
 
   "capas": [
@@ -247,11 +247,20 @@
       "atribucion": "Atlas Estratégico de España"
     },
     {
+      "_": "«Acotado» ya no es una palabra pendiente: acota lo que un DOCUMENTO PÚBLICO SITÚA. El PRTR publica mucho dinero y casi nada de geografía —la lista de los 100 mayores perceptores no lleva ubicación, y el mapa del PRTR de MITECO es un Power BI incrustado sin conjunto de datos que citar—. El listado del PERTE VEC Sección B 2024 sí trae provincia y municipio fila a fila. Cuando otra convocatoria publique el suyo con municipio, entra aquí como registros nuevos: el id no se renombra.",
       "id": "perte",
       "titulo": "PERTE en ejecución (acotado)",
       "arbol": "tablero",
       "grupo": "actividad",
-      "en_preparacion": true
+      "geometria": "puntos",
+      "registro": "verificado",
+      "ambito": "espana",
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-06",
+      "version": "1.0.0",
+      "fichero": "capas/perte.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Ministerio de Industria y Turismo · Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
 
     {

@@ -152,6 +152,12 @@
         "color": "#A6A2B4",
         "def": "Expediente abierto —información pública, evaluación en curso— y sin resolver." }
     ],
+    "_perte": "Un solo valor, y es deliberado: el listado del Ministerio no clasifica los planes, y sacar una clase del título de cada proyecto —«baterías», «componentes», «digitalización»— sería interpretar un texto libre escrito por el solicitante. Lo que distingue a unos de otros es el dinero, y el dinero va en campos con su verificación al lado.",
+    "perte": [
+      { "valor": "plan_inversion", "etiqueta": "Plan de inversión",
+        "color": "#7A6A4F",
+        "def": "Un expediente de inversión con propuesta de ayuda del PERTE, situado en el municipio que declara su propio listado. Es dinero comprometido sobre un plan, no una instalación en marcha." }
+    ],
     "_hidrogeno-produccion": "Un solo valor, y es deliberado: las siete plantas son la misma clase de cosa y la fuente las sirve en la misma capa. Lo que las distingue —en qué punto de su vida están— ya lo llevan `fase` y `estado_pci`, y meterlo también aquí sería la doble fuente de verdad que D3 descartó. Precedente de vocabulario de un valor: `recurso-eolico`, con `zona` a secas.",
     "hidrogeno-produccion": [
       { "valor": "electrolizador", "etiqueta": "Electrolizador",

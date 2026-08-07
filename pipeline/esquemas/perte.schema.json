@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/perte.schema.json",
+  "title": "Extensión de capa · perte",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Los planes de inversión del PERTE en ejecución, ACOTADOS a lo que un documento público sitúa: hoy, el listado de la Propuesta de Resolución Definitiva del PERTE VEC — Sección B 2024, que trae provincia y municipio fila a fila. El PRTR publica mucho más dinero y casi nada de geografía; lo que no se puede situar no entra.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "El punto del municipio en el Nomenclátor del IGN. No es la fábrica: el documento da el municipio por su nombre y no publica coordenada, así que `geo_precision` es `municipio` y no puede ser otra cosa."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["beneficiario", "cif", "codigo_plan", "instrumento",
+                         "comision_verificacion", "fase", "municipio", "provincia"],
+            "properties": {
+              "beneficiario": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La razón social tal como la escribe el listado, con su forma societaria. No la marca comercial."
+              },
+              "cif": {
+                "type": "string",
+                "pattern": "^([A-Z]\\d{8}|\\d{8}[A-Z])$",
+                "description": "El identificador fiscal que publica el propio listado. Es lo que permite seguir a un beneficiario entre convocatorias cuando la razón social cambia de forma."
+              },
+              "codigo_plan": {
+                "type": "string",
+                "pattern": "^VE2-\\d{6}-\\d{4}-\\d{4}$",
+                "description": "El código del plan de inversión. Es la llave del expediente y NO se repite: si dos registros lo comparten, una fila del documento se ha duplicado y otra se ha perdido — por eso lo comprueba validar.py."
+              },
+              "instrumento": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El documento que sostiene el registro, nombrado por lo que es. Obligatorio: sin documento no hay registro."
+              },
+              "comision_verificacion": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "description": "Fecha de la comisión de verificación en la que este expediente quedó como está. No es adorno: el documento es un registro por comisiones y un mismo plan puede aparecer en varias, revisado. Sin esta fecha, dos cifras del mismo expediente no se pueden ordenar en el tiempo."
+              },
+              "fase": { "type": "string" },
+              "municipio": { "type": "string", "minLength": 1 },
+              "provincia": { "type": "string", "minLength": 1 },
+              "presupuesto_financiable": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "El presupuesto que el listado declara financiable. Es lo que el solicitante propone gastar, no lo que se le da."
+              },
+              "gasto_subvencionable": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "La parte del presupuesto que la comisión considera subvencionable."
+              },
+              "subvencion_propuesta": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "PROPUESTA, y la palabra va dentro del nombre a propósito. El documento se titula «Propuesta de Resolución Definitiva» y aun así no concede: la resolución se notifica por el registro electrónico y no es públicamente citable (§6.1, enmienda 1.18)."
+              },
+              "prestamo_propuesto": {
+                "type": "number",
+                "minimum": 0,
+                "description": "El préstamo propuesto, que en muchos expedientes es cero. Se publica el cero porque significa algo —ayuda solo en subvención— y omitirlo lo haría indistinguible de un dato que falta."
+              },
+
+              "subvencion": {
+                "not": {},
+                "description": "PROHIBIDO por su nombre. Una propuesta no se convierte en concesión borrando un adjetivo, y este es exactamente el campo que alguien escribiría al copiar la cifra sin leer el título del documento."
+              },
+              "empleos": {
+                "not": {},
+                "description": "PROHIBIDO, igual que en `centros-datos` y `hidrogeno-produccion`. El empleo asociado a una ayuda es previsión del solicitante y nadie lo comprueba después."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -177,6 +177,14 @@ const ROTULOS = {
   potencia_mw: "Potencia (MW)",
   volumen_util_gwh: "Volumen útil (GWh)",
   produccion_t_anio: "Producción declarada (t/año)",
+  beneficiario: "Beneficiario",
+  cif: "Identificador fiscal",
+  codigo_plan: "Plan de inversión",
+  comision_verificacion: "Comisión de verificación",
+  presupuesto_financiable: "Presupuesto financiable (€)",
+  gasto_subvencionable: "Gasto subvencionable (€)",
+  subvencion_propuesta: "Subvención PROPUESTA (€)",
+  prestamo_propuesto: "Préstamo PROPUESTO (€)",
 };
 
 function rotularCampo(clave) {

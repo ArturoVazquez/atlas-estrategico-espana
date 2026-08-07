@@ -86,6 +86,13 @@ CASOS: dict[str, tuple[set[str], int]] = {
     # se puede escribir porque el CI lo desmiente. Este caso declara «hidraulica»
     # con la eólica al quíntuple.
     "invalido-10-dominante-que-no-cuadra.geojson":     ({"§10"},    1),
+
+    # La comprobación propia de `perte` (§10), y nace del mismo susto: su fuente
+    # es un registro por comisiones de verificación en el que un expediente
+    # REAPARECE revisado. Quedarse con las dos apariciones pone dos veces la
+    # misma fábrica en el mapa y suma su dinero dos veces. Este caso es el real —
+    # BeePlanet, de 447.269 a 626.177 € entre dos comisiones.
+    "invalido-10-plan-repetido.geojson":               ({"§10"},    1),
 }
 
 LINEA = re.compile(r"^\s+(BLOQUEA|AVISA)\s+(\S+)\s")

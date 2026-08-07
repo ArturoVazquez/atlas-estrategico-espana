@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.17.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.18.0 · **Fecha:** 2026-08-06
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -283,6 +283,27 @@ consultable con GDAL sin adaptadores. Las dos excepciones estructuradas son
 > circular es la primera. La que publica el atlas es la segunda, y la primera está
 > en su ficha, entera y con su «si».
 
+> **Una propuesta de resolución es documento oficial, pero no es el acto**
+> *(1.18)*. La tercera de esta familia, y la más fácil de olvidar porque la
+> palabra «definitiva» invita: el listado del PERTE VEC se titula «Propuesta de
+> Resolución **Definitiva**» y aun así **no concede nada** — la resolución se
+> notifica por el registro electrónico y no es públicamente citable.
+>
+> Sostiene un `confirmado` sobre **lo que ella afirma**: que se PROPONE conceder
+> tal importe a tal beneficiario. No sobre la concesión. Y como el atlas no puede
+> poner ese matiz en un asterisco que nadie lee, va **dentro del nombre de los
+> campos**: `subvencion_propuesta`, `prestamo_propuesto`. El esquema prohíbe
+> además `subvencion` a secas, para que la propuesta no se convierta en concesión
+> borrando un adjetivo.
+>
+> **Y hay documentos oficiales que no son una tabla aunque lo parezcan.** Ese
+> listado es un registro por comisiones de verificación en el que un mismo
+> expediente reaparece con cifras nuevas: **la aparición posterior revisa a la
+> anterior**. Contar filas da 61; los expedientes vigentes son 57. Cuando una
+> fuente publique sus propios totales, hay que **cuadrar contra ellos antes de
+> publicar** — es lo único que distingue haber entendido el documento de haberlo
+> leído por encima.
+
 ### 6.2 Verificación por campo
 
 Los campos **sensibles** llevan compañeros con sufijo reservado `__v` (estado) y
@@ -374,6 +395,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
 | `centros-datos` *(1.15)* | `fase` | `fase == "produccion"` (el centro presta servicio). Un campus **autorizado y sin construir no está en explotación**, por muchos gigavatios-hora que prometa su declaración ambiental. |
 | `hidrogeno-red` *(1.16)* | `fase` | `fase == "produccion"` (el tramo, la compresora o la caverna prestan servicio). Hoy **ninguno de los diez**: la red entera está en tramitación, y eso es lo que el filtro debe enseñar. |
+| `perte` *(1.18)* | — | **no aplica**. Un plan de inversión subvencionado no es una instalación: es dinero comprometido sobre un expediente. Preguntarle si está «en explotación» es preguntarle a la clase de objeto equivocada, como a una provincia o a un espacio marítimo. |
 | `hidrogeno-produccion` *(1.17)* | `fase` | `fase == "produccion"` (la planta electroliza hoy). Hoy **ninguna de las siete**. Ojo con la palabra: aquí `produccion` es la fase del expediente, no «producir hidrógeno» en abstracto — una planta con todos los permisos y sin construir sigue sin producir nada. |
 | `generacion-electrica-provincia` *(1.14)* | — | **no aplica**. El registro no es una instalación: es una **provincia**, y a un territorio no se le pregunta si está en explotación. Lo que generó no la pone «en explotación» ni la deja fuera: la pregunta es de otra clase de objeto. Devuelve `null`, y por eso el filtro no esconde ni una sola de las 52. |
 
@@ -668,6 +690,9 @@ vocabulario.
 - *minerales-derechos* *(1.12)*: `vigente` · `en_tramite` · `extinguido`
 - *electricidad-interconexiones* *(1.13)*: `en_servicio` · `en_construccion` · `proyectada`
 - *centros-datos* *(1.15)*: `en_servicio` · `autorizado` · `en_tramitacion`
+- *perte* *(1.18)*: `plan_inversion` — **un solo valor**: el documento no
+  clasifica los planes, y sacar una clase del título de cada proyecto sería
+  interpretar. Lo que distingue a unos de otros es el dinero, y ese va en campos
 - *hidrogeno-produccion* *(1.17)*: `electrolizador` — **un solo valor**, y es
   deliberado: las siete son la misma clase de cosa y la fuente las sirve en la
   misma capa. Lo que las distingue —en qué punto están— ya lo llevan `fase` y
@@ -1067,7 +1092,50 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > siempre previsión del promotor. Misma prohibición, y por el mismo motivo, que
 > ya lleva `centros-datos`.
 
-*(Capas futuras —PERTE acotado, agua embalsada— entran por §8 con su
+**perte** *(1.18)* (`actividad`, puntos, verificado): `beneficiario` (✔) ·
+`cif` (✔) · `codigo_plan` (✔) · `instrumento` (✔) · `comision_verificacion` (✔) ·
+`fase` · `municipio` (✔) · `provincia` (✔) · `presupuesto_financiable`
+(+`__v`,`__f`) · `gasto_subvencionable` (+`__v`,`__f`) · `subvencion_propuesta`
+(+`__v`,`__f`) · `prestamo_propuesto` (+`__v`,`__f`) · `claves[]`
+
+> **Qué acota «acotado».** La capa venía declarada desde la demo con esa palabra
+> y sin decidir qué recorta. Decide: **acota lo que un documento público sitúa**.
+> El PRTR publica mucho dinero y casi nada de geografía — la lista de los 100
+> mayores perceptores, obligatoria por el artículo 25 bis del Reglamento MRR, da
+> nombre, NIF e importe **y ninguna ubicación**; el mapa del PRTR de MITECO sí
+> sitúa, pero es un Power BI incrustado y no publica conjunto de datos alguno. El
+> listado del **PERTE VEC — Sección B, convocatoria 2024** sí trae **provincia y
+> municipio en cada fila**, y por eso es esta capa. Cuando otra convocatoria
+> publique el suyo con municipio, entra aquí como registros nuevos: **el id no se
+> renombra**.
+>
+> **El documento no es una tabla, y confundirlo cuesta cuatro registros falsos.**
+> Es un registro por **comisiones de verificación** —seis, de mayo a octubre de
+> 2025— y un expediente puede aparecer en más de una: **la posterior revisa a la
+> anterior**. Contar códigos da 61; los vigentes son **57**. Que esa lectura es la
+> buena lo demuestran los TOTALES del propio documento, que **cuadran al céntimo
+> en las seis comisiones** — las tres primeras imprimen acumulado y las tres
+> últimas el total de su comisión. La prueba fina: un expediente pasa de 447.269 €
+> a 626.177 € de subvención entre dos comisiones, y el acumulado sube exactamente
+> esos 178.908 €.
+>
+> **`comision_verificacion` no es adorno**: es la fecha de la comisión en la que
+> el expediente quedó como está. Sin ella, dos registros con cifras distintas del
+> mismo programa no se pueden ordenar en el tiempo.
+>
+> **La geometría es `municipio` y no puede ser otra cosa.** El documento da el
+> municipio por su nombre, sin coordenada, así que el punto sale del Nomenclátor
+> del IGN. Dos avisos que costaron encontrarse: pedir el municipio **por nombre**
+> a `administrativeunit` devuelve **0 para Valladolid, Elgoibar o Abadiño**, que
+> existen; y la consulta por recuadro **topa en silencio** (199 de 219 municipios
+> en Álava con `limit=3000`), así que hay que paginar y comprobar contra
+> `numberMatched` antes de dar nada por completo.
+>
+> **`subvencion` a secas está prohibida en el esquema**, igual que `empleos`. La
+> primera, para que una propuesta no se convierta en concesión borrando un
+> adjetivo (§6.1, enmienda 1.18); la segunda, por lo mismo que en `centros-datos`.
+
+*(Capas futuras —agua embalsada— entran por §8 con su
 apartado aquí y su esquema en `pipeline/esquemas/`.)*
 
 ---
@@ -1177,6 +1245,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.18.0** | 2026-08-06 | **Aditiva.** Nace `perte` (§10), y con ella se decide qué acota la palabra «acotado» que la capa arrastraba desde la demo: **acota lo que un documento público sitúa**. Se descartan por el camino la lista de los 100 mayores perceptores del PRTR (obligatoria por el art. 25 bis del Reglamento MRR, y **sin ubicación**) y el mapa del PRTR de MITECO (un Power BI incrustado: no hay conjunto de datos que citar). Queda el listado de la Propuesta de Resolución Definitiva del **PERTE VEC — Sección B 2024**, que trae **provincia y municipio fila a fila**. §6.1 gana la tercera enmienda de su familia: **una propuesta de resolución es documento oficial y no es el acto** — sostiene un confirmado sobre lo que PROPONE, no sobre la concesión, y el matiz va dentro del nombre de los campos (`subvencion_propuesta`) porque un asterisco no lo lee nadie. Con un aviso que no es de esta capa sino de cualquiera: **hay documentos oficiales que no son una tabla aunque lo parezcan**. Este es un registro por comisiones de verificación donde una aparición posterior REVISA a la anterior; contar filas da 61 y los expedientes vigentes son 57. Lo demuestran sus propios TOTALES, que cuadran al céntimo en las seis comisiones. §6.5 le da su fila: `activo` **no aplica**, porque un plan de inversión es dinero comprometido, no una instalación. §9, un vocabulario de un solo valor (`plan_inversion`). |
 | **1.17.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-produccion` (§10): las siete plantas de electrólisis españolas de la lista de la Unión — **siete, no cinco**, porque dos de los cinco proyectos nombran y sitúan dos plantas cada uno. §6.1 gana la consecuencia práctica de la enmienda 1.16, y esta cambia **cómo se redacta una ficha**, no si la fuente vale: **un registro obliga a publicar, no a certificar**. Cuando quien declara es una empresa, su texto trae tres cosas mezcladas —el proyecto, la ambición y el argumento de venta— y solo la primera llega a un campo numérico; la ambición va a `claves` **verbatim y con su condicional intacto**, y la evaluación promocional no se publica. El caso que lo obligó: el valle asturiano declara **1 GW de ambición y 150 MW de proyecto en el mismo párrafo**, y la cifra que circula por ahí es la primera. §9 estrena un vocabulario de **un solo valor** (`electrolizador`), como ya hacía `recurso-eolico`. §6.5 le da su fila, con el aviso de que aquí `fase: produccion` es el peldaño del expediente y no «producir hidrógeno» en abstracto. **No nace ninguna regla `R*`**: las que hacen falta ya existen, y añadir una por no romper la racha sería exactamente la prosa disfrazada de garantía que §8 prohíbe. |
 | **1.16.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-red` (§10) —la capa que se llamaba `h2med` y no podía seguir llamándose así: de sus 3.268 km, **2.634 son la red troncal española**, que no es el H2Med—. El perímetro no lo elige el atlas: lo fija el Acuerdo del Consejo de Ministros de 30-07-2024 (BOE-A-2024-19047), que habilita a Enagás para **cinco** proyectos, dos de ellos —las cavernas de sal 9.24.1 y 9.24.2— que el relato público del H2Med **no menciona nunca**. §6.1 gana el reverso de la enmienda 1.15: si aquella dijo que el comunicado de un gobierno no es primario, esta dice que **un registro que una norma OBLIGA a publicar sí lo es**, aunque viva en una web — la plataforma de transparencia PCI-PMI existe por el **artículo 23 del Reglamento (UE) 2022/869**, que enumera de la a) a la g) lo que debe contener, empezando por la información geográfica. Con dos cautelas que vienen con ella: la obligación **no alcanza a lo que se sirve junto** (la capa PLATTS del mismo visor es de S&P Global y no entra), y un registro **puede publicar y advertir a la vez**. Esa advertencia —«la representación GIS no prejuzga y puede no coincidir con el trazado final»— obliga a estrenar un valor de `geo_precision`: **`proyectada`** (§5, §6.6, §9), dentro de **R9**. Ninguno de los cinco anteriores servía, y por el mismo motivo que hizo nacer `generalizada` en la 1.14: `ilustrativa` habría hecho mentir a la ficha —«trazado a mano alzada»— sobre cartografía que nadie dibujó a mano. La distinción que conserva es de **tiempo**, no de detalle: las otras cuatro dicen cuánto se afina un contorno; `proyectada` dice que **el terreno todavía no puede desmentirlo**. Y nace **R10**: en una capa con lineales, `longitud_km` cuadra con su propia geometría al 15 %. Sale de una trampa real — el servicio publica un `SHAPE.LEN` en metros de **Web Mercator**, inflado por la latitud hasta un 38 %, con el que BarMar «mide» 518 km en vez de 382. La regla no persigue un decimal: persigue un cambio de unidad o de proyección. |
 | **1.15.0** | 2026-08-06 | **Aditiva.** Nace `centros-datos` (§10) con una regla de entrada estrecha y explícita: **entra el centro que un acto administrativo nombra**, y nada más. La casilla obligó a decidirlo porque **España no tiene registro público de centros de datos** —la base europea del art. 12 de la Directiva 2023/1791 se publica agregada por Estado miembro, MITECO no lleva censo y las cifras de mercado son de la patronal—. §6.1 gana la enmienda que faltaba: **una nota de prensa de una administración no es `primaria`**; lo primario es el acto, no su anuncio. La escribió el caso catalán, con sus «26 proyectos y 2.000 MW» sin un solo expediente detrás: hasta ahora el atlas solo había tenido que rechazar fuentes privadas, y la trampa pública es peor porque parece oficial. §10 deja además fuera a los tres solicitantes de centros de datos que el concurso de capacidad de demanda **sí nombra** —CPD4GREEN, Benbros DC y ACS DC Infra, los tres excluidos—: esa resolución define una solicitud en un nudo, no un centro en un sitio, que es el límite de §6.6 aplicado por segunda vez. §6.5 y §9 dan su fila y sus tres categorías. |

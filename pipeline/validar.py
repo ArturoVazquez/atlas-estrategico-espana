@@ -618,6 +618,38 @@ def comprobar_generacion(doc: dict) -> list[Hallazgo]:
     return out
 
 
+def comprobar_perte(doc: dict) -> list[Hallazgo]:
+    """§10 · El `codigo_plan` no se repite.
+
+    Es la comprobación equivalente a la de la provincia duplicada en la coropleta,
+    y nace del mismo susto. El listado del Ministerio es un registro por comisiones
+    de verificación en el que un mismo expediente REAPARECE revisado, y al leerlo
+    es fácil quedarse con las dos apariciones en vez de con la última. Si eso
+    pasa, el mapa muestra dos veces la misma fábrica con cifras distintas y suma
+    dos veces su dinero — que es la avería silenciosa de esta capa.
+
+    El número exacto de registros NO se fija en el esquema: eso haría imposible
+    una fixture de un solo registro, y las pruebas exigen un incumplimiento por
+    fichero.
+    """
+    out = []
+    vistos: dict[str, str] = {}
+    for f in doc.get("features", []):
+        props = f.get("properties") or {}
+        codigo = props.get("codigo_plan")
+        if not codigo:
+            continue  # ya lo denuncia el esquema (§7.1)
+        donde = f.get("id", "(sin id)")
+        if codigo in vistos:
+            out.append(Hallazgo(
+                BLOQUEA, "§10", donde,
+                f"«{codigo}» ya lo declara {vistos[codigo]}. En el listado del PERTE un "
+                f"expediente reaparece cuando una comisión posterior lo REVISA: vale la "
+                f"última, no las dos."))
+        vistos[codigo] = donde
+    return out
+
+
 def comprobar_r8(docs: dict[str, dict]) -> list[Hallazgo]:
     """§6.5 · R8 — la única regla que compara DOS capas entre sí.
 
@@ -719,6 +751,7 @@ def validar_capa(doc: dict, ruta: Path, manifiesto: dict, voc: dict) -> list[Hal
         # su `id`, y no como regla R en §6.4. Del mismo rango que las
         # prohibiciones `"not": {}` de los esquemas.
         *(comprobar_generacion(doc) if capa == "generacion-electrica-provincia" else []),
+        *(comprobar_perte(doc) if capa == "perte" else []),
     ]
 
 
