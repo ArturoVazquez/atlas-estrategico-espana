@@ -1,0 +1,1342 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "idioma",
+    "schema_version": "1.19.0",
+    "verificado_a": "2026-08-07"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "idioma:espana",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6853,
+          40.40197
+        ]
+      },
+      "properties": {
+        "slug": "espana",
+        "nombre": "España",
+        "categoria": "estado",
+        "descripcion": "La Constitución no llama «español» a la lengua oficial: la llama «castellano», y la sitúa entre «las lenguas españolas» en vez de por encima de ellas. La cooficialidad no la concede la Constitución directamente, sino el Estatuto de cada Comunidad.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Madrid en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "cooficial_acotada",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Española, artículo 3",
+        "norma_fecha": "1978-12-29",
+        "norma_cita": "El castellano es la lengua española oficial del Estado. Todos los españoles tienen el deber de conocerla y el derecho a usarla. […] Las demás lenguas españolas serán también oficiales en las respectivas Comunidades Autónomas de acuerdo con sus Estatutos.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "España",
+        "claves": [
+          {
+            "k": "El límite de la cooficialidad",
+            "v": "Por Estatuto de autonomía: «Las demás lenguas españolas serán también oficiales en las respectivas Comunidades Autónomas de acuerdo con sus Estatutos» (art. 3.2). La Constitución no enumera cuáles son ni dónde.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Española (texto consolidado, Agencia Estatal Boletín Oficial del Estado)",
+            "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229",
+            "fecha": "1978-12-29",
+            "archivo": "fuentes/2026-08-07_boe_constitucion-espanola-consolidada.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:mexico",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -99.13293,
+          19.44439
+        ]
+      },
+      "properties": {
+        "slug": "mexico",
+        "nombre": "México",
+        "categoria": "estado",
+        "descripcion": "México no declara idioma oficial en su Constitución. El español es lengua NACIONAL, a la par que las indígenas y «con la misma validez», por una ley ordinaria de 2003. Es el caso que más desmiente al mapa de un solo color: el país con más hispanohablantes del mundo no tiene el español como lengua oficial.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Ciudad de México en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "nacional_sin_oficialidad",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Ley General de Derechos Lingüísticos de los Pueblos Indígenas, artículo 4",
+        "norma_fecha": "2003-03-13",
+        "norma_cita": "Las lenguas indígenas que se reconozcan en los términos de la presente Ley y el español son lenguas nacionales por su origen histórico y tendrán la misma validez.",
+        "nombre_en_la_norma": "español",
+        "pais": "México",
+        "claves": [
+          {
+            "k": "La ausencia, comprobada en el texto entero",
+            "v": "Sobre las 414 páginas del texto consolidado de la Constitución Política de los Estados Unidos Mexicanos hay 14 menciones a lengua, idioma, castellano o español, y NINGUNA declara el idioma del Estado: son lenguas indígenas, lenguas extranjeras en el currículo, la orden de traducir decretos —y varias son el apellido «Castellanos» de un senador.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Ley General de Derechos Lingüísticos de los Pueblos Indígenas (texto vigente, Cámara de Diputados)",
+            "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGDLPI.pdf",
+            "fecha": "2003-03-13",
+            "archivo": "fuentes/2026-08-07_mex_ley-general-derechos-linguisticos.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:colombia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.08529,
+          4.59837
+        ]
+      },
+      "properties": {
+        "slug": "colombia",
+        "nombre": "Colombia",
+        "categoria": "estado",
+        "descripcion": "Oficialidad del castellano en todo el país, con las lenguas de los grupos étnicos oficiales en sus propios territorios.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Bogotá en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "cooficial_acotada",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política de Colombia, artículo 10",
+        "norma_fecha": "1991-07-04",
+        "norma_cita": "El castellano es el idioma oficial de Colombia. Las lenguas y dialectos de los grupos étnicos son también oficiales en sus territorios. La enseñanza que se imparta en las comunidades con tradiciones lingüísticas propias será bilingüe.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "Colombia",
+        "claves": [
+          {
+            "k": "El límite de la cooficialidad",
+            "v": "El territorio del grupo étnico: «son también oficiales en sus territorios». La Constitución no los enumera.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política de 1991 (Secretaría del Senado de la República) — captura paginada, artículos 1 a 32",
+            "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+            "fecha": "1991-07-04",
+            "archivo": "fuentes/2026-08-07_senado-co_constitucion-1991-arts-1-32.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:argentina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.43251,
+          -34.61071
+        ]
+      },
+      "properties": {
+        "slug": "argentina",
+        "nombre": "Argentina",
+        "categoria": "estado",
+        "descripcion": "La Constitución argentina no nombra la lengua del Estado en ningún artículo. El español es la lengua de facto, sin norma fundamental que lo declare.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Buenos Aires en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "sin_norma_expresa",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la Nación Argentina (texto oficial ordenado por la Ley 24.430)",
+        "norma_fecha": "1994-08-22",
+        "norma_cita": "Ninguna. Sobre los 80.722 caracteres del texto oficial no hay una sola mención a lengua, idioma, castellano ni español.",
+        "nombre_en_la_norma": "no lo nombra",
+        "pais": "Argentina",
+        "claves": [
+          {
+            "k": "Cómo se comprobó la ausencia",
+            "v": "Con control positivo, que es lo que separa una ausencia real de un fallo de codificación: el fichero viene en ISO-8859-1 y leerlo como UTF-8 rompe la ñ de «español» y fabrica un cero falso. Leído bien trae 47 ñ y 606 ó, y encuentra «Nación» 132 veces y «Constitución» 43 — y aun así, cero menciones.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la Nación Argentina — Ley 24.430, texto oficial (InfoLeg, Ministerio de Justicia)",
+            "url": "http://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/804/norma.htm",
+            "fecha": "1994-08-22",
+            "archivo": "fuentes/2026-08-07_infoleg_constitucion-nacion-argentina-ley-24430.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:chile",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.6505,
+          -33.4402
+        ]
+      },
+      "properties": {
+        "slug": "chile",
+        "nombre": "Chile",
+        "categoria": "estado",
+        "descripcion": "La Constitución chilena no nombra la lengua del Estado. Los dos intentos de sustituirla (2022 y 2023), que sí incluían disposiciones plurilingües, fueron rechazados en referéndum.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Santiago en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "sin_norma_expresa",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política de la República de Chile",
+        "norma_fecha": "1980-10-21",
+        "norma_cita": "Ninguna. Sobre los 304.553 caracteres del texto vigente no hay una sola mención a lengua, idioma, castellano ni español.",
+        "nombre_en_la_norma": "no lo nombra",
+        "pais": "Chile",
+        "claves": [
+          {
+            "k": "Cómo se comprobó la ausencia",
+            "v": "Control positivo sobre el texto vigente: 221 ñ, 1.821 ó, «Constitución» 124 veces y «República» 257 — y cero menciones a la lengua.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Y por qué NO vale el PDF de la Cámara de Diputados",
+            "v": "El que sirve `camara.cl` da la misma respuesta y está fechado el 24 de julio de 2003 en sus metadatos, con la numeración anterior a la reforma de 2005: llega al artículo 119 y la vigente tiene 143. Un negativo se puede fabricar leyendo mal el texto o leyendo bien un texto viejo.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política de la República de Chile (texto consolidado, Gobierno Digital de Chile) — edición de enero de 2020, con reformas citadas hasta la Ley 21.200",
+            "url": "https://cdn.digital.gob.cl/filer_public/ae/40/ae401a45-7e46-4ab7-b9d3-1f7cc5afa9d6/constitucion-politica-de-la-republica.pdf",
+            "fecha": "1980-10-21",
+            "archivo": "fuentes/2026-08-07_gobdigital-cl_constitucion-politica-de-chile.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:uruguay",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.18682,
+          -34.90538
+        ]
+      },
+      "properties": {
+        "slug": "uruguay",
+        "nombre": "Uruguay",
+        "categoria": "estado",
+        "descripcion": "La Constitución uruguaya no nombra la lengua del Estado en ninguno de sus 332 artículos.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Montevideo en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "sin_norma_expresa",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la República Oriental del Uruguay",
+        "norma_fecha": "1967-02-02",
+        "norma_cita": "Ninguna. Sobre los 204.012 caracteres del texto y sus 332 artículos no hay una sola mención a lengua, idioma, castellano ni español.",
+        "nombre_en_la_norma": "no lo nombra",
+        "pais": "Uruguay",
+        "claves": [
+          {
+            "k": "Cómo se comprobó la ausencia",
+            "v": "Control positivo: 127 ñ, «República» 220 veces, y la secuencia completa de artículos hasta el 332 — que es la constitución entera, no un extracto. Cero menciones.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la República Oriental del Uruguay (IMPO, Dirección Nacional de Impresiones y Publicaciones Oficiales)",
+            "url": "https://www.impo.com.uy/bases/constitucion/1967-1967",
+            "fecha": "1967-02-02",
+            "archivo": "fuentes/2026-08-07_impo_constitucion-uruguay-1967.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:peru",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.05201,
+          -12.04607
+        ]
+      },
+      "properties": {
+        "slug": "peru",
+        "nombre": "Perú",
+        "categoria": "estado",
+        "descripcion": "Oficialidad del castellano en todo el país; la de las lenguas originarias está condicionada a que predominen en la zona.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Lima en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "cooficial_acotada",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política del Perú, artículo 48",
+        "norma_fecha": "1993-12-29",
+        "norma_cita": "Son idiomas oficiales el castellano y, en las zonas donde predominen, también lo son el quechua, el aimara y las demás lenguas aborígenes, según la ley.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "Perú",
+        "claves": [
+          {
+            "k": "El límite de la cooficialidad",
+            "v": "La predominancia territorial: «en las zonas donde predominen». No es una lista cerrada —«las demás lenguas aborígenes»— y su desarrollo se remite a la ley.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "La cita, contrastada contra dos ediciones",
+            "v": "Idéntica palabra por palabra en la edición del Tribunal Constitucional (2021) y en una edición anotada con concordancias de 2023.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política del Perú de 1993 (Tribunal Constitucional del Perú)",
+            "url": "https://www.tc.gob.pe/wp-content/uploads/2021/05/Constitucion-Politica-del-Peru-1993.pdf",
+            "fecha": "1993-12-29",
+            "archivo": "fuentes/2026-08-07_tc-pe_constitucion-politica-del-peru-1993.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:bolivia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.15193,
+          -16.49603
+        ]
+      },
+      "properties": {
+        "slug": "bolivia",
+        "nombre": "Bolivia",
+        "categoria": "estado",
+        "descripcion": "El caso contrario exacto de México: Bolivia declara oficiales el castellano y treinta y seis lenguas indígenas, enumeradas una a una, en TODO el Estado y sin condición territorial.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de La Paz en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "cooficial_estatal",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política del Estado, artículo 5.I",
+        "norma_fecha": "2009-02-07",
+        "norma_cita": "Son idiomas oficiales del Estado el castellano y todos los idiomas de las naciones y pueblos indígena originario campesinos, que son el aymara, araona, baure, bésiro, canichana, cavineño, cayubaba, chácobo, chimán, ese ejja, guaraní, guarasu'we, guarayu, itonama, leco, machajuyai-kallawaya, machineri, maropa, mojeño-trinitario […].",
+        "nombre_en_la_norma": "castellano",
+        "pais": "Bolivia",
+        "claves": [
+          {
+            "k": "Sin condición de ningún tipo",
+            "v": "A diferencia de Perú o Colombia, la oficialidad no está acotada a la zona donde la lengua predomine: rige en todo el Estado para las treinta y siete.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política del Estado Plurinacional de Bolivia (Gaceta Oficial de Bolivia)",
+            "url": "http://gacetaoficialdebolivia.gob.bo/app/webroot/archivos/CONSTITUCION.pdf",
+            "fecha": "2009-02-07",
+            "archivo": "fuentes/2026-08-07_gaceta-bo_constitucion-politica-del-estado.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:ecuador",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.502,
+          -0.21304
+        ]
+      },
+      "properties": {
+        "slug": "ecuador",
+        "nombre": "Ecuador",
+        "categoria": "estado",
+        "descripcion": "Ecuador inventa una categoría intermedia que no existe en ningún otro texto: los «idiomas oficiales de relación intercultural», entre la oficialidad plena y el mero reconocimiento.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Quito en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "cooficial_acotada",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la República del Ecuador, artículo 2",
+        "norma_fecha": "2008-10-20",
+        "norma_cita": "El castellano es el idioma oficial del Ecuador; el castellano, el kichwa y el shuar son idiomas oficiales de relación intercultural. Los demás idiomas ancestrales son de uso oficial para los pueblos indígenas en las zonas donde habitan.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "Ecuador",
+        "claves": [
+          {
+            "k": "El límite de la cooficialidad",
+            "v": "Una FUNCIÓN, no un territorio: el kichwa y el shuar son oficiales «de relación intercultural» en todo el país. Los demás idiomas ancestrales sí llevan límite territorial: «en las zonas donde habitan».",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la República del Ecuador, texto reformado (Asamblea Nacional del Ecuador)",
+            "url": "https://www.asambleanacional.gob.ec/es/contenido/constitucion-de-la-republica-del-ecuador",
+            "fecha": "2008-10-20",
+            "archivo": "fuentes/2026-08-07_asamblea-ec_constitucion-republica-ecuador-reformada.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:venezuela",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.91898,
+          10.50294
+        ]
+      },
+      "properties": {
+        "slug": "venezuela",
+        "nombre": "Venezuela",
+        "categoria": "estado",
+        "descripcion": "Oficialidad del castellano, con los idiomas indígenas de uso oficial para los pueblos indígenas.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Caracas en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "cooficial_acotada",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la República Bolivariana de Venezuela, artículo 9",
+        "norma_fecha": "1999-12-30",
+        "norma_cita": "El idioma oficial es el castellano. Los idiomas indígenas también son de uso oficial para los pueblos indígenas y deben ser respetados en todo el territorio de la República, por constituir patrimonio cultural de la Nación y de la humanidad.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "Venezuela",
+        "claves": [
+          {
+            "k": "El límite de la cooficialidad",
+            "v": "Un PUEBLO, no un territorio: «de uso oficial para los pueblos indígenas», y a la vez «respetados en todo el territorio de la República». Es el único de los seis casos acotados donde el límite es personal y no geográfico.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "La edición archivada, declarada",
+            "v": "El PDF que sirve la Asamblea Nacional está creado en 2005 y no incorpora la enmienda de 2009. El artículo 9 no ha sido enmendado nunca, así que la cita es válida; la edición es incompleta como consolidado y se dice.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la República Bolivariana de Venezuela (Asamblea Nacional) — edición de 2005, anterior a la enmienda de 2009",
+            "url": "https://www.asambleanacional.gob.ve/",
+            "fecha": "1999-12-30",
+            "archivo": "fuentes/2026-08-07_asamblea-ve_constitucion-republica-bolivariana-venezuela.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:paraguay",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.62583,
+          -25.29067
+        ]
+      },
+      "properties": {
+        "slug": "paraguay",
+        "nombre": "Paraguay",
+        "categoria": "estado",
+        "descripcion": "El único Estado que se declara a sí mismo bilingüe, y el único donde la lengua cooficial es indígena y hablada por la mayoría de la población.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Asunción en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "bilingue",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Nacional del Paraguay, artículo 140",
+        "norma_fecha": "1992-06-20",
+        "norma_cita": "El Paraguay es un país pluricultural y bilingüe. Son idiomas oficiales el castellano y el guaraní. La ley establecerá las modalidades de utilización de uno y otro. Las lenguas indígenas, así como las de otras minorías, forman parte del patrimonio cultural de la Nación.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "Paraguay",
+        "claves": [
+          {
+            "k": "Sin límite territorial ni funcional",
+            "v": "El castellano y el guaraní son oficiales en pie de igualdad y en todo el territorio: no hay «donde predomine» ni «para los pueblos». Lo que la ley regula son las modalidades de uso, no el alcance.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Y llega a la escuela",
+            "v": "El artículo 77 ordena que «la enseñanza en los comienzos del proceso escolar se realizará en la lengua oficial materna del educando».",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Nacional de la República del Paraguay (Biblioteca y Archivo Central del Congreso Nacional)",
+            "url": "https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional",
+            "fecha": "1992-06-20",
+            "archivo": "fuentes/2026-08-07_bacn-py_constitucion-nacional-1992.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:costa-rica",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.07881,
+          9.93037
+        ]
+      },
+      "properties": {
+        "slug": "costa-rica",
+        "nombre": "Costa Rica",
+        "categoria": "estado",
+        "descripcion": "Oficialidad única. Es uno de los textos que llama «español» a la lengua, frente al «castellano» de la Constitución Española.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de San José en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política de Costa Rica, artículo 76",
+        "norma_fecha": "1949-11-07",
+        "norma_cita": "El español es el idioma oficial de la Nación. No obstante, el Estado velará por el mantenimiento y cultivo de las lenguas indígenas nacionales.",
+        "nombre_en_la_norma": "español",
+        "pais": "Costa Rica",
+        "claves": [
+          {
+            "k": "El artículo es una adición posterior",
+            "v": "El propio texto lo anota: el artículo 76 fue adicionado por el artículo 2 de la Ley n.º 5703. La Constitución de 1949 no nombraba la lengua.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política de la República de Costa Rica (Tribunal Supremo de Elecciones) — edición de mayo de 2025",
+            "url": "https://www.tse.go.cr/pdf/normativa/constitucion.pdf",
+            "fecha": "1949-11-07",
+            "archivo": "fuentes/2026-08-07_tse-cr_constitucion-politica-costa-rica.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:guatemala",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.52891,
+          14.62308
+        ]
+      },
+      "properties": {
+        "slug": "guatemala",
+        "nombre": "Guatemala",
+        "categoria": "estado",
+        "descripcion": "Oficialidad única del español; las lenguas vernáculas son patrimonio cultural, no lenguas oficiales.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Ciudad de Guatemala en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política de la República de Guatemala, artículo 143",
+        "norma_fecha": "1985-05-31",
+        "norma_cita": "Idioma oficial. El idioma oficial de Guatemala, es el español. Las lenguas vernáculas, forman parte del patrimonio cultural de la Nación.",
+        "nombre_en_la_norma": "español",
+        "pais": "Guatemala",
+        "claves": [
+          {
+            "k": "Patrimonio no es oficialidad",
+            "v": "La Corte de Constitucionalidad lo subraya en la edición anotada: el artículo «otorga la calidad de oficial al idioma español, pero reconocen las lenguas vernáculas, porque forman parte del patrimonio cultural de la nación».",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política de la República de Guatemala, edición anotada con jurisprudencia de la Corte de Constitucionalidad (Instituto de la Defensa Pública Penal)",
+            "url": "https://www.idpp.gob.gt/",
+            "fecha": "1985-05-31",
+            "archivo": "fuentes/2026-08-07_idpp-gt_constitucion-politica-guatemala-anotada.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:el-salvador",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.21558,
+          13.70328
+        ]
+      },
+      "properties": {
+        "slug": "el-salvador",
+        "nombre": "El Salvador",
+        "categoria": "estado",
+        "descripcion": "Oficialidad única, y el único de Centroamérica que dice «castellano» en vez de «español».",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de San Salvador en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la República de El Salvador, artículo 62",
+        "norma_fecha": "1983-12-15",
+        "norma_cita": "El idioma oficial de El Salvador es el castellano. El gobierno está obligado a velar por su conservación y enseñanza. Las lenguas autóctonas que se hablan en el territorio nacional forman parte del patrimonio cultural y serán objeto de preservación, difusión y respeto.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "El Salvador",
+        "claves": [
+          {
+            "k": "La edición archivada, declarada",
+            "v": "El PDF de la Asamblea Legislativa es de 2014. El artículo 62 no ha sido reformado desde entonces.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la República de El Salvador (Asamblea Legislativa)",
+            "url": "https://www.asamblea.gob.sv/",
+            "fecha": "1983-12-15",
+            "archivo": "fuentes/2026-08-07_asamblea-sv_constitucion-el-salvador.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:honduras",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.21948,
+          14.10399
+        ]
+      },
+      "properties": {
+        "slug": "honduras",
+        "nombre": "Honduras",
+        "categoria": "estado",
+        "descripcion": "Oficialidad única. Es el único de los veinte textos que le encarga al Estado proteger la «pureza» del idioma.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Tegucigalpa en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la República de Honduras, artículo 6",
+        "norma_fecha": "1982-01-20",
+        "norma_cita": "El idioma oficial de Honduras es el español. El Estado protegerá su pureza e incrementará su enseñanza.",
+        "nombre_en_la_norma": "español",
+        "pais": "Honduras",
+        "claves": [
+          {
+            "k": "«Pureza», y solo aquí",
+            "v": "Ningún otro de los veinte textos archivados usa esa palabra. No cambia el estatuto, pero es exactamente la clase de matiz que un mapa de un solo color destruye.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la República de Honduras (Poder Judicial de Honduras, CEDIJ) — edición actualizada a 2025",
+            "url": "https://www.poderjudicial.gob.hn/",
+            "fecha": "1982-01-20",
+            "archivo": "fuentes/2026-08-07_pj-hn_constitucion-honduras-actualizada-2025.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:nicaragua",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -86.27044,
+          12.15496
+        ]
+      },
+      "properties": {
+        "slug": "nicaragua",
+        "nombre": "Nicaragua",
+        "categoria": "estado",
+        "descripcion": "Oficialidad del español, con seis lenguas de uso oficial acotadas a una región nombrada. Rompe el eje que valía para Bolivia, Perú, Ecuador y Paraguay: entre ellas está el Inglés Creole, que no es indígena.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Managua en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "cooficial_acotada",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política de la República de Nicaragua, artículo 11",
+        "norma_fecha": "2025-02-18",
+        "norma_cita": "El español es el idioma oficial del Estado y también son consideradas lenguas de uso comunitario y oficial en la Costa Caribe nicaragüense, el Inglés Creole, el Miskitu, el Mayagna, el Ulwa, el Garífuna y el Rama.",
+        "nombre_en_la_norma": "español",
+        "pais": "Nicaragua",
+        "claves": [
+          {
+            "k": "El límite de la cooficialidad",
+            "v": "Una REGIÓN nombrada: «en la Costa Caribe nicaragüense». Es el único de los seis casos acotados donde la constitución nombra el territorio.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "La captura, y su defecto",
+            "v": "La infraestructura oficial nicaragüense está caída —el digesto de la Asamblea no conecta y el Poder Judicial falla el handshake TLS— y la única copia accesible se sirve desde un dominio del Estado CON EL CERTIFICADO CADUCADO. Se capturó saltando la verificación, y se dice. Lo que sostiene la cita es que el documento se identifica solo: «LA GACETA DIARIO OFICIAL, Managua, Martes 18 de Febrero de 2025», Ley n.º 1234 de Reforma Parcial, número 32.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política de la República de Nicaragua, texto íntegro tras la reforma de 2025 — La Gaceta, Diario Oficial n.º 32",
+            "url": "https://cam.gob.ni/",
+            "fecha": "2025-02-18",
+            "archivo": "fuentes/2026-08-07_gaceta-ni_constitucion-nicaragua-reforma-2025.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:panama",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.53498,
+          8.96996
+        ]
+      },
+      "properties": {
+        "slug": "panama",
+        "nombre": "Panamá",
+        "categoria": "estado",
+        "descripcion": "La declaración más corta de las veinte: una sola frase, sin matices ni encargos al Estado.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Ciudad de Panamá en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política de la República de Panamá, artículo 7",
+        "norma_fecha": "1972-10-11",
+        "norma_cita": "El español es el idioma oficial de la República.",
+        "nombre_en_la_norma": "español",
+        "pais": "Panamá",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política de la República de Panamá, texto editado por la Asamblea Nacional (Tribunal Electoral)",
+            "url": "https://constitucion.te.gob.pa/",
+            "fecha": "1972-10-11",
+            "archivo": "fuentes/2026-08-07_te-pa_constitucion-panama.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:cuba",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.36613,
+          23.1339
+        ]
+      },
+      "properties": {
+        "slug": "cuba",
+        "nombre": "Cuba",
+        "categoria": "estado",
+        "descripcion": "Oficialidad única, declarada en el mismo artículo que fija el nombre del Estado y su capital: la lengua como atributo de identidad estatal.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de La Habana en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la República de Cuba, artículo 2",
+        "norma_fecha": "2019-04-10",
+        "norma_cita": "El nombre del Estado cubano es República de Cuba, el idioma oficial es el español y su capital es La Habana.",
+        "nombre_en_la_norma": "español",
+        "pais": "Cuba",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la República de Cuba — Gaceta Oficial n.º 5 Extraordinaria de 10 de abril de 2019 (Ministerio de Justicia)",
+            "url": "https://www.gacetaoficial.gob.cu/es/constitucion-de-la-republica-de-cuba",
+            "fecha": "2019-04-10",
+            "archivo": "fuentes/2026-08-07_gaceta-cu_constitucion-cuba-2019.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:republica-dominicana",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.92974,
+          18.47075
+        ]
+      },
+      "properties": {
+        "slug": "republica-dominicana",
+        "nombre": "República Dominicana",
+        "categoria": "estado",
+        "descripcion": "Oficialidad única, en un capítulo que la Constitución titula «Del idioma oficial y los símbolos patrios».",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Santo Domingo en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la República Dominicana, artículo 29",
+        "norma_fecha": "2015-06-13",
+        "norma_cita": "Idioma oficial. El idioma oficial de la República Dominicana es el español.",
+        "nombre_en_la_norma": "español",
+        "pais": "República Dominicana",
+        "claves": [
+          {
+            "k": "La edición archivada, declarada",
+            "v": "La edición que sirve la Presidencia es la de 2015 (Gaceta Oficial 10805) y no incorpora la reforma de octubre de 2024, que no tocó el capítulo VII.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la República Dominicana (Presidencia de la República) — Gaceta Oficial n.º 10805",
+            "url": "https://presidencia.gob.do/",
+            "fecha": "2015-06-13",
+            "archivo": "fuentes/2026-08-07_presidencia-do_constitucion-dominicana-2015.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:guinea-ecuatorial",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.78328,
+          3.75001
+        ]
+      },
+      "properties": {
+        "slug": "guinea-ecuatorial",
+        "nombre": "Guinea Ecuatorial",
+        "categoria": "estado",
+        "descripcion": "El único Estado africano de la lista, y el único cuya norma fundamental deja la lista de lenguas oficiales ABIERTA: nombra dos y delega el resto en la ley ordinaria.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Malabo en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_con_remision",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Ley Fundamental de Guinea Ecuatorial, artículo 4.1",
+        "norma_fecha": "2012-02-16",
+        "norma_cita": "Las Lenguas oficiales de la República de Guinea Ecuatorial son el Español, el Francés y las que la Ley determine. Se reconocen las Lenguas Autóctonas como integrantes de la cultura nacional.",
+        "nombre_en_la_norma": "español",
+        "pais": "Guinea Ecuatorial",
+        "claves": [
+          {
+            "k": "Lo que este artículo NO dice",
+            "v": "No nombra el portugués. La frase que circula en todas partes —«las lenguas oficiales son español, francés y portugués»— no está en la Ley Fundamental: el portugués es oficial por ley ordinaria de 2007, no por norma fundamental. Es una diferencia de RANGO, y se conserva.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Una lista constitucionalmente abierta",
+            "v": "«y las que la Ley determine». Ninguno de los otros diecinueve Estados deja abierta la enumeración.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Ley Fundamental de Guinea Ecuatorial — Ley núm. 1/2012, de 16 de febrero (Boletín Oficial del Estado de Guinea Ecuatorial)",
+            "url": "https://boe.gob.gq/files/LEY%20FUNDAMENTAL.pdf",
+            "fecha": "2012-02-16",
+            "archivo": "fuentes/2026-08-07_boe-gq_ley-fundamental-guinea-ecuatorial.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:onu",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.99572,
+          40.72156
+        ]
+      },
+      "properties": {
+        "slug": "onu",
+        "nombre": "Organización de las Naciones Unidas",
+        "categoria": "organizacion",
+        "descripcion": "El español es una de las seis lenguas oficiales y de trabajo de la Asamblea General, y lo es por su propio Reglamento: oficial e idioma de trabajo a la vez, que en el sistema de la ONU son dos cosas distintas.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Nueva York en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "lengua_de_trabajo",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Reglamento de la Asamblea General de las Naciones Unidas, artículo 51",
+        "norma_fecha": "1947-11-17",
+        "norma_cita": "El árabe, el chino, el español, el francés, el inglés y el ruso serán a la vez los idiomas oficiales y los idiomas de trabajo de la Asamblea General, sus comisiones y sus subcomisiones.",
+        "nombre_en_la_norma": "español",
+        "sede": "Nueva York",
+        "claves": [
+          {
+            "k": "Oficial y de trabajo no son lo mismo",
+            "v": "El artículo 51 concede las dos categorías al mismo tiempo. En otros órganos del sistema de la ONU un idioma puede ser oficial sin ser de trabajo, lo que limita en qué se interpreta y se traduce.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Reglamento de la Asamblea General — capítulo VIII, Idiomas (Naciones Unidas)",
+            "url": "https://www.un.org/es/ga/about/ropga/ropga_lang.shtml",
+            "fecha": "1947-11-17",
+            "archivo": "fuentes/2026-08-07_onu_reglamento-asamblea-general-idiomas.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:union-europea",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.33137,
+          50.83526
+        ]
+      },
+      "properties": {
+        "slug": "union-europea",
+        "nombre": "Unión Europea",
+        "categoria": "organizacion",
+        "descripcion": "Hacen falta los dos artículos porque dicen cosas de rango distinto: el Tratado hace el español lengua AUTÉNTICA del propio Tratado, pero NO fija las lenguas de las instituciones — las delega en un reglamento del Consejo.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Bruselas en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_con_remision",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Tratado de la Unión Europea, artículo 55.1; y Tratado de Funcionamiento de la Unión Europea, artículo 342",
+        "norma_fecha": "2016-06-07",
+        "norma_cita": "El presente Tratado, redactado en un ejemplar único, en lenguas alemana, búlgara, checa, croata, danesa, eslovaca, eslovena, española, estonia, finesa, francesa, griega, húngara, inglesa, irlandesa, italiana, letona, lituana, maltesa, neerlandesa, polaca, portuguesa, rumana y sueca, cuyos textos en cada una de estas lenguas son igualmente auténticos […]. [Art. 342 TFUE:] El régimen lingüístico de las instituciones de la Unión será fijado por el Consejo mediante reglamentos, por unanimidad.",
+        "nombre_en_la_norma": "español",
+        "sede": "Bruselas",
+        "claves": [
+          {
+            "k": "Dos cosas distintas, y conviene no confundirlas",
+            "v": "Lengua auténtica del Tratado (art. 55.1 TUE) no es lo mismo que lengua oficial y de trabajo de las instituciones. Lo segundo lo fija el Reglamento n.º 1/1958, que es derecho derivado y se puede cambiar por unanimidad del Consejo.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El español entró en 1986",
+            "v": "El Reglamento n.º 1/1958 original no podía nombrarlo: sus lenguas eran las de los seis fundadores. El español se añadió con el Acta de Adhesión de España y Portugal.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Por qué no se cita EUR-Lex",
+            "v": "EUR-Lex está detrás de un WAF de AWS con reto JavaScript y devuelve 202 con cero bytes a cualquier lector automático. El BOE espeja el Diario Oficial y sirve los tratados consolidados en PDF con capa de texto: esa es la puerta buena.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Versiones consolidadas del Tratado de la Unión Europea y del Tratado de Funcionamiento de la Unión Europea (DOUE C 202 de 7.6.2016, espejo del BOE)",
+            "url": "https://www.boe.es/doue/2016/202/Z00001-00388.pdf",
+            "fecha": "2016-06-07",
+            "archivo": "fuentes/2026-08-07_boe_tratados-ue-consolidados-2016.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    }
+  ]
+}

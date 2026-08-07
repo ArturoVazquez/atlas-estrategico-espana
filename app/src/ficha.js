@@ -186,6 +186,16 @@ const ROTULOS = {
   gasto_subvencionable: "Gasto subvencionable (€)",
   subvencion_propuesta: "Subvención PROPUESTA (€)",
   prestamo_propuesto: "Préstamo PROPUESTO (€)",
+  estatuto: "Estatuto de la lengua",
+  norma: "Norma que lo fija",
+  norma_fecha: "Fecha de la norma",
+  // Va rotulada como CITA para que se lea como lo que es: el texto del
+  // artículo, no la glosa del atlas. En los tres registros mudos —Argentina,
+  // Chile, Uruguay— describe una ausencia, y ahí el rótulo importa más todavía.
+  norma_cita: "Lo que dice el texto",
+  nombre_en_la_norma: "Cómo la llama la norma",
+  pais: "Estado",
+  sede: "Sede",
 };
 
 function rotularCampo(clave) {

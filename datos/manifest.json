@@ -264,13 +264,20 @@
     },
 
     {
+      "_": "Cartografía el ESTATUTO JURÍDICO del idioma, no su demografía, y la causa es una LICENCIA: la demolingüística del español la publica el Instituto Cervantes bajo un aviso legal que dice que el acceso «no otorga a los usuarios ningún derecho» y no hay conjunto de datos suyo en datos.gob.es, así que republicarla bajo CC BY 4.0 es lo que datos/LICENCIA-DATOS.md prohíbe (§6.1, enmienda 1.19). Lo que sí se puede republicar es el texto legal, que por el art. 13 del TRLPI no es objeto de propiedad intelectual. Única capa `registro: analisis` del atlas: el sello marca la TESIS —llamar «activo» a esto—, NO rebaja la prueba (§6.7). Le falta su `debate_url`: el hilo de El Tercio no existe todavía y no se inventa; el atlas es autosuficiente por D1, así que la capa se publica igual. Faltan también la OEA y la Unión Africana, donde el español es lengua oficial: oas.org devuelve 403 a toda captura y el protocolo de la UA se sirve como escaneo sin capa de texto.",
       "id": "idioma",
       "titulo": "El idioma como activo",
       "arbol": "intangibles",
       "grupo": "dotacion",
+      "geometria": "puntos",
       "registro": "analisis",
       "ambito": "mundo",
-      "en_preparacion": true
+      "cadencia_revision_dias": 365,
+      "verificado_a": "2026-08-07",
+      "version": "1.0.0",
+      "fichero": "capas/idioma.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Textos legales de sus respectivos Estados y organizaciones · Natural Earth (dominio público) · Atlas Estratégico de España"
     }
   ]
 }
