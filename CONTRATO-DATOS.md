@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.19.0 · **Fecha:** 2026-08-07
+**Versión del contrato:** 1.20.0 · **Fecha:** 2026-08-07
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -418,7 +418,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `minerales-dominios` *(1.10)* | `categoria` (§9, vocabulario) | `categoria ∈ {activo, mixto}` |
 | `electricidad-interconexiones` *(1.13)* | `categoria` (§9) | `categoria == "en_servicio"`. Un enlace en servicio SÍ está en explotación — al contrario que un derecho minero, que es un título y no una obra. |
 | `minerales-derechos` *(1.12)* | — | **no aplica**. Un título otorgado NO dice que se esté explotando: se puede tener una concesión décadas sin abrir una mina. Va en el grupo `actividad` porque alguien lo sostiene y puede caducar, pero la pregunta del filtro no se le hace. |
-| `cables-submarinos` | `fase` | `fase == "produccion"` (cable en servicio) |
+| `cables-submarinos` *(1.20)* | `fase` | `fase == "produccion"` (el cable presta servicio). Ojo: el registro es el ATERRIZAJE, y su fase es la del cable que llega a él — un expediente en información pública es `tramitacion` aunque la playa lleve ahí siglos. |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
 | `centros-datos` *(1.15)* | `fase` | `fase == "produccion"` (el centro presta servicio). Un campus **autorizado y sin construir no está en explotación**, por muchos gigavatios-hora que prometa su declaración ambiental. |
@@ -825,7 +825,10 @@ distinguen mejor citando el artículo que clasificándolo.
 - *generacion-electrica-provincia* *(1.14)*: `eolica` · `solar_fv` · `solar_termica` ·
   `hidraulica` · `nuclear` · `combustibles` · `cogeneracion` · `mareomotriz` —
   la **tecnología dominante** de la provincia
-- *cables-submarinos*: `aterrizaje` · `trazado`
+- *cables-submarinos*: `aterrizaje` · `trazado` — **`trazado` se queda sin
+  usar** *(1.20)*, y no es olvido: el recorrido de un cable submarino no tiene
+  fuente con licencia compatible (TeleGeography es CC BY-NC-SA). Lo que sí
+  publica una fuente primaria es dónde toca tierra
 - *recurso-eolico* / *recurso-solar*: `zona`
 
 > **`proyectada` existe en dos vocabularios distintos, y es a propósito**
@@ -1028,9 +1031,53 @@ mapa: «Cu · Zn · Pb»)
 > primaria, R5 obliga a que ascienda **la capa entera**: es regla de capa, no de
 > registro, así que el ascenso parcial parte la capa en dos en vez de mezclarlas.
 
-**cables-submarinos** (`dotacion`, mixta, ilustrativo→verificado):
-`sistemas[]` · `destinos[]` · `operadores[]` (cuando se verifique) ·
-`municipio` · `provincia`
+**cables-submarinos** *(1.20)* (`dotacion`, **puntos**, verificado):
+`sistema` · `titular` (✔) · `conecta` (✔) · `expediente` (✔) · `instrumento` (✔) ·
+`fase` · `emplazamiento` (✔) · `municipio` (✔) · `provincia` (✔) · `claves[]`
+
+> **La capa registra ATERRIZAJES, no cables.** El boceto anterior la imaginaba
+> `mixta`, con `sistemas[]` y `destinos[]` en arrays y un trazado que dibujar. La
+> realidad de las fuentes obliga a otra cosa: **el trazado de un cable submarino no
+> tiene fuente compatible** —el mapa de TeleGeography, que es la referencia obvia,
+> está bajo CC BY-NC-SA y `datos/LICENCIA-DATOS.md` lo veta— y lo que sí publica
+> una fuente primaria es **dónde toca tierra**, porque para tocar tierra hace falta
+> ocupar dominio público marítimo-terrestre y eso exige un acto administrativo. Un
+> registro por aterrizaje, con arrays convertidos en campos planos. La categoría
+> `trazado` (§9) **se queda sin usar**, y no es un olvido.
+>
+> **Qué acota, y lo obliga lo encontrado.** Los actos de Costas cubren TODO cable
+> que ocupe dominio público marítimo-terrestre, y ahí dentro hay un cable de fibra
+> atado al puente de Txatxarramendi y canalizaciones que cruzan la ría del Bidasoa
+> y la de Oriñón. Sin criterio, la capa se llena de cruces de ría. El que separa
+> sale del propio acto: **entra el aterrizaje de un cable que une territorios
+> separados por mar** —otro país, otra isla, la península con un archipiélago—.
+>
+> **Un cable que cruza aguas españolas y no aterriza aquí NO ENTRA.** Lo decidió
+> el Europe India Gateway: su resolución de impacto ambiental (BOE-A-2010-2040)
+> describe 15.000 km por aguas de Galicia, el Estrecho y el mar de Alborán, y toca
+> tierra en **Gibraltar**. Sin aterrizaje no hay punto, y su paso por aguas
+> españolas está en prosa, no en coordenadas. Se archiva, se cita y se queda
+> fuera — el mismo muro que la subasta IF24.
+>
+> **`sistema` admite hueco, y es importante que lo admita.** El acto de Costas
+> autoriza una ocupación, no bautiza un cable: el expediente CNC02/23/39/0009 de
+> Santander no nombra el sistema en ninguna parte. Publicar ahí un nombre sacado
+> de la prensa sería exactamente lo que esta capa evita, así que el campo se queda
+> vacío con su fuente `tipo: hueco` y R4 baja el registro a `parcial`.
+>
+> **La geometría es `paraje`**: el acto nombra la playa o el puerto, y el
+> Nomenclátor del IGN da su coordenada. Con dos avisos que costaron encontrarse.
+> Los nombres **no coinciden** entre el acto y el nomenclátor —la playa que el
+> expediente llama «Arrietara» está como «Playa Atxabiribil», y la «Malvarrosa»
+> como «Platja de la Malva-rosa»—, y manda el nomenclátor. Y en Santander el IGN
+> **no nombra la playa**: nombra la isla y la ermita de la Virgen del Mar que la
+> delimitan, así que se usa ese topónimo y la ficha lo dice.
+>
+> **Sin registro público, la capa no puede afirmar que están todos**, y lo dice en
+> el manifiesto. La Ley 11/2022 obliga a los titulares a comunicar sus cables al
+> Ministerio de Transformación Digital, pero el Ministerio **no publica la lista**:
+> su punto de contacto único solo ofrece el formulario. Lo que se publica son los
+> aterrizajes que un acto administrativo nombra y sitúa.
 
 **recurso-eolico / recurso-solar** (`dotacion`, polígonos, ilustrativo):
 `distritos[]` · `justificacion` (por qué la zona)
@@ -1411,6 +1458,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.20.0** | 2026-08-07 | **Aditiva.** Nace `cables-submarinos` (§10), y nace **distinta de su propio boceto**: el contrato la imaginaba `mixta`, con `sistemas[]`, `destinos[]` y un trazado que dibujar. Las fuentes obligan a otra cosa. **El recorrido de un cable submarino no tiene fuente compatible** —TeleGeography es CC BY-NC-SA, vetada por `datos/LICENCIA-DATOS.md`— y lo que sí publica una fuente primaria es **dónde toca tierra**, porque ocupar dominio público marítimo-terrestre exige un acto administrativo. Un registro por **aterrizaje**, en puntos, con los arrays convertidos en campos planos; la categoría `trazado` (§9) queda declarada y **sin usar**. La acotación no la elige el gusto: los actos de Costas cubren TODO cable que ocupe el dominio, incluidos uno atado al puente de Txatxarramendi y dos que cruzan las rías del Bidasoa y de Oriñón, así que **entra el que une territorios separados por mar** y no el cruce de una ría. Y un cable que atraviesa aguas españolas **sin aterrizar aquí no entra**: lo decidió el Europe India Gateway, 15.000 km por Galicia, el Estrecho y Alborán que tocan tierra en **Gibraltar** (BOE-A-2010-2040) — se archiva, se cita y se queda fuera, como la subasta IF24. `sistema` **admite hueco a propósito**: un acto de Costas autoriza una ocupación, no bautiza un cable, y el expediente de Santander no nombra el sistema; poner ahí un nombre de la prensa sería justo lo que la capa evita, así que va con fuente `tipo: hueco` y R4 lo baja a `parcial`. §6.5 le da su fila, con el aviso de que la `fase` es la del cable y no la de la playa. |
 | **1.19.0** | 2026-08-07 | **Aditiva.** Nace `idioma` (§10), la última casilla del horizonte y **la primera capa `analisis` del atlas**. Nace además cambiada de significado por una licencia: «El idioma como activo» pedía demolingüística, y la del español la publica el Instituto Cervantes bajo un aviso legal que dice que el acceso «no otorga a los usuarios ningún derecho» —sin conjunto de datos en `datos.gob.es`—, así que republicarla bajo CC BY 4.0 es lo que `datos/LICENCIA-DATOS.md` prohíbe. Tercer muro de licencia del atlas, tras el ShareAlike de la CNMC y el NonCommercial de TeleGeography. §6.1 gana la enmienda que faltaba, y no discute autoridad sino **copia**: **un texto legal no tiene dueño** —art. 13 del TRLPI, que excluye de la propiedad intelectual las disposiciones legales y los actos de los organismos públicos—, así que constituciones y tratados se archivan enteros y se republican sin permiso. La capa pasa a cartografiar el **ESTATUTO** del idioma, y desmiente el mapa de un solo color: **México no declara idioma oficial** (es «lengua nacional» por ley, a la par que las indígenas) y **Argentina, Chile y Uruguay no nombran la lengua**. §9 estrena `estatuto`, **nueve valores** porque hay nueve arquitecturas distintas y ninguna se inventó de antemano. Nace `geo_precision: pais` (§5, §6.6), hermano de `municipio` una escala más arriba y **fuera de R9** por lo mismo: el objeto es el Estado entero y el punto solo existe para poder pinchar el registro; se rechaza con él la tentación de los polígonos de países, que habrían metido al atlas en cada disputa fronteriza del planeta. Y nace **§6.7**, la sección que define por fin qué sella `analisis`: **marca la TESIS, no rebaja la prueba** — reverso exacto de `ilustrativo` (R5), que baja el listón de la evidencia y no toca la interpretación. Declarado sin adorno: §6.7 es **doctrina sin CI**, porque `validar.py` no comprueba nada sobre `analisis` ni `debate_url`. |
 | **1.18.0** | 2026-08-06 | **Aditiva.** Nace `perte` (§10), y con ella se decide qué acota la palabra «acotado» que la capa arrastraba desde la demo: **acota lo que un documento público sitúa**. Se descartan por el camino la lista de los 100 mayores perceptores del PRTR (obligatoria por el art. 25 bis del Reglamento MRR, y **sin ubicación**) y el mapa del PRTR de MITECO (un Power BI incrustado: no hay conjunto de datos que citar). Queda el listado de la Propuesta de Resolución Definitiva del **PERTE VEC — Sección B 2024**, que trae **provincia y municipio fila a fila**. §6.1 gana la tercera enmienda de su familia: **una propuesta de resolución es documento oficial y no es el acto** — sostiene un confirmado sobre lo que PROPONE, no sobre la concesión, y el matiz va dentro del nombre de los campos (`subvencion_propuesta`) porque un asterisco no lo lee nadie. Con un aviso que no es de esta capa sino de cualquiera: **hay documentos oficiales que no son una tabla aunque lo parezcan**. Este es un registro por comisiones de verificación donde una aparición posterior REVISA a la anterior; contar filas da 61 y los expedientes vigentes son 57. Lo demuestran sus propios TOTALES, que cuadran al céntimo en las seis comisiones. §6.5 le da su fila: `activo` **no aplica**, porque un plan de inversión es dinero comprometido, no una instalación. §9, un vocabulario de un solo valor (`plan_inversion`). |
 | **1.17.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-produccion` (§10): las siete plantas de electrólisis españolas de la lista de la Unión — **siete, no cinco**, porque dos de los cinco proyectos nombran y sitúan dos plantas cada uno. §6.1 gana la consecuencia práctica de la enmienda 1.16, y esta cambia **cómo se redacta una ficha**, no si la fuente vale: **un registro obliga a publicar, no a certificar**. Cuando quien declara es una empresa, su texto trae tres cosas mezcladas —el proyecto, la ambición y el argumento de venta— y solo la primera llega a un campo numérico; la ambición va a `claves` **verbatim y con su condicional intacto**, y la evaluación promocional no se publica. El caso que lo obligó: el valle asturiano declara **1 GW de ambición y 150 MW de proyecto en el mismo párrafo**, y la cifra que circula por ahí es la primera. §9 estrena un vocabulario de **un solo valor** (`electrolizador`), como ya hacía `recurso-eolico`. §6.5 le da su fila, con el aviso de que aquí `fase: produccion` es el peldaño del expediente y no «producir hidrógeno» en abstracto. **No nace ninguna regla `R*`**: las que hacen falta ya existen, y añadir una por no romper la racha sería exactamente la prosa disfrazada de garantía que §8 prohíbe. |

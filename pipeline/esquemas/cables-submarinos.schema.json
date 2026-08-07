@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/cables-submarinos.schema.json",
+  "title": "Extensión de capa · cables-submarinos",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Registra ATERRIZAJES, no cables: el recorrido no tiene fuente con licencia compatible (TeleGeography es CC BY-NC-SA), y lo que sí publica una fuente primaria es dónde toca tierra, porque ocupar dominio público marítimo-terrestre exige un acto administrativo. Entra el aterrizaje de un cable que une territorios separados por mar; no entra el cruce de una ría.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "El punto es la playa o el puerto que nombra el acto, situado por el Nomenclátor del IGN. Por eso `geo_precision` es `paraje` y no `exacta`: el nomenclátor es primario para el NOMBRE del lugar, no para el punto exacto donde el cable entra en tierra."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["titular", "conecta", "expediente", "instrumento",
+                         "emplazamiento", "municipio", "provincia"],
+            "properties": {
+              "sistema": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El nombre del sistema de cable. NO es obligatorio, y eso es deliberado: un acto de Costas autoriza una ocupación, no bautiza un cable. El expediente CNC02/23/39/0009 de Santander no lo nombra en ninguna parte, y poner ahí un nombre sacado de la prensa sería exactamente lo que esta capa evita. Cuando falta, va su fuente `tipo: hueco` y R4 baja el registro a `parcial`."
+              },
+              "titular": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Quien pide o recibe la concesión, tal como lo escribe el acto. No es necesariamente el dueño del cable: en Grace Hopper el solicitante es Telxius, que es quien aterriza."
+              },
+              "conecta": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Qué territorios une, según el acto. Es el campo que sostiene la acotación de la capa: si no une territorios separados por mar, el registro no debería existir."
+              },
+              "expediente": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La referencia del expediente de Costas (CNC02/AA/PP/NNNN) o el identificador del anuncio en el BOE. Es la llave que permite seguir el procedimiento y volver al documento."
+              },
+              "instrumento": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El acto administrativo que sostiene el registro, nombrado por lo que es —solicitud en información pública, otorgamiento de concesión, legalización—. Obligatorio: sin acto no hay registro, que es toda la doctrina de esta capa."
+              },
+              "fase": {
+                "type": "string",
+                "description": "La del CABLE, no la de la playa: un expediente en información pública es `tramitacion` aunque el arenal lleve ahí siglos."
+              },
+              "emplazamiento": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La playa o el puerto donde el cable toca tierra, EN LA FORMA DEL NOMENCLÁTOR y no en la del acto, que a veces difiere: «Playa Atxabiribil» donde el expediente dice «Arrietara», «Platja de la Malva-rosa» donde dice «Malvarrosa»."
+              },
+              "municipio": { "type": "string", "minLength": 1 },
+              "provincia": { "type": "string", "minLength": 1 },
+
+              "longitud_km": {
+                "not": {},
+                "description": "PROHIBIDO. Un aterrizaje no tiene longitud, y la del cable entero llevaría a publicar una cifra que ninguna fuente compatible sostiene — el trazado es justo lo que esta capa NO puede publicar."
+              },
+              "capacidad_tbps": {
+                "not": {},
+                "description": "PROHIBIDO. La capacidad de un cable es dato comercial del operador, no del acto administrativo que autoriza su aterrizaje."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
