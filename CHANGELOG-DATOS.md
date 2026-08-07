@@ -32,6 +32,83 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.24 — El atlas no se aplicaba a sí mismo lo que exige a sus fuentes
+
+**Ningún registro cambia.** Cambia poder contestar, de una capa cualquiera, la
+pregunta más natural que se le puede hacer a un dato: **¿de dónde sale esto y qué
+me obliga?**
+
+Se contestaba, pero cruzando cinco sitios ordenados por criterios distintos —el
+manifiesto por capa, los `__f` por registro, el contrato por campo, el changelog
+**por release** y `fuentes/` por fecha de captura—. Ahora hay una ficha por capa.
+
+### Añadido
+
+- **`fuentes/PROCEDENCIA.md`.** Una ficha por cada una de las 22 capas: de dónde
+  sale, con qué licencia y qué obliga, qué hay que saber antes de citarla, qué
+  hueco declara y qué fichero la sostiene. Al final, un **cuaderno de obtención**
+  para quien tenga que volver a la fuente: el endpoint, el formato, el CRS y la
+  trampa.
+- **§7.9 del contrato, que BLOQUEA:** toda capa con datos tiene su ficha, y toda
+  ficha su capa. Comprueba que **existe**, no que diga la verdad — eso no lo sabe
+  una máquina, y no hace falta: el fallo real no es la ficha mentirosa, es la que
+  se escribe «luego» y nunca se escribe. Pruebas **26 → 31**.
+
+**Lo que se añade es la síntesis, no el hecho.** La licencia autoritativa sigue
+siendo la del manifiesto, los campos siguen en §10 y el relato en este changelog;
+la ficha enlaza en vez de copiar. Es D3 aplicada a la documentación.
+
+### Lo que salió al escribirlo
+
+Un documento así se escribe para ordenar lo que ya se sabe. Este destapó tres
+cosas que no se sabían.
+
+**Primera: de las condiciones de uso solo había TRES archivadas** —la Comisión,
+la plataforma PCI y la CNMC—. Las del **IGN, Puertos del Estado y Adif** se
+afirmaban en el changelog **sin una sola cita**. Ya están las cuatro.
+
+**Segunda, y es una deuda: la licencia del IGN fija la FORMA del reconocimiento,
+no solo la libertad de uso.** La Orden FOM/2807/2015 es CC-BY 4.0 —eso estaba
+bien comprobado— pero su punto 4 exige, para obra derivada, la fórmula literal
+**«Obra derivada de BTN Continua CC-BY 4.0 ign.es»**, y su punto 5 obliga a
+repetirla **en los metadatos**. El manifiesto de las **13 capas** que citan al
+IGN dice otra cosa. **Adif** exige igualmente un literal: **«© Administrador de
+infraestructuras ferroviarias»**. Queda anotado en la ficha, pendiente de
+corregir, y dicho aquí en vez de callado. La licencia se comprobó antes de
+extraer, como manda `datos/LICENCIA-DATOS.md`; lo que no se hizo fue leer **cómo**
+obliga a citar.
+
+**Tercera: el archivo guardaba 34 citas reescritas.** La regla de finales de
+línea del repositorio protegía el PDF y el ZIP y **dejaba pasar el HTML, el XML y
+el JSON**, que son la mitad de `fuentes/`. Un servidor que sirve CRLF y un git que
+lo normaliza a LF producen un fichero **que ya no es el que se descargó**: el
+metadato de Puertos del Estado se servía con 39.516 bytes y el repositorio
+guardaba 38.775. Se lee igual y no cuadra byte a byte, que en un archivo de citas
+es la diferencia entre una copia y **la** cita. Sus bytes verdaderos sobrevivían
+solo en la copia de trabajo: quien clonara se los llevaba alterados. Con
+`fuentes/** -text`, los 61 ficheros no binarios vuelven a cuadrar.
+
+### Dónde NO se lee una licencia
+
+Dos avisos que costaron media tarde y volverán:
+
+- El **`GetCapabilities` de Puertos del Estado** dice `Fees: NONE` y
+  `AccessConstraints: NONE`… con `ProviderName: OSGeo`. Es la **plantilla de
+  GeoServer sin tocar**, no una declaración del organismo. La licencia buena está
+  en el registro CSW, y dice «No se aplican condiciones de acceso y uso. CC BY 4.0
+  Puertos del Estado».
+- El **`GetCapabilities` de Adif** no trae ninguno de los dos campos. Su licencia
+  también está en el CSW.
+
+### Corregido
+
+- **Un número propio, en el documento que existe para eso.** Las citas con URL
+  del atlas son **8.497**, no 5.693: el recuento anterior se quedaba en el array
+  `fuentes` y no bajaba a los `__f` ni a `claves[].fuente`. **Las 8.497 están
+  archivadas** — §7.7 no tiene un solo aviso pendiente, y ahora está medido.
+
+---
+
 ## datos-v2026.08.23 — El atlas tenía el transporte entero vacío
 
 Tres capas y **una rama nueva del árbol**. Era el hueco más grande que quedaba:

@@ -1,6 +1,6 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.25.0",
+  "schema_version": "1.26.0",
   "actualizado": "2026-08-07",
 
   "registro": {

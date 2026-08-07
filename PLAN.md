@@ -284,6 +284,33 @@ etiqueta exacta, la posición del atlas es la misma y queda escrita aquí: **no 
 persigue, y su ausencia se declara como exclusión deliberada** en vez de
 descubrirse por el hueco.
 
+### La procedencia, y una deuda de atribución abierta (2026-08-08)
+
+Nace **`fuentes/PROCEDENCIA.md`**: una ficha por capa con de dónde sale, qué
+obliga su licencia y qué hay que saber antes de citarla, más un cuaderno de
+obtención con los endpoints y las trampas. Con diente: **§7.9 bloquea el CI si
+una capa publica sin su ficha.**
+
+Escribirlo destapó tres cosas, y una queda ABIERTA:
+
+1. **Solo había tres licencias de entrada archivadas.** Las del IGN, Puertos del
+   Estado y Adif se afirmaban en el changelog sin cita. Ya están.
+2. **El archivo guardaba 34 citas reescritas** por la normalización de finales de
+   línea. Cerrado con `fuentes/** -text`.
+3. **⚠ ABIERTO — la atribución del IGN y de Adif.** La licencia del IGN no solo
+   concede: **fija la forma del reconocimiento**. Para obra derivada exige «Obra
+   derivada de BTN Continua CC-BY 4.0 ign.es» y obliga a repetirlo en los
+   metadatos; Adif exige «© Administrador de infraestructuras ferroviarias». El
+   manifiesto de las **13 capas** que citan al IGN dice otra cosa.
+
+**Qué hace falta para cerrar el punto 3:** decidir la forma exacta del
+`atribucion` de esas 13 capas —que son las tres de BTN más las diez que usan el
+Nomenclátor o las unidades administrativas—, aplicarla en el manifiesto y sacar
+release. **Es una corrección de dato, no de prosa**, y por eso no se ha hecho de
+oficio en la misma pasada que la documentó: la firma una persona. La fórmula y
+los identificadores exactos (BTN, NGBE, BDLJE) están ya archivados y escritos en
+la ficha, así que el trabajo es de decisión, no de investigación.
+
 ### Las ramas en gris, y qué le falta a cada una
 
 Las cinco se comprobaron una a una el 2026-08-07, con la fuente en la mano.
