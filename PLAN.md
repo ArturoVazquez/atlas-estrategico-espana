@@ -288,16 +288,51 @@ MITECO. Lo que sí es primario es la **Planificación de la red de transporte
 2021-2026**, aprobada por Consejo de Ministros, pero eso es la red PLANIFICADA y
 además ya alimenta `electricidad-interconexiones`.
 
-**`cables-submarinos` es la más levantable de las cinco, y aun así no hoy.** La
-Ley 11/2022 (disposición adicional 23.ª) obliga a los titulares a comunicar sus
-cables al Ministerio de Transformación Digital, pero **el Ministerio no publica
-la lista**: su página de punto de contacto único solo ofrece el formulario. La
-reconstrucción es posible acto por acto —las concesiones de dominio público
-marítimo-terrestre y las resoluciones de impacto ambiental sí salen en el BOE, y
-dan cable, playa y municipio—, y su doctrina ya está escrita: sería el mismo
-«entra el que un acto administrativo nombra y sitúa» de `centros-datos`. Lo que
-falta es el trabajo, y una advertencia: sin registro, la capa **nunca podrá
-afirmar que están todos**, y eso habría que decirlo en su ficha.
+**`cables-submarinos` es la más levantable de las cinco.** La Ley 11/2022
+(disposición adicional 23.ª) obliga a los titulares a comunicar sus cables al
+Ministerio de Transformación Digital, pero **el Ministerio no publica la lista**:
+su punto de contacto único solo ofrece el formulario. Se reconstruye acto por
+acto desde el BOE y desde la participación pública de las Demarcaciones de
+Costas, con el mismo «entra el que un acto administrativo nombra y sitúa» de
+`centros-datos`.
+
+**La acotación no la elige el gusto: la obliga lo que se encontró.** Los actos de
+Costas cubren TODO lo que ocupa dominio público marítimo-terrestre con un cable,
+y ahí dentro hay un cable de fibra atado al puente de Txatxarramendi, una
+canalización que cruza la ría del Bidasoa en Irún y otra que cruza la ría de
+Oriñón. Eso no es un cable submarino en ningún sentido estratégico. El criterio
+que separa, y sale del propio acto, es **qué territorios une**: entra el
+aterrizaje en España de un cable que conecta territorios **separados por mar**
+—otro país, otra isla, la península con un archipiélago—; no entra el cruce de
+una ría.
+
+**Corpus verificado el 2026-08-07**, con acto citado y aterrizaje situado:
+
+| Sistema | Titular | Aterrizaje | Acto |
+|---|---|---|---|
+| Grace Hopper | Telxius Cable España | playa de Arrietara, **Sopela** (Bizkaia) | CNC02/21/48/0001 |
+| *(sin nombre en el acto)* | Edge Network Infrastructure Services Spain | playa de la Virgen del Mar, **Santander** | CNC02/23/39/0009 |
+| Cádiz–Ceuta | GTD Cableado de Redes Inteligentes | playas de Benítez y La Ribera, **Ceuta** | BOE-B-2024-12549, resolución de 12-12-2019 |
+| PENBAL-4 | Telefónica de España | playa de la Malvarrosa, **Valencia** → Ibiza y Mallorca | CNC02/17/46/0009 (legalización) |
+| Canalink | Canarias Submarine Link | Puerto de **Santa Cruz de La Palma** | BOE-B-2011-23242, acuerdo de 24-05-2011, 25 años |
+| Canalink | Canarias Submarine Link | Puerto de **Granadilla** (Tenerife) | BOE-B-2013-3436 |
+
+Pistas que quedan abiertas, con su documento ya localizado: **PENCAN-X**,
+Península–Gran Canaria (RD 1124/2024, modificado por RD 268/2026); el **ramal de
+Canalink Base 4 a Fuerteventura** (RD 973/2025); y el aterrizaje de **Sagunto**
+(CNC02/25/46/0013). Los tres son subvenciones o solicitudes: hay que comprobar si
+sitúan el aterrizaje o solo lo financian.
+
+**Y un hallazgo que afina la capa: el Europe India Gateway NO aterriza en
+España.** Su resolución de impacto ambiental (BOE-A-2010-2040) describe un cable
+de 15.000 km que cruza aguas de Galicia, el Estrecho y el mar de Alborán —y toca
+tierra en **Gibraltar**. Sin aterrizaje español no hay punto que publicar, y su
+trazado por aguas españolas está descrito en prosa, no en coordenadas. Se archiva
+y se cita; no se convierte en registro. Es el mismo muro que la subasta IF24.
+
+**La advertencia que tendrá que ir en su ficha:** sin registro público, la capa
+**nunca podrá afirmar que están todos**. Publica los aterrizajes que un acto
+administrativo nombra, y dice que eso es lo que publica.
 
 ---
 
