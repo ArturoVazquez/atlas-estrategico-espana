@@ -242,6 +242,65 @@ que queda de él es `agua-embalsada`, bloqueada esperando dos ZIP del SNCZI que
 tiene que dejar Arturo en `fuentes/`. El pipeline de expedientes de cambio (D7),
 cuando haya señales reales con las que diseñarlo.
 
+### Las cinco ramas que siguen en gris, y qué le falta a cada una
+
+Comprobadas una a una el 2026-08-07, con la fuente en la mano. **Ninguna está
+en gris por olvido**, y ninguna se puede levantar sin romper algo:
+
+| Rama | Qué la para | Qué haría falta |
+|---|---|---|
+| `agua-embalsada` | El MITECO protege la descarga con **ALTCHA**, un CAPTCHA de prueba de trabajo | Que una persona pulse el botón |
+| `recurso-eolico` | No existe dato **vectorial** oficial de recurso: solo ráster | Decidir qué publica de verdad |
+| `recurso-solar` | Lo mismo | Lo mismo |
+| `red-electrica` | REE es `corporativa` y **R3 le prohíbe sostener un `confirmado`** | Fuente primaria con geometría |
+| `cables-submarinos` | **No hay registro público**, pese a la Ley 11/2022 | Reconstruirla acto por acto |
+
+**`agua-embalsada` — el bloqueo es técnico y deliberado, no un despiste.** Las URL
+de descarga del SNCZI existen y funcionan
+(`gis.miteco.gob.es/descargas/app/DescargaFichero?f=egis_embalse_geoetrs89.zip`),
+la licencia es de **atribución simple** —«se puede usar de modo libre y gratuito
+siempre que se mencione al Ministerio»— y por tanto compatible con CC BY 4.0. Lo
+que no se puede es automatizar: el formulario lleva un `<altcha-widget>`, o sea
+un CAPTCHA de prueba de trabajo que el Ministerio ha puesto a propósito para
+frenar la descarga automática. **Eso no se salta.** Los dos ZIP —15,4 MB de
+embalses y 296 KB de presas— tienen que caer en `fuentes/` a mano.
+
+**`recurso-eolico` y `recurso-solar` — no es un problema de licencia, es de qué
+clase de cosa es un recurso.** El Atlas Eólico del IDAE es un **visor** con PDF
+por comunidad autónoma, no un conjunto de datos. El Global Wind Atlas y el Global
+Solar Atlas sí están en **CC BY 4.0** y sirven GIS, pero lo que sirven es
+**ráster** (GeoTIFF a 250 m). Convertir ese campo continuo en «zonas de recurso»
+lo tendría que hacer el atlas, y eso es **generar datos**: exactamente lo que
+`CLAUDE.md` llama el peor bug posible de este proyecto. Un recurso es un campo,
+no un registro con fuente.
+
+La salida honesta, si alguna vez se quiere, existe y es **cambiar la pregunta**
+—como ya pasó tres veces en este horizonte—: el MITECO publica la **zonificación
+ambiental para energías renovables**, eólica y fotovoltaica por separado, en
+shapefile y clasificada en cinco clases de sensibilidad. Es oficial, es vectorial
+y es española. Pero **no es recurso, es restricción**: dice dónde se puede poner
+un parque, no cuánto viento hace. Renombrar la rama es decisión de producto, y de
+Arturo.
+
+**`red-electrica`** choca con R3: la geometría de la red de transporte la publica
+REE, que es el operador, o sea `corporativa`. No se encontró shapefile abierto del
+MITECO. Lo que sí es primario es la **Planificación de la red de transporte
+2021-2026**, aprobada por Consejo de Ministros, pero eso es la red PLANIFICADA y
+además ya alimenta `electricidad-interconexiones`.
+
+**`cables-submarinos` es la más levantable de las cinco, y aun así no hoy.** La
+Ley 11/2022 (disposición adicional 23.ª) obliga a los titulares a comunicar sus
+cables al Ministerio de Transformación Digital, pero **el Ministerio no publica
+la lista**: su página de punto de contacto único solo ofrece el formulario. La
+reconstrucción es posible acto por acto —las concesiones de dominio público
+marítimo-terrestre y las resoluciones de impacto ambiental sí salen en el BOE, y
+dan cable, playa y municipio—, y su doctrina ya está escrita: sería el mismo
+«entra el que un acto administrativo nombra y sitúa» de `centros-datos`. Lo que
+falta es el trabajo, y una advertencia: sin registro, la capa **nunca podrá
+afirmar que están todos**, y eso habría que decirlo en su ficha.
+
+---
+
 **La última casilla, y la capa cambió de significado por una licencia** (release
 `datos-v2026.08.16`). `idioma`: **22 registros**, veinte Estados y dos
 organizaciones internacionales, con el artículo de cada uno citado literal.
