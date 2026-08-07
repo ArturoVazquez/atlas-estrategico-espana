@@ -1,7 +1,7 @@
 {
   "_": "Vocabularios controlados del Atlas Estratégico de España (CONTRATO-DATOS.md §9). Añadir un valor es versión MENOR de contrato y acto deliberado. El orden de cada lista es el orden de presentación y el `color` de cada categoría es el que pinta el mapa: el visor no reordena, no traduce y no elige colores, lee de aquí.",
-  "schema_version": "1.17.0",
-  "actualizado": "2026-08-06",
+  "schema_version": "1.24.0",
+  "actualizado": "2026-08-07",
 
   "registro": {
     "verif": [
@@ -241,9 +241,12 @@
         "color": "#7A7466",
         "def": "Fue de los grandes y hoy no produce. No se borra: la memoria del territorio es dato." }
     ],
+    "_cables-submarinos": "Nacieron los dos SIN COLOR el 2026-08-07, y la capa entera estuvo una release pintándose con el color de reserva —indistinguible de cualquier otra— sin que nada lo dijera. Lo cazó una comprobación nueva de `validar.py` (§9, avisa y no bloquea) escrita después de que el mismo fallo apareciera por tercera vez en el proyecto. Los tonos son de la familia teal de la rama `conectividad`, separados de los violetas de `centros-datos` y de los azules de `hidrogeno-red`.",
     "cables-submarinos": [
-      { "valor": "aterrizaje", "etiqueta": "Punto de aterrizaje" },
-      { "valor": "trazado", "etiqueta": "Trazado" }
+      { "valor": "aterrizaje", "etiqueta": "Punto de aterrizaje", "color": "#2F6B72",
+        "def": "Donde el cable toca tierra: el único punto del trazado que una fuente primaria publica. El cable entero no entra —su trazado no tiene fuente compatible— y por eso la capa registra aterrizajes y no cables." },
+      { "valor": "trazado", "etiqueta": "Trazado",
+        "def": "DECLARADO Y SIN USAR, y no es un olvido: el trazado de un cable submarino no tiene fuente compatible con CC BY 4.0 (TeleGeography es CC BY-NC-SA). Existe para el día que la haya. Y SIN COLOR TAMPOCO, que es deliberado: el color es «lo que pinta el mapa», y una categoría que no pinta nada no tiene color que declarar — elegirlo hoy sería decidir un diseño para algo que no existe. El aviso de §9 salta el día que un registro la use, que es exactamente cuando hace falta." }
     ],
     "_parques-eolicos": "Sustituye al vocabulario de `recurso-eolico`, que tenía un solo valor —`zona`— para unas zonas de recurso que nunca se pudieron dibujar sin inventarlas. Sigue teniendo un solo valor, pero ahora nombra algo que existe y que la fuente clasifica.",
     "parques-eolicos": [
