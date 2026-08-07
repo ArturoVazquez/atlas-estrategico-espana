@@ -13,7 +13,7 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **doce capas publicadas**, release `datos-v2026.08.13`, visor
+**Estado:** **doce capas publicadas**, release `datos-v2026.08.14`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
 (nuclear, gas y regasificación, interconexiones eléctricas, generación por
 provincia, producción de hidrógeno); conectividad (centros de datos, red de hidrógeno); y el tablero

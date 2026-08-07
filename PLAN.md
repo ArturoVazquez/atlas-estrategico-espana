@@ -235,8 +235,9 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
 embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → ~~H2Med~~ →
-~~electrolizadores~~ → subasta del Banco Europeo del Hidrógeno (NUEVA, ver
-abajo) → PERTE acotado → intangibles (clase `analisis`, ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
+~~electrolizadores~~ → ~~subasta del Banco Europeo del Hidrógeno~~ (resuelta:
+NO es capa, ver abajo) → PERTE acotado → intangibles (clase `analisis`,
+ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
 señales reales con las que diseñarlo.
 
 **La segunda casilla, cumplida por otro nombre** (release `datos-v2026.08.10`).
@@ -247,6 +248,37 @@ potencia pero solo por comunidad autónoma y **bajo CC BY-SA**, que
 que R3 no admite. Se publica lo que sí se sostiene —la mezcla de generación de
 las 52 provincias— y la potencia queda como hueco declarado en las 52 fichas.
 **La casilla se renombra; no se disfraza.**
+
+**La sexta casilla se cierra sin capa, y esa ES la respuesta** (release
+`datos-v2026.08.14`). La subasta IF24 del Banco Europeo del Hidrógeno tiene
+fuente oficial, completa y primaria —61 ofertas, 15 invitadas, 6 firmadas, y la
+tabla nominal de los 25 invitados con su precio y su capacidad—, y **aun así no
+se convierte en capa: no publica dónde está ninguno**. Se archiva, se cita desde
+la ficha que toca y se deja escrito el motivo.
+
+Es la primera fuente **excelente y no cartografiable** con la que se topa el
+atlas. La tentación era clara, porque media docena de nombres son topónimos
+—VILLAMARTIN, PUERTO SERRANO, TORDESILLAS, ARANDA, Arteixo, Los Barrios— y
+deducir la ubicación de un nombre comercial es exactamente lo que ya salió mal
+con los tres «El Espartal» del nomenclátor, que estaban a 120 km.
+
+Lo que sí deja, y va a la ficha de Huelva:
+
+- **De 25 proyectos invitados, 16 son españoles.** Firmaron 3 (155 MWe) y se
+  retiraron 13 (1.191 MWe): sobrevivió el **12 %** de la capacidad española
+  invitada.
+- **Las dos ofertas más baratas de toda Europa eran españolas** —0,20 y 0,25
+  €/kg— y las dos se retiraron. Lo que las tumbó, según la propia página, fue la
+  exigencia de una **garantía de finalización**: la Comisión pidió aval y el
+  precio bajó de golpe de categoría.
+- **Una unidad de la Fase 2 de Huelva («Tharsis-ELY-1», de Cepsa Sustainable
+  Fuels) ganó y no firmó.** Es el único punto donde la subasta toca una capa
+  publicada.
+
+Queda apuntado para quien siga: **la tercera subasta ya tiene resultados** —nueve
+proyectos, 1.090 millones, contratos previstos para el cuarto trimestre de 2026—
+y merece la misma lectura cuando se publique su tabla nominal. Si alguna vez una
+resolución sitúa estos proyectos, la fuente ya está archivada.
 
 **La quinta casilla, y la que menos código pidió** (release
 `datos-v2026.08.13`). `hidrogeno-produccion`: **siete** plantas de electrólisis

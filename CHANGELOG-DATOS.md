@@ -32,6 +32,74 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.14 — La subasta que España ganó y no firmó
+
+Ninguna capa nueva. Entra **una fuente** —los resultados de la subasta IF24 del
+Banco Europeo del Hidrógeno— y con ella dos claves en el registro de Huelva de
+`hidrogeno-produccion`. Es una release pequeña con un hallazgo que no lo es.
+
+### El hallazgo
+
+De **61 ofertas** evaluadas, la Comisión invitó a firmar a **15** el 20 de mayo
+de 2025. Al exigírseles una **garantía de finalización**, varias renunciaron;
+CINEA fue llamando a la lista de reserva por estricto orden de precio. El 20 de
+enero de 2026 firmaron **seis**, por 270,6 millones.
+
+En la tabla final hay **25 proyectos invitados en algún momento, y 16 son
+españoles**. De esos 16:
+
+- **firmaron 3** — H2CRI (Green Devco), NOON (Iberdrola Clientes) y GH2Move-VLC
+  (Diverxia): **155 MWe** entre los tres;
+- **se retiraron 13**: **1.191 MWe**.
+
+Sobrevivió el **12 %** de la capacidad española invitada. Y **las dos ofertas más
+baratas de toda Europa eran españolas** —0,20 y 0,25 €/kg, VILLAMARTIN H2 y
+PUERTO SERRANO H2, ambas de Galena Renovables— y **las dos se retiraron**.
+
+**Uno de los retirados toca una capa de este atlas.** «Tharsis-ELY-1», coordinado
+por *Cepsa Sustainable Fuels, S.L.* —Cepsa es el nombre anterior de Moeve—,
+ofertó 80 MWe a 0,80 €/kg y figura como retirado. THARSIS es como la ficha del
+PCI 9.15.4 llama a su Fase 2. El registro de Huelva lo dice ahora en su ficha.
+
+### Añadido
+
+- Fuente: los resultados oficiales de la subasta IF24, archivados.
+- `hidrogeno-produccion:huelva-moeve` — dos claves nuevas y su fuente. Capa a
+  **1.1.0**.
+
+### Lo que esta release NO hace, y es la decisión más importante
+
+**La subasta no se convierte en capa, y no por falta de calidad de la fuente.**
+Es primaria, oficial, completa y trae hasta la capacidad ofertada en MWe de cada
+proyecto. Lo que no trae es **dónde está cada uno**: publica nombre de proyecto,
+coordinador, país y cifras, y nada más.
+
+Varios nombres invitan a adivinar —VILLAMARTIN, PUERTO SERRANO, TORDESILLASH2,
+ARANDAH2, Arteixo, Los Barrios— y **adivinar es exactamente lo prohibido**. Ya se
+comprobó en esta misma casa lo que cuesta: los tres parajes llamados «El
+Espartal» del nomenclátor están en La Rioja y Navarra, a 120 km del centro de
+datos que los mencionaba. Un mapa no se construye con topónimos deducidos de un
+nombre comercial.
+
+Así que es la primera vez que el atlas se topa con una fuente **excelente y no
+cartografiable**. Se archiva, se cita desde donde toca y se deja escrito por qué
+no hay capa. Si algún día una resolución sitúa esos proyectos, la fuente ya está
+guardada.
+
+### Huecos
+
+- **Dónde está cada proyecto de la subasta.** Ver arriba: la fuente no lo publica.
+- **A qué parte del proyecto de Huelva corresponde la oferta retirada.** El
+  emparejamiento entre «Tharsis-ELY-1» (80 MWe) y la Fase 2 del PCI (200 MW) lo
+  hace el atlas por nombre y promotor, no la fuente, y las capacidades no
+  coinciden. La clave va como `parcial`: **la retirada es un hecho firme; su
+  encaje exacto en este proyecto, no**.
+- **Por qué se retiró cada uno.** La página nombra la garantía de finalización
+  como causa general y no desglosa proyecto por proyecto. No se atribuye motivo a
+  ninguno en particular.
+
+---
+
 ## datos-v2026.08.13 — Siete electrolizadores, y la diferencia entre un proyecto y una ambición
 
 Entra **`hidrogeno-produccion`**: las plantas de electrólisis españolas que están

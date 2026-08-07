@@ -57,6 +57,18 @@
             "fuente": "f2"
           },
           {
+            "k": "Una unidad de la fase THARSIS ganó una subasta europea y no llegó a firmar",
+            "v": "En la subasta IF24 del Banco Europeo del Hidrógeno, la Comisión invitó a firmar un contrato al proyecto «Tharsis-ELY-1», coordinado por Cepsa Sustainable Fuels, S.L. —Cepsa es el nombre anterior de Moeve—, con 80 MWe de capacidad ofertada y 0,80 €/kg. Figura como RETIRADO: no firmó. El emparejamiento entre esa oferta y la Fase 2 de este proyecto lo hace el atlas por nombre y promotor, no la fuente, y las capacidades no coinciden (la fase declara 200 MW y la oferta 80 MWe), así que probablemente sea una unidad dentro de ella. Por eso esta clave va como parcial: el hecho de la retirada es firme; a qué parte de este proyecto corresponde, no.",
+            "verif": "parcial",
+            "fuente": "f4"
+          },
+          {
+            "k": "Qué fue de la subasta, para leer la anterior en su contexto",
+            "v": "De 61 ofertas evaluadas, la Comisión invitó a firmar a 15 el 20 de mayo de 2025. Varias renunciaron al exigírseles una garantía de finalización, y CINEA fue llamando a la lista de reserva por orden de precio. El 20 de enero de 2026 firmaron SEIS, por 270,6 millones. En la tabla final hay 25 proyectos invitados en algún momento: 16 españoles, de los que firmaron 3 (155 MWe) y se retiraron 13 (1.191 MWe). Las dos ofertas más baratas de toda Europa eran españolas —0,20 y 0,25 €/kg— y las dos se retiraron.",
+            "verif": "confirmado",
+            "fuente": "f4"
+          },
+          {
             "k": "Por qué esta fuente es primaria, y qué no garantiza",
             "v": "La plataforma existe por el artículo 23 del TEN-E, que obliga a la Comisión a publicar «información general actualizada, por ejemplo, información geográfica, para cada proyecto de la lista de la Unión». Es el registro, no la nota sobre el registro. Pero un registro publica lo que sus registrados le declaran: obliga a publicar, no a certificar.",
             "verif": "confirmado",
@@ -87,6 +99,14 @@
             "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-80836",
             "fecha": "2022-05-30",
             "archivo": "fuentes/2026-08-06_doue_reglamento-2022-869-ten-e.html"
+          },
+          {
+            "id": "f4",
+            "tipo": "primaria",
+            "titulo": "Comisión Europea — Resultados de la subasta IF24 del Banco Europeo del Hidrógeno (Fondo de Innovación): proyectos seleccionados, firmantes y retirados",
+            "url": "https://climate.ec.europa.eu/eu-action/eu-funding-climate-action/innovation-fund/calls-proposals/if24-auction_en",
+            "fecha": "2026-01-20",
+            "archivo": "fuentes/2026-08-06_ce_subasta-if24-banco-europeo-hidrogeno-resultados.html"
           }
         ],
         "nota": "La ficha técnica la redacta el promotor y el registro la publica sin certificarla: el artículo 23 del TEN-E obliga a publicar, no a comprobar. Por eso la potencia que aparece arriba es la del proyecto que la ficha define, y todo lo que la fuente presenta como ambición o ampliación futura se queda en las claves, con sus palabras."
