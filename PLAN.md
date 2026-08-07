@@ -255,7 +255,38 @@ en gris por olvido**, y ninguna se puede levantar sin romper algo:
 | `red-electrica` | REE es `corporativa` y **R3 le prohíbe sostener un `confirmado`** | Fuente primaria con geometría |
 | `cables-submarinos` | **No hay registro público**, pese a la Ley 11/2022 | Reconstruirla acto por acto |
 
-**`agua-embalsada` — el bloqueo es técnico y deliberado, no un despiste.** Las URL
+**`agua-embalsada` — DESBLOQUEADA el 2026-08-07: hay otra puerta, y es mejor.**
+El shapefile del SNCZI sigue tras el ALTCHA (ver abajo), pero resulta que **ese
+no era el dato**. «Agua embalsada» no es la geometría del vaso: es el agua que
+hay dentro, y eso el MITECO lo publica en abierto y sin formulario.
+
+`BD-Embalses.zip` —el histórico del **Boletín Hidrológico Semanal**, servido
+desde el CDN del Ministerio, licencia libre con atribución— trae **719.725 filas
+semanales desde 1988**: fecha, demarcación, embalse, capacidad total, agua actual
+y si es hidroeléctrico. Ya está archivado en `fuentes/`. Estado al 4 de agosto de
+2026: **401 embalses, 56.480 hm³ de capacidad y 39.277 embalsados (69,5 %)**.
+
+Es formato **MDB** (Access) y este entorno no traía lector; se lee con
+`access_parser`, instalado **solo en el scratchpad** — no es dependencia del
+pipeline y no debe serlo.
+
+**Lo que falta para publicarla, y por qué no se hizo de una sentada.** La base no
+lleva coordenadas: hay que casar cada embalse con el Nomenclátor del IGN. Un
+barrido por `tipo=Embalse` da 1.884 topónimos y, con el emparejador afinado
+—artículo pospuesto incluido, que es la lección de `perte`—, casan **271 de 401
+sin ambigüedad (68 %), 21 ambiguos y 109 sin correspondencia**. Los que fallan
+son los de nombre en catalán, euskera o gallego («La Baells», «Añarbe»,
+«Boadella»), que el nomenclátor rotula con otro tipo o en su lengua.
+
+**Publicar el 68 % en silencio sería exactamente el peor bug de este proyecto.**
+Lo que queda es: ampliar el barrido a los otros tipos y lenguas, desambiguar los
+21 por punto-en-polígono contra el **WFS de demarcaciones hidrográficas**
+(`https://wmts.mapama.gob.es/sig/wfs_agua/demarcaciones_et/wfs`, que sí existe y
+es el único WFS del Ministerio), y declarar como hueco lo que siga sin casar.
+Ojo también con los embalses cuyo último registro es de 2003: no son actuales y
+van a `estado_registro: historico`, no se borran.
+
+**Y lo que el ALTCHA sigue bloqueando, que ya no es la capa entera.** Las URL
 de descarga del SNCZI existen y funcionan
 (`gis.miteco.gob.es/descargas/app/DescargaFichero?f=egis_embalse_geoetrs89.zip`),
 la licencia es de **atribución simple** —«se puede usar de modo libre y gratuito
