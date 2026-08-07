@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validador del Atlas Estratégico de España — el contrato con dientes.
 
-Comprueba las siete verificaciones de CONTRATO-DATOS.md §7 sobre las reglas de
+Comprueba las nueve verificaciones de CONTRATO-DATOS.md §7 sobre las reglas de
 doctrina R1–R9 de §6.4 — las nueve, desde el contrato 1.10. Corre en CI en cada
 PR que toque `datos/`.
 
@@ -37,6 +37,7 @@ except ImportError:  # pragma: no cover
 RAIZ = Path(__file__).resolve().parent.parent
 DATOS = RAIZ / "datos"
 ESQUEMAS = Path(__file__).resolve().parent / "esquemas"
+PROCEDENCIA = RAIZ / "fuentes" / "PROCEDENCIA.md"
 
 # §7.4 · El recuadro del territorio, CANARIAS INCLUIDAS. Quien lo estreche
 # «porque España está más al norte» deja fuera dos provincias.
@@ -805,6 +806,51 @@ def comprobar_manifiesto(manifiesto: dict) -> list[Hallazgo]:
     return out
 
 
+# Una ficha de capa en `fuentes/PROCEDENCIA.md` se reconoce porque su encabezado
+# de nivel 2 es UN SOLO token en kebab-case, que es la forma de un `id` de capa.
+# Los encabezados de prosa llevan espacios y mayúsculas («Lo que vale para
+# todas»), así que no colisionan. La regla está escrita también en el preámbulo
+# del documento: quien titule una sección de prosa en kebab-case se buscará un
+# hallazgo, y lo tendrá merecido.
+FICHA_CAPA = re.compile(r"^## ([a-z][a-z0-9-]*)\s*$", re.MULTILINE)
+
+
+def comprobar_procedencia(manifiesto: dict, texto: str | None) -> list[Hallazgo]:
+    """§7.9 · Ninguna capa publica datos sin decir de dónde salen. BLOQUEA.
+
+    Es higiene del repositorio, no doctrina sobre los datos: por eso no es una
+    regla `R*` de §6.4, sino una comprobación del mismo rango que §7.8.
+
+    Comprueba lo único que una máquina puede comprobar aquí —que la ficha
+    EXISTE—, no que esté bien escrita. Que un documento de procedencia diga la
+    verdad no lo sabe el CI; que falte entero, sí. Y ese es el fallo real: se
+    añade una capa, se publica, y la ficha se escribe «luego».
+
+    Pura a propósito (dict + texto → hallazgos), para poder ejercitarla en las
+    pruebas sin tocar el disco, como ya se hace con `vigilar.py`.
+    """
+    if texto is None:
+        return [Hallazgo(BLOQUEA, "§7.9", "fuentes/PROCEDENCIA.md",
+                         "No existe. Cada capa publicada tiene que decir de dónde "
+                         "sale, con qué condiciones y qué hay que saber (§2).")]
+
+    fichas = set(FICHA_CAPA.findall(texto))
+    publicadas = {c["id"] for c in manifiesto.get("capas", []) if c.get("fichero")}
+
+    out = []
+    for cid in sorted(publicadas - fichas):
+        out.append(Hallazgo(BLOQUEA, "§7.9", cid,
+                            "Publica datos y no tiene ficha en "
+                            "`fuentes/PROCEDENCIA.md`. Un dato cuya procedencia "
+                            "no se puede leer no se puede citar."))
+    for cid in sorted(fichas - publicadas):
+        out.append(Hallazgo(BLOQUEA, "§7.9", cid,
+                            "Tiene ficha de procedencia y no publica datos. O le "
+                            "falta su entrada en el manifiesto, o la ficha sobrevive "
+                            "a una capa que ya no está."))
+    return out
+
+
 # ─────────────────────────── orquestación ───────────────────────────
 
 def validar_capa(doc: dict, ruta: Path, manifiesto: dict, voc: dict) -> list[Hallazgo]:
@@ -842,7 +888,13 @@ def main(argv: list[str]) -> int:
     manifiesto = cargar(DATOS / "manifest.json")
     voc = vocabularios()
 
-    hallazgos = {"manifest.json": comprobar_manifiesto(manifiesto)}
+    hallazgos = {
+        "manifest.json": comprobar_manifiesto(manifiesto),
+        "fuentes/PROCEDENCIA.md": comprobar_procedencia(
+            manifiesto,
+            PROCEDENCIA.read_text(encoding="utf-8") if PROCEDENCIA.exists() else None,
+        ),
+    }
 
     if argv:
         rutas = [Path(a) for a in argv]

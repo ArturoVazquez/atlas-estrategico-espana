@@ -7,7 +7,7 @@
 
   "_registro_por_adelantado": "NOTA HISTÓRICA desde el 2026-08-07: ya no hay ninguna capa `en_preparacion`, así que esta regla no gobierna nada hoy. Se conserva porque la puerta sigue abierta y porque su motivo es bueno. Decía: una rama declarada puede adelantar su `registro` aunque no tenga datos —la regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero`—, y eso importaba porque `registro: ilustrativo` activa R5 sobre la capa: dibuja dónde, no cuánto ni de quién. Las dos últimas que lo usaban, `recurso-eolico` y `recurso-solar`, resultaron ser el caso que enseña por qué adelantarlo es arriesgado: declaraban `ilustrativo` porque se las imaginaba dibujadas a mano, y al publicarse de verdad —ya como `parques-eolicos` y `plantas-solares`— son `verificado`. Adelantar el registro es una previsión, no un compromiso.",
 
-  "schema_version": "1.25.0",
+  "schema_version": "1.26.0",
   "release": "2026.08.23",
 
   "capas": [

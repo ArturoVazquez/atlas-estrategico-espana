@@ -22,6 +22,10 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 VALIDAR = AQUI.parent / "validar.py"
 
+sys.path.insert(0, str(AQUI.parent))
+
+from validar import comprobar_procedencia  # noqa: E402
+
 # fixture -> (códigos que DEBEN salir y ninguno más, código de salida esperado)
 #
 # El código de salida va explícito y no deducido de si hay hallazgos, porque el
@@ -115,6 +119,41 @@ CASOS: dict[str, tuple[set[str], int]] = {
     "invalido-10-estatuto-contradictorio.geojson":     ({"§10"},    1),
 }
 
+# §7.9 · La ficha de procedencia. No lleva fixture GeoJSON porque no mira dentro
+# de una colección: compara el manifiesto con un documento en prosa. Se ejercita
+# como se ejercita `vigilar.py` —importando la función pura y dándole entradas
+# sintéticas—, que es el único modo de ver morder al diente sin romper el repo.
+#
+# nombre -> (manifiesto, texto del documento o None, ids que deben salir señalados)
+MANIFIESTO_PRUEBA = {"capas": [
+    {"id": "con-datos", "fichero": "capas/con-datos.geojson"},
+    {"id": "en-gris"},                      # rama del horizonte: no debe exigir ficha
+]}
+
+CASOS_PROCEDENCIA: dict[str, tuple[dict, str | None, set[str]]] = {
+    "procedencia · la ficha está":
+        (MANIFIESTO_PRUEBA, "# Procedencia\n\n## con-datos\n\ntexto\n", set()),
+
+    # El fallo real que esta comprobación existe para cazar: se añade la capa, se
+    # publica, y la ficha se escribe «luego».
+    "procedencia · capa publicada sin ficha":
+        (MANIFIESTO_PRUEBA, "# Procedencia\n\n## Lo que vale para todas\n", {"con-datos"}),
+
+    # Una rama en gris no tiene datos, así que no debe exigirle procedencia a
+    # nadie. Si esto fallara, el horizonte de §3 sería inhabitable.
+    "procedencia · la rama en gris no la exige":
+        (MANIFIESTO_PRUEBA,
+         "## con-datos\n\n## Cuaderno de obtención\n", set()),
+
+    # El recíproco: una ficha que sobrevive a su capa. Señala al revés — o falta
+    # la entrada en el manifiesto, o el documento quedó desfasado.
+    "procedencia · ficha huérfana":
+        (MANIFIESTO_PRUEBA, "## con-datos\n\n## capa-fantasma\n", {"capa-fantasma"}),
+
+    "procedencia · el documento entero no existe":
+        (MANIFIESTO_PRUEBA, None, {"fuentes/PROCEDENCIA.md"}),
+}
+
 LINEA = re.compile(r"^\s+(BLOQUEA|AVISA)\s+(\S+)\s")
 
 
@@ -164,12 +203,34 @@ def main() -> int:
         else:
             print(f"  ✓ {nombre:<52} {etiqueta}")
 
+    for nombre, (manifiesto, texto, esperados) in CASOS_PROCEDENCIA.items():
+        hallazgos = comprobar_procedencia(manifiesto, texto)
+        señalados = {h.donde for h in hallazgos}
+        niveles = {h.nivel for h in hallazgos}
+
+        problemas = []
+        if señalados != esperados:
+            if faltan := esperados - señalados:
+                problemas.append(f"no señaló {', '.join(sorted(faltan))}")
+            if sobran := señalados - esperados:
+                problemas.append(f"señaló de más {', '.join(sorted(sobran))}")
+        if hallazgos and niveles != {"BLOQUEA"}:
+            problemas.append("§7.9 tiene que bloquear, no avisar")
+
+        etiqueta = "§7.9  " + (", ".join(sorted(esperados)) if esperados else "sin hallazgos")
+        if problemas:
+            fallos.append(f"{nombre}: {'; '.join(problemas)}")
+            print(f"  ✗ {nombre}\n      esperado: {etiqueta}\n      {'; '.join(problemas)}")
+        else:
+            print(f"  ✓ {nombre:<52} {etiqueta}")
+
+    total = len(CASOS) + len(CASOS_PROCEDENCIA)
     print()
     if fallos:
         print(f"✗ {len(fallos)} prueba(s) del validador no cumplen.")
         return 1
 
-    print(f"✓ {len(CASOS)} pruebas. El fichero válido pasa; cada incumplimiento se")
+    print(f"✓ {total} pruebas. El fichero válido pasa; cada incumplimiento se")
     print("  señala por su regla, y solo por la suya; y lo que avisa no bloquea.")
     return 0
 
