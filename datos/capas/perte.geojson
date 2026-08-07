@@ -81,7 +81,7 @@
     },
     {
       "type": "Feature",
-      "id": "perte:a31472459-oltza-zendea",
+      "id": "perte:a31472459-cendea-de-olza-oltza-zendea",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -90,8 +90,8 @@
         ]
       },
       "properties": {
-        "slug": "a31472459-oltza-zendea",
-        "nombre": "VOLKSWAGEN NAVARRA, S.A. — Oltza Zendea",
+        "slug": "a31472459-cendea-de-olza-oltza-zendea",
+        "nombre": "VOLKSWAGEN NAVARRA, S.A. — Cendea de Olza/Oltza Zendea",
         "categoria": "plan_inversion",
         "descripcion": "Plan de s ostenibilidad VW Navarra",
         "estado_registro": "vigente",
@@ -109,7 +109,7 @@
         "fase": "tramitacion",
         "fase__v": "confirmado",
         "fase__f": "f1",
-        "municipio": "Oltza Zendea",
+        "municipio": "Cendea de Olza/Oltza Zendea",
         "provincia": "Navarra",
         "presupuesto_financiable": 8309006.0,
         "presupuesto_financiable__v": "confirmado",
@@ -124,12 +124,6 @@
         "prestamo_propuesto__v": "confirmado",
         "prestamo_propuesto__f": "f1",
         "claves": [
-          {
-            "k": "El listado escribe el municipio de otra forma",
-            "v": "El Ministerio lo llama «Cendea de Olza/Oltza Zendea» y el Nomenclátor del IGN, «Oltza Zendea». Es la misma localidad con el artículo en otro sitio o el nombre en otra lengua. Se publica la forma del IGN, que es de donde sale el punto, y se deja dicha la del listado.",
-            "verif": "confirmado",
-            "fuente": "f2"
-          },
           {
             "k": "El documento es un registro por comisiones, no una tabla",
             "v": "El listado recoge seis comisiones de verificación entre mayo y octubre de 2025, y un expediente puede aparecer en más de una: la posterior lo REVISA. Contar filas da 61; los expedientes vigentes son 57. Que esa lectura es la buena lo demuestran los TOTALES del propio documento, que cuadran al céntimo en las seis.",
@@ -1042,7 +1036,7 @@
     },
     {
       "type": "Feature",
-      "id": "perte:a16952764-sagunto",
+      "id": "perte:a16952764-sagunt-sagunto",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -1051,8 +1045,8 @@
         ]
       },
       "properties": {
-        "slug": "a16952764-sagunto",
-        "nombre": "POWERCO BATTERY SPAIN SA. — Sagunto",
+        "slug": "a16952764-sagunt-sagunto",
+        "nombre": "POWERCO BATTERY SPAIN SA. — Sagunt/Sagunto",
         "categoria": "plan_inversion",
         "descripcion": "Plan de inversión para implementar medidas de Sostenibilidad y Eficiencia Energética en la factoría de PowerCo Battery Spain S.A.U. de Sagunto",
         "estado_registro": "vigente",
@@ -1070,7 +1064,7 @@
         "fase": "tramitacion",
         "fase__v": "confirmado",
         "fase__f": "f1",
-        "municipio": "Sagunto",
+        "municipio": "Sagunt/Sagunto",
         "provincia": "València/Valencia",
         "presupuesto_financiable": 142000000.0,
         "presupuesto_financiable__v": "confirmado",
@@ -1087,7 +1081,7 @@
         "claves": [
           {
             "k": "El listado escribe el municipio de otra forma",
-            "v": "El Ministerio lo llama «Sagunto/Sagunt» y el Nomenclátor del IGN, «Sagunto». Es la misma localidad con el artículo en otro sitio o el nombre en otra lengua. Se publica la forma del IGN, que es de donde sale el punto, y se deja dicha la del listado.",
+            "v": "El Ministerio lo llama «Sagunto/Sagunt» y el Nomenclátor del IGN, «Sagunt/Sagunto». Es la misma localidad con el artículo en otro sitio o el nombre en otra lengua. Se publica la forma del IGN, que es de donde sale el punto, y se deja dicha la del listado.",
             "verif": "confirmado",
             "fuente": "f2"
           },

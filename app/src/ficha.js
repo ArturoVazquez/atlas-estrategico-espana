@@ -178,6 +178,7 @@ const ROTULOS = {
   volumen_util_gwh: "Volumen útil (GWh)",
   produccion_t_anio: "Producción declarada (t/año)",
   beneficiario: "Beneficiario",
+  titulo_plan: "Título del plan",
   cif: "Identificador fiscal",
   codigo_plan: "Plan de inversión",
   comision_verificacion: "Comisión de verificación",
