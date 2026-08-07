@@ -15,6 +15,13 @@ Cada capa declara además su propia `licencia` y `atribucion` en
 `datos/manifest.json` (contrato §3). Si alguna capa futura llevara una licencia
 distinta a esta, mandaría la del manifiesto y se anotaría aquí.
 
+> **La licencia de ENTRADA de cada capa —la de su emisor, y qué obliga— está en
+> [`fuentes/PROCEDENCIA.md`](../fuentes/PROCEDENCIA.md).** Este documento cubre
+> la salida: bajo qué condiciones se reutiliza lo que publica el atlas. Son dos
+> preguntas distintas y conviene no confundirlas: que una fuente sea compatible
+> con CC BY 4.0 **no significa que baste con citarla de cualquier manera**. La
+> del IGN, por ejemplo, exige una fórmula literal para la obra derivada.
+
 ---
 
 ## Por qué CC BY 4.0 y no algo más restrictivo

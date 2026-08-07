@@ -5,6 +5,11 @@ Copia de cada documento citado por el atlas, guardada **en el momento de citarlo
 su web, una empresa retira una nota de prensa que ya no le conviene. Cuando eso
 pasa, la cita sigue aquí.
 
+> **Qué se llevó cada capa de aquí, y con qué condiciones: [`PROCEDENCIA.md`](PROCEDENCIA.md).**
+> Este fichero explica cómo se archiva; aquel, de dónde sale cada capa, qué
+> obliga su licencia y qué hay que saber antes de citarla. Ninguna capa publica
+> sin su ficha — lo comprueba el CI (§7.9).
+
 ## Cómo se nombra un fichero
 
 ```
@@ -32,6 +37,13 @@ Ejemplo: `2026-07-22_ce_lista-crma-1.pdf`
   fecha de captura y el viejo se queda. La contradicción entre dos versiones es
   un dato, y a veces el más interesante.
 - **Este directorio jamás se ignora.** Es la cita.
+- **Y jamás se normaliza.** `.gitattributes` saca a `fuentes/` entero de la
+  regla de finales de línea del repositorio (`fuentes/** -text`). Se descubrió
+  tarde: durante 34 documentos, un servidor que servía CRLF y un git que lo
+  reescribía a LF guardaban un fichero **que ya no era el que se descargó** —el
+  metadato de Puertos del Estado se servía con 39.516 bytes y el repositorio
+  guardaba 38.775—. Se lee igual y no cuadra byte a byte, que aquí es la
+  diferencia entre una copia y la cita.
 
 ## Lo que NO cambia de licencia por estar aquí
 

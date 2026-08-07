@@ -62,6 +62,7 @@ PLAN.md             fases de construcción y criterios de hecho
 CHANGELOG-DATOS.md  una entrada por release: qué cambió, y qué sigue sin saberse
 datos/              las capas (GeoJSON RFC 7946, WGS84) y el manifiesto
 fuentes/            archivo documental de todo lo citado
+  PROCEDENCIA.md    de dónde sale cada capa, qué obliga su licencia y qué saber
 pipeline/           validar.py (doctrina como test, en CI) · vigilar.py (semanal)
                     consultar.py (consulta al IGN y al catastro; contrasta)
 app/                el visor, y la página «Método» que lo explica
@@ -145,6 +146,13 @@ Señalar un **hueco** —un dato que damos por bueno sin fuente primaria— es t
 
 Ese documento explica también por qué ninguna capa incorpora datasets con
 licencia contagiosa, y qué obliga eso a reconstruir desde fuente primaria.
+
+**La licencia de entrada —la del emisor de cada capa— está en
+[`fuentes/PROCEDENCIA.md`](fuentes/PROCEDENCIA.md)**, con una ficha por capa: de
+dónde sale, qué exige exactamente su licencia, qué hay que saber antes de
+citarla y qué hueco declara. Que una fuente sea compatible con CC BY 4.0 no
+significa que baste con citarla de cualquier manera: la del IGN, por ejemplo,
+exige una fórmula literal para la obra derivada.
 
 ## Cadencia
 
