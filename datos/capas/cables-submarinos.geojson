@@ -1,0 +1,434 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "cables-submarinos",
+    "schema_version": "1.20.0",
+    "verificado_a": "2026-08-07"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "cables-submarinos:grace-hopper-sopela",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.99701,
+          43.38867
+        ]
+      },
+      "properties": {
+        "slug": "grace-hopper-sopela",
+        "nombre": "Grace Hopper — Playa Atxabiribil (Sopela)",
+        "categoria": "aterrizaje",
+        "descripcion": "Aterrizaje en la costa de Bizkaia de un cable transatlántico. El expediente de Costas llama al arenal «playa de Arrietara»; el Nomenclátor del IGN lo llama «Playa Atxabiribil» — es el mismo, con nombre doble.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Playa Atxabiribil» en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "sistema": "Grace Hopper",
+        "titular": "Telxius Cable España, S.L.",
+        "titular__v": "confirmado",
+        "titular__f": "f1",
+        "conecta": "España con el Reino Unido y los Estados Unidos",
+        "expediente": "CNC02/21/48/0001",
+        "instrumento": "Anuncio de la Demarcación de Costas del País Vasco por el que se somete a información pública la solicitud de concesión de ocupación de dominio público marítimo-terrestre con destino a la instalación de un cable submarino de fibra óptica desde la playa de Arrietara",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "emplazamiento": "Playa Atxabiribil",
+        "municipio": "Sopela",
+        "provincia": "Bizkaia",
+        "claves": [
+          {
+            "k": "El acto no nombra el sistema en su título",
+            "v": "El anuncio autoriza «un cable submarino de fibra óptica» sin bautizarlo. El nombre «Grace Hopper» consta en el proyecto básico que acompaña al expediente, preparado por SubCom, que forma parte de la misma documentación de información pública.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Y el titular no es el dueño del cable",
+            "v": "Quien solicita la concesión es Telxius Cable España, que es quien aterriza. El acto dice eso y solo eso; el atlas publica el titular del expediente, no el propietario del sistema.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Anuncio de la Demarcación de Costas del País Vasco — información pública del expediente CNC02/21/48/0001 (Ministerio para la Transición Ecológica y el Reto Demográfico)",
+            "url": "https://www.miteco.gob.es/es/costas/participacion-publica/48-cnc-cable-arrietara.html",
+            "fecha": "2021-02-26",
+            "archivo": "fuentes/2026-08-07_miteco_cnc02-21-48-0001-cable-arrietara-sopela.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "url": "https://api-features.ign.es/collections/namedplace/items",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_ign_ngbe-toponimos-cables-submarinos.json"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cables-submarinos:virgen-del-mar-santander",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8775,
+          43.47913
+        ]
+      },
+      "properties": {
+        "slug": "virgen-del-mar-santander",
+        "nombre": "Aterrizaje de la Virgen del Mar (Santander)",
+        "categoria": "aterrizaje",
+        "descripcion": "Solicitud de concesión para un cable submarino de telecomunicaciones con inicio en la playa de la Virgen del Mar. El acto no dice de qué sistema se trata ni adónde va.",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Isla de la Virgen del Mar» en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "titular": "Edge Network Infrastructure Services Spain, S.L.U.",
+        "titular__v": "confirmado",
+        "titular__f": "f1",
+        "conecta": "España con el otro extremo del cable, que el acto no nombra",
+        "expediente": "S-23/142 CNC02/23/39/0009",
+        "instrumento": "Anuncio de la Demarcación de Costas en Cantabria sobre solicitud de terrenos de dominio público marítimo-terrestre con destino a la instalación de un cable submarino de telecomunicaciones con inicio en la playa de la Virgen del Mar",
+        "fase": "tramitacion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "emplazamiento": "Isla de la Virgen del Mar",
+        "municipio": "Santander",
+        "provincia": "Cantabria",
+        "claves": [
+          {
+            "k": "Lo que el acto NO dice, y por eso el registro es parcial",
+            "v": "El expediente autoriza la ocupación y no bautiza el cable: no hay nombre de sistema ni destino en todo el anuncio. Publicar aquí un nombre sacado de la prensa sería exactamente lo que esta capa existe para no hacer, así que el campo queda como hueco declarado.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El nomenclátor no nombra la playa",
+            "v": "El Nomenclátor del IGN no recoge «playa de la Virgen del Mar». Sí recoge la ISLA y la ERMITA de la Virgen del Mar, que la delimitan, y de ahí sale la coordenada. Es `paraje` por el nombre del lugar, no por el punto donde el cable entra en tierra.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Anuncio de la Demarcación de Costas en Cantabria — información pública del expediente CNC02/23/39/0009 (Ministerio para la Transición Ecológica y el Reto Demográfico)",
+            "url": "https://www.miteco.gob.es/es/costas/participacion-publica/39-cnc02-23-39-0009.html",
+            "fecha": "2023-09-11",
+            "archivo": "fuentes/2026-08-07_miteco_cnc02-23-39-0009-cable-virgen-del-mar-santander.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "url": "https://api-features.ign.es/collections/namedplace/items",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_ign_ngbe-toponimos-cables-submarinos.json"
+          },
+          {
+            "id": "f3",
+            "tipo": "hueco",
+            "titulo": "El acto administrativo no nombra el sistema de cable ni su destino. Ninguna fuente primaria lo hace: la Ley 11/2022 obliga a comunicarlos al Ministerio de Transformación Digital, pero el Ministerio no publica la lista."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cables-submarinos:cadiz-ceuta-benitez",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.33747,
+          35.89516
+        ]
+      },
+      "properties": {
+        "slug": "cadiz-ceuta-benitez",
+        "nombre": "Cádiz–Ceuta — Playa de Benítez (Ceuta)",
+        "categoria": "aterrizaje",
+        "descripcion": "Concesión otorgada para el cableado submarino de fibra óptica que une Cádiz con Ceuta, en las playas de Benítez y La Ribera. Ocupa 49.368 metros cuadrados de dominio público marítimo-terrestre por diez años, prorrogables hasta treinta.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Playa de Benítez» en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "sistema": "Cableado submarino Cádiz–Ceuta",
+        "titular": "GTD Cableado de Redes Inteligentes, S.L.",
+        "titular__v": "confirmado",
+        "titular__f": "f1",
+        "conecta": "la península (Cádiz) con Ceuta",
+        "expediente": "BOE-B-2024-12549",
+        "instrumento": "Anuncio de la Unidad de Costas de la Delegación del Gobierno en Ceuta sobre otorgamiento de concesión de ocupación de dominio público marítimo-terrestre con destino a cableado submarino de fibra óptica",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "emplazamiento": "Playa de Benítez",
+        "municipio": "Ceuta",
+        "provincia": "Ceuta",
+        "claves": [
+          {
+            "k": "El acto sitúa DOS playas y el registro es uno",
+            "v": "La concesión cubre «las playas de Benítez y La Ribera en la parte correspondiente a Ceuta». Se publica un punto, en Benítez, porque el aterrizaje es uno; la segunda playa va aquí en vez de inventar un registro que el acto no distingue.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Superficie y plazo, del propio acto",
+            "v": "«49.368 metros cuadrados», por «diez años, prorrogables hasta un máximo de treinta». La resolución es de 12 de diciembre de 2019 y el anuncio de otorgamiento se publica en 2024.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Anuncio de la Unidad de Costas de la Delegación del Gobierno en Ceuta sobre otorgamiento de concesión — BOE-B-2024-12549",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-B-2024-12549",
+            "fecha": "2019-12-12",
+            "archivo": "fuentes/2026-08-07_boe_concesion-cable-cadiz-ceuta-gtd.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "url": "https://api-features.ign.es/collections/namedplace/items",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_ign_ngbe-toponimos-cables-submarinos.json"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cables-submarinos:penbal-4-valencia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.32281,
+          39.47851
+        ]
+      },
+      "properties": {
+        "slug": "penbal-4-valencia",
+        "nombre": "PENBAL-4 — Platja de la Malva-rosa (Valencia)",
+        "categoria": "aterrizaje",
+        "descripcion": "Cable que une la península con Baleares y que parte de la playa de la Malvarrosa. El expediente es de LEGALIZACIÓN: el cable ya estaba instalado en el dominio público marítimo-terrestre cuando se pidió la concesión.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Platja de la Malva-rosa» en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "sistema": "PENBAL-4",
+        "titular": "Telefónica de España, S.A.U.",
+        "titular__v": "confirmado",
+        "titular__f": "f1",
+        "conecta": "la península (Valencia) con Ibiza y Mallorca",
+        "expediente": "CNC02/17/46/0009",
+        "instrumento": "Anuncio de la Demarcación de Costas en Valencia sobre la solicitud de concesión para la legalización del cable submarino PENBAL-4",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "emplazamiento": "Platja de la Malva-rosa",
+        "municipio": "València",
+        "provincia": "Valencia",
+        "claves": [
+          {
+            "k": "Es una legalización, y eso dice algo",
+            "v": "El acto no autoriza una obra futura: regulariza una ocupación ya existente. Por eso la fase es `produccion` aunque el expediente esté en tramitación — la que se tramita es la concesión, no el cable.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "El nombre de la playa, en la forma del nomenclátor",
+            "v": "El acto dice «playa de la Malvarrosa»; el Nomenclátor del IGN la escribe en valenciano, «Platja de la Malva-rosa». Manda el nomenclátor. Ojo al buscarla: «La Malvarrosa» a secas devuelve un paraje a cuarenta kilómetros al norte, que no es esta playa.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Anuncio de la Demarcación de Costas en Valencia sobre solicitud de concesión de Telefónica de España, S.A.U. — BOE-B-2026-17288, expediente CNC02/17/46/0009",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-B-2026-17288",
+            "fecha": "2026-01-01",
+            "archivo": "fuentes/2026-08-07_boe_solicitud-cable-penbal-4-valencia.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "url": "https://api-features.ign.es/collections/namedplace/items",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_ign_ngbe-toponimos-cables-submarinos.json"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cables-submarinos:canalink-santa-cruz-la-palma",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.76689,
+          28.67982
+        ]
+      },
+      "properties": {
+        "slug": "canalink-santa-cruz-la-palma",
+        "nombre": "Canalink — Puerto de Santa Cruz de La Palma",
+        "categoria": "aterrizaje",
+        "descripcion": "Concesión de veinticinco años para instalar un cable submarino de telecomunicaciones en las aguas del puerto de Santa Cruz de La Palma. Es uno de los dos amarres canarios de Canalink que un acto administrativo sitúa.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Puerto de Santa Cruz de La Palma» en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "sistema": "Canalink",
+        "titular": "Canarias Submarine Link, S.L.",
+        "titular__v": "confirmado",
+        "titular__f": "f1",
+        "conecta": "las islas Canarias entre sí",
+        "expediente": "BOE-B-2011-23242",
+        "instrumento": "Resolución del Consejo de Administración de la Autoridad Portuaria de Santa Cruz de Tenerife por la que se otorga concesión administrativa para la ocupación de dominio público portuario en la Zona II de aguas del Puerto de Santa Cruz de La Palma",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "emplazamiento": "Puerto de Santa Cruz de La Palma",
+        "municipio": "Santa Cruz de la Palma",
+        "provincia": "Santa Cruz de Tenerife",
+        "claves": [
+          {
+            "k": "El acto es portuario, no de Costas",
+            "v": "Cuando el cable entra por una Zona II de aguas de un puerto de interés general, quien otorga es la Autoridad Portuaria y no la Demarcación de Costas. Cambia el órgano, no la doctrina: sigue siendo un acto administrativo que nombra y sitúa.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Plazo y fecha, del propio acuerdo",
+            "v": "Veinticinco años, por acuerdo de 24 de mayo de 2011.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Resolución del Consejo de Administración de la Autoridad Portuaria de Santa Cruz de Tenerife — BOE-B-2011-23242",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-B-2011-23242",
+            "fecha": "2011-05-24",
+            "archivo": "fuentes/2026-08-07_boe_concesion-canalink-puerto-santa-cruz-la-palma.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "url": "https://api-features.ign.es/collections/namedplace/items",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_ign_ngbe-toponimos-cables-submarinos.json"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cables-submarinos:canalink-granadilla",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4914,
+          28.08144
+        ]
+      },
+      "properties": {
+        "slug": "canalink-granadilla",
+        "nombre": "Canalink — Puerto de Granadilla (Tenerife)",
+        "categoria": "aterrizaje",
+        "descripcion": "El segundo amarre canario de Canalink que un acto administrativo sitúa: concesión de ocupación del dominio público portuario en las aguas del puerto de Granadilla, en Tenerife.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "paraje",
+        "geo_fuente": "«Puerto de Granadilla» en el Nomenclátor Geográfico Básico de España",
+        "geo_fuente__v": "confirmado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "sistema": "Canalink",
+        "titular": "Canarias Submarine Link, S.L.",
+        "titular__v": "confirmado",
+        "titular__f": "f1",
+        "conecta": "las islas Canarias entre sí",
+        "expediente": "BOE-B-2013-3436",
+        "instrumento": "Resolución del Consejo de Administración de la Autoridad Portuaria de Santa Cruz de Tenerife por la que se otorga concesión administrativa para la ocupación de dominio público portuario en la Zona II de aguas del Puerto de Granadilla",
+        "fase": "produccion",
+        "fase__v": "confirmado",
+        "fase__f": "f1",
+        "emplazamiento": "Puerto de Granadilla",
+        "municipio": "Granadilla de Abona",
+        "provincia": "Santa Cruz de Tenerife",
+        "claves": [
+          {
+            "k": "El contraste municipal no vale para esta capa, y no es un fallo del dato",
+            "v": "Los puntos son topónimos costeros: el IGN sitúa la etiqueta de una playa en la orilla, y los polígonos municipales acaban en la costa. `consultar.py contraste` dirá siempre «ningún municipio lo contiene» para los aterrizajes de playa. Comprobado moviendo el punto 400 m tierra adentro: entonces sí cae en su municipio. Mover el punto para que el contraste calle sería estropear el dato para contentar a la herramienta.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          },
+          {
+            "k": "Dos concesiones, dos registros",
+            "v": "Santa Cruz de La Palma y Granadilla son dos actos distintos, de dos años distintos, sobre dos puertos distintos. El atlas publica aterrizajes, no sistemas: un cable con dos amarres documentados da dos registros.",
+            "verif": "confirmado",
+            "fuente": "f1"
+          }
+        ],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Resolución del Consejo de Administración de la Autoridad Portuaria de Santa Cruz de Tenerife — BOE-B-2013-3436",
+            "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-B-2013-3436",
+            "fecha": "2013-01-01",
+            "archivo": "fuentes/2026-08-07_boe_concesion-canalink-puerto-granadilla.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "primaria",
+            "titulo": "Nomenclátor Geográfico Básico de España — Instituto Geográfico Nacional",
+            "url": "https://api-features.ign.es/collections/namedplace/items",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_ign_ngbe-toponimos-cables-submarinos.json"
+          }
+        ]
+      }
+    }
+  ]
+}

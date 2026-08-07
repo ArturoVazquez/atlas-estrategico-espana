@@ -173,14 +173,20 @@
     },
 
     {
+      "_": "Registra ATERRIZAJES, no cables, y nace distinta de su propio boceto: se declaró `mixta` e `ilustrativo` cuando se imaginaba un trazado que dibujar, y las fuentes obligan a otra cosa. El recorrido de un cable submarino NO tiene fuente con licencia compatible —TeleGeography es CC BY-NC-SA, vetada por datos/LICENCIA-DATOS.md—, y lo que sí publica una fuente primaria es dónde toca tierra, porque ocupar dominio público marítimo-terrestre exige un acto administrativo. Acotación: entra el aterrizaje de un cable que une territorios SEPARADOS POR MAR; no entra el cruce de una ría, y los actos de Costas están llenos de ellos. ADVERTENCIA QUE HAY QUE LEER: esta capa NO PUEDE AFIRMAR QUE ESTÁN TODOS. La Ley 11/2022 obliga a comunicar los cables al Ministerio de Transformación Digital pero el Ministerio no publica la lista, así que no existe registro contra el que cuadrar. Publica los aterrizajes que un acto administrativo nombra y sitúa, y dice que eso es lo que publica.",
       "id": "cables-submarinos",
       "titulo": "Cables submarinos",
       "arbol": "conectividad",
       "grupo": "dotacion",
-      "geometria": "mixta",
-      "registro": "ilustrativo",
+      "geometria": "puntos",
+      "registro": "verificado",
       "ambito": "espana",
-      "en_preparacion": true
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-07",
+      "version": "1.0.0",
+      "fichero": "capas/cables-submarinos.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Ministerio para la Transición Ecológica y el Reto Demográfico · Autoridad Portuaria de Santa Cruz de Tenerife · Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
     {
       "_": "La capa más pequeña del atlas, y el tamaño ES el dato: España no tiene registro público de centros de datos. La base europea del art. 12 de la Directiva 2023/1791 se publica agregada por Estado miembro, MITECO no lleva censo y las cifras de mercado son de la patronal (`corporativa`, R3). Entra el centro que un ACTO ADMINISTRATIVO nombra, sitúa y dimensiona, y por ahora el único localizado que hace las tres cosas es el PIGA «Expansión Región AWS en Aragón».",

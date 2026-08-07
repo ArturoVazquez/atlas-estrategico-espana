@@ -196,6 +196,13 @@ const ROTULOS = {
   nombre_en_la_norma: "Cómo la llama la norma",
   pais: "Estado",
   sede: "Sede",
+  sistema: "Sistema de cable",
+  titular: "Titular del expediente",
+  conecta: "Qué une",
+  expediente: "Expediente",
+  // «Emplazamiento» y no «playa»: dos de los seis aterrizajes son puertos, y
+  // uno se sitúa por una isla porque el nomenclátor no nombra su arenal.
+  emplazamiento: "Emplazamiento",
 };
 
 function rotularCampo(clave) {
