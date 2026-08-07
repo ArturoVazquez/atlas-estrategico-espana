@@ -150,6 +150,16 @@ def tocar(url: str) -> tuple[int | None, str | None, str | None]:
     """HEAD y, si no gusta, GET. Muchos servidores oficiales no admiten HEAD.
 
     Devuelve también el `Content-Type`, que es lo único que delata un soft-404.
+
+    Con una cautela que costó una acusación falsa: **el `Content-Type` de un HEAD
+    no es de fiar**. El Tribunal Supremo de Elecciones de Costa Rica responde
+    `text/html` a un HEAD sobre su constitución y `application/pdf` al GET de la
+    misma URL — el documento está sano y quien miente es la sonda. Así que
+    cuando el HEAD trae un tipo que delataría un soft-404, NO se acusa: se
+    confirma con GET, que es lo que un lector haría de verdad. Es la misma
+    disciplina que ya salvó a esta casa de denunciar a la plataforma PCI por una
+    consulta mal acotada — antes de acusar a una fuente, comprobar la propia
+    herramienta.
     """
     for metodo in ("HEAD", "GET"):
         peticion = urllib.request.Request(
@@ -157,7 +167,10 @@ def tocar(url: str) -> tuple[int | None, str | None, str | None]:
             headers={"User-Agent": "atlas-estrategico-espana (vigilar.py)"})
         try:
             with urllib.request.urlopen(peticion, timeout=ESPERA) as r:
-                return r.status, None, r.headers.get("Content-Type")
+                tipo = r.headers.get("Content-Type")
+                if metodo == "HEAD" and desajuste(tipo, url):
+                    continue  # sospechoso: que lo confirme un GET
+                return r.status, None, tipo
         except urllib.error.HTTPError as e:
             if metodo == "HEAD" and e.code in (403, 405, 501):
                 continue  # el servidor no quiere HEAD; se prueba con GET
