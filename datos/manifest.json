@@ -1,14 +1,14 @@
 {
   "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
 
-  "_estado": "El horizonte acordado está cerrado. Tienen datos DIECISIETE capas: `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `red-electrica`, `perte`, `idioma`, `cables-submarinos`, `agua-embalsada`, `limites-soberania` y `espacios-maritimos`. Siguen `en_preparacion: true` y sin `fichero` DOS: `recurso-eolico` y `recurso-solar`. Su motivo se comprobó otra vez el 2026-08-07 y quedó MÁS firme, no menos: el recurso solo existe como ráster (Global Wind/Solar Atlas), y la zonificación ambiental del MITECO —que el plan daba por la salida honesta y por vectorial— resultó ser GeoTIFF también, así que vectorizar lo tendría que hacer el atlas por las dos vías. `red-electrica` salió de esa misma lista cuando se vio que su bloqueo descansaba en una premisa nunca escrita: R3 impide que REE sostenga un confirmado, pero no dice que REE sea el único que lo publica — y el IGN lo publica. Es la regla del horizonte de §3 y es la verdad: un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+  "_estado": "El horizonte acordado está cerrado y, desde el 2026-08-07, NO QUEDA NINGUNA rama en gris: las diecinueve capas del manifiesto tienen datos. Las dos últimas en caer fueron `recurso-eolico` y `recurso-solar`, y no cayeron: **cambiaron de objeto**. Un recurso es un campo continuo —cuánto sopla el viento— y solo existe como ráster, así que dibujar zonas de recurso lo tendría que hacer el atlas; se renombraron a `parques-eolicos` y `plantas-solares`, que registran el RECINTO de cada instalación, con nombre y contorno del IGN. El renombrado salió gratis porque ninguna había publicado un registro (§8 protege los ids con datos), y arrastró dos cambios que pesan más que el nombre: de `dotacion` a `actividad`, porque un parque se desmantela y una dotación es una condición permanente del territorio; y de `ilustrativo` a `verificado`, porque ya no son trazos a mano alzada. Que no queden ramas en gris no significa que no falte nada: lo que falta está declarado registro a registro y en el changelog, que es donde debe estar.",
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 
-  "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
+  "_registro_por_adelantado": "NOTA HISTÓRICA desde el 2026-08-07: ya no hay ninguna capa `en_preparacion`, así que esta regla no gobierna nada hoy. Se conserva porque la puerta sigue abierta y porque su motivo es bueno. Decía: una rama declarada puede adelantar su `registro` aunque no tenga datos —la regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero`—, y eso importaba porque `registro: ilustrativo` activa R5 sobre la capa: dibuja dónde, no cuánto ni de quién. Las dos últimas que lo usaban, `recurso-eolico` y `recurso-solar`, resultaron ser el caso que enseña por qué adelantarlo es arriesgado: declaraban `ilustrativo` porque se las imaginaba dibujadas a mano, y al publicarse de verdad —ya como `parques-eolicos` y `plantas-solares`— son `verificado`. Adelantar el registro es una previsión, no un compromiso.",
 
-  "schema_version": "1.22.0",
-  "release": "2026.08.20",
+  "schema_version": "1.23.0",
+  "release": "2026.08.21",
 
   "capas": [
     {
@@ -59,24 +59,36 @@
     },
 
     {
-      "id": "recurso-eolico",
-      "titulo": "Recurso eólico",
+      "_": "Era `recurso-eolico`, «Recurso eólico», y se renombra sin coste porque NUNCA publicó un registro — §8 protege los ids con datos, no los del horizonte; mismo caso que `h2med` → `hidrogeno-red`. Y el renombrado no es de nombre, es de OBJETO: un recurso es un campo continuo —cuánto sopla el viento— y solo existe como ráster, así que dibujar «zonas de recurso» lo tendría que hacer el atlas; un parque eólico es un recinto con nombre y contorno, y eso el IGN lo cartografía. Por eso cambian también las dos cosas que importan más que el id: de `dotacion` a `actividad`, porque un parque se desmantela y `dotacion` es «una condición permanente del territorio»; y de `ilustrativo` a `verificado`, porque ya no son trazos a mano alzada sino perímetros de fuente primaria. ALCANCE: 1.382 recintos de los 1.389 que la BTN clasifica como TIPO 07, o sea el 100 % de la superficie — los 7 que faltan no llevan nombre en la fuente y `nombre` es obligatorio.",
+      "id": "parques-eolicos",
+      "titulo": "Parques eólicos",
       "arbol": "energia",
-      "grupo": "dotacion",
+      "grupo": "actividad",
       "geometria": "poligonos",
-      "registro": "ilustrativo",
+      "registro": "verificado",
       "ambito": "espana",
-      "en_preparacion": true
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-07",
+      "version": "1.0.0",
+      "fichero": "capas/parques-eolicos.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
     {
-      "id": "recurso-solar",
-      "titulo": "Recurso solar",
+      "_": "Era `recurso-solar`, «Recurso solar», y se renombra por lo mismo y con el mismo coste: ninguno. Reúne las dos tecnologías que la BTN separa —TIPO 05 fotovoltaica y TIPO 08 termosolar— en una capa con dos categorías, porque la fuente las sirve en la misma tabla y son la misma clase de objeto: un recinto que convierte sol en electricidad. Cuarenta y cinco termosolares no dan para una rama del árbol. ALCANCE, y aquí hay un hueco que hay que mirar de frente: de las 3.165 fotovoltaicas que la BTN clasifica, solo 1.206 llevan nombre — el 38 % de los recintos, pero el 76 % de la superficie, porque las anónimas son las pequeñas. Las termosolares van casi enteras: 44 de 45. Es la misma forma que `agua-embalsada`, que publica el 77 % de los embalses y el 86 % de la capacidad.",
+      "id": "plantas-solares",
+      "titulo": "Plantas solares (fotovoltaica y termosolar)",
       "arbol": "energia",
-      "grupo": "dotacion",
+      "grupo": "actividad",
       "geometria": "poligonos",
-      "registro": "ilustrativo",
+      "registro": "verificado",
       "ambito": "espana",
-      "en_preparacion": true
+      "cadencia_revision_dias": 180,
+      "verificado_a": "2026-08-07",
+      "version": "1.0.0",
+      "fichero": "capas/plantas-solares.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
     {
       "id": "gas-regasificacion",
