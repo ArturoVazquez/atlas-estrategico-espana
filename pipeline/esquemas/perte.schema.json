@@ -22,13 +22,18 @@
           },
           "properties": {
             "type": "object",
-            "required": ["beneficiario", "cif", "codigo_plan", "instrumento",
+            "required": ["beneficiario", "titulo_plan", "cif", "codigo_plan", "instrumento",
                          "comision_verificacion", "fase", "municipio", "provincia"],
             "properties": {
               "beneficiario": {
                 "type": "string",
                 "minLength": 1,
                 "description": "La razón social tal como la escribe el listado, con su forma societaria. No la marca comercial."
+              },
+              "titulo_plan": {
+                "type": "string",
+                "minLength": 1,
+                "description": "El título del plan, tal como lo escribió su solicitante. Va separado del beneficiario porque el PDF los imprime PEGADOS, sin delimitador: lo único que los corta es la forma societaria al final del nombre de la empresa. Publicarlos juntos en un campo llamado `beneficiario` sería un campo que no significa lo que dice."
               },
               "cif": {
                 "type": "string",

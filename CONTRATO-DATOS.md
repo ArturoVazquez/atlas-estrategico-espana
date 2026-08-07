@@ -1093,7 +1093,7 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > ya lleva `centros-datos`.
 
 **perte** *(1.18)* (`actividad`, puntos, verificado): `beneficiario` (✔) ·
-`cif` (✔) · `codigo_plan` (✔) · `instrumento` (✔) · `comision_verificacion` (✔) ·
+`titulo_plan` (✔) · `cif` (✔) · `codigo_plan` (✔) · `instrumento` (✔) · `comision_verificacion` (✔) ·
 `fase` · `municipio` (✔) · `provincia` (✔) · `presupuesto_financiable`
 (+`__v`,`__f`) · `gasto_subvencionable` (+`__v`,`__f`) · `subvencion_propuesta`
 (+`__v`,`__f`) · `prestamo_propuesto` (+`__v`,`__f`) · `claves[]`
