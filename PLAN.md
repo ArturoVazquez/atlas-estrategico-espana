@@ -241,18 +241,19 @@ que queda de él es `agua-embalsada`, bloqueada esperando dos ZIP del SNCZI que
 tiene que dejar Arturo en `fuentes/`. El pipeline de expedientes de cambio (D7),
 cuando haya señales reales con las que diseñarlo.
 
-### Las cinco ramas que siguen en gris, y qué le falta a cada una
+### Las ramas en gris, y qué le falta a cada una
 
-Comprobadas una a una el 2026-08-07, con la fuente en la mano. **Ninguna está
-en gris por olvido**, y ninguna se puede levantar sin romper algo:
+Las cinco se comprobaron una a una el 2026-08-07, con la fuente en la mano.
+**Ninguna estaba en gris por olvido.** Ese mismo día cayeron dos —el porqué de
+cada una, debajo de la tabla—, y **quedan tres**:
 
 | Rama | Qué la para | Qué haría falta |
 |---|---|---|
-| `agua-embalsada` | El MITECO protege la descarga con **ALTCHA**, un CAPTCHA de prueba de trabajo | Que una persona pulse el botón |
+| ~~`agua-embalsada`~~ | ~~El MITECO protege la descarga con **ALTCHA**, un CAPTCHA de prueba de trabajo~~ | **LEVANTADA**: el vaso no era el dato |
 | `recurso-eolico` | No existe dato **vectorial** oficial de recurso: solo ráster | Decidir qué publica de verdad |
 | `recurso-solar` | Lo mismo | Lo mismo |
 | `red-electrica` | REE es `corporativa` y **R3 le prohíbe sostener un `confirmado`** | Fuente primaria con geometría |
-| `cables-submarinos` | **No hay registro público**, pese a la Ley 11/2022 | Reconstruirla acto por acto |
+| ~~`cables-submarinos`~~ | ~~**No hay registro público**, pese a la Ley 11/2022~~ | **LEVANTADA**: se registran aterrizajes |
 
 **`agua-embalsada` — LEVANTADA** el 2026-08-07, release `datos-v2026.08.18`, con
 **308 embalses y el 86 % de la capacidad del país**. Lo que sigue cuenta de dónde
