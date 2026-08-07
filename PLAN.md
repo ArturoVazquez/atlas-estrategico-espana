@@ -236,9 +236,47 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
 embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → ~~H2Med~~ →
 ~~electrolizadores~~ → ~~subasta del Banco Europeo del Hidrógeno~~ (resuelta:
-NO es capa, ver abajo) → ~~PERTE acotado~~ → intangibles (clase `analisis`,
-ámbito mundo). **El horizonte acordado se acaba aquí**: queda una casilla. El pipeline de expedientes de cambio (D7) cuando haya
-señales reales con las que diseñarlo.
+NO es capa, ver abajo) → ~~PERTE acotado~~ → ~~intangibles~~ (clase `analisis`,
+ámbito mundo). **EL HORIZONTE ACORDADO ESTÁ COMPLETO** (2026-08-07). Lo único
+que queda de él es `agua-embalsada`, bloqueada esperando dos ZIP del SNCZI que
+tiene que dejar Arturo en `fuentes/`. El pipeline de expedientes de cambio (D7),
+cuando haya señales reales con las que diseñarlo.
+
+**La última casilla, y la capa cambió de significado por una licencia** (release
+`datos-v2026.08.16`). `idioma`: **22 registros**, veinte Estados y dos
+organizaciones internacionales, con el artículo de cada uno citado literal.
+
+Lo que deja escrito:
+
+- **Cuando la fuente obvia no se puede reutilizar, hay que preguntarse qué
+  pregunta VECINA sí tiene fuente libre** antes de dar la capa por imposible. «El
+  idioma como activo» pedía demolingüística y el Instituto Cervantes la publica
+  bajo un aviso legal que no la deja republicar; lo que sí no tiene dueño es el
+  **texto legal** (art. 13 del TRLPI), así que la capa cartografía el ESTATUTO.
+  Tercera vez en este horizonte que una restricción de licencia obliga a decir con
+  precisión qué se publica —«renovable instalada», «PERTE acotado», «el idioma»—
+  y las tres veces la capa salió **más honesta**, no más pobre.
+- **La búsqueda web sirve para ENCONTRAR el documento, nunca para citarlo.** Dos
+  veces en esta tanda el texto desmintió al resumen de la búsqueda, y la mayor es
+  que **Guinea Ecuatorial no nombra el portugués** en su Ley Fundamental, contra
+  lo que se repite en todas partes.
+- **Un negativo se puede fabricar de dos maneras**: leyendo mal el texto —la ñ
+  rota de un ISO-8859-1 leído como UTF-8, que convierte «español» en un cero
+  falso— o **leyendo bien un texto viejo**, como el PDF de 2003 que la Cámara
+  chilena sirve hoy sin decir que lo es. Contra lo primero, control positivo sobre
+  los acentos; contra lo segundo, mirar metadatos, ley de reforma citada y si la
+  numeración de artículos cuadra con la vigente.
+- **Un «no encontrado» es casi siempre la consulta, no la fuente.** Tres veces
+  falló el patrón por la forma de la palabra: Paraguay escribe «ARTICULO» sin
+  tilde, Guatemala tenía el índice antes que el artículo, Guinea dice «Lenguas
+  oficiales» donde se buscaba «idioma oficial».
+- **Una comprobación que el esquema ya hace es código muerto**, y lo delató la
+  regla de un incumplimiento por fixture: al señalar §7.1 además de §10 quedó
+  claro que la guarda nueva no podía saltar nunca.
+- **Una guardia que da falsas alarmas se acaba desactivando.** `vigilar.py`
+  acusaba a la Constitución de Costa Rica de servir HTML donde promete PDF: el
+  documento estaba sano y mentía la sonda, porque el `Content-Type` de un **HEAD**
+  no es de fiar. Ahora se confirma con GET antes de acusar.
 
 **La segunda casilla, cumplida por otro nombre** (release `datos-v2026.08.10`).
 Decía «renovable **instalada** por provincia» y ese dato no lo publica nadie con

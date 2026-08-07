@@ -32,6 +32,109 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.16 — El idioma, y el mapa de un solo color era falso
+
+Entra **`idioma`**, la decimocuarta capa y la última del horizonte acordado.
+**22 registros**: veinte Estados y dos organizaciones internacionales, cada uno
+con su artículo citado **literal** y el texto entero archivado.
+
+**No es lo que su nombre sugiere, y la causa es una licencia.** «El idioma como
+activo» pedía demolingüística —los seiscientos millones de hablantes, país por
+país— y esa ruta está cerrada: el informe del Instituto Cervantes dejó de
+publicarse con ese nombre en 2024, no hay conjunto de datos suyo en
+`datos.gob.es`, y el aviso legal de `cervantes.org` dice que el acceso «no otorga
+a los usuarios ningún derecho» sobre los contenidos, solo «uso exclusivo y
+personal». Republicar esa tabla bajo CC BY 4.0 con permiso comercial es lo que
+`datos/LICENCIA-DATOS.md` prohíbe. Tercer muro de licencia del atlas, tras el
+ShareAlike de la CNMC y el NonCommercial de TeleGeography.
+
+Lo que sí se puede republicar es el **texto legal**: el artículo 13 del TRLPI
+excluye de la propiedad intelectual las disposiciones legales y los actos de los
+organismos públicos. Una constitución no tiene dueño. Así que la capa cartografía
+el **estatuto jurídico** del idioma: dónde es lengua oficial, por qué norma, y en
+qué organizaciones internacionales es lengua de trabajo.
+
+### Añadido
+
+- **`idioma`** — 22 registros. El reparto, que es el hallazgo:
+
+  | Estatuto | Cuántos | Quiénes |
+  |---|---|---|
+  | Oficial por la Constitución | 7 | Colombia, Costa Rica, Guatemala, El Salvador, Honduras, Panamá, Cuba, R. Dominicana |
+  | Cooficialidad acotada | 6 | España, Perú, Ecuador, Venezuela, Nicaragua |
+  | **Sin norma que la nombre** | **3** | **Argentina, Chile, Uruguay** |
+  | Oficial con remisión a la ley | 2 | Guinea Ecuatorial, Unión Europea |
+  | Cooficialidad estatal plena | 1 | Bolivia (castellano + 36 lenguas indígenas) |
+  | Bilingüe | 1 | Paraguay (con el guaraní) |
+  | **Lengua nacional, no oficial** | **1** | **México** |
+  | Lengua oficial y de trabajo | 1 | ONU |
+
+- **Cuatro de los veinte países** que cualquier mapa pinta de un solo color no
+  dicen lo que ese color afirma. **México** —el país con más hispanohablantes del
+  mundo— **no declara idioma oficial**: el español es «lengua nacional», a la par
+  que las indígenas y «con la misma validez», por el art. 4 de la Ley General de
+  Derechos Lingüísticos de 2003. **Argentina, Chile y Uruguay** no nombran la
+  lengua en absoluto.
+
+- **La lengua no se llama igual en todas partes.** Once textos dicen «el
+  **español**» y ocho dicen «el **castellano**». Va en campo propio
+  (`nombre_en_la_norma`), no en nota al pie: en un documento constitucional esa
+  palabra la eligió alguien, y en el caso español lleva discutida desde 1978
+  porque «castellano» sitúa la lengua entre las españolas en vez de por encima.
+
+- **Guinea Ecuatorial no nombra el portugués.** La frase que circula en todas
+  partes —«sus lenguas oficiales son español, francés y portugués»— no está en su
+  Ley Fundamental, que dice «el Español, el Francés **y las que la Ley
+  determine**». El portugués es oficial por ley ordinaria de 2007. Diferencia de
+  rango, conservada.
+
+### Cómo se publica un negativo
+
+Archivando **el texto en el que la cosa NO está**, para que el lector compruebe
+la ausencia él mismo. Los tres registros mudos citan su constitución entera y
+cuentan cómo se comprobó:
+
+- **Con control positivo sobre los acentos.** El fichero argentino viene en
+  ISO-8859-1 y leerlo como UTF-8 rompe la ñ de «español» y fabrica un cero falso.
+  Leído bien trae 47 ñ y 606 ó, encuentra «Nación» 132 veces y «Constitución» 43
+  — y aun así, cero menciones a la lengua.
+- **Mirando la fecha del documento.** El PDF que sirve hoy la Cámara de Diputados
+  chilena da la respuesta correcta y está fechado en **2003**, con la numeración
+  anterior a la reforma de 2005. Un negativo se puede fabricar de dos maneras:
+  leyendo mal el texto, o leyendo bien un texto viejo.
+
+### Corregido
+
+- `vigilar.py` — el detector de soft-404 usaba el `Content-Type` de un **HEAD**, y
+  ese no es de fiar: el servidor del Tribunal Supremo de Elecciones de Costa Rica
+  responde `text/html` al HEAD y `application/pdf` al GET de la misma URL. La
+  guardia acusaba a una fuente sana. Ahora confirma con GET antes de acusar.
+
+### Huecos
+
+- **El `debate_url` de la capa.** `analisis` se define «enlazada al hilo de El
+  Tercio donde se defiende» y ese hilo **no existe todavía**. No se inventa: el
+  atlas es autosuficiente por D1 y la capa se publica igual.
+- **La OEA y la Unión Africana**, donde el español es lengua oficial, **no
+  entran**. `oas.org` devuelve 403 a toda captura automática y el Protocolo de
+  Enmiendas al Acta Constitutiva de la UA se sirve como escaneo sin capa de
+  texto. Se sabe lo que dicen y no se publican.
+- **Tres ediciones anteriores a una reforma que no toca el artículo citado**, y se
+  dice: Venezuela (PDF de 2005, sin la enmienda de 2009), El Salvador (2014) y
+  República Dominicana (2015, sin la reforma de 2024).
+- **La captura de Nicaragua se hizo saltando la verificación TLS.** Toda la
+  infraestructura oficial nicaragüense está caída y la única copia accesible se
+  sirve desde un dominio del Estado con el certificado caducado. Lo que sostiene
+  la cita es que el documento se identifica solo: «LA GACETA DIARIO OFICIAL,
+  Managua, Martes 18 de Febrero de 2025», Ley n.º 1234, número 32.
+- **La geometría no está confirmada, y no puede estarlo.** Los puntos son
+  capitales de Natural Earth: dominio público y excelente, pero una compilación
+  cartográfica, no un emisor oficial. Su fuente va tipada `corporativa` a
+  propósito, para que **R3 impida por sí sola** que nadie la marque nunca como
+  confirmada.
+
+---
+
 ## datos-v2026.08.15 — Cincuenta y siete planes, y un documento que no era una tabla
 
 Entra **`perte`**: los planes de inversión del PERTE que un documento público
