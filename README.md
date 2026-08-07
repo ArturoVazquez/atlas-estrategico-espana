@@ -13,14 +13,16 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **diecisiete capas publicadas**, release `datos-v2026.08.20`, visor
+**Estado:** **diecinueve capas publicadas** y ninguna rama en gris, release
+`datos-v2026.08.21`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
 (nuclear, gas y regasificación, interconexiones eléctricas, tendido de alta
-tensión, generación por
+tensión, parques eólicos, plantas solares, generación por
 provincia, producción de hidrógeno, agua embalsada); conectividad (centros de datos, red de hidrógeno, cables submarinos); y el tablero
 (límites y soberanía, espacios marítimos, PERTE acotado); e intangibles (el estatuto
-jurídico del idioma). Las demás ramas están **declaradas y
-vacías**, que es su forma de decir la verdad.
+jurídico del idioma). **Ya no queda ninguna rama declarada y vacía**, lo
+que no quiere decir que no falte nada: lo que falta va declarado registro a
+registro y en el changelog.
 
 Falta una sola cosa para publicar: el **mapa base propio**. Mientras tanto el
 visor tira de un depósito de demostración ajeno y **lo advierte en su propio
@@ -65,7 +67,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las diecisiete capas con datos, por si sirve de índice:
+Las diecinueve capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -77,6 +79,8 @@ Las diecisiete capas con datos, por si sirve de índice:
 | `electricidad-interconexiones` | verificada | Los enlaces que cruzan frontera, con el extremo de fuera nombrado y sin coordenada |
 | `generacion-electrica-provincia` | verificada | Las 52 provincias y su mezcla de generación por tecnología |
 | `red-electrica` | verificada | El tendido de 220 y 400 kV del IGN y las 657 subestaciones donde termina |
+| `parques-eolicos` | verificada | 1.382 recintos de parque eólico, con nombre y contorno del IGN |
+| `plantas-solares` | verificada | 1.206 fotovoltaicas y 44 termosolares: el 76 % y el 100 % de su superficie |
 | `hidrogeno-produccion` | verificada | Las siete plantas de electrólisis de la lista de la Unión |
 | `centros-datos` | verificada | Los centros que un acto administrativo nombra, sitúa y dimensiona |
 | `hidrogeno-red` | verificada | Los cinco proyectos de hidrógeno de la lista de la Unión, y sus compresoras |

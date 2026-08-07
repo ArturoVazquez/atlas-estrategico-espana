@@ -244,14 +244,14 @@ cuando haya señales reales con las que diseñarlo.
 ### Las ramas en gris, y qué le falta a cada una
 
 Las cinco se comprobaron una a una el 2026-08-07, con la fuente en la mano.
-**Ninguna estaba en gris por olvido.** Ese mismo día cayeron **tres** —el porqué
-de cada una, debajo de la tabla—, y **quedan dos**:
+**Ninguna estaba en gris por olvido.** Y ese mismo día cayeron **las cinco**: el
+porqué de cada una está debajo de la tabla. **No queda ninguna rama en gris.**
 
 | Rama | Qué la para | Qué haría falta |
 |---|---|---|
 | ~~`agua-embalsada`~~ | ~~El MITECO protege la descarga con **ALTCHA**, un CAPTCHA de prueba de trabajo~~ | **LEVANTADA**: el vaso no era el dato |
-| `recurso-eolico` | No existe dato **vectorial** oficial de recurso: solo ráster | Decidir qué publica de verdad |
-| `recurso-solar` | Lo mismo | Lo mismo |
+| ~~`recurso-eolico`~~ | ~~No existe dato **vectorial** oficial de recurso: solo ráster~~ | **RENOMBRADA** a `parques-eolicos`: cambia de objeto |
+| ~~`recurso-solar`~~ | ~~Lo mismo~~ | **RENOMBRADA** a `plantas-solares` |
 | ~~`red-electrica`~~ | ~~REE es `corporativa` y **R3 le prohíbe sostener un `confirmado`**~~ | **LEVANTADA**: la publica el IGN, no solo REE |
 | ~~`cables-submarinos`~~ | ~~**No hay registro público**, pese a la Ley 11/2022~~ | **LEVANTADA**: se registran aterrizajes |
 
@@ -324,6 +324,14 @@ levanta por ahí; se refuerza.
 
 Y sí es cierto lo otro: **no es recurso, es restricción** — dice dónde se puede
 poner un parque, no cuánto viento hace.
+
+**RESUELTAS el 2026-08-07**, release `datos-v2026.08.21`, y no publicando el
+recurso sino **cambiando de objeto**: pasan a `parques-eolicos` (1.382 recintos)
+y `plantas-solares` (1.206 fotovoltaicas + 44 termosolares). Renombrar salió
+gratis porque ninguna había publicado un registro, y arrastró los dos cambios que
+pesan de verdad — de `dotacion` a `actividad`, porque un parque se desmantela, y
+de `ilustrativo` a `verificado`, porque ya no son trazos a mano alzada. Lo que
+sigue es de dónde salió.
 
 **La salida que sí existe apareció en el mismo sitio que desbloqueó
 `red-electrica`:** la BTN del IGN trae `0713S Central eléctrica` con **geometría

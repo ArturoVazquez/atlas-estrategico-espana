@@ -32,6 +32,86 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.21 — Un recurso es un campo; una instalación, un recinto
+
+Capas dieciocho y diecinueve. Con ellas **el manifiesto se queda sin ninguna
+rama en gris por primera vez** desde que existe.
+
+### Añadido
+
+- **`parques-eolicos` — 1.382 registros.** Los recintos que la BTN del IGN
+  clasifica como TIPO 07 «PARQUE EÓLICO», con nombre y contorno.
+- **`plantas-solares` — 1.250 registros.** 1.206 fotovoltaicas (TIPO 05) y 44
+  termosolares (TIPO 08), en una capa con dos categorías.
+
+### Retirado
+
+- **`recurso-eolico` y `recurso-solar`** dejan de existir. Nunca publicaron un
+  registro, así que renombrarlas salió gratis: **§8 protege los ids con datos**,
+  y a un id sin datos no lo cita nadie. Precedente exacto: `h2med` →
+  `hidrogeno-red`. Esa regla, usada ya dos veces sin estar escrita, entra en §8.
+
+**No es un renombrado: es un cambio de objeto.** «Recurso» es cuánto sopla el
+viento — un **campo continuo**, que existe como ráster y no como registros.
+Convertirlo en zonas lo tendría que hacer el atlas. Y la salida que el propio
+plan daba por buena, la zonificación ambiental del MITECO «en shapefile y
+vectorial», **resultó falsa al comprobarla**: dentro del ZIP hay dos GeoTIFF y un
+léeme que dice «los ráster clasificados». La vía de escape tenía el mismo defecto
+que la vía original.
+
+**Los dos cambios que pesan más que el id.** De `dotacion` a **`actividad`**: el
+viento es una condición permanente del territorio, pero **un parque se
+desmantela**. Y de `ilustrativo` a **`verificado`**: eran trazos imaginados a
+mano y son perímetros de fuente primaria, en `geo_precision: exacta`. Cambiar
+solo el título habría dejado el mismo error escrito de otra forma.
+
+**Evidencia independiente.** Los **2.632 recintos caen dentro de una provincia
+española, ni uno fuera**, contrastando los polígonos del IGN contra los de
+`generacion-electrica-provincia`. Y el reparto cuadra con la generación que
+publica el MITECO: **cinco de las seis provincias punteras en eólica coinciden**,
+cuatro de seis en solar. Las diferencias son las que deben salir — A Coruña tiene
+**173 parques y genera menos que Zaragoza con 144** —, porque recintos no es
+potencia. Que es justo lo que el esquema prohíbe escribir.
+
+**La geometría NO se simplifica**, al revés que el tendido de la release
+anterior, y el contraste enseña cuándo simplificar sale gratis. Allí la BTN pone
+un vértice por torre y quitarlos costó el **0,017 %** de la longitud. Aquí el
+contorno **es** el dato: a 25 m se ahorraría el 61 % de los vértices, pero
+costaría el **0,23 %** de superficie y **dejaría 29 parques convertidos en
+cuadrados**.
+
+### Corregido
+
+- **Desambiguador de slugs** — lo cazó el propio validador por §7.2. Usaba un
+  contador por nombre, así que el sufijo «-2» que inventa chocaba con **«Planta
+  Solar Fede 2», que se llama así de verdad**. Ahora comprueba contra el conjunto
+  de lo realmente usado. `red-electrica` se regeneró y sale **byte a byte
+  idéntico**: allí el fallo estaba latente y nunca disparó, así que su release no
+  necesita reedición.
+- `manifest.json` — la nota `_registro_por_adelantado` hablaba de «cinco capas en
+  preparación» y ya no queda ninguna. Se conserva como nota histórica, porque su
+  motivo sigue siendo bueno y la puerta sigue abierta.
+
+### Huecos
+
+- **Fotovoltaica: 1.206 de 3.165 recintos.** Parece un desastre y es el **76 % de
+  la superficie**, porque las anónimas son las pequeñas. Las 1.959 que faltan no
+  llevan nombre en la BTN y `nombre` es obligatorio. **Cuando el hueco es de censo
+  y no de magnitud hay que decir las dos cifras**, porque una sola engaña en la
+  dirección que le convenga a quien la elija.
+- **Eólica: 7 recintos sin nombre** quedan fuera. Son el 0 % de la superficie.
+- **Termosolar: 1 de 45.**
+- **No hay potencia, y no la habrá por esta fuente.** `potencia_mw` está prohibido
+  en los dos esquemas: es la primera cifra que cualquiera espera de un parque
+  eólico y la BTN no la da. Quien la publica es el promotor (`corporativa`, R3) o
+  un registro administrativo de instalaciones, que sería otra fuente y otra capa.
+- **Tampoco titular, ni fecha de puesta en servicio.** La BTN trae `f_alta`, que
+  es cuándo el IGN capturó el recinto y no cuándo la planta arrancó.
+- **Sigue sin publicarse el RECURSO**, y esta release no lo resuelve: lo cambia de
+  pregunta. Si algún día alguien quiere el campo de viento, sigue siendo ráster.
+
+---
+
 ## datos-v2026.08.20 — R3 no se discute: se cambia de emisor
 
 Decimoséptima capa. `red-electrica` llevaba en gris desde el primer día por un
