@@ -203,6 +203,13 @@ const ROTULOS = {
   // «Emplazamiento» y no «playa»: dos de los seis aterrizajes son puertos, y
   // uno se sitúa por una isla porque el nomenclátor no nombra su arenal.
   emplazamiento: "Emplazamiento",
+  demarcacion: "Demarcación hidrográfica",
+  capacidad_hm3: "Capacidad (hm³)",
+  agua_actual_hm3: "Agua embalsada (hm³)",
+  // La fecha del PARTE, no la de captura: en esta serie hay embalses cuyo
+  // último dato es de 2003, y sin la fecha una reserva no significa nada.
+  fecha_dato: "Fecha del parte",
+  hidroelectrico: "Uso hidroeléctrico",
 };
 
 function rotularCampo(clave) {

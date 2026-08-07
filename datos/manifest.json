@@ -165,11 +165,20 @@
       "atribucion": "Comisión Europea (CINEA) · Atlas Estratégico de España"
     },
     {
+      "_": "Publica EL AGUA, no el vaso. El shapefile del inventario de presas del SNCZI está tras un ALTCHA —un CAPTCHA de prueba de trabajo que el Ministerio puso a propósito y que no se salta— y resultó no ser el dato: «agua embalsada» es lo que hay dentro, y eso el MITECO lo publica en abierto en el histórico del Boletín Hidrológico Semanal (719.725 partes desde 1988). ALCANCE, dicho sin rodeos: el Boletín trae 401 embalses y aquí se publican 308, el 86 % de la capacidad embalsada de España. Los 93 que faltan no se omiten en silencio: 58 no tienen correspondencia en el Nomenclátor del IGN, 29 casan con más de un topónimo sin poder decidir cuál, y 6 casaban de nombre con un embalse de OTRA cuenca —un «San Lorenzo» del Ebro que era el de Tenerife—. La base no lleva coordenadas: la geometría se cose por nombre y CADA PUNTO se verifica preguntando al servicio del propio Ministerio en qué demarcación cae.",
       "id": "agua-embalsada",
       "titulo": "Agua embalsada",
       "arbol": "energia",
       "grupo": "dotacion",
-      "en_preparacion": true
+      "geometria": "puntos",
+      "registro": "verificado",
+      "ambito": "espana",
+      "cadencia_revision_dias": 90,
+      "verificado_a": "2026-08-07",
+      "version": "1.0.0",
+      "fichero": "capas/agua-embalsada.geojson",
+      "licencia": "CC-BY-4.0",
+      "atribucion": "Ministerio para la Transición Ecológica y el Reto Demográfico · Instituto Geográfico Nacional · Atlas Estratégico de España"
     },
 
     {
