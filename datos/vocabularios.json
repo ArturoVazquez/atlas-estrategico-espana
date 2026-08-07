@@ -252,6 +252,14 @@
       { "valor": "zona", "etiqueta": "Zona de recurso" }
     ],
 
+    "_red-electrica": "Dos valores, y los separa la fuente: la BTN captura el tendido como línea y la subestación como recinto, con atributos distintos. No hay un tercero para «torre de alta tensión» aunque el IGN la capture (280.072 de ellas): una torre no es un activo estratégico, es el detalle con el que se dibuja la línea.",
+    "red-electrica": [
+      { "valor": "tendido", "etiqueta": "Tendido", "color": "#7A5B3A",
+        "def": "Los tramos de una clase de tensión, agregados en un solo registro. Se agregan porque la BTN no da nombre a ninguno de los 18.505 tramos: no hay 1.784 objetos que nombrar, hay una cosa que la fuente distingue — la tensión." },
+      { "valor": "subestacion", "etiqueta": "Subestación", "color": "#A8794A",
+        "def": "El recinto donde termina al menos un tramo de 220 o 400 kV. El criterio no es del atlas: la norma de captura del IGN obliga a que una línea finalice en subestación, transformador, central, vértice de otra línea o torre." }
+    ],
+
     "_agua-embalsada": "Un solo valor, como `recurso-eolico` y `plan_inversion`. El Boletín Hidrológico no clasifica los embalses, y sacar una clase del uso o del tamaño sería interpretar. Lo que los distingue —cuánta agua cabe y cuánta hay— va en campos.",
     "agua-embalsada": [
       { "valor": "embalse", "etiqueta": "Embalse", "color": "#4A6C7A",

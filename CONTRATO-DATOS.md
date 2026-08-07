@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.21.0 · **Fecha:** 2026-08-07
+**Versión del contrato:** 1.22.0 · **Fecha:** 2026-08-07
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -420,6 +420,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `minerales-derechos` *(1.12)* | — | **no aplica**. Un título otorgado NO dice que se esté explotando: se puede tener una concesión décadas sin abrir una mina. Va en el grupo `actividad` porque alguien lo sostiene y puede caducar, pero la pregunta del filtro no se le hace. |
 | `cables-submarinos` *(1.20)* | `fase` | `fase == "produccion"` (el cable presta servicio). Ojo: el registro es el ATERRIZAJE, y su fase es la del cable que llega a él — un expediente en información pública es `tramitacion` aunque la playa lleve ahí siglos. |
 | `recurso-eolico`, `recurso-solar` | — | **no aplica**: son recurso, no explotación. El filtro las deja al margen, no las oculta. |
+| `red-electrica` *(1.22)* | — | **no aplica**, y por partida doble. Un tendido cartografiado no es una instalación que se explote o se deje de explotar: es infraestructura, y la BTN además **no dice si está energizada** — solo que está ahí. Preguntarle a una subestación si está «en explotación» tendría sentido, pero la fuente no lo responde, y **un `false` por falta de dato es exactamente la mentira que R7 evita**. Devuelve `null`. |
 | `tablero`: `limites-soberania` y `espacios-maritimos` *(1.11)* | — | **no aplica**, por el mismo motivo. Un territorio reclamado o un espacio marítimo sin delimitar no está «en explotación»; la pregunta no se le hace. |
 | `centros-datos` *(1.15)* | `fase` | `fase == "produccion"` (el centro presta servicio). Un campus **autorizado y sin construir no está en explotación**, por muchos gigavatios-hora que prometa su declaración ambiental. |
 | `hidrogeno-red` *(1.16)* | `fase` | `fase == "produccion"` (el tramo, la compresora o la caverna prestan servicio). Hoy **ninguno de los diez**: la red entera está en tramitación, y eso es lo que el filtro debe enseñar. |
@@ -834,6 +835,11 @@ distinguen mejor citando el artículo que clasificándolo.
   fuente con licencia compatible (TeleGeography es CC BY-NC-SA). Lo que sí
   publica una fuente primaria es dónde toca tierra
 - *recurso-eolico* / *recurso-solar*: `zona`
+- *red-electrica* *(1.22)*: `tendido` · `subestacion` — los dos los
+  separa la fuente, que captura la línea y el recinto como objetos
+  distintos. No hay un tercero para la torre de alta tensión, aunque el
+  IGN capture 280.072: una torre no es un activo, es el detalle con el
+  que se dibuja la línea
 
 > **`proyectada` existe en dos vocabularios distintos, y es a propósito**
 > *(1.16)*. Es `categoria` en `electricidad-interconexiones` (qué clase de enlace
@@ -986,12 +992,17 @@ mundo`): `estado_juridico` (✔; +`__v`,`__f`) · `partes[]` · `instrumento` ·
 > **nombrado y sin coordenada**, en `extremo_exterior`. El día que un instrumento
 > publique el trazado, el registro sube a `LineString` con el mismo `id` (§8).
 >
-> **Por qué la red de transporte NO está aquí.** El mallado español —líneas de
+> ~~**Por qué la red de transporte NO está aquí.** El mallado español —líneas de
 > 400 kV, subestaciones interiores— lo publica Red Eléctrica, que es **sociedad
 > cotizada**: por §6.1 es `corporativa` y por R3 no sostiene un `confirmado`. No
 > hay cartografía de la red bajo licencia compatible con CC BY 4.0
-> (`datos/LICENCIA-DATOS.md`), así que `red-electrica` sigue declarada y vacía.
-> Es la misma frontera que ya marcó Enagás en la capa de gas.
+> (`datos/LICENCIA-DATOS.md`), así que `red-electrica` sigue declarada y vacía.~~
+> **El mallado ya tiene capa propia** *(1.22)*, y lo de arriba se conserva tachado
+> porque enseña bien un error: todo lo que afirmaba de REE y de R3 era cierto, y
+> la conclusión era falsa igual. La premisa que fallaba no estaba escrita —«no hay
+> cartografía» quería decir «no la he encontrado»—, y por eso no se podía discutir.
+> **Una frase que da por cerrado el mundo tiene que decir dónde miró.**
+> El IGN la publica: ver `red-electrica`, más abajo.
 
 **minerales-derechos** *(1.12)* (`actividad`, polígonos, verificado):
 `titular` (✔) · `tipo_derecho` · `situacion` (✔) · `n_registro` ·
@@ -1390,6 +1401,77 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > `estado_registro: historico`, que es la regla de que nada se borra aplicada a
 > una serie temporal que dejó de alimentarse.
 
+**red-electrica** *(1.22)* (`dotacion`, **mixta**, verificado):
+`tension_kv` (✔) · `n_tramos` (✔) · `longitud_medida_km` · `claves[]`
+
+> **La capa se llama por lo que la fuente sostiene, y no por lo que uno querría
+> que dijera.** El título fue «Red eléctrica (transporte)» hasta el día de
+> publicarla, y ese título afirmaba una **categoría jurídica**: pertenecer a la
+> red de transporte lo decide la regulación, no un mapa. Lo que el IGN certifica
+> es otra cosa, más pequeña y del todo cierta: **que hay un tendido de esa clase
+> de tensión sobre el terreno**. De ahí el título de hoy y de ahí que
+> `red_transporte` esté prohibido por su nombre en el esquema. Tercera vez en la
+> misma semana que la acotación honesta la impone la fuente y no el gusto:
+> `cables-submarinos` registra aterrizajes y `agua-embalsada`, el agua.
+>
+> **Cómo cayó el muro de R3, que es lo que merece recordarse.** La capa llevaba
+> desde el principio en gris con un motivo impecable —el mallado lo publica Red
+> Eléctrica, `corporativa`, y R3 no la deja sostener un `confirmado`— y una
+> premisa que nadie escribió: *que no lo publica nadie más*. El **IGN** lo publica,
+> en la Base Topográfica Nacional, tema Energía, con licencia de la Orden
+> FOM/2807/2015 «compatible con CC-BY 4.0» y sin puerta ninguna. **R3 no se
+> esquiva discutiéndola: se esquiva cambiando de emisor.**
+>
+> **Qué clase de fuente es una carta topográfica** *(la novedad de fondo)*. Hasta
+> hoy el IGN entraba en el atlas 456 veces y siempre como **Nomenclátor**, que es
+> un *registro* y está en la lista de §6.1 con todas las letras. La BTN no es un
+> registro: es **cartografía**. Sigue siendo `primaria`, y por el mismo motivo que
+> el Nomenclátor —producción oficial de la agencia cartográfica del Estado— pero
+> **con el alcance recortado**: sostiene lo que ha medido (que hay una línea aquí,
+> de esta clase de tensión, y un recinto allá) y no sostiene nada de lo que no
+> mide. **De quién es la línea, la BTN no dice una palabra**, y por eso `titular`
+> y `propietario` están prohibidos: escribirlos sería sabérselo en vez de leerlo,
+> y el único que lo publica es el operador — o sea, de vuelta al muro.
+>
+> **Por qué son DOS registros de tendido y no 1.784.** Porque las 18.505 líneas de
+> la BTN traen `nombre` a nulo, **todas**. Un tramo no es un objeto con identidad:
+> es el trozo que quedó entre dos hitos de captura. Nombrarlos por sus extremos
+> habría fabricado 1.784 nombres que nadie ha dado nunca. Lo que la fuente sí
+> distingue es la **clase de tensión**, y eso es lo que hay: dos cosas. `n_tramos`
+> conserva el recuento, que es un hecho de la fuente y se puede volver a contar
+> sobre el extracto archivado.
+>
+> **El filtro de subestaciones no es criterio del atlas: es la norma de captura
+> del IGN.** «Las líneas eléctricas deben finalizar en transformador, subestación
+> eléctrica, central eléctrica, vértice de otra línea eléctrica o torre de alta
+> tensión.» Así que se pregunta lo único que se puede preguntar sin interpretar:
+> **¿cae un extremo de línea de 220 o 400 kV dentro de este recinto?** De las
+> 3.548 subestaciones de la BTN, **718 lo cumplen y 657 tienen nombre**; las 61
+> restantes se quedan fuera porque `nombre` es obligatorio, y quedan dichas aquí y
+> en el manifiesto en vez de desaparecer. Sin el filtro entrarían las 2.766
+> nombradas, entre ellas las de tracción de Adif — que no son red de alta tensión
+> por el hecho de existir. Dos de Adif **sí** pasan el filtro, y está bien que
+> pasen: la tracción ferroviaria engancha a 220 kV de verdad.
+>
+> **`longitud_km` va `parcial` a propósito, y es la parte más fácil de hacer mal.**
+> El IGN **no publica ninguna longitud**. El número lo mide el atlas sobre la
+> geometría original, así que detrás no hay fuente que lo sostenga y un
+> `confirmado` incumpliría R2 aunque la geometría sí sea primaria. **Medir sobre
+> un dato primario no convierte la medida en primaria.**
+>
+> **La geometría publicada va simplificada, y por eso es `generalizada`** (§6.6,
+> el caso de 1.14). La BTN captura «un vértice en la base de cada una de las
+> torres»: un tramo recto de cuarenta torres trae cuarenta vértices y una sola
+> forma. Con 25 m de tolerancia se van el **85 % de los vértices** y cuesta el
+> **0,017 % de la longitud** — 31.154,2 km pasan a 31.148,9. Las subestaciones NO
+> se simplifican: son el perímetro del objeto mismo y se quedan en `exacta`.
+>
+> **La BTN separa con `#` los nombres alternativos de un mismo recinto** y no
+> siempre es el par euskera/castellano: «Subestación Eléctrica Guadame#Subestación
+> Eléctrica Guadalquivir Medio» son dos nombres de lo mismo. No se elige uno —eso
+> sería tirar un dato de la fuente—: se publican los dos unidos por « / », y una
+> clave dice que el separador es de la fuente y la barra, del atlas.
+
 *(Capas futuras entran por §8 con su apartado aquí y su esquema en
 `pipeline/esquemas/`.)*
 
@@ -1500,6 +1582,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.22.0** | 2026-08-07 | **Aditiva.** Nace `red-electrica` (§10), y nace derribando un bloqueo que llevaba desde el primer día y que estaba **bien razonado y mal concluido**. El motivo escrito era impecable —el mallado lo publica Red Eléctrica, `corporativa`, y R3 no la deja sostener un `confirmado`— pero descansaba en una premisa que nadie llegó a escribir: *que no lo publica nadie más*. Lo publica el **IGN**, en la Base Topográfica Nacional, tema Energía, con licencia de la Orden FOM/2807/2015 «compatible con CC-BY 4.0» y sin CAPTCHA ni modal. **R3 no se discute: se cambia de emisor.** De ahí la lección que §10 deja anotada — una frase que da por cerrado el mundo tiene que decir dónde miró. **La novedad de fondo es qué clase de fuente es una carta topográfica:** el IGN entraba ya 456 veces en el atlas y siempre como **Nomenclátor**, que es un *registro* y está en la lista de §6.1; la BTN es **cartografía**, sigue siendo `primaria` por ser producción oficial de la agencia del Estado, pero **con el alcance recortado a lo que mide** — de quién es la línea no dice nada, y por eso `titular` y `propietario` están prohibidos en el esquema. **El título también cambió el día de publicar:** «Red eléctrica (transporte)» afirmaba una categoría JURÍDICA que ningún mapa certifica, y pasó a «Tendido de alta tensión (220 y 400 kV)», que es lo que la fuente sostiene — tercera vez en la misma semana que la acotación la impone la fuente y no el gusto (`cables-submarinos` registra aterrizajes; `agua-embalsada`, el agua). Son **dos registros de tendido y no 1.784** porque las 18.505 líneas de la BTN traen `nombre` a nulo y bautizarlas por sus extremos habría fabricado nombres que nadie ha dado; y **657 subestaciones de las 718** en las que termina un tramo de 220/400 kV, con el filtro sacado de la propia norma de captura del IGN y las 61 sin nombre declaradas en vez de omitidas. `longitud_km` va **`parcial` a propósito**: el IGN no publica ninguna longitud, la mide el atlas, y **medir sobre un dato primario no convierte la medida en primaria** — un `confirmado` ahí incumpliría R2. La geometría del tendido va `generalizada` por simplificada a 25 m: el 85 % de los vértices por el 0,017 % de la longitud, porque la BTN captura un vértice por torre y un tramo recto de cuarenta torres no tiene cuarenta formas. §6.5 le da su fila: `activo` **no aplica**, y aquí por un motivo que conviene retener — la fuente **no dice si el tendido está energizado**, y un `false` por falta de dato es justo la mentira que R7 evita. **No nace ninguna regla `R*`.** |
 | **1.21.0** | 2026-08-07 | **Aditiva.** Nace `agua-embalsada` (§10), y nace **por una pregunta mejor formulada**. La ruta obvia —el shapefile del Inventario de Presas y Embalses del SNCZI— está tras un **ALTCHA**, un CAPTCHA de prueba de trabajo que el Ministerio puso a propósito y que no se salta; y otras cinco vías fallaron (URLs viejas a 404, no hay WFS de embalses, el ArcGIS REST del Ministerio no sirve esa capa, el PDF resumen agrega por cuenca). **La sexta fue darse cuenta de que el shapefile no era el dato:** «agua embalsada» no es la geometría del vaso, es el agua que hay dentro, y eso el MITECO lo publica en abierto y sin formulario en el histórico del **Boletín Hidrológico Semanal** — 719.725 partes semanales desde 1988. Se publican **308 embalses de los 401** del Boletín, el **86 % de la capacidad embalsada de España**, y los 93 restantes se declaran uno a uno en el manifiesto. La base **no lleva coordenadas**: la geometría se cose por nombre contra el Nomenclátor del IGN, con una normalización de **cuatro lenguas** —nueve prefijos (`Embalse`, `Pantà`, `Presa`, `Pantano`, `Encoro`, `Balsa`, `Charca`, `Embassament`, `Bassa`) y el sufijo vasco `urtegia` con su genitivo— y **cada punto se verifica** preguntando al servicio del propio Ministerio en qué demarcación cae. Esa vuelta cazó seis emparejamientos que casaban de nombre y señalaban un embalse de otra cuenca, entre ellos un «San Lorenzo» del Ebro que era el de Tenerife. §6.5 le da su fila: `activo` **no aplica**, porque un embalse es una reserva y no una instalación que se explote. El esquema prohíbe `porcentaje_llenado` **por derivado**, igual que R7 con `activo`: sale de dividir las dos cifras que la capa ya publica, y escribirlo sería la doble fuente de verdad que D3 descartó. |
 | **1.20.0** | 2026-08-07 | **Aditiva.** Nace `cables-submarinos` (§10), y nace **distinta de su propio boceto**: el contrato la imaginaba `mixta`, con `sistemas[]`, `destinos[]` y un trazado que dibujar. Las fuentes obligan a otra cosa. **El recorrido de un cable submarino no tiene fuente compatible** —TeleGeography es CC BY-NC-SA, vetada por `datos/LICENCIA-DATOS.md`— y lo que sí publica una fuente primaria es **dónde toca tierra**, porque ocupar dominio público marítimo-terrestre exige un acto administrativo. Un registro por **aterrizaje**, en puntos, con los arrays convertidos en campos planos; la categoría `trazado` (§9) queda declarada y **sin usar**. La acotación no la elige el gusto: los actos de Costas cubren TODO cable que ocupe el dominio, incluidos uno atado al puente de Txatxarramendi y dos que cruzan las rías del Bidasoa y de Oriñón, así que **entra el que une territorios separados por mar** y no el cruce de una ría. Y un cable que atraviesa aguas españolas **sin aterrizar aquí no entra**: lo decidió el Europe India Gateway, 15.000 km por Galicia, el Estrecho y Alborán que tocan tierra en **Gibraltar** (BOE-A-2010-2040) — se archiva, se cita y se queda fuera, como la subasta IF24. `sistema` **admite hueco a propósito**: un acto de Costas autoriza una ocupación, no bautiza un cable, y el expediente de Santander no nombra el sistema; poner ahí un nombre de la prensa sería justo lo que la capa evita, así que va con fuente `tipo: hueco` y R4 lo baja a `parcial`. §6.5 le da su fila, con el aviso de que la `fase` es la del cable y no la de la playa. |
 | **1.19.0** | 2026-08-07 | **Aditiva.** Nace `idioma` (§10), la última casilla del horizonte y **la primera capa `analisis` del atlas**. Nace además cambiada de significado por una licencia: «El idioma como activo» pedía demolingüística, y la del español la publica el Instituto Cervantes bajo un aviso legal que dice que el acceso «no otorga a los usuarios ningún derecho» —sin conjunto de datos en `datos.gob.es`—, así que republicarla bajo CC BY 4.0 es lo que `datos/LICENCIA-DATOS.md` prohíbe. Tercer muro de licencia del atlas, tras el ShareAlike de la CNMC y el NonCommercial de TeleGeography. §6.1 gana la enmienda que faltaba, y no discute autoridad sino **copia**: **un texto legal no tiene dueño** —art. 13 del TRLPI, que excluye de la propiedad intelectual las disposiciones legales y los actos de los organismos públicos—, así que constituciones y tratados se archivan enteros y se republican sin permiso. La capa pasa a cartografiar el **ESTATUTO** del idioma, y desmiente el mapa de un solo color: **México no declara idioma oficial** (es «lengua nacional» por ley, a la par que las indígenas) y **Argentina, Chile y Uruguay no nombran la lengua**. §9 estrena `estatuto`, **nueve valores** porque hay nueve arquitecturas distintas y ninguna se inventó de antemano. Nace `geo_precision: pais` (§5, §6.6), hermano de `municipio` una escala más arriba y **fuera de R9** por lo mismo: el objeto es el Estado entero y el punto solo existe para poder pinchar el registro; se rechaza con él la tentación de los polígonos de países, que habrían metido al atlas en cada disputa fronteriza del planeta. Y nace **§6.7**, la sección que define por fin qué sella `analisis`: **marca la TESIS, no rebaja la prueba** — reverso exacto de `ilustrativo` (R5), que baja el listón de la evidencia y no toca la interpretación. Declarado sin adorno: §6.7 es **doctrina sin CI**, porque `validar.py` no comprueba nada sobre `analisis` ni `debate_url`. |

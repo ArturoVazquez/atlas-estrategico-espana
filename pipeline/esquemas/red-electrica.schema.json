@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/red-electrica.schema.json",
+  "title": "Extensión de capa · red-electrica",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). El tendido de 220 y 400 kV y las subestaciones en las que termina, todo de la Base Topográfica Nacional del IGN. La capa registra lo que la CARTOGRAFÍA sostiene —que hay un tendido de esa clase de tensión sobre el terreno— y no la categoría jurídica «red de transporte», que la define la regulación y no el mapa.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["MultiLineString", "Polygon", "MultiPolygon"],
+                "description": "Capa mixta. Las líneas son el tendido, agregado por tensión; los polígonos son el recinto de cada subestación, capturado por la BTN «por el contorno exterior»."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["tension_kv"],
+            "properties": {
+              "tension_kv": {
+                "enum": [220, 400],
+                "description": "La clase de tensión del atributo TENSI_0710 del IGN, que solo tiene cuatro valores y de los que aquí entran dos: 03 (220 kV) y 04 (400 kV). En una subestación es la MAYOR de las que le llegan; las dos, cuando son dos, van en `claves`. No es una medida: es una clase de un codelist cerrado, y por eso es un enum y no un número libre."
+              },
+              "n_tramos": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Cuántos objetos 0710L de esa tensión agrega el registro. Es un recuento de la fuente —se puede volver a contar sobre el extracto archivado— y por eso va confirmado. Solo lo llevan los dos registros de tendido."
+              },
+              "longitud_medida_km": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Kilómetros medidos POR EL ATLAS sobre la geometría original de la BTN, antes de simplificar. El IGN no publica ninguna longitud, así que este número no lo sostiene la fuente: va como `parcial` a propósito, y `claves` dice cuánto mide la geometría publicada. Un `confirmado` aquí sería R2 incumplido."
+              },
+              "longitud_km": {
+                "not": {},
+                "description": "PROHIBIDO, y la prohibición es de VOCABULARIO, no de dato. En `hidrogeno-red` este campo existe y significa «la longitud que DECLARA la fuente» — hasta la ficha lo rotula así, «Longitud declarada (km)». Aquí no hay ninguna declarada: la mide el atlas. Reusar el nombre habría hecho que el visor imprimiese «declarada» encima de un número que nadie declaró, que es mentir en la interfaz sin mentir en el dato. Por eso el campo se llama `longitud_medida_km` y este queda cerrado."
+              },
+
+              "titular": {
+                "not": {},
+                "description": "PROHIBIDO, y es la prohibición que justifica esta capa. La BTN cartografía el tendido y NO dice de quién es. Escribir «Red Eléctrica de España» sería sabérselo, no leerlo — y ese dato solo lo publica el propio operador, o sea `corporativa`, que es exactamente lo que R3 impide. La capa existe porque el IGN esquiva a REE; meter al titular la devolvería al muro."
+              },
+              "propietario": {
+                "not": {},
+                "description": "PROHIBIDO. Sinónimo de `titular`, prohibido por el mismo motivo y por su nombre, para que la prohibición no se esquive cambiando la palabra."
+              },
+              "red_transporte": {
+                "not": {},
+                "description": "PROHIBIDO. Sería la afirmación jurídica que la cartografía no hace: que 220 o 400 kV es tensión de transporte es cierto como regla general, pero quién pertenece a la red de transporte lo fija la regulación. La capa dice dónde hay tendido de esa tensión; no reparte carnés."
+              },
+              "capacidad_mw": {
+                "not": {},
+                "description": "PROHIBIDO. Ni la BTN ni su catálogo dan capacidad de transporte de ninguna línea. Derivarla de la tensión es física de manual aplicada a un dato que nadie ha publicado: verosimilitud, que es el peor bug de este atlas."
+              },
+              "n_circuitos": {
+                "not": {},
+                "description": "PROHIBIDO. El atributo no existe en 0710L: la BTN captura la línea, no cuántos circuitos cuelgan de sus torres."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
