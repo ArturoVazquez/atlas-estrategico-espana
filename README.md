@@ -13,9 +13,10 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **dieciséis capas publicadas**, release `datos-v2026.08.19`, visor
+**Estado:** **diecisiete capas publicadas**, release `datos-v2026.08.20`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
-(nuclear, gas y regasificación, interconexiones eléctricas, generación por
+(nuclear, gas y regasificación, interconexiones eléctricas, tendido de alta
+tensión, generación por
 provincia, producción de hidrógeno, agua embalsada); conectividad (centros de datos, red de hidrógeno, cables submarinos); y el tablero
 (límites y soberanía, espacios marítimos, PERTE acotado); e intangibles (el estatuto
 jurídico del idioma). Las demás ramas están **declaradas y
@@ -64,7 +65,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las dieciséis capas con datos, por si sirve de índice:
+Las diecisiete capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -75,6 +76,7 @@ Las dieciséis capas con datos, por si sirve de índice:
 | `gas-regasificacion` | verificada | Las siete plantas de GNL |
 | `electricidad-interconexiones` | verificada | Los enlaces que cruzan frontera, con el extremo de fuera nombrado y sin coordenada |
 | `generacion-electrica-provincia` | verificada | Las 52 provincias y su mezcla de generación por tecnología |
+| `red-electrica` | verificada | El tendido de 220 y 400 kV del IGN y las 657 subestaciones donde termina |
 | `hidrogeno-produccion` | verificada | Las siete plantas de electrólisis de la lista de la Unión |
 | `centros-datos` | verificada | Los centros que un acto administrativo nombra, sitúa y dimensiona |
 | `hidrogeno-red` | verificada | Los cinco proyectos de hidrógeno de la lista de la Unión, y sus compresoras |

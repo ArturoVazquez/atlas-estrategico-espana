@@ -32,6 +32,85 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.20 — R3 no se discute: se cambia de emisor
+
+Decimoséptima capa. `red-electrica` llevaba en gris desde el primer día por un
+motivo **impecable y aun así equivocado**, y eso es lo que esta release cuenta.
+
+### Añadido
+
+- **`red-electrica` — 659 registros.** Dos de tendido y 657 de subestación, todo
+  de la **Base Topográfica Nacional del IGN**, tema Energía (GeoPackage nacional,
+  descarga directa, licencia de la Orden FOM/2807/2015 «compatible con CC-BY
+  4.0»).
+  - **Tendido de 400 kV** — 553 tramos, **14.904,9 km**.
+  - **Tendido de 220 kV** — 1.231 tramos, **16.249,3 km**.
+  - **657 subestaciones** de las 718 en las que termina un tramo de esa tensión.
+
+**Por qué se levantó el bloqueo.** El motivo escrito era cierto entero: el
+mallado lo publica Red Eléctrica, que es `corporativa`, y **R3** no la deja
+sostener un `confirmado`. Debajo había una premisa que nadie llegó a escribir —
+*que no lo publica nadie más*—, y esa era falsa. **Una frase que da por cerrado
+el mundo tiene que decir dónde miró.**
+
+**Por qué son DOS tendidos y no 1.784.** Las 18.505 líneas de la BTN traen
+`nombre` a nulo, **todas**. Un tramo no es un objeto con identidad: es el trozo
+que quedó entre dos hitos de captura. Nombrarlos por sus extremos habría
+fabricado 1.784 nombres que nadie ha dado nunca.
+
+**El filtro de subestaciones sale de la fuente, no del atlas.** La norma de
+captura del IGN obliga a que «las líneas eléctricas deben finalizar en
+transformador, subestación eléctrica, central eléctrica, vértice de otra línea
+eléctrica o torre de alta tensión». Así que la pregunta es la única que no
+interpreta: **¿cae un extremo de línea de 220 o 400 kV dentro de este recinto?**
+Sin el filtro entrarían las 2.766 nombradas, incluida la tracción de Adif.
+
+**Evidencia independiente, para que cualquiera la repita.** Las cinco
+interconexiones de `electricidad-interconexiones` están construidas desde
+documentos del **MITECO**, no del IGN, y las cinco caen sobre la subestación que
+les toca: Adrall a **0,5 km** con el nombre idéntico, Gatika a **1,6 km**, Beariz
+a 3,1, Orcoyen a 6,5. Y el «Puerto de la Cruz» cuya ficha advertía «es el LUGAR
+que el instrumento nombra, **no la subestación**» resulta tener su subestación a
+**0,7 km**, llamada igual que el paso de montaña de Cádiz.
+
+**La geometría del tendido va simplificada a 25 m**, y por eso es
+`generalizada`: 117.306 vértices pasan a 17.034 (**–85 %**) y la longitud pierde
+el **0,017 %** (31.154,2 → 31.148,9 km). La BTN captura un vértice por torre, y
+un tramo recto de cuarenta torres no tiene cuarenta formas. Las subestaciones no
+se simplifican: son el perímetro del objeto y se quedan en `exacta`.
+
+### Corregido
+
+- `PLAN.md` — afirmaba que la **zonificación ambiental para renovables** del
+  MITECO está «en shapefile» y «es vectorial». **No lo es.** Comprobado
+  descargando el ZIP: dentro vienen `Clas_ISA_eol_c.tiff` y `Clas_ISA_eol_pb.tiff`,
+  y el propio léeme del Ministerio dice «los **ráster clasificados**». La que el
+  plan daba por salida honesta para `recurso-eolico`/`recurso-solar` tenía el
+  mismo defecto que la vía que venía a sustituir.
+- `PLAN.md` — el epígrafe seguía diciendo «las **cinco** ramas que siguen en
+  gris» cuando ya eran tres, y ahora dos.
+
+### Huecos
+
+- **61 subestaciones** cumplen el criterio y **se quedan fuera porque la BTN no
+  las nombra**, y `nombre` es obligatorio. No se omiten en silencio: van dichas
+  aquí, en el manifiesto y en §10.
+- **`longitud_medida_km` va `parcial`, no `confirmado`.** El IGN no publica
+  ninguna longitud: el número lo mide el atlas. **Medir sobre un dato primario no
+  convierte la medida en primaria** — un `confirmado` ahí incumpliría R2.
+- **La BTN no dice de quién es cada línea**, y el esquema prohíbe `titular` y
+  `propietario` por su nombre. Ese dato solo lo publica el operador, que es
+  `corporativa`: escribirlo devolvería la capa al muro por la puerta de atrás.
+- **La BTN no dice si el tendido está energizado.** Por eso `activo` **no
+  aplica** en §6.5: un `false` por falta de dato es la mentira que R7 evita.
+- **`recurso-eolico` y `recurso-solar` siguen en gris**, y tras esta pasada con
+  **más** motivo, no menos. La alternativa que sí existe —los recintos de 1.389
+  parques eólicos, 3.165 fotovoltaicas y 45 termosolares, que la misma BTN trae
+  como polígono— no es recurso sino instalación, y renombrar la rama es decisión
+  de producto.
+
+---
+
 ## datos-v2026.08.19 — La cabecera del manifiesto decía ser de otra release
 
 Corrección sin cambios en los datos. **Ninguna capa se toca**; lo que se arregla

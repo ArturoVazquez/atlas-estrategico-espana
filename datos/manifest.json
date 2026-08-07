@@ -1,14 +1,14 @@
 {
   "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
 
-  "_estado": "El horizonte acordado está cerrado. Tienen datos DIECISÉIS capas: `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `perte`, `idioma`, `cables-submarinos`, `agua-embalsada`, `limites-soberania` y `espacios-maritimos`. Siguen `en_preparacion: true` y sin `fichero` TRES: `recurso-eolico` y `recurso-solar` —el recurso solo existe como ráster y vectorizarlo lo inventaría el atlas— y `red-electrica`, cuya geometría publica el operador y R3 le prohíbe sostener un confirmado. Es la regla del horizonte de §3 y es la verdad: un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+  "_estado": "El horizonte acordado está cerrado. Tienen datos DIECISIETE capas: `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `red-electrica`, `perte`, `idioma`, `cables-submarinos`, `agua-embalsada`, `limites-soberania` y `espacios-maritimos`. Siguen `en_preparacion: true` y sin `fichero` DOS: `recurso-eolico` y `recurso-solar`. Su motivo se comprobó otra vez el 2026-08-07 y quedó MÁS firme, no menos: el recurso solo existe como ráster (Global Wind/Solar Atlas), y la zonificación ambiental del MITECO —que el plan daba por la salida honesta y por vectorial— resultó ser GeoTIFF también, así que vectorizar lo tendría que hacer el atlas por las dos vías. `red-electrica` salió de esa misma lista cuando se vio que su bloqueo descansaba en una premisa nunca escrita: R3 impide que REE sostenga un confirmado, pero no dice que REE sea el único que lo publica — y el IGN lo publica. Es la regla del horizonte de §3 y es la verdad: un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 
   "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
 
-  "schema_version": "1.21.0",
-  "release": "2026.08.19",
+  "schema_version": "1.22.0",
+  "release": "2026.08.20",
 
   "capas": [
     {

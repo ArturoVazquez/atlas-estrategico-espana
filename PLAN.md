@@ -244,15 +244,15 @@ cuando haya señales reales con las que diseñarlo.
 ### Las ramas en gris, y qué le falta a cada una
 
 Las cinco se comprobaron una a una el 2026-08-07, con la fuente en la mano.
-**Ninguna estaba en gris por olvido.** Ese mismo día cayeron dos —el porqué de
-cada una, debajo de la tabla—, y **quedan tres**:
+**Ninguna estaba en gris por olvido.** Ese mismo día cayeron **tres** —el porqué
+de cada una, debajo de la tabla—, y **quedan dos**:
 
 | Rama | Qué la para | Qué haría falta |
 |---|---|---|
 | ~~`agua-embalsada`~~ | ~~El MITECO protege la descarga con **ALTCHA**, un CAPTCHA de prueba de trabajo~~ | **LEVANTADA**: el vaso no era el dato |
 | `recurso-eolico` | No existe dato **vectorial** oficial de recurso: solo ráster | Decidir qué publica de verdad |
 | `recurso-solar` | Lo mismo | Lo mismo |
-| `red-electrica` | REE es `corporativa` y **R3 le prohíbe sostener un `confirmado`** | Fuente primaria con geometría |
+| ~~`red-electrica`~~ | ~~REE es `corporativa` y **R3 le prohíbe sostener un `confirmado`**~~ | **LEVANTADA**: la publica el IGN, no solo REE |
 | ~~`cables-submarinos`~~ | ~~**No hay registro público**, pese a la Ley 11/2022~~ | **LEVANTADA**: se registran aterrizajes |
 
 **`agua-embalsada` — LEVANTADA** el 2026-08-07, release `datos-v2026.08.18`, con
@@ -335,8 +335,9 @@ producto, y de Arturo — pero ahora la alternativa no es un premio de consolaci
 
 ~~**`red-electrica`** choca con R3: la geometría de la red de transporte la publica
 REE, que es el operador, o sea `corporativa`. No se encontró shapefile abierto del
-MITECO.~~ **DESBLOQUEADA el 2026-08-07, y el diagnóstico de arriba era corto de
-miras.** R3 era verdad; la premisa oculta —«nadie más la publica»— no lo era. **El
+MITECO.~~ **LEVANTADA el 2026-08-07**, release `datos-v2026.08.20`, con **31.154 km de
+tendido de 220 y 400 kV y 657 subestaciones**. El diagnóstico de arriba era corto
+de miras. R3 era verdad; la premisa oculta —«nadie más la publica»— no lo era. **El
 IGN sí la publica**, en la Base Topográfica Nacional, tema Energía: un GeoPackage
 nacional de 39,5 MB, descarga directa (`muestraLic: NO`, sin modal ni CAPTCHA) y
 licencia de la **Orden FOM/2807/2015**, declarada «compatible con CC-BY 4.0». El
