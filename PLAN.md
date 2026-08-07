@@ -235,7 +235,7 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
 embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → ~~H2Med~~ →
-~~electrolizadores~~ → ~~subasta del Banco Europeo del Hidrógeno~~ (resuelta:
+~~electrolizadores~~ → ~~cables submarinos~~ → ~~subasta del Banco Europeo del Hidrógeno~~ (resuelta:
 NO es capa, ver abajo) → ~~PERTE acotado~~ → ~~intangibles~~ (clase `analisis`,
 ámbito mundo). **EL HORIZONTE ACORDADO ESTÁ COMPLETO** (2026-08-07). Lo único
 que queda de él es `agua-embalsada`, bloqueada esperando dos ZIP del SNCZI que
@@ -288,7 +288,8 @@ MITECO. Lo que sí es primario es la **Planificación de la red de transporte
 2021-2026**, aprobada por Consejo de Ministros, pero eso es la red PLANIFICADA y
 además ya alimenta `electricidad-interconexiones`.
 
-**`cables-submarinos` es la más levantable de las cinco.** La Ley 11/2022
+**`cables-submarinos` — LEVANTADA** el 2026-08-07, release `datos-v2026.08.17`,
+con seis aterrizajes. Lo que sigue explica de dónde salió y qué le falta. La Ley 11/2022
 (disposición adicional 23.ª) obliga a los titulares a comunicar sus cables al
 Ministerio de Transformación Digital, pero **el Ministerio no publica la lista**:
 su punto de contacto único solo ofrece el formulario. Se reconstruye acto por

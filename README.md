@@ -13,10 +13,10 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **catorce capas publicadas**, release `datos-v2026.08.16`, visor
+**Estado:** **quince capas publicadas**, release `datos-v2026.08.17`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
 (nuclear, gas y regasificación, interconexiones eléctricas, generación por
-provincia, producción de hidrógeno); conectividad (centros de datos, red de hidrógeno); y el tablero
+provincia, producción de hidrógeno); conectividad (centros de datos, red de hidrógeno, cables submarinos); y el tablero
 (límites y soberanía, espacios marítimos, PERTE acotado); e intangibles (el estatuto
 jurídico del idioma). Las demás ramas están **declaradas y
 vacías**, que es su forma de decir la verdad.
@@ -64,7 +64,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las catorce capas con datos, por si sirve de índice:
+Las quince capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -81,6 +81,7 @@ Las catorce capas con datos, por si sirve de índice:
 | `perte` | verificada | Los 57 planes de inversión del PERTE VEC que su listado sitúa por municipio |
 | `limites-soberania` | verificada | Ocho territorios, con quién administra y quién reclama |
 | `espacios-maritimos` | verificada | Las aguas sin delimitar, la plataforma continental y el monte Tropic |
+| `cables-submarinos` | verificada | Los seis aterrizajes de cable que un acto administrativo nombra y sitúa |
 | `idioma` | **análisis** | El estatuto jurídico del español: veinte Estados y dos organizaciones, con su artículo citado literal |
 
 Los datos son **curación humana con fuente primaria**. El pipeline valida, vigila

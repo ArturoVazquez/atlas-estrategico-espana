@@ -32,6 +32,75 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.17 — Los cables no se pueden dibujar; los aterrizajes sí
+
+Entra **`cables-submarinos`**, la decimoquinta capa. **Seis aterrizajes**, cada
+uno con el acto administrativo que lo autoriza y su topónimo del IGN.
+
+**Nace distinta de su propio boceto.** El contrato la imaginaba `mixta`, con
+`sistemas[]`, `destinos[]` y un trazado que dibujar. Las fuentes obligan a otra
+cosa: **el recorrido de un cable submarino no tiene fuente con licencia
+compatible** —el mapa de TeleGeography, la referencia obvia, está bajo
+CC BY-NC-SA y `datos/LICENCIA-DATOS.md` lo veta—, y lo que sí publica una fuente
+primaria es **dónde toca tierra**, porque ocupar dominio público
+marítimo-terrestre exige un acto administrativo. Un registro por aterrizaje, en
+puntos. La categoría `trazado` queda declarada y **sin usar**.
+
+### Añadido
+
+- **`cables-submarinos`** — seis aterrizajes:
+
+  | Sistema | Titular | Dónde | Acto |
+  |---|---|---|---|
+  | Grace Hopper | Telxius | Playa Atxabiribil, **Sopela** | CNC02/21/48/0001 |
+  | *(sin nombre en el acto)* | Edge Network | Isla de la Virgen del Mar, **Santander** | CNC02/23/39/0009 |
+  | Cádiz–Ceuta | GTD | Playa de Benítez, **Ceuta** | BOE-B-2024-12549 |
+  | PENBAL-4 | Telefónica | Platja de la Malva-rosa, **València** | CNC02/17/46/0009 |
+  | Canalink | Canarias Submarine Link | Puerto de **Santa Cruz de la Palma** | BOE-B-2011-23242 |
+  | Canalink | Canarias Submarine Link | Puerto de **Granadilla** | BOE-B-2013-3436 |
+
+- **La acotación no la elige el gusto, la obliga lo encontrado.** Los actos de
+  Costas cubren TODO cable que ocupe dominio público marítimo-terrestre, y ahí
+  dentro hay un cable de fibra atado al puente de Txatxarramendi y
+  canalizaciones que cruzan las rías del Bidasoa y de Oriñón. Sin criterio, la
+  capa se llena de cruces de ría. El que separa sale del propio acto: **entra el
+  aterrizaje de un cable que une territorios separados por mar**.
+
+- **Un cable que cruza aguas españolas y no aterriza aquí no entra.** Lo decidió
+  el **Europe India Gateway**: su resolución de impacto ambiental
+  (BOE-A-2010-2040) describe 15.000 km por aguas de Galicia, el Estrecho y el mar
+  de Alborán… y toca tierra en **Gibraltar**. Se archiva, se cita y se queda
+  fuera.
+
+### Corregido
+
+- `consultar.py contraste` — **no caer en ningún municipio no es lo mismo que
+  caer en otro.** Lo segundo es una contradicción; lo primero es que no hay
+  segundo dato con el que comparar, y en la costa es lo normal: el IGN sitúa la
+  etiqueta de una playa en la orilla y los polígonos municipales acaban en la
+  costa. Sin esta guarda, esta capa daría dos falsos «¡REVISAR!» en cada pasada.
+
+### Huecos
+
+- **Esta capa no puede afirmar que están todos, y lo dice en su manifiesto.** La
+  Ley 11/2022 obliga a los titulares a comunicar sus cables al Ministerio de
+  Transformación Digital, pero **el Ministerio no publica la lista**: su punto de
+  contacto único solo ofrece el formulario. No existe registro contra el que
+  cuadrar, así que se publica lo que un acto administrativo nombra y sitúa.
+- **El aterrizaje de Santander no tiene sistema.** El expediente autoriza la
+  ocupación y no bautiza el cable: sin nombre y sin destino en todo el anuncio.
+  Va con fuente `tipo: hueco` y R4 baja el registro a `parcial`. Poner ahí un
+  nombre sacado de la prensa sería justo lo que esta capa evita.
+- **Tres pistas localizadas y sin comprobar:** PENCAN-X, Península–Gran Canaria
+  (RD 1124/2024, modificado por RD 268/2026); el ramal de Canalink Base 4 a
+  Fuerteventura (RD 973/2025); y el aterrizaje de Sagunto (CNC02/25/46/0013). Los
+  tres son subvenciones o solicitudes: hay que comprobar si **sitúan** el
+  aterrizaje o solo lo financian.
+- **El lado peninsular del cable Cádiz–Ceuta.** El acto archivado es el de la
+  parte de Ceuta; el de Cádiz será otro expediente.
+
+---
+
 ## datos-v2026.08.16 — El idioma, y el mapa de un solo color era falso
 
 Entra **`idioma`**, la decimocuarta capa y la última del horizonte acordado.
