@@ -32,6 +32,102 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.23 — El atlas tenía el transporte entero vacío
+
+Tres capas y **una rama nueva del árbol**. Era el hueco más grande que quedaba:
+por los puertos de interés general pasa la mayor parte del comercio exterior
+español, y hasta hoy no había nada.
+
+### Añadido
+
+- **`puertos` — 164 registros.** Las zonas de servicio de **43 puertos de interés
+  general**, gestionados por 28 Autoridades Portuarias, del WFS INSPIRE de
+  Puertos del Estado (**CC BY 4.0** declarado por el propio servicio).
+- **`rte-t` — 77 registros.** Los nodos españoles del **Anexo II del Reglamento
+  (UE) 2024/1679**: 49 nodos urbanos, 38 aeropuertos, 42 puertos marítimos, 1
+  puerto interior y 28 terminales ferrocarril-carretera.
+- **`ferrocarril` — 326 registros, 24.136 km.** La red de titularidad estatal,
+  del WFS INSPIRE de **Adif**, versión 2026/01.
+
+**Un puerto no es un registro.** La Ley de Puertos le delimita una zona de
+servicio **terrestre** y **dos de aguas** —la I abrigada, donde se opera; la II
+exterior, de espera y maniobra—, así que 43 puertos dan 164 recintos. Y por eso
+en el mapa un puerto ocupa mucho más mar que tierra.
+
+**La red básica no es «más importante» que la global.** Son los dos plazos del
+Reglamento: **2030** y **2050**. Un calendario con fuerza legal, no una escala.
+
+### Lo que se decidió no interpretar
+
+El servicio de puertos rotula cada recinto con un campo que vale «DEUP» o
+«Desafectacion» y **no documenta qué distingue**. No es un matiz: desafectar es
+**sacar** suelo del dominio público portuario, y son **48 de 164** — si esos
+polígonos fueran el suelo retirado, publicarlos como puerto diría lo contrario
+de la verdad. La duda viene de la propia norma, donde una orden ministerial
+aprueba a la vez «la delimitación … y la desafectación», y hay espacios
+desafectados que después se **reincorporan**.
+
+Lo resuelve el publicador y no una suposición del atlas: el conjunto se titula
+«Zonas de servicio portuarias de España». **El campo va verbatim y el atlas
+declara que no lo interpreta.**
+
+### Tres trampas técnicas, contadas porque volverán
+
+- **El PDF del DOUE no se puede parsear** («rotated text», el mismo muro del
+  PERTE) y **el texto plano tampoco vale**: aplasta las columnas, y «A Coruña X
+  Global Básica» no dice cuál valor es el aeropuerto y cuál el puerto. Con cinco
+  columnas eso es ambigüedad fatal. Lo resuelve el **espejo del BOE**, que sirve
+  la tabla en `<td>` de verdad.
+- **El vínculo línea↔tramo de Adif está escrito en los dos sentidos y no son
+  equivalentes.** La lista de la línea reclama **188 tramos por duplicado** —a
+  alguno lo reclaman **siete** líneas—, y coser por ahí daba **47.357 km** de red
+  donde hay 24.136. **Lo delató el total, no el código**: la red de Adif no llega
+  a 25.000 km.
+- **El GML de Adif viene en LAT LON.** El CRS se declara como URN
+  (`urn:ogc:def:crs:EPSG::4258`), y eso obliga al orden de ejes de la autoridad.
+  Copiarlas tal cual habría puesto la red ferroviaria española en el golfo de
+  Guinea.
+
+### Corregido
+
+- **Dos avisos del IGN quedan pagados.** Un **cero suyo no prueba ausencia**: el
+  servicio devuelve 200 con la colección vacía cuando se le aprieta, y en el
+  primer barrido «Albacete» y «Santander» salieron como no encontrados. Y **la
+  media de los vértices de un municipio no está dentro del municipio**: Castelló
+  de la Plana incluye las **islas Columbretes**, a 50 km mar adentro, y el
+  promedio se va al agua. Es §6.6 —«el centroide de un derecho multiparte puede
+  caer donde no hay derecho ninguno»— aplicada a un municipio.
+- **Orden de operaciones en la geometría de puertos:** simplificar → redondear →
+  tirar astillas → **orientar**. Orientar antes de redondear no vale, porque el
+  redondeo a 5 decimales puede **voltear el signo** del área de un anillo casi
+  degenerado. Se orienta lo que se publica, no lo que se calcula.
+- **El patrón de `codigo_linea` nació sin admitir letras.** De las 326 líneas hay
+  exactamente una, «0613G». La cazó §7.1: un patrón que solo describe el caso
+  mayoritario es una comprobación que miente.
+
+### Huecos
+
+- **48 recintos portuarios** llevan un acto que el atlas no interpreta, dicho
+  arriba y en cada ficha.
+- **24 astillas descartadas** en `puertos`: partes que tras redondear a 5
+  decimales quedan con menos de un metro cuadrado. Entre todas, **1,89 m² de
+  2.200 km²**.
+- **29 líneas de Adif** de las 355 no tienen ningún tramo que las declare y
+  quedan fuera.
+- **Las 2.682 estaciones y bifurcaciones de Adif NO entran**: mezclan estaciones
+  de viajeros con nudos técnicos («BIF. CANAL DEL DUERO») y piden criterio
+  propio. Su GML **sí queda archivado**, para que levantarlas no exija volver a
+  pedirlo.
+- **Ni ancho de vía, ni electrificación, ni alta velocidad, ni número de vías.**
+  Existen en el servicio de Adif, en capas que esta pasada no lee, y el esquema
+  los prohíbe por su nombre: escribirlos de memoria sería inventar los datos más
+  citables de la capa.
+- **35 de los 77 nodos RTE-T llevan una equivalencia declarada** entre el nombre
+  del Reglamento y el municipio del IGN. No la ha hecho un emparejador: va una a
+  una con su motivo, para poder discutirse.
+
+---
+
 ## datos-v2026.08.22 — Una capa entera se pintaba del color de reserva
 
 Corrección. **Ninguna capa cambia de registros**; lo que cambia es que dos de

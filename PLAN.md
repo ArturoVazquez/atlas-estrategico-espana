@@ -236,10 +236,53 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → ~~agua embalsada~~ → ~~centros de datos~~ → ~~H2Med~~ →
 ~~electrolizadores~~ → ~~cables submarinos~~ → ~~subasta del Banco Europeo del Hidrógeno~~ (resuelta:
 NO es capa, ver abajo) → ~~PERTE acotado~~ → ~~intangibles~~ (clase `analisis`,
-ámbito mundo). **EL HORIZONTE ACORDADO ESTÁ COMPLETO** (2026-08-07). Lo único
-que queda de él es `agua-embalsada`, bloqueada esperando dos ZIP del SNCZI que
-tiene que dejar Arturo en `fuentes/`. El pipeline de expedientes de cambio (D7),
-cuando haya señales reales con las que diseñarlo.
+ámbito mundo). **EL HORIZONTE ACORDADO ESTÁ COMPLETO** (2026-08-07), y
+`agua-embalsada` también cayó ese día por otra puerta: el shapefile no era el
+dato. El pipeline de expedientes de cambio (D7), cuando haya señales reales con
+las que diseñarlo.
+
+### Horizonte NUEVO: la rama del transporte (2026-08-07)
+
+Terminado el horizonte acordado, se buscaron capas que nadie había contemplado
+y salió un hueco que llevaba desde el principio a la vista sin que nadie lo
+mirara: **el atlas tenía la energía muy trabajada y el transporte entero
+vacío**, cuando por los puertos de interés general pasa la mayor parte del
+comercio exterior español.
+
+Se abrió la rama `transporte` con tres capas, **todas publicadas el mismo día**
+(release `datos-v2026.08.23`):
+
+| Capa | Qué registra | Fuente |
+|---|---|---|
+| `puertos` | 164 recintos de 43 puertos de interés general | WFS INSPIRE de Puertos del Estado, **CC BY 4.0** |
+| `rte-t` | Los 77 nodos españoles de la red transeuropea | Anexo II del Reglamento (UE) 2024/1679 |
+| `ferrocarril` | 326 líneas y 24.136 km | WFS INSPIRE de Adif, versión 2026/01 |
+
+**Lo que se investigó y NO entró todavía**, con su motivo, para no volver a
+buscarlo desde cero:
+
+- **ICTS** (29 infraestructuras científicas singulares, 62 instalaciones) — el
+  Ministerio **no publica fichero descargable**; habría que sacarlo del Mapa de
+  ICTS documento a documento.
+- **Desaladoras** — **no hay inventario único**: Acuamed publica proyecto a
+  proyecto. España es potencia mundial en esto y merece la pasada.
+- **Almacenamiento subterráneo de gas** (Yela, Serrablo, Gaviota) — concesiones
+  en el BOE, acto por acto como `cables-submarinos`. **Y está Castor**, el
+  almacén cerrado por sismicidad: un caso que este atlas cuenta mejor que nadie.
+- **Bases de utilización conjunta con EEUU** (Rota, Morón) — el Convenio de
+  Defensa está publicado en el BOE con sus anejos. Público y de primer orden.
+- **Estaciones de espacio profundo** (Robledo de Chavela, Cebreros, Maspalomas)
+  — acuerdos internacionales en el BOE.
+- **Refinerías** — ocho o nueve, autorizaciones en el BOE. Poco volumen, mucho
+  valor.
+
+**Y lo que NO se debe buscar.** El Catálogo Nacional de Infraestructuras
+Estratégicas y Críticas **no es público**. Ojo con cómo se dice: se comprobó la
+Ley 8/2011 y **no emplea la palabra «secreto»** —habla de datos «clasificados»
+y remite las condiciones a su Reglamento, que no se ha leído—. Sea cual sea la
+etiqueta exacta, la posición del atlas es la misma y queda escrita aquí: **no se
+persigue, y su ausencia se declara como exclusión deliberada** en vez de
+descubrirse por el hueco.
 
 ### Las ramas en gris, y qué le falta a cada una
 

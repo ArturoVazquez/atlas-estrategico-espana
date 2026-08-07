@@ -13,12 +13,13 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **diecinueve capas publicadas** y ninguna rama en gris, release
-`datos-v2026.08.22`, visor
+**Estado:** **veintidós capas publicadas** y ninguna rama en gris, release
+`datos-v2026.08.23`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
 (nuclear, gas y regasificación, interconexiones eléctricas, tendido de alta
 tensión, parques eólicos, plantas solares, generación por
-provincia, producción de hidrógeno, agua embalsada); conectividad (centros de datos, red de hidrógeno, cables submarinos); y el tablero
+provincia, producción de hidrógeno, agua embalsada); conectividad (centros de datos, red de hidrógeno, cables submarinos); transporte
+(puertos, nodos de la red transeuropea, red ferroviaria); y el tablero
 (límites y soberanía, espacios marítimos, PERTE acotado); e intangibles (el estatuto
 jurídico del idioma). **Ya no queda ninguna rama declarada y vacía**, lo
 que no quiere decir que no falte nada: lo que falta va declarado registro a
@@ -67,7 +68,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las diecinueve capas con datos, por si sirve de índice:
+Las veintidós capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -89,6 +90,9 @@ Las diecinueve capas con datos, por si sirve de índice:
 | `espacios-maritimos` | verificada | Las aguas sin delimitar, la plataforma continental y el monte Tropic |
 | `agua-embalsada` | verificada | 308 embalses con su capacidad y su reserva, verificados contra su cuenca |
 | `cables-submarinos` | verificada | Los seis aterrizajes de cable que un acto administrativo nombra y sitúa |
+| `puertos` | verificada | Las tres zonas de servicio —tierra, Zona I y Zona II— de 43 puertos de interés general |
+| `rte-t` | verificada | Los 77 nodos españoles de la red transeuropea, por modo y por red básica o global |
+| `ferrocarril` | verificada | 326 líneas y 24.136 km de la red de Adif |
 | `idioma` | **análisis** | El estatuto jurídico del español: veinte Estados y dos organizaciones, con su artículo citado literal |
 
 Los datos son **curación humana con fuente primaria**. El pipeline valida, vigila
