@@ -88,6 +88,15 @@ def vocabularios() -> dict:
         # dentro hacía falta porque el porqué de una categoría se lee mejor al
         # lado de sus colores que en otro documento.
         "categoria": {c: valores(l) for c, l in v["categoria"].items() if not c.startswith("_")},
+        # Las categorías SIN `color`. El propio fichero dice de sí mismo que «el
+        # color de cada categoría es el que pinta el mapa: el visor no reordena,
+        # no traduce y no elige colores, lee de aquí», así que una categoría sin
+        # color es una promesa que el visor no puede cumplir: cae en el color de
+        # reserva y la capa entera se vuelve indistinguible de las demás.
+        "categoria_sin_color": {
+            c: {x["valor"] for x in l if not x.get("color")}
+            for c, l in v["categoria"].items() if not c.startswith("_")
+        },
     }
 
 
@@ -512,6 +521,26 @@ def comprobar_vocabularios(doc: dict, capa: str, voc: dict) -> list[Hallazgo]:
                 out.append(Hallazgo(BLOQUEA, "§7.6", donde,
                                     f"La fuente «{fuente.get('id')}» tiene tipo "
                                     f"«{fuente.get('tipo')}», que no existe."))
+
+    # §9 · Una categoría que se USA tiene que traer su color. AVISA y no bloquea:
+    # el dato es correcto, lo que falla es que el mapa no lo puede distinguir.
+    #
+    # Se comprueba UNA VEZ POR CATEGORÍA y no por registro — si no, una capa de
+    # 1.382 parques daría 1.382 avisos idénticos y el parte sería ilegible, que
+    # es la manera más fácil de que un aviso deje de leerse.
+    #
+    # El fallo que lo obliga es real y ya había pasado dos veces: lo cuenta
+    # `app/src/mapa.js` («Cuatro capas, indistinguibles») y volvió a colarse en
+    # `cables-submarinos`, cuyo `aterrizaje` nació sin color el 2026-08-07 y
+    # estuvo una release entera pintándose con el color de reserva sin que nada
+    # lo dijera.
+    sin_color = voc["categoria_sin_color"].get(capa, set())
+    usadas = {f.get("properties", {}).get("categoria") for f in doc.get("features", [])}
+    for cat in sorted(usadas & sin_color):
+        out.append(Hallazgo(AVISA, "§9", capa,
+                            f"La categoría «{cat}» se usa y no declara `color` en "
+                            f"vocabularios.json: el visor la pintará con el color "
+                            f"de reserva, indistinguible del de otra capa."))
     return out
 
 

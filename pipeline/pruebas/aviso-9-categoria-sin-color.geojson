@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "atlas": { "capa": "cables-submarinos", "schema_version": "1.23.0", "verificado_a": "2026-08-07" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "cables-submarinos:categoria-sin-color",
+      "geometry": { "type": "Point", "coordinates": [-2.99, 43.39] },
+      "properties": {
+        "slug": "categoria-sin-color",
+        "nombre": "Registro que usa una categoría sin color declarado",
+        "categoria": "trazado",
+        "estado_registro": "vigente",
+        "verif": "parcial",
+        "geo_precision": "ilustrativa",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "titular": "Titular de prueba",
+        "conecta": "Un sitio con otro",
+        "expediente": "PRUEBA/00/00/0000",
+        "instrumento": "Documento de prueba que no existe",
+        "emplazamiento": "Ninguno",
+        "municipio": "Sopela",
+        "provincia": "Bizkaia",
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "hueco",
+            "titulo": "Fixture: no cita nada, solo tiene que pasar el núcleo"
+          }
+        ],
+        "nota": "AVISA por §9 y NO bloquea, a propósito. `trazado` está declarada en vocabularios.json SIN color, y eso también es deliberado: el color es «lo que pinta el mapa», así que una categoría que ningún registro usa no tiene color que declarar — elegirlo hoy sería decidir un diseño para algo que no existe. Este fixture es el único sitio del proyecto donde esa categoría se usa, y existe para probar que el aviso salta el día que alguien la use de verdad. El fallo que obligó a escribir la comprobación es real y había pasado tres veces: lo cuenta app/src/mapa.js («Cuatro capas, indistinguibles») y volvió a colarse en esta misma capa, cuyo `aterrizaje` nació sin color y estuvo una release entera pintándose con el color de reserva sin que nada lo dijera."
+      }
+    }
+  ]
+}

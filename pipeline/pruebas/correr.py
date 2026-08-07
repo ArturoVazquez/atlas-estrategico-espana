@@ -79,6 +79,12 @@ CASOS: dict[str, tuple[set[str], int]] = {
     "invalido-76-vocabulario.geojson":                 ({"§7.6"},   1),
     "aviso-77-fuente-sin-archivar.geojson":            ({"§7.7"},   0),
     "invalido-78-capa-fantasma.geojson":               ({"§7.8"},   1),
+    # El segundo caso que AVISA sin bloquear. Una categoría que se usa y no
+    # declara `color` deja al visor pintándola con el de reserva: el dato es
+    # correcto y lo que se pierde es poder distinguir la capa. No bloquea por
+    # eso mismo, y avisa porque el fallo ya se coló tres veces — la última en
+    # `cables-submarinos`, que estuvo una release entera indistinguible.
+    "aviso-9-categoria-sin-color.geojson":             ({"§9"},     0),
 
     # La comprobación propia de `generacion-electrica-provincia` (§10): su
     # `categoria` es la tecnología DOMINANTE, o sea un derivado de las cifras del
