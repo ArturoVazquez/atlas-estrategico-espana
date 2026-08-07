@@ -1,14 +1,14 @@
 {
   "_": "Registro de capas del Atlas Estratégico de España (CONTRATO-DATOS.md §3). La app construye el panel desde aquí: añadir una capa es añadir su fichero y su entrada, sin tocar código de panel. Los rótulos de `arbol`, `grupo` y demás enums NO viven aquí: se leen de vocabularios.json.",
 
-  "_estado": "F3 cerrada. Tienen datos `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `limites-soberania` y `espacios-maritimos` — doce; las otras siete siguen `en_preparacion: true` y sin `fichero`, que es la regla del horizonte de §3 y es la verdad. Un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
+  "_estado": "El horizonte acordado está cerrado. Tienen datos DIECISÉIS capas: `minerales-proyectos`, `minerales-derechos`, `minerales-dominios`, `nuclear`, `gas-regasificacion`, `electricidad-interconexiones`, `generacion-electrica-provincia`, `centros-datos`, `hidrogeno-red`, `hidrogeno-produccion`, `perte`, `idioma`, `cables-submarinos`, `agua-embalsada`, `limites-soberania` y `espacios-maritimos`. Siguen `en_preparacion: true` y sin `fichero` TRES: `recurso-eolico` y `recurso-solar` —el recurso solo existe como ráster y vectorizarlo lo inventaría el atlas— y `red-electrica`, cuya geometría publica el operador y R3 le prohíbe sostener un confirmado. Es la regla del horizonte de §3 y es la verdad: un manifiesto que anunciara capas inexistentes sería la primera mentira del atlas, y sería sobre sí mismo.",
 
   "_grupo_del_tablero": "`limites-soberania` va como `dotacion` y no como `actividad`: una reclamación de soberanía es una condición permanente del territorio, no una empresa que alguien sostiene y puede abandonar. Se resistió la tentación de abrir un tercer grupo por una sola capa; si el tablero crece y el encaje sigue chirriando, se abre entonces con motivo.",
 
   "_registro_por_adelantado": "Cinco capas declaran ya su `registro` aunque estén en preparación: es lo que el contrato §10 dice de ellas, transcrito. La regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero` — lo demás puede adelantarse cuando ya se sabe. Importa porque `registro: ilustrativo` activa la regla R5 sobre esa capa: dibuja dónde, no cuánto ni de quién.",
 
-  "schema_version": "1.18.0",
-  "release": "2026.08.15",
+  "schema_version": "1.21.0",
+  "release": "2026.08.18",
 
   "capas": [
     {

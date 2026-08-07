@@ -84,6 +84,22 @@ for (const fichero of ficheros) {
 
 const m = JSON.parse(readFileSync(join(DESTINO, "manifest.json"), "utf8"));
 const conDatos = m.capas.filter((c) => c.fichero).length;
+
+// El manifiesto dice de qué release es, y la etiqueta dice cuál se está
+// sirviendo. Si no coinciden, alguien publicó una release y se dejó la cabecera
+// del manifiesto sin tocar — que es exactamente lo que pasó tres veces seguidas
+// el 2026-08-07, porque se actualizaban las entradas de capa una a una y nunca
+// lo de arriba. AVISA y no rompe: el dato servido es el de la etiqueta y está
+// bien; lo que está mal es lo que el manifiesto dice de sí mismo.
+const declarada = String(m.release ?? "");
+if (declarada && !etiqueta.endsWith(declarada)) {
+  console.warn(
+    `\n  ⚠ El manifiesto dice ser de la release «${declarada}» y se está sirviendo` +
+      `\n    «${etiqueta}». Se sirve la etiqueta, que es lo correcto — pero la` +
+      `\n    cabecera de datos/manifest.json se quedó sin actualizar.\n`
+  );
+}
+
 console.log(
   `  ${etiqueta} → public/datos/   release ${m.release} · ` +
     `${conDatos} capa(s) con datos · ${m.capas.length - conDatos} en preparación`
