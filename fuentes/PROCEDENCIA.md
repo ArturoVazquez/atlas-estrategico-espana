@@ -90,13 +90,19 @@ conjunto nuevo modificando el original** debe incluir esas expresiones **tambié
 en los metadatos** — en el resumen, en el linaje y en las restricciones de
 acceso.
 
-> **⚠ Deuda declarada, encontrada al escribir este documento (2026-08-08).** El
-> manifiesto atribuye hoy «Instituto Geográfico Nacional · Atlas Estratégico de
-> España», que **no es la fórmula que la licencia exige**. La licencia se
-> comprobó antes de extraer, como manda `datos/LICENCIA-DATOS.md`, y el
-> veredicto era correcto —CC-BY 4.0, compatible—; lo que no se hizo fue leer
-> **cómo** obliga a citar. Está pendiente de corregir en el manifiesto de las 13
-> capas afectadas, y se anota aquí en vez de dejarlo callado.
+> **Encontrado y corregido el 2026-08-08.** El manifiesto atribuía «Instituto
+> Geográfico Nacional · Atlas Estratégico de España», que **no es la fórmula que
+> la licencia exige** —y **cuatro capas no nombraban al IGN en absoluto**, que es
+> peor—. La licencia se había comprobado antes de extraer, como manda
+> `datos/LICENCIA-DATOS.md`, y el veredicto era correcto: CC-BY 4.0, compatible.
+> Lo que no se hizo fue leer **cómo** obliga a citar. **Comprobar que una fuente
+> es compatible no es lo mismo que leer cómo obliga a citarla.**
+>
+> Las 13 capas llevan ya su fórmula, y **el visor la muestra**: la atribución
+> viaja con la fuente de MapLibre, así que aparece mientras la capa está
+> encendida y desaparece al apagarla — que es lo que pide el punto 4, «visible
+> junto con los datos, a pie de mapa». Un crédito fijo en el pie afirmaría que el
+> atlas usa la BTN incluso con esa capa apagada.
 
 - Archivado: [`2026-08-08_cnig_licencia-uso-productos-ign-fom-2807-2015.pdf`](2026-08-08_cnig_licencia-uso-productos-ign-fom-2807-2015.pdf)
   · [`2026-08-08_scne_tabla-de-productos-atribucion.html`](2026-08-08_scne_tabla-de-productos-atribucion.html)
@@ -216,7 +222,7 @@ ellas.
 
 **De dónde** · **IGN — Base Topográfica Nacional**, tema Energía, objeto `0713S`
 «Central eléctrica», atributo `TIPO_0713`.
-**Licencia** · IGN, ver arriba. **Atribución pendiente de corregir.**
+**Licencia** · IGN, ver arriba · atribución exigida: `Obra derivada de BTN Continua CC-BY 4.0 ign.es`
 **Qué hay que saber** · Son **recintos, no potencia**. La BTN captura el parque
 «por el contorno exterior de su recinto», y de eso **no se deduce cuánta energía
 produce**: A Coruña tiene 173 parques y genera menos que Zaragoza con 144.
@@ -230,7 +236,7 @@ nadie los escriba de memoria. `superficie_ha` también, por derivada.
 
 **De dónde** · La misma BTN, el mismo objeto `0713S` (tipos 05 fotovoltaica y 08
 termosolar).
-**Licencia** · IGN, ver arriba. **Atribución pendiente de corregir.**
+**Licencia** · IGN, ver arriba · atribución exigida: `Obra derivada de BTN Continua CC-BY 4.0 ign.es`
 **Qué hay que saber** · **1.959 fotovoltaicas quedan fuera porque la BTN no las
 nombra**, y son las pequeñas: entran 1.206 de 3.165 recintos, que son el **76 %
 de la superficie**. Termosolar, 44 de 45. Las dos cifras van siempre juntas
@@ -291,7 +297,7 @@ corporativa.
 **De dónde** · **IGN — BTN**, tema Energía, objetos `0710L` «Línea eléctrica»
 (atributo `TENSI_0710`: 03 = 220 kV, 04 = 400 kV) y `0719S` «Transformación
 eléctrica».
-**Licencia** · IGN, ver arriba. **Atribución pendiente de corregir.**
+**Licencia** · IGN, ver arriba · atribución exigida: `Obra derivada de BTN Continua CC-BY 4.0 ign.es`
 **Qué hay que saber** · **Es cartografía, no un registro de titularidad.** El
 mapa dice dónde está el tendido; **de quién es no dice nada**, y por eso el
 esquema prohíbe `titular` y `propietario`. Por lo mismo el título dice «Tendido
@@ -457,8 +463,8 @@ preguntando al IGN de vuelta.
 literal: «Se permite cualquier uso si se menciona la autoría de ADIF del
 siguiente modo: **© Administrador de infraestructuras ferroviarias**». Es
 atribución sola, sin ShareAlike ni NonCommercial: compatible.
-> **⚠ El manifiesto no usa hoy ese texto exacto**, sino «Administrador de
-> Infraestructuras Ferroviarias (Adif)». Pendiente de corregir, como el del IGN.
+> **Corregido el 2026-08-08:** el manifiesto usaba «Administrador de
+> Infraestructuras Ferroviarias (Adif)» y ahora lleva el literal con su símbolo.
 > Y ojo con dónde se busca: **el `GetCapabilities` de Adif no trae `Fees` ni
 > `AccessConstraints`** — no declara nada. La licencia está en el CSW.
 

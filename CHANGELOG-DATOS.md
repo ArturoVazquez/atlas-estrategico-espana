@@ -32,6 +32,70 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.25 — Citar bien no es citar a quien toca, es citarlo como pide
+
+La release anterior encontró el problema y lo dejó anotado. Esta lo arregla.
+
+### La lección, primero
+
+**Comprobar que una fuente es compatible no es lo mismo que leer cómo obliga a
+citarla.** El atlas llevaba veintidós capas haciendo lo primero —bien, y por
+escrito— y ninguna haciendo lo segundo.
+
+La licencia del IGN (Orden FOM/2807/2015) no se limita a conceder el uso: su
+punto 4 **fija la forma del reconocimiento**, y para obra derivada exige el
+literal «Obra derivada de \<producto\> \<fecha\> CC-BY 4.0 \<productores\>».
+Su punto 5 obliga además a repetirlo **en los metadatos**. Adif exige «©
+Administrador de infraestructuras ferroviarias».
+
+### Corregido
+
+**15 atribuciones**, con los identificadores sacados de la tabla de productos del
+propio SCNE:
+
+| Producto | Capas | Fórmula |
+|---|---|---|
+| Base Topográfica Nacional | 3 | `Obra derivada de BTN Continua CC-BY 4.0 ign.es` |
+| Nomenclátor Geográfico Básico | 8 | `Obra derivada de NGBE Continua CC-BY 4.0 ign.es` |
+| Límites administrativos | 2 | `Obra derivada de BDLJE Continua CC-BY 4.0 ign.es` |
+| Adif | 1 | `© Administrador de infraestructuras ferroviarias` |
+| Puertos del Estado | 1 | ahora nombra su licencia, `CC BY 4.0` |
+
+**Cuatro de las trece no mencionaban al IGN en absoluto** —`minerales-proyectos`,
+`nuclear`, `electricidad-interconexiones` y `limites-soberania`—, que es peor que
+mencionarlo con la fórmula equivocada. Se sitúan por topónimo del Nomenclátor y
+su atribución no lo decía.
+
+**Lo de cada emisor se conserva.** La licencia pide que su fórmula **esté**, no
+que esté sola: `agua-embalsada` sigue citando al MITECO y `rte-t` a la Unión
+Europea, con la del IGN dentro.
+
+### Y ahora se ve
+
+El campo `atribucion` existía desde la primera release y **no lo pintaba nadie**.
+Ahora viaja con la **fuente** de MapLibre, no con el pie: aparece mientras la
+capa está encendida y desaparece al apagarla — que es literalmente lo que pide el
+punto 4, «visible junto con los datos, de forma legible y a pie de mapa».
+
+Atarlo al pie habría sido más fácil y habría dicho una mentira pequeña: que el
+atlas usa la BTN incluso con las tres capas de la BTN apagadas.
+
+### La trampa que hizo falta para encontrar todo esto
+
+**`npm run build` desde la raíz del repositorio construía otro proyecto.** La raíz
+no tenía `package.json`, así que npm **subía por el árbol de directorios** hasta
+el primero que encontrase —en la máquina donde se escribió esto, uno del perfil
+del usuario— y compilaba un proyecto React ajeno mientras imprimía «✓ built en
+3,5 s». Un verde que no verificaba **nada** del atlas, y con el que se dio por
+buena la release anterior.
+
+Se destapó al comprobar que el cambio de la atribución llegaba al bundle: no
+llegaba, y el hash del fichero no cambiaba nunca. Tapado con un `package.json` en
+la raíz que no construye nada y solo delega en `app/`. **La raíz ahora responde
+por sí misma o falla**, que es lo que tenía que haber hecho desde el principio.
+
+---
+
 ## datos-v2026.08.24 — El atlas no se aplicaba a sí mismo lo que exige a sus fuentes
 
 **Ningún registro cambia.** Cambia poder contestar, de una capa cualquiera, la

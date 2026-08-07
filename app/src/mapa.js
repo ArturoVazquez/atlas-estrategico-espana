@@ -75,7 +75,16 @@ export function crearMapa(contenedor) {
  */
 export function anadirCapa(mapa, { entrada, coleccion }) {
   const fuente = `atlas:${entrada.id}`;
-  mapa.addSource(fuente, { type: "geojson", data: coleccion });
+  // La atribución viaja con la FUENTE, no con el pie: MapLibre la muestra solo
+  // mientras alguna capa suya está encendida, que es literalmente lo que exige
+  // la licencia del IGN — «visible junto con los datos, a pie de mapa». Un
+  // crédito fijo en el pie diría que el atlas usa la BTN incluso con la capa
+  // apagada, y dejaría de decirlo el día que alguien reordene el pie.
+  mapa.addSource(fuente, {
+    type: "geojson",
+    data: coleccion,
+    attribution: entrada.atribucion,
+  });
 
   const categorias = [
     ...new Set(coleccion.features.map((f) => f.properties?.categoria).filter(Boolean)),

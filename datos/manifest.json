@@ -7,8 +7,8 @@
 
   "_registro_por_adelantado": "NOTA HISTÓRICA desde el 2026-08-07: ya no hay ninguna capa `en_preparacion`, así que esta regla no gobierna nada hoy. Se conserva porque la puerta sigue abierta y porque su motivo es bueno. Decía: una rama declarada puede adelantar su `registro` aunque no tenga datos —la regla del horizonte solo exige `id`, `titulo`, `arbol` y `grupo`, y solo PROHÍBE `fichero`—, y eso importaba porque `registro: ilustrativo` activa R5 sobre la capa: dibuja dónde, no cuánto ni de quién. Las dos últimas que lo usaban, `recurso-eolico` y `recurso-solar`, resultaron ser el caso que enseña por qué adelantarlo es arriesgado: declaraban `ilustrativo` porque se las imaginaba dibujadas a mano, y al publicarse de verdad —ya como `parques-eolicos` y `plantas-solares`— son `verificado`. Adelantar el registro es una previsión, no un compromiso.",
 
-  "schema_version": "1.26.0",
-  "release": "2026.08.24",
+  "schema_version": "1.27.0",
+  "release": "2026.08.25",
 
   "capas": [
     {
@@ -24,7 +24,7 @@
       "version": "1.1.0",
       "fichero": "capas/minerales-proyectos.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Atlas Estratégico de España"
+      "atribucion": "Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "id": "minerales-dominios",
@@ -72,7 +72,7 @@
       "version": "1.0.0",
       "fichero": "capas/parques-eolicos.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "Obra derivada de BTN Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "_": "Era `recurso-solar`, «Recurso solar», y se renombra por lo mismo y con el mismo coste: ninguno. Reúne las dos tecnologías que la BTN separa —TIPO 05 fotovoltaica y TIPO 08 termosolar— en una capa con dos categorías, porque la fuente las sirve en la misma tabla y son la misma clase de objeto: un recinto que convierte sol en electricidad. Cuarenta y cinco termosolares no dan para una rama del árbol. ALCANCE, y aquí hay un hueco que hay que mirar de frente: de las 3.165 fotovoltaicas que la BTN clasifica, solo 1.206 llevan nombre — el 38 % de los recintos, pero el 76 % de la superficie, porque las anónimas son las pequeñas. Las termosolares van casi enteras: 44 de 45. Es la misma forma que `agua-embalsada`, que publica el 77 % de los embalses y el 86 % de la capacidad.",
@@ -88,7 +88,7 @@
       "version": "1.0.0",
       "fichero": "capas/plantas-solares.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "Obra derivada de BTN Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "id": "gas-regasificacion",
@@ -118,7 +118,7 @@
       "version": "1.0.0",
       "fichero": "capas/nuclear.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Atlas Estratégico de España"
+      "atribucion": "Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "id": "electricidad-interconexiones",
@@ -133,7 +133,7 @@
       "version": "1.0.0",
       "fichero": "capas/electricidad-interconexiones.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Atlas Estratégico de España"
+      "atribucion": "Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "_": "Se retituló dos veces. Era «Red eléctrica e interconexiones» hasta que las interconexiones tuvieron su capa, y era «Red eléctrica (transporte)» hasta que se publicó: ese título afirmaba una categoría JURÍDICA que la fuente no certifica. Estuvo en gris porque el mallado lo publica Red Eléctrica, sociedad cotizada, y R3 no deja que una `corporativa` sostenga un confirmado — pero la premisa oculta, que nadie más lo publica, era falsa: el IGN lo cartografía en la Base Topográfica Nacional, con licencia compatible con CC BY 4.0 y sin CAPTCHA. QUÉ SE PUBLICA Y QUÉ NO: dos registros de tendido (400 y 220 kV) que agregan los 1.784 tramos de la BTN, porque los 18.505 tramos vienen SIN NOMBRE y bautizarlos por sus extremos sería inventarlos; y 657 subestaciones de las 718 en las que termina un tramo de esa tensión — las otras 61 quedan fuera porque la fuente tampoco las nombra, y no se omiten en silencio. Del tendido se publica la geometría simplificada a 25 m, que cuesta el 0,017 % de la longitud y ahorra el 85 % de los vértices: la BTN captura un vértice por torre y un tramo recto de 40 torres no tiene 40 formas.",
@@ -149,7 +149,7 @@
       "version": "1.0.0",
       "fichero": "capas/red-electrica.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "Obra derivada de BTN Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "_": "Era `renovable-provincia`, «Renovable instalada por provincia», y se renombra porque esa casilla no la sostiene nadie: MITECO desagrega por provincia la GENERACIÓN, no la potencia; la CNMC da potencia pero solo por comunidad autónoma y bajo CC BY-SA (ShareAlike, vetada por datos/LICENCIA-DATOS.md); y Red Eléctrica llega a provincia siendo `corporativa`, que R3 no admite para un confirmado. Renombrar sale gratis porque el id nunca publicó datos: §8 protege los ids con registros, no los del horizonte.",
@@ -166,7 +166,7 @@
       "version": "1.0.0",
       "fichero": "capas/generacion-electrica-provincia.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "MITECO · Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "MITECO · Obra derivada de BDLJE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "_": "Va en `energia` y no en `conectividad` junto a `hidrogeno-red`, y no es despiste: el árbol no es un índice temático. Una planta que PRODUCE un vector energético es energía; el corredor que lo MUEVE es conectividad, que es donde la demo v4 puso el H2Med.",
@@ -198,7 +198,7 @@
       "version": "1.0.0",
       "fichero": "capas/agua-embalsada.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Ministerio para la Transición Ecológica y el Reto Demográfico · Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "Ministerio para la Transición Ecológica y el Reto Demográfico · Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
 
     {
@@ -215,7 +215,7 @@
       "version": "1.0.0",
       "fichero": "capas/cables-submarinos.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Ministerio para la Transición Ecológica y el Reto Demográfico · Autoridad Portuaria de Santa Cruz de Tenerife · Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "Ministerio para la Transición Ecológica y el Reto Demográfico · Autoridad Portuaria de Santa Cruz de Tenerife · Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "_": "La capa más pequeña del atlas, y el tamaño ES el dato: España no tiene registro público de centros de datos. La base europea del art. 12 de la Directiva 2023/1791 se publica agregada por Estado miembro, MITECO no lleva censo y las cifras de mercado son de la patronal (`corporativa`, R3). Entra el centro que un ACTO ADMINISTRATIVO nombra, sitúa y dimensiona, y por ahora el único localizado que hace las tres cosas es el PIGA «Expansión Región AWS en Aragón».",
@@ -231,7 +231,7 @@
       "version": "1.0.0",
       "fichero": "capas/centros-datos.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "INAGA (Gobierno de Aragón) · Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "INAGA (Gobierno de Aragón) · Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "_": "Era `h2med`, «Corredor H2Med», y se renombra antes de publicar nada porque el nombre habría sido inexacto desde el primer día: de los 3.268 km que la capa dibuja, 2.634 son la RED TRONCAL ESPAÑOLA, que no es el H2Med. Renombrar sale gratis porque el id nunca publicó registros: §8 protege los ids con datos, no los del horizonte. Y cambia de grupo: `dotacion` es «una condición permanente del territorio» y una red que Enagás está tramitando es «una empresa que alguien sostiene y puede abandonar», que es la definición de `actividad` — igual que su hermana `electricidad-interconexiones`.",
@@ -265,7 +265,7 @@
       "version": "1.0.0",
       "fichero": "capas/puertos.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Puertos del Estado · Atlas Estratégico de España"
+      "atribucion": "Puertos del Estado CC BY 4.0 · Atlas Estratégico de España"
     },
     {
       "_": "Los 77 nodos españoles del Anexo II del Reglamento (UE) 2024/1679. Es el esqueleto legal del transporte español: 49 nodos urbanos, 38 aeropuertos, 42 puertos marítimos, 1 puerto interior y 28 terminales ferrocarril-carretera, cada uno declarado de la red BÁSICA (horizonte 2030) o GLOBAL (2050). DE DÓNDE SALE LA TABLA, que fue la mitad del trabajo: el Anexo II tiene siete columnas y el PDF del DOUE no se puede parsear —el modo layout avisa de «rotated text» y devuelve incompleto—, y el texto plano NO VALE porque aplasta las columnas: «A Coruña X Global Básica» no dice cuál valor es el aeropuerto y cuál el puerto. Lo resuelve el espejo del BOE, que sirve el mismo documento en HTML con la tabla en <td> de verdad. CUADRE: 77 filas entre el primer «ES» y el «FR» siguiente, las 77 con sus siete celdas, sin nombres repetidos y ninguna sin modo. LA GEOMETRÍA es el municipio, y 35 nodos necesitaron una equivalencia DECLARADA una a una: siete «Área Metropolitana de …», una parroquia (San Cibrao, en Cervo), un nodo que son dos municipios (Tarragona-Reus), una isla entera (El Hierro) y las formas oficiales bilingües que el Reglamento abrevia — «Elche/Elx» no existe en el IGN, existe «Elx/Elche».",
@@ -281,7 +281,7 @@
       "version": "1.0.0",
       "fichero": "capas/rte-t.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Unión Europea (DOUE) · Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "Unión Europea (DOUE) · Obra derivada de BDLJE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "_": "La red ferroviaria de titularidad estatal, de la IDE de Adif (WFS INSPIRE, versión 2026/01). Adif es entidad pública empresarial y su metadato declara «sin limitaciones al acceso público» y «no se aplican condiciones de acceso y uso», con atribución: compatible con CC BY 4.0. SE PUBLICAN 326 LÍNEAS de las 355 que trae el servicio; las 29 restantes no tienen ningún tramo que las declare y quedan fuera, dichas aquí. EL ERROR QUE ESTUVO A PUNTO DE COLARSE, y merece recordarse: el vínculo entre línea y tramo está escrito en los DOS sentidos y no son equivalentes. La lista `net:link` de las líneas reclama 188 tramos por duplicado —a alguno lo reclaman SIETE líneas—, así que coser por ahí daba 47.357 km, casi el doble de la red real. Cada tramo, en cambio, declara UNA sola línea. Se cose por el lado que no puede contar dos veces, y salen 24.136 km con los 1.689 tramos usados exactamente una vez. Lo delató el total, no el código: la red de Adif no llega a 25.000 km. NO ENTRAN todavía las 2.682 estaciones y bifurcaciones del mismo servicio: mezclan estaciones de viajeros con nudos técnicos y piden criterio propio.",
@@ -297,7 +297,7 @@
       "version": "1.0.0",
       "fichero": "capas/ferrocarril.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Administrador de Infraestructuras Ferroviarias (Adif) · Atlas Estratégico de España"
+      "atribucion": "© Administrador de infraestructuras ferroviarias · Atlas Estratégico de España"
     },
     {
       "id": "limites-soberania",
@@ -312,7 +312,7 @@
       "version": "1.0.0",
       "fichero": "capas/limites-soberania.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Atlas Estratégico de España"
+      "atribucion": "Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
     {
       "id": "espacios-maritimos",
@@ -343,7 +343,7 @@
       "version": "1.0.0",
       "fichero": "capas/perte.geojson",
       "licencia": "CC-BY-4.0",
-      "atribucion": "Ministerio de Industria y Turismo · Instituto Geográfico Nacional · Atlas Estratégico de España"
+      "atribucion": "Ministerio de Industria y Turismo · Obra derivada de NGBE Continua CC-BY 4.0 ign.es · Atlas Estratégico de España"
     },
 
     {

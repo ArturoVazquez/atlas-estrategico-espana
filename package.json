@@ -1,0 +1,13 @@
+{
+  "name": "atlas-estrategico-espana",
+  "private": true,
+  "_": "Este fichero no tiene dependencias y no construye nada: delega en `app/`.",
+  "_por_que": "Sin él, la raíz del repositorio no tiene package.json y `npm run build` SUBE por el árbol de directorios hasta encontrar uno. En la máquina donde se escribió esto, el primero que encontraba estaba en el perfil del usuario, y `npm run build` construía otro proyecto entero mientras imprimía «✓ built» — un verde que no verificaba nada del atlas. Costó una release dada por buena sin comprobar. Con estos alias, la raíz responde por sí misma o falla.",
+  "scripts": {
+    "build": "npm --prefix app run build",
+    "dev": "npm --prefix app run dev",
+    "datos": "npm --prefix app run datos",
+    "validar": "python pipeline/validar.py",
+    "pruebas": "python pipeline/pruebas/correr.py"
+  }
+}

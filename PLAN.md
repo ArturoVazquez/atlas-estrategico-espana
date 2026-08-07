@@ -297,19 +297,22 @@ Escribirlo destapó tres cosas, y una queda ABIERTA:
    Estado y Adif se afirmaban en el changelog sin cita. Ya están.
 2. **El archivo guardaba 34 citas reescritas** por la normalización de finales de
    línea. Cerrado con `fuentes/** -text`.
-3. **⚠ ABIERTO — la atribución del IGN y de Adif.** La licencia del IGN no solo
-   concede: **fija la forma del reconocimiento**. Para obra derivada exige «Obra
-   derivada de BTN Continua CC-BY 4.0 ign.es» y obliga a repetirlo en los
-   metadatos; Adif exige «© Administrador de infraestructuras ferroviarias». El
-   manifiesto de las **13 capas** que citan al IGN dice otra cosa.
+3. **La atribución del IGN y de Adif — CERRADO el 2026-08-08** (contrato 1.27.0).
+   La licencia del IGN no solo concede: **fija la forma del reconocimiento**.
+   **15 atribuciones corregidas**, y cuatro de ellas ni nombraban al IGN. Además
+   **el visor las pinta**, atadas a la fuente de MapLibre, así que se ven mientras
+   la capa está encendida — que es lo que la licencia pide.
 
-**Qué hace falta para cerrar el punto 3:** decidir la forma exacta del
-`atribucion` de esas 13 capas —que son las tres de BTN más las diez que usan el
-Nomenclátor o las unidades administrativas—, aplicarla en el manifiesto y sacar
-release. **Es una corrección de dato, no de prosa**, y por eso no se ha hecho de
-oficio en la misma pasada que la documentó: la firma una persona. La fórmula y
-los identificadores exactos (BTN, NGBE, BDLJE) están ya archivados y escritos en
-la ficha, así que el trabajo es de decisión, no de investigación.
+**La lección, que vale más que la corrección:** *comprobar que una fuente es
+compatible no es lo mismo que leer cómo obliga a citarla*. Lo primero se hizo bien
+veintidós veces; lo segundo no se hizo ninguna.
+
+**Y una trampa de la máquina, encontrada al verificar esto.** La raíz del
+repositorio no tenía `package.json`, así que `npm run build` **subía por el árbol
+de directorios** hasta el del perfil del usuario y construía otro proyecto entero
+imprimiendo «✓ built». Un verde que no verificaba nada del atlas, y con el que se
+dio por buena una release. Tapado con un `package.json` en la raíz que solo
+delega en `app/`.
 
 ### Las ramas en gris, y qué le falta a cada una
 
