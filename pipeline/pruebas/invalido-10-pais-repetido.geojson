@@ -1,0 +1,115 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "idioma",
+    "schema_version": "1.19.0",
+    "verificado_a": "2026-08-07"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "idioma:argentina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.43251,
+          -34.61071
+        ]
+      },
+      "properties": {
+        "slug": "argentina",
+        "nombre": "Argentina",
+        "categoria": "estado",
+        "descripcion": "La Constitución argentina no nombra la lengua del Estado en ningún artículo. El español es la lengua de facto, sin norma fundamental que lo declare.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Buenos Aires en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "sin_norma_expresa",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la Nación Argentina (texto oficial ordenado por la Ley 24.430)",
+        "norma_fecha": "1994-08-22",
+        "norma_cita": "Ninguna. Sobre los 80.722 caracteres del texto oficial no hay una sola mención a lengua, idioma, castellano ni español.",
+        "nombre_en_la_norma": "no lo nombra",
+        "pais": "Argentina",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la Nación Argentina — Ley 24.430, texto oficial (InfoLeg, Ministerio de Justicia)",
+            "url": "http://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/804/norma.htm",
+            "fecha": "1994-08-22",
+            "archivo": "fuentes/2026-08-07_infoleg_constitucion-nacion-argentina-ley-24430.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "idioma:argentina-bis",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.43251,
+          -34.61071
+        ]
+      },
+      "properties": {
+        "slug": "argentina-bis",
+        "nombre": "Argentina (segunda ficha)",
+        "categoria": "estado",
+        "descripcion": "La Constitución argentina no nombra la lengua del Estado en ningún artículo. El español es la lengua de facto, sin norma fundamental que lo declare.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Buenos Aires en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "oficial_constitucion",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución de la Nación Argentina (texto oficial ordenado por la Ley 24.430)",
+        "norma_fecha": "1994-08-22",
+        "norma_cita": "La misma Argentina, con otro estatuto.",
+        "nombre_en_la_norma": "no lo nombra",
+        "pais": "Argentina",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución de la Nación Argentina — Ley 24.430, texto oficial (InfoLeg, Ministerio de Justicia)",
+            "url": "http://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/804/norma.htm",
+            "fecha": "1994-08-22",
+            "archivo": "fuentes/2026-08-07_infoleg_constitucion-nacion-argentina-ley-24430.html"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ],
+        "nota": "VIOLA la comprobación propia de la capa (§10). Dos registros declaran el mismo `pais` y publican estatutos contradictorios: uno dice que ninguna norma nombra la lengua y el otro que la Constitución la declara oficial. El mapa mostraría dos veces Argentina sin decir cuál rige. Es la hermana de `codigo_plan` en `perte` y de la provincia duplicada en la coropleta."
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.18.0 · **Fecha:** 2026-08-06
+**Versión del contrato:** 1.19.0 · **Fecha:** 2026-08-07
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -190,7 +190,7 @@ anglosajón) se asume y queda anotado aquí.
 | `descripcion` | string | – | 1–3 frases de contexto |
 | `estado_registro` | enum | ✔ | `vigente` · `historico` · `retirado` |
 | `verif` | enum | ✔ | `confirmado` · `parcial` · `no_verificado` — estado global del registro |
-| `geo_precision` | enum | ✔ | `exacta` · `paraje` · **(1.14)** `generalizada` · **(1.16)** `proyectada` · `municipio` · `ilustrativa` |
+| `geo_precision` | enum | ✔ | `exacta` · `paraje` · **(1.14)** `generalizada` · **(1.16)** `proyectada` · `municipio` · **(1.19)** `pais` · `ilustrativa` |
 | `geo_fuente` | string | – | de dónde sale la geometría (p. ej. `catastro minero`, `mano alzada`). **(1.3)** admite `__v`/`__f` como cualquier campo sensible — ver §6.6 |
 | `fecha_alta` | fecha ISO | ✔ | cuándo entró el registro en el atlas |
 | `fecha_verificacion` | fecha ISO | ✔ | última pasada de verificación humana |
@@ -304,6 +304,34 @@ consultable con GDAL sin adaptadores. Las dos excepciones estructuradas son
 > publicar** — es lo único que distingue haber entendido el documento de haberlo
 > leído por encima.
 
+> **Un texto legal no tiene dueño, y por eso se puede republicar entero**
+> *(1.19)*. Las tres enmiendas anteriores discuten **cuánta autoridad** concede
+> una fuente; esta discute algo distinto y que hasta ahora no había hecho falta:
+> **si el atlas puede copiarla**. El artículo 13 del TRLPI es literal —«no son
+> objeto de propiedad intelectual las **disposiciones legales o reglamentarias**
+> […] y **los actos, acuerdos, deliberaciones y dictámenes de los organismos
+> públicos**, así como las traducciones oficiales»—, así que una constitución, una
+> ley o un tratado se archivan enteros, se citan literalmente y se republican bajo
+> la CC BY 4.0 del atlas sin pedir permiso a nadie.
+>
+> **Lo escribió una capa que se quedó sin su fuente obvia.** «El idioma como
+> activo» pedía demolingüística, y la demolingüística del español la publica el
+> Instituto Cervantes en PDF con un aviso legal que dice que el acceso «no otorga
+> a los usuarios ningún derecho» sobre los contenidos, solo «uso exclusivo y
+> personal»; en `datos.gob.es` no hay conjunto de datos suyo. Extraer la parte
+> sustancial de esa base para republicarla con permiso comercial es lo que
+> `datos/LICENCIA-DATOS.md` prohíbe — el tercer muro de licencia del atlas, tras
+> el ShareAlike de la CNMC y el NonCommercial de TeleGeography.
+>
+> **La consecuencia no es publicar menos, es publicar otra cosa mejor sostenida:**
+> el ESTATUTO jurídico del idioma en vez de su demografía. Y de ahí sale la regla
+> general: cuando la fuente obvia de una capa no se puede reutilizar, hay que
+> preguntarse qué pregunta vecina SÍ tiene fuente libre, antes de dar la capa por
+> imposible. Tres veces en el mismo horizonte —«renovable instalada» → mezcla de
+> generación, «PERTE acotado» → lo que un documento sitúa, «el idioma» → su
+> estatuto— la restricción obligó a decir con precisión qué se publica, y las tres
+> veces la capa salió **más honesta**, no más pobre.
+
 ### 6.2 Verificación por campo
 
 Los campos **sensibles** llevan compañeros con sufijo reservado `__v` (estado) y
@@ -397,6 +425,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `hidrogeno-red` *(1.16)* | `fase` | `fase == "produccion"` (el tramo, la compresora o la caverna prestan servicio). Hoy **ninguno de los diez**: la red entera está en tramitación, y eso es lo que el filtro debe enseñar. |
 | `perte` *(1.18)* | — | **no aplica**. Un plan de inversión subvencionado no es una instalación: es dinero comprometido sobre un expediente. Preguntarle si está «en explotación» es preguntarle a la clase de objeto equivocada, como a una provincia o a un espacio marítimo. |
 | `hidrogeno-produccion` *(1.17)* | `fase` | `fase == "produccion"` (la planta electroliza hoy). Hoy **ninguna de las siete**. Ojo con la palabra: aquí `produccion` es la fase del expediente, no «producir hidrógeno» en abstracto — una planta con todos los permisos y sin construir sigue sin producir nada. |
+| `idioma` *(1.19)* | — | **no aplica**, y es el caso más claro de todos. El registro es un **Estado** o una **organización internacional**, y lo que se publica de él es una norma vigente. Un idioma oficial no está «en explotación»: ni siquiera es una cosa que se explote. Devuelve `null`, como las provincias y el tablero. |
 | `generacion-electrica-provincia` *(1.14)* | — | **no aplica**. El registro no es una instalación: es una **provincia**, y a un territorio no se le pregunta si está en explotación. Lo que generó no la pone «en explotación» ni la deja fuera: la pregunta es de otra clase de objeto. Devuelve `null`, y por eso el filtro no esconde ni una sola de las 52. |
 
 Una capa cuya fila diga «no aplica» devuelve `null`, no `false`. La diferencia
@@ -459,6 +488,7 @@ su copia archivada, igual que la que sostiene un promotor.
 | Perímetro del objeto mismo, de fuente cartográfica primaria, **simplificado por el atlas** para poder publicarse *(1.14)* | `generalizada` |
 | Trazado o emplazamiento **previsto**, publicado por la fuente primaria que además **advierte ella misma** de que puede no ser el definitivo *(1.16)* | `proyectada` |
 | Nada localizable, o fuente con licencia incompatible (`datos/LICENCIA-DATOS.md`) | `municipio` — se queda ahí, y lo dice |
+| El hecho es **de un Estado entero** y la fuente no sitúa nada dentro de él *(1.19)* | `pais` |
 | Trazado a mano alzada | `ilustrativa` |
 
 Quedarse en `municipio` es un resultado legítimo: es el hueco del principio 1
@@ -495,6 +525,27 @@ como quiera su promotor y sigue sin poder desmentirla el terreno, porque el
 terreno todavía no la tiene. Entra en **R9** con las otras que prometen
 cartografía, y **no concede exactitud**: sobre una `proyectada` no se mide, se
 lee una intención con fuente.
+
+**`pais` es el hermano de `municipio` una escala más arriba** *(1.19)*. Nació con
+`idioma`, cuyos registros afirman cosas de la forma «en este Estado rige esta
+norma». Eso no tiene coordenada: el objeto es el territorio entero, y el punto
+solo existe para que el registro se pueda pinchar en un mapa. Los cinco valores
+anteriores mentirían, cada uno a su manera — `exacta` y `paraje` prometen un
+lugar donde no hay ninguno, `generalizada` y `proyectada` prometen cartografía
+que nadie ha trazado, e `ilustrativa` diría «mano alzada» de una capital que
+está donde está.
+
+Como `municipio`, **queda fuera de R9 a propósito**: una precisión que no promete
+cartografía no tiene por qué citarla como primaria. Lo que sí debe hacer es
+declarar de dónde sale el punto en `geo_fuente` **sin marcarlo `confirmado`**
+cuando la fuente cartográfica no sea un emisor oficial. El caso que lo estrena:
+las capitales salen de Natural Earth, que está en dominio público —licencia
+cómoda— pero es una compilación, no un registro público. Un punto de cortesía se
+declara como lo que es.
+
+Y una tentación que se rechaza con él: **polígonos de países**. Habrían metido al
+atlas en cada disputa fronteriza del planeta a cambio de ningún poder analítico,
+porque el hecho que se publica no es una línea.
 
 **Un punto representativo no hereda la precisión del polígono del que sale.**
 Un perímetro de fuente primaria concede `exacta` **a ese perímetro**, no a un
@@ -544,6 +595,44 @@ se cae porque un ministerio está de mantenimiento no es un contrato.
 Si un punto y su municipio no cuadran, la salida **no es elegir**: uno de los dos
 datos está mal y no se sabe cuál. Se para, la geometría se queda donde estaba y
 se declara el hueco — que es lo que se hizo con `las-cruces` al abrir esta capa.
+
+---
+
+## 6.7 · Qué sella exactamente `registro: analisis` *(1.19)*
+
+La clase existe desde la 1.1 y **nadie la había usado**. La estrena `idioma`, y
+lo primero que hubo que decidir es qué promete y qué no, porque la definición
+corta —«investigación u opinión sellada como tal»— se puede leer de dos maneras
+y una de ellas es un desastre.
+
+**`analisis` marca la TESIS. No rebaja la prueba.**
+
+Cada dato de una capa `analisis` lleva su fuente primaria, su `__v` y su `__f`
+exactamente igual que en una capa `verificado`, y R1–R10 se le aplican enteras.
+Lo que la clase advierte al lector es otra cosa: que **el marco es discutible**.
+En `idioma`, cada artículo citado es un hecho comprobable contra el texto
+archivado; lo opinable es llamar «activo» a ese conjunto de hechos y haberlo
+recortado así. Una capa `analisis` con datos flojos no es análisis: es una capa
+mala con coartada, y el sello sirve justamente para que eso no cuele.
+
+Es el reverso exacto de `ilustrativo` (R5), y conviene verlos juntos porque se
+confunden: **`ilustrativo` baja el listón de la evidencia y no toca la
+interpretación** —dibuja dónde, no cuánto ni de quién—; **`analisis` mantiene el
+listón intacto y marca la interpretación**. Por eso R5 obliga a `ilustrativo` a
+renunciar a los `__v` por campo, y por eso a `analisis` no se le permite
+renunciar a nada.
+
+**El `debate_url` es embudo, no dependencia.** D4 define la clase «enlazada al
+hilo del foro donde se defiende», y D1 manda por encima: «el atlas debe ser
+público y autosuficiente, las fichas se bastan solas». Un `analisis` sin hilo se
+publica; lo que no se hace es inventarse el enlace. Queda como hueco declarado
+hasta que el hilo exista.
+
+**Y una advertencia sobre el diente:** hoy `validar.py` **no comprueba nada**
+sobre `analisis` ni sobre `debate_url`. Esta sección es doctrina sin CI, y se
+dice aquí porque §8 prohíbe que el contrato afirme garantías que la validación no
+da. Si alguna vez una segunda capa `analisis` la pone a prueba, esto es lo
+primero que hay que convertir en regla.
 
 ---
 
@@ -667,7 +756,8 @@ vocabulario.
 - `verif`: `confirmado` · `parcial` · `no_verificado`
 - `estado_registro`: `vigente` · `historico` · `retirado`
 - `geo_precision`: `exacta` · `paraje` · `generalizada` *(1.14)* · `proyectada`
-  *(1.16)* · `municipio` · `ilustrativa` — qué fuente concede cada uno, en §6.6
+  *(1.16)* · `municipio` · `pais` *(1.19)* · `ilustrativa` — qué fuente concede
+  cada uno, en §6.6
 - `fuente.tipo`: `primaria` · `prensa` · `corporativa` · `hueco`
 - `fase` *(1.1)*: `produccion` · `desarrollo` · `tramitacion` · `parado` · `cerrado`
 
@@ -698,6 +788,37 @@ vocabulario.
   misma capa. Lo que las distingue —en qué punto están— ya lo llevan `fase` y
   `estado_pci`. Precedente: `recurso-eolico`, con `zona` a secas
 - *hidrogeno-red* *(1.16)*: `hidroducto` · `estacion_compresion` · `almacenamiento`
+- *idioma* *(1.19)*: `estado` · `organizacion` — dos clases de sujeto, no dos
+  grados de la misma cosa: un Estado se da a sí mismo su norma lingüística, una
+  organización internacional la recibe de un tratado que firman otros
+
+**`estatuto`, el vocabulario de `idioma`** *(1.19)*. Es el campo espinal de la
+capa y **no puede ser un booleano**, porque el mapa de un solo color que todo el
+mundo tiene en la cabeza es falso. Ocho valores, y ninguno se inventó de
+antemano: cada uno salió de leer un texto que no encajaba en los anteriores.
+Tampoco se multiplican por gusto — hubo un noveno, `cooficial_regional`, que se
+retiró antes de publicar: separaba tres maneras de acotar la cooficialidad que se
+distinguen mejor citando el artículo que clasificándolo.
+
+- `oficial_constitucion` — la constitución lo declara lengua oficial del Estado
+  (España, Colombia, Costa Rica, Guatemala, Honduras, Panamá, Cuba, R. Dominicana)
+- `cooficial_acotada` — oficial, y otras lenguas lo son **con un límite** (España,
+  Colombia, Perú, Ecuador, Venezuela, Nicaragua). **El límite no es el mismo en
+  las seis** —territorio donde predomina, Estatuto de autonomía, región nombrada,
+  pueblo indígena, «relación intercultural»— y esa diferencia es demasiado fina
+  para un enum: va a `claves` verbatim. El valor afirma la arquitectura: hay
+  cooficialidad y **no alcanza a todo el Estado**
+- `cooficial_estatal` — varias lenguas oficiales **en todo el Estado**, enumeradas
+  (Bolivia, con el castellano y treinta y seis lenguas indígenas)
+- `bilingue` — el Estado se declara bilingüe (Paraguay, con el guaraní)
+- `oficial_con_remision` — la norma fundamental nombra unas y **delega el resto en
+  la ley** (Guinea Ecuatorial; y la UE, por el art. 342 TFUE)
+- `nacional_sin_oficialidad` — norma expresa que la hace **nacional** sin
+  declararla oficial (México)
+- `sin_norma_expresa` — lengua de facto del Estado y **ninguna norma la nombra**
+  (Argentina, Chile, Uruguay)
+- `lengua_de_trabajo` — en una organización internacional, por su tratado o
+  reglamento (ONU)
   — aquí `categoria` dice **qué pieza de la red es**, no en qué estado está: el
   estado ya lo llevan `fase` y `estado_pci`, y las tres piezas se leen de un
   vistazo en el mapa porque son línea, punto y punto
@@ -1135,6 +1256,51 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > primera, para que una propuesta no se convierta en concesión borrando un
 > adjetivo (§6.1, enmienda 1.18); la segunda, por lo mismo que en `centros-datos`.
 
+**idioma** *(1.19)* (`dotacion`, puntos, **analisis**, ámbito **mundo**):
+`estatuto` (+`__v`,`__f`) · `norma` (✔) · `norma_fecha` · `norma_cita` (✔) ·
+`nombre_en_la_norma` (✔) · `pais` · `sede` · `claves[]`
+
+> **La capa cartografía el ESTATUTO del idioma, no su demografía**, y la causa es
+> una licencia, no el gusto (§6.1, enmienda 1.19). Lo que publica es dónde el
+> español es lengua oficial, **por qué norma**, y en qué organizaciones
+> internacionales es lengua de trabajo. Cada registro cita su artículo **literal**
+> y archiva el texto entero del que sale.
+>
+> **`nombre_en_la_norma` no es un sinónimo, es el hallazgo.** Los textos no
+> coinciden en cómo se llama la cosa: España, Colombia, Perú, Bolivia, Ecuador,
+> Venezuela y Paraguay dicen **«castellano»**; Costa Rica, Guatemala, Honduras,
+> Panamá, Nicaragua, Cuba, R. Dominicana y Guinea Ecuatorial dicen **«español»**.
+> En un texto constitucional esa palabra la eligió alguien —en el caso español,
+> discutida desde 1978 porque «castellano» sitúa la lengua ENTRE las españolas en
+> vez de por encima—. Normalizar las dos formas a una borraría lo único que ese
+> artículo decidió, así que va a campo propio y no a nota al pie.
+>
+> **Un negativo se publica archivando el texto en el que la cosa NO está.**
+> Argentina, Chile y Uruguay no nombran la lengua en su constitución, y México la
+> declara «nacional» sin declararla oficial. Decirlo de palabra no vale: entran
+> las constituciones **enteras**, para que el lector compruebe la ausencia él
+> mismo. Y se comprueba con **control positivo** —que el texto traiga sus tildes y
+> sus eñes, y que encuentre palabras que sí tienen que estar— porque leer un
+> ISO-8859-1 como UTF-8 rompe la ñ de «español» y fabrica un cero falso.
+>
+> **Un negativo también se fabrica leyendo bien un texto viejo.** El PDF que sirve
+> hoy la Cámara de Diputados chilena da la respuesta correcta y está fechado en
+> **2003**, con la numeración anterior a la reforma de 2005. Antes de publicar una
+> ausencia hay que mirar la fecha del documento: metadatos del PDF, ley de reforma
+> más reciente citada, y si la numeración de artículos cuadra con la vigente.
+>
+> **`hablantes`, `hablantes_nativos`, `estudiantes` y `poblacion` están prohibidos
+> en el esquema, por su nombre.** No es una carencia pendiente de rellenar: es el
+> cortafuegos de la licencia que dio origen a la capa, y tiene que doler
+> intentar saltárselo.
+>
+> **Lo que falta, dicho:** la OEA y la Unión Africana —donde el español es lengua
+> oficial por el Protocolo de Enmiendas al Acta Constitutiva— **no entran
+> todavía**. `oas.org` devuelve 403 a toda captura automática y el protocolo de la
+> UA se sirve como escaneo sin capa de texto. Se sabe lo que dicen y no se
+> publican: citar de memoria un artículo que no se ha podido leer sería
+> exactamente lo que esta capa existe para no hacer.
+
 *(Capas futuras —agua embalsada— entran por §8 con su
 apartado aquí y su esquema en `pipeline/esquemas/`.)*
 
@@ -1245,6 +1411,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.19.0** | 2026-08-07 | **Aditiva.** Nace `idioma` (§10), la última casilla del horizonte y **la primera capa `analisis` del atlas**. Nace además cambiada de significado por una licencia: «El idioma como activo» pedía demolingüística, y la del español la publica el Instituto Cervantes bajo un aviso legal que dice que el acceso «no otorga a los usuarios ningún derecho» —sin conjunto de datos en `datos.gob.es`—, así que republicarla bajo CC BY 4.0 es lo que `datos/LICENCIA-DATOS.md` prohíbe. Tercer muro de licencia del atlas, tras el ShareAlike de la CNMC y el NonCommercial de TeleGeography. §6.1 gana la enmienda que faltaba, y no discute autoridad sino **copia**: **un texto legal no tiene dueño** —art. 13 del TRLPI, que excluye de la propiedad intelectual las disposiciones legales y los actos de los organismos públicos—, así que constituciones y tratados se archivan enteros y se republican sin permiso. La capa pasa a cartografiar el **ESTATUTO** del idioma, y desmiente el mapa de un solo color: **México no declara idioma oficial** (es «lengua nacional» por ley, a la par que las indígenas) y **Argentina, Chile y Uruguay no nombran la lengua**. §9 estrena `estatuto`, **nueve valores** porque hay nueve arquitecturas distintas y ninguna se inventó de antemano. Nace `geo_precision: pais` (§5, §6.6), hermano de `municipio` una escala más arriba y **fuera de R9** por lo mismo: el objeto es el Estado entero y el punto solo existe para poder pinchar el registro; se rechaza con él la tentación de los polígonos de países, que habrían metido al atlas en cada disputa fronteriza del planeta. Y nace **§6.7**, la sección que define por fin qué sella `analisis`: **marca la TESIS, no rebaja la prueba** — reverso exacto de `ilustrativo` (R5), que baja el listón de la evidencia y no toca la interpretación. Declarado sin adorno: §6.7 es **doctrina sin CI**, porque `validar.py` no comprueba nada sobre `analisis` ni `debate_url`. |
 | **1.18.0** | 2026-08-06 | **Aditiva.** Nace `perte` (§10), y con ella se decide qué acota la palabra «acotado» que la capa arrastraba desde la demo: **acota lo que un documento público sitúa**. Se descartan por el camino la lista de los 100 mayores perceptores del PRTR (obligatoria por el art. 25 bis del Reglamento MRR, y **sin ubicación**) y el mapa del PRTR de MITECO (un Power BI incrustado: no hay conjunto de datos que citar). Queda el listado de la Propuesta de Resolución Definitiva del **PERTE VEC — Sección B 2024**, que trae **provincia y municipio fila a fila**. §6.1 gana la tercera enmienda de su familia: **una propuesta de resolución es documento oficial y no es el acto** — sostiene un confirmado sobre lo que PROPONE, no sobre la concesión, y el matiz va dentro del nombre de los campos (`subvencion_propuesta`) porque un asterisco no lo lee nadie. Con un aviso que no es de esta capa sino de cualquiera: **hay documentos oficiales que no son una tabla aunque lo parezcan**. Este es un registro por comisiones de verificación donde una aparición posterior REVISA a la anterior; contar filas da 61 y los expedientes vigentes son 57. Lo demuestran sus propios TOTALES, que cuadran al céntimo en las seis comisiones. §6.5 le da su fila: `activo` **no aplica**, porque un plan de inversión es dinero comprometido, no una instalación. §9, un vocabulario de un solo valor (`plan_inversion`). |
 | **1.17.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-produccion` (§10): las siete plantas de electrólisis españolas de la lista de la Unión — **siete, no cinco**, porque dos de los cinco proyectos nombran y sitúan dos plantas cada uno. §6.1 gana la consecuencia práctica de la enmienda 1.16, y esta cambia **cómo se redacta una ficha**, no si la fuente vale: **un registro obliga a publicar, no a certificar**. Cuando quien declara es una empresa, su texto trae tres cosas mezcladas —el proyecto, la ambición y el argumento de venta— y solo la primera llega a un campo numérico; la ambición va a `claves` **verbatim y con su condicional intacto**, y la evaluación promocional no se publica. El caso que lo obligó: el valle asturiano declara **1 GW de ambición y 150 MW de proyecto en el mismo párrafo**, y la cifra que circula por ahí es la primera. §9 estrena un vocabulario de **un solo valor** (`electrolizador`), como ya hacía `recurso-eolico`. §6.5 le da su fila, con el aviso de que aquí `fase: produccion` es el peldaño del expediente y no «producir hidrógeno» en abstracto. **No nace ninguna regla `R*`**: las que hacen falta ya existen, y añadir una por no romper la racha sería exactamente la prosa disfrazada de garantía que §8 prohíbe. |
 | **1.16.0** | 2026-08-06 | **Aditiva.** Nace `hidrogeno-red` (§10) —la capa que se llamaba `h2med` y no podía seguir llamándose así: de sus 3.268 km, **2.634 son la red troncal española**, que no es el H2Med—. El perímetro no lo elige el atlas: lo fija el Acuerdo del Consejo de Ministros de 30-07-2024 (BOE-A-2024-19047), que habilita a Enagás para **cinco** proyectos, dos de ellos —las cavernas de sal 9.24.1 y 9.24.2— que el relato público del H2Med **no menciona nunca**. §6.1 gana el reverso de la enmienda 1.15: si aquella dijo que el comunicado de un gobierno no es primario, esta dice que **un registro que una norma OBLIGA a publicar sí lo es**, aunque viva en una web — la plataforma de transparencia PCI-PMI existe por el **artículo 23 del Reglamento (UE) 2022/869**, que enumera de la a) a la g) lo que debe contener, empezando por la información geográfica. Con dos cautelas que vienen con ella: la obligación **no alcanza a lo que se sirve junto** (la capa PLATTS del mismo visor es de S&P Global y no entra), y un registro **puede publicar y advertir a la vez**. Esa advertencia —«la representación GIS no prejuzga y puede no coincidir con el trazado final»— obliga a estrenar un valor de `geo_precision`: **`proyectada`** (§5, §6.6, §9), dentro de **R9**. Ninguno de los cinco anteriores servía, y por el mismo motivo que hizo nacer `generalizada` en la 1.14: `ilustrativa` habría hecho mentir a la ficha —«trazado a mano alzada»— sobre cartografía que nadie dibujó a mano. La distinción que conserva es de **tiempo**, no de detalle: las otras cuatro dicen cuánto se afina un contorno; `proyectada` dice que **el terreno todavía no puede desmentirlo**. Y nace **R10**: en una capa con lineales, `longitud_km` cuadra con su propia geometría al 15 %. Sale de una trampa real — el servicio publica un `SHAPE.LEN` en metros de **Web Mercator**, inflado por la latitud hasta un 38 %, con el que BarMar «mide» 518 km en vez de 382. La regla no persigue un decimal: persigue un cambio de unidad o de proyección. |

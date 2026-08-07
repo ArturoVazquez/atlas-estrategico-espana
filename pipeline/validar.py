@@ -82,6 +82,7 @@ def vocabularios() -> dict:
         "geo_precision": valores(v["registro"]["geo_precision"]),
         "fase": valores(v["registro"]["fase"]),
         "fuente_tipo": valores(v["fuente"]["tipo"]),
+        "estatuto": valores(v["estatuto"]),
         # Las claves que empiezan por `_` son comentarios, no capas: es la
         # convención del propio fichero (su primera clave es un `"_"`), y aquí
         # dentro hacía falta porque el porqué de una categoría se lee mejor al
@@ -482,6 +483,7 @@ def comprobar_vocabularios(doc: dict, capa: str, voc: dict) -> list[Hallazgo]:
         ("estado_registro", voc["estado_registro"]),
         ("geo_precision", voc["geo_precision"]),
         ("fase", voc["fase"]),
+        ("estatuto", voc["estatuto"]),
         ("categoria", voc["categoria"].get(capa, set())),
     ]
 
@@ -650,6 +652,54 @@ def comprobar_perte(doc: dict) -> list[Hallazgo]:
     return out
 
 
+def comprobar_idioma(doc: dict) -> list[Hallazgo]:
+    """§10 · Un mismo sujeto no aparece dos veces, y un negativo cita su texto.
+
+    Dos comprobaciones, las dos nacidas de cómo se puede estropear ESTA capa:
+
+    La primera es la hermana de `codigo_plan` en `perte` y de la provincia
+    duplicada en la coropleta: si un país aparece dos veces, el mapa afirma dos
+    estatutos distintos para el mismo Estado y no dice cuál vale.
+
+    La segunda es de coherencia entre dos campos, y el esquema no la puede hacer
+    porque cada uno es válido por su cuenta: `estatuto: sin_norma_expresa` afirma
+    que NINGUNA norma nombra la lengua, así que `nombre_en_la_norma` solo puede
+    decir «no lo nombra» — y al revés. Si se separan, la ficha se contradice a sí
+    misma en dos líneas seguidas, que es justo el error que se cuela al copiar un
+    registro para hacer el siguiente.
+
+    (Hubo aquí una tercera comprobación que se retiró antes de publicar: exigía
+    que un `sin_norma_expresa` declarase la `norma` donde se comprobó la ausencia.
+    El esquema YA la exige en todos los registros, así que no podía saltar nunca.
+    Lo delató su propia fixture, al señalar §7.1 además de §10.)
+    """
+    out = []
+    vistos: dict[str, str] = {}
+    for f in doc.get("features", []):
+        props = f.get("properties") or {}
+        donde = f.get("id", "(sin id)")
+
+        sujeto = props.get("pais") or props.get("sede")
+        if sujeto:
+            if sujeto in vistos:
+                out.append(Hallazgo(
+                    BLOQUEA, "§10", donde,
+                    f"«{sujeto}» ya lo declara {vistos[sujeto]}. Dos registros del mismo "
+                    f"sujeto publican dos estatutos y no dicen cuál rige."))
+            vistos[sujeto] = donde
+
+        muda = props.get("estatuto") == "sin_norma_expresa"
+        sin_nombre = props.get("nombre_en_la_norma") == "no lo nombra"
+        if muda != sin_nombre and props.get("estatuto") and props.get("nombre_en_la_norma"):
+            out.append(Hallazgo(
+                BLOQUEA, "§10", donde,
+                f"Se contradice: «estatuto: {props.get('estatuto')}» y "
+                f"«nombre_en_la_norma: {props.get('nombre_en_la_norma')}». Si ninguna "
+                f"norma nombra la lengua, no puede haber un nombre; y si lo hay, "
+                f"alguna norma la nombra."))
+    return out
+
+
 def comprobar_r8(docs: dict[str, dict]) -> list[Hallazgo]:
     """§6.5 · R8 — la única regla que compara DOS capas entre sí.
 
@@ -752,6 +802,7 @@ def validar_capa(doc: dict, ruta: Path, manifiesto: dict, voc: dict) -> list[Hal
         # prohibiciones `"not": {}` de los esquemas.
         *(comprobar_generacion(doc) if capa == "generacion-electrica-provincia" else []),
         *(comprobar_perte(doc) if capa == "perte" else []),
+        *(comprobar_idioma(doc) if capa == "idioma" else []),
     ]
 
 

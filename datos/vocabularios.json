@@ -31,6 +31,8 @@
         "def": "Trazado o emplazamiento PREVISTO, publicado por la fuente primaria que además advierte ella misma de que puede no ser el definitivo. No dice cuánto se ha afinado un contorno: dice que el terreno todavía no puede desmentirlo. Sobre una geometría proyectada no se mide. Exige fuente primaria (R9, §6.6)." },
       { "valor": "municipio", "etiqueta": "Centroide municipal",
         "def": "El municipio, no la ubicación. No sirve para medir distancias. Es el hueco del principio 1 aplicado a la geometría: un resultado legítimo, dicho en voz alta." },
+      { "valor": "pais", "etiqueta": "País",
+        "def": "El hecho es de un ESTADO ENTERO y la fuente no sitúa nada dentro de él: el punto solo existe para poder pinchar el registro en el mapa. Hermano de `municipio` una escala más arriba, y fuera de R9 por lo mismo. Declara su `geo_fuente` pero no la marca confirmada cuando quien la sirve no es un emisor oficial (§6.6)." },
       { "valor": "ilustrativa", "etiqueta": "Ilustrativa",
         "def": "Dibuja dónde, no cuánto ni de quién. Trazado a mano alzada." }
     ],
@@ -248,6 +250,34 @@
     ],
     "recurso-solar": [
       { "valor": "zona", "etiqueta": "Zona de recurso" }
+    ],
+
+    "_idioma": "Dos clases de SUJETO, no dos grados de la misma cosa: un Estado se da a sí mismo su norma lingüística; una organización internacional la recibe de un tratado que firman otros.",
+    "idioma": [
+      { "valor": "estado", "etiqueta": "Estado", "color": "#7A6A4F",
+        "def": "Un Estado soberano cuya norma fundamental o legal define el estatuto del español en su territorio." },
+      { "valor": "organizacion", "etiqueta": "Organización internacional", "color": "#5C7355",
+        "def": "Una organización internacional en cuyo tratado o reglamento el español es lengua oficial o de trabajo." }
     ]
-  }
+  },
+
+  "_estatuto": "El campo espinal de `idioma`, y la razón de que la capa exista. NO puede ser un booleano: el mapa de un solo color que todo el mundo tiene en la cabeza es falso. Ninguno de estos nueve valores se inventó de antemano — cada uno salió de leer un texto que no encajaba en los anteriores (§9, §10).",
+  "estatuto": [
+    { "valor": "oficial_constitucion", "etiqueta": "Oficial por la Constitución",
+      "def": "La constitución lo declara lengua oficial del Estado." },
+    { "valor": "cooficial_acotada", "etiqueta": "Cooficialidad acotada",
+      "def": "Oficial, y otras lenguas lo son CON UN LÍMITE. El límite no es el mismo en todas partes —Perú y Colombia lo ponen en el territorio donde la lengua predomina, España en el Estatuto de cada Comunidad, Nicaragua en una región nombrada, Venezuela en los pueblos indígenas, Ecuador en una función («relación intercultural»)— y esa diferencia es demasiado fina para un enum: va en `claves`, verbatim. Lo que el valor afirma es la arquitectura: hay cooficialidad y NO alcanza a todo el Estado." },
+    { "valor": "cooficial_estatal", "etiqueta": "Cooficialidad estatal plena",
+      "def": "Varias lenguas oficiales EN TODO EL ESTADO, enumeradas una a una y sin condición de ningún tipo." },
+    { "valor": "bilingue", "etiqueta": "Estado bilingüe",
+      "def": "El Estado se declara a sí mismo bilingüe: dos lenguas oficiales en pie de igualdad y en todo el territorio." },
+    { "valor": "oficial_con_remision", "etiqueta": "Oficial, con remisión a la ley",
+      "def": "La norma fundamental nombra unas lenguas y DELEGA EL RESTO en la ley ordinaria: la lista queda constitucionalmente abierta." },
+    { "valor": "nacional_sin_oficialidad", "etiqueta": "Lengua nacional, no oficial",
+      "def": "Una norma expresa la hace NACIONAL sin declararla oficial. No es un vacío: es una decisión, y distinta de las dos vecinas." },
+    { "valor": "sin_norma_expresa", "etiqueta": "Sin norma que la nombre",
+      "def": "Lengua de facto del Estado, y NINGUNA norma la nombra. Se sostiene archivando la constitución entera para que la ausencia se pueda comprobar." },
+    { "valor": "lengua_de_trabajo", "etiqueta": "Lengua oficial y de trabajo",
+      "def": "En una organización internacional, por su tratado o su reglamento." }
+  ]
 }

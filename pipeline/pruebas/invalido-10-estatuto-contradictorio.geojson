@@ -1,0 +1,63 @@
+{
+  "type": "FeatureCollection",
+  "atlas": {
+    "capa": "idioma",
+    "schema_version": "1.19.0",
+    "verificado_a": "2026-08-07"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "idioma:chile",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.6505,
+          -33.4402
+        ]
+      },
+      "properties": {
+        "slug": "chile",
+        "nombre": "Chile",
+        "categoria": "estado",
+        "descripcion": "La Constitución chilena no nombra la lengua del Estado. Los dos intentos de sustituirla (2022 y 2023), que sí incluían disposiciones plurilingües, fueron rechazados en referéndum.",
+        "estado_registro": "vigente",
+        "verif": "confirmado",
+        "geo_precision": "pais",
+        "geo_fuente": "punto de Santiago en Natural Earth. Sitúa el sujeto, no el objeto: lo que el registro afirma rige en todo el territorio",
+        "geo_fuente__v": "no_verificado",
+        "geo_fuente__f": "f2",
+        "fecha_alta": "2026-08-07",
+        "fecha_verificacion": "2026-08-07",
+        "estatuto": "sin_norma_expresa",
+        "estatuto__v": "confirmado",
+        "estatuto__f": "f1",
+        "norma": "Constitución Política de la República de Chile",
+        "norma_fecha": "1980-10-21",
+        "norma_cita": "Ninguna. Sobre los 304.553 caracteres del texto vigente no hay una sola mención a lengua, idioma, castellano ni español.",
+        "nombre_en_la_norma": "castellano",
+        "pais": "Chile",
+        "claves": [],
+        "fuentes": [
+          {
+            "id": "f1",
+            "tipo": "primaria",
+            "titulo": "Constitución Política de la República de Chile (texto consolidado, Gobierno Digital de Chile) — edición de enero de 2020, con reformas citadas hasta la Ley 21.200",
+            "url": "https://cdn.digital.gob.cl/filer_public/ae/40/ae401a45-7e46-4ab7-b9d3-1f7cc5afa9d6/constitucion-politica-de-la-republica.pdf",
+            "fecha": "1980-10-21",
+            "archivo": "fuentes/2026-08-07_gobdigital-cl_constitucion-politica-de-chile.pdf"
+          },
+          {
+            "id": "f2",
+            "tipo": "corporativa",
+            "titulo": "Natural Earth — lugares poblados 1:110m (`ne_110m_populated_places`)",
+            "url": "https://github.com/nvkelso/natural-earth-vector",
+            "fecha": "2026-08-07",
+            "archivo": "fuentes/2026-08-07_naturalearth_lugares-poblados-110m.geojson"
+          }
+        ],
+        "nota": "VIOLA la comprobación propia de la capa (§10). La ficha se contradice a sí misma en dos líneas seguidas: dice `sin_norma_expresa` —que ninguna norma nombra la lengua— y a la vez que la norma la llama «castellano». Si no hay norma que la nombre, no puede haber un nombre. El esquema no lo ve porque cada campo es válido por su cuenta; es el error que se cuela al copiar un registro para hacer el siguiente."
+      }
+    }
+  ]
+}

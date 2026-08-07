@@ -93,6 +93,20 @@ CASOS: dict[str, tuple[set[str], int]] = {
     # misma fábrica en el mapa y suma su dinero dos veces. Este caso es el real —
     # BeePlanet, de 447.269 a 626.177 € entre dos comisiones.
     "invalido-10-plan-repetido.geojson":               ({"§10"},    1),
+
+    # Las dos de `idioma` (§10). La primera es hermana de la anterior: dos
+    # registros del mismo país publican estatutos contradictorios y el mapa no
+    # dice cuál rige.
+    "invalido-10-pais-repetido.geojson":               ({"§10"},    1),
+
+    # La segunda es de coherencia ENTRE DOS CAMPOS, y por eso el esquema no la
+    # ve: cada uno es válido por su cuenta. Decir `sin_norma_expresa` y a la vez
+    # que la norma la llama «castellano» es contradecirse en dos líneas
+    # seguidas — el error que se cuela al copiar un registro para hacer el
+    # siguiente. Ocupa el sitio de una comprobación que se retiró antes de
+    # publicar porque el esquema ya la hacía, y fue su propia fixture la que lo
+    # delató al señalar §7.1 además de §10.
+    "invalido-10-estatuto-contradictorio.geojson":     ({"§10"},    1),
 }
 
 LINEA = re.compile(r"^\s+(BLOQUEA|AVISA)\s+(\S+)\s")
