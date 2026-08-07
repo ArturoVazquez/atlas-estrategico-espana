@@ -236,8 +236,8 @@ ficha → hilo → atlas funciona en ambos sentidos, y el foro tiene su hilo.
 ~~Red eléctrica e interconexiones~~ → ~~renovable por provincia~~ → agua
 embalsada (EMPEZADA, ver abajo) → ~~centros de datos~~ → ~~H2Med~~ →
 ~~electrolizadores~~ → ~~subasta del Banco Europeo del Hidrógeno~~ (resuelta:
-NO es capa, ver abajo) → PERTE acotado → intangibles (clase `analisis`,
-ámbito mundo). El pipeline de expedientes de cambio (D7) cuando haya
+NO es capa, ver abajo) → ~~PERTE acotado~~ → intangibles (clase `analisis`,
+ámbito mundo). **El horizonte acordado se acaba aquí**: queda una casilla. El pipeline de expedientes de cambio (D7) cuando haya
 señales reales con las que diseñarlo.
 
 **La segunda casilla, cumplida por otro nombre** (release `datos-v2026.08.10`).
@@ -248,6 +248,38 @@ potencia pero solo por comunidad autónoma y **bajo CC BY-SA**, que
 que R3 no admite. Se publica lo que sí se sostiene —la mezcla de generación de
 las 52 provincias— y la potencia queda como hueco declarado en las 52 fichas.
 **La casilla se renombra; no se disfraza.**
+
+**La séptima casilla, y la palabra «acotado» por fin quiere decir algo** (release
+`datos-v2026.08.15`). Venía en el nombre de la capa desde la demo v4 sin que
+nadie decidiera qué recorta. Recorta esto: **entra lo que un documento público
+sitúa**. `perte` publica **57 planes**, 1.134,7 M€ de presupuesto financiable y
+269,1 M€ de subvención propuesta.
+
+Lo que deja escrito:
+
+- **El PRTR publica dinero, no geografía.** La lista de los 100 mayores
+  perceptores es obligatoria por norma europea y no lleva ubicación; el mapa del
+  PRTR de MITECO sí sitúa pero es un Power BI incrustado, sin conjunto de datos
+  que citar. El único listado con **provincia y municipio fila a fila** es el del
+  PERTE VEC Sección B 2024, y por eso es esta capa. Las demás convocatorias
+  entran cuando publiquen el suyo igual.
+- **Hay documentos oficiales que no son una tabla aunque lo parezcan** (§6.1 del
+  contrato, enmienda 1.18). Este es un registro por comisiones de verificación
+  donde una aparición posterior REVISA a la anterior: contar filas da 61 y los
+  expedientes vigentes son 57. **Cuando una fuente publique sus propios totales,
+  cuadrar contra ellos ANTES de publicar** — es lo único que separa entender un
+  documento de haberlo leído por encima.
+- **Una propuesta de resolución no es el acto**, por mucho que se titule
+  «definitiva». El matiz va dentro del nombre del campo (`subvencion_propuesta`),
+  porque un asterisco no lo lee nadie.
+- **Cuidado con `re.sub` al coser texto extraído de un PDF.** Capturar el dígito
+  de la izquierda lo consume y la siguiente coincidencia se queda sin él: reparó
+  un separador, dejó otro roto, y una fila entera se fue con los importes de su
+  vecina. Con lookarounds no pasa. Y lo delató el cuadre, no la vista.
+- **La nota sobre el tope silencioso del IGN se cobró su tercera pieza.** Pedir
+  municipios por nombre devuelve cero para Valladolid o Elgoibar; y la consulta
+  por recuadro topó en 199 de 219 en Álava con `limit=3000`. Hay que paginar y
+  comparar con `numberMatched`, siempre.
 
 **La sexta casilla se cierra sin capa, y esa ES la respuesta** (release
 `datos-v2026.08.14`). La subasta IF24 del Banco Europeo del Hidrógeno tiene

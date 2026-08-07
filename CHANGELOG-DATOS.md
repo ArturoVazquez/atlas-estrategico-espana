@@ -32,6 +32,110 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.15 — Cincuenta y siete planes, y un documento que no era una tabla
+
+Entra **`perte`**: los planes de inversión del PERTE que un documento público
+sitúa. Decimotercera capa, **57 registros**, **1.134,7 M€** de presupuesto
+financiable y **269,1 M€** de subvención propuesta.
+
+### Qué acota «acotado»
+
+La capa venía declarada con esa palabra desde el primer día y **nadie había
+decidido qué recorta**. Recorta esto: **entra lo que un documento público
+sitúa**, y el PRTR publica muchísimo dinero y casi nada de geografía.
+
+| Descartado | Por qué |
+|---|---|
+| Lista de los **100 mayores perceptores** (obligatoria por el art. 25 bis del Reglamento MRR) | Nombre, NIF e importe. **Sin ubicación** |
+| **Mapa del PRTR de MITECO** | Sitúa, pero es un **Power BI incrustado**: no publica conjunto de datos que citar |
+| **BDNS** | Concesiones sin ubicación de la inversión |
+
+Queda el listado de la Propuesta de Resolución Definitiva del **PERTE VEC —
+Sección B, convocatoria 2024**, que trae **provincia y municipio fila a fila**.
+
+### El hallazgo: el documento no es una tabla
+
+Parece una tabla de doce columnas y es **un registro por comisiones de
+verificación** — seis, de mayo a octubre de 2025. Un expediente puede aparecer en
+más de una, y **la aparición posterior REVISA a la anterior**. Contar filas da
+61; los expedientes vigentes son **57**. Publicar 61 habría puesto cuatro
+fábricas fantasma en el mapa y sumado su dinero dos veces.
+
+**Que esa lectura es la buena no es una interpretación: lo demuestran los TOTALES
+del propio documento, que cuadran al céntimo en las seis comisiones** (las tres
+primeras imprimen acumulado; las tres últimas, el total de su comisión). La
+prueba fina: BeePlanet pasa de 447.269 € a 626.177 € de subvención entre dos
+comisiones, y el acumulado del documento sube **exactamente esos 178.908 €**.
+
+### Añadido
+
+- `perte` — 57 registros, del plan de **343 M€ de Stellantis en Figueruelas** al
+  de **1,3 M€ de una fábrica de motos en Utrera**. Sin recortes por tamaño: un
+  corte por importe sería una opinión disfrazada de criterio.
+- Dos fuentes archivadas: el PDF del Ministerio y el registro de procedencia de
+  los 44 puntos municipales del Nomenclátor.
+- Una comprobación nueva en el CI: **`codigo_plan` no se repite** (23 pruebas).
+
+### Dos trampas que habrían falseado dinero, y cómo se cazaron
+
+**El extractor de PDF mete espacios dentro de los números** —«1.653.242 ,00» y
+«1.157. 269,00»— y coserlos con grupos de captura no basta: `re.sub` consume el
+dígito que la siguiente coincidencia necesita, así que reparaba un separador y
+dejaba el otro roto. Efecto: la fila de HIMOINSA **desaparecía y sus importes se
+los quedaba la fila de al lado** — peor que perderla, porque nada se ve vacío. Lo
+delató el cuadre contra los totales, no la vista.
+
+**Y pedir municipios por nombre al IGN devuelve cero** para Valladolid, Elgoibar
+o Abadiño, que existen. La vía buena es por recuadro de provincia filtrando
+`tipo=Municipio`, y **hay que paginar**: con `limit=3000` el servicio devolvió
+199 de 219 municipios en Álava **sin avisar**. La guarda que compara lo devuelto
+con `numberMatched` saltó y evitó publicar una capa con municipios que faltaban.
+
+### Lo que encontró la verificación, y no la lectura del código
+
+Dos cosas, y las dos aparecieron *después* de dar la capa por hecha.
+
+**`beneficiario` no era el beneficiario.** El PDF imprime la razón social y el
+título del plan **pegados, sin separador**, y el campo los llevaba juntos: un
+campo que no significaba lo que decía. Lo enseñó la ficha abierta en el
+navegador, no el validador. Lo único que los delimita es la forma societaria al
+final del nombre de la empresa —cubre 54 de 57, y las otras tres son variantes
+raras del propio listado («SOCIEDAD LIMITADA», «S .L.» con espacio,
+«S.L.UNIPERSONAL»)—. Ahora son 57 de 57, y nace `titulo_plan`.
+
+**Y el municipio se escribe de tres maneras distintas.** El contraste devolvió
+los 57 puntos al callejero del IGN y **tres no caían en el municipio que
+declaraban**. No eran puntos malos: eran formas del mismo nombre. El Ministerio
+usa la variante del INE con el artículo pospuesto («Porriño, O»,
+«Hospitalet de Llobregat, L'»); el Nomenclátor rotula el punto de otra forma
+(«Sagunto», «Oltza Zendea»); y el nombre canónico —el del **polígono**— es un
+tercero («Sagunt/Sagunto», «Cendea de Olza/Oltza Zendea»). Se publica el del
+polígono, que es contra el que se comprueba, y la forma del listado queda dicha
+en la ficha de cada registro afectado.
+
+### Huecos
+
+- **La resolución de concesión, que no es esta.** El documento se titula
+  «Propuesta de Resolución **Definitiva**» y aun así **no concede**: la resolución
+  se notifica por el registro electrónico, que exige identificación y no es
+  públicamente citable. Por eso los campos se llaman `subvencion_propuesta` y
+  `prestamo_propuesto`, y el esquema **prohíbe** `subvencion` a secas.
+- **El punto es el del municipio, no el de la fábrica.** El listado sitúa por
+  nombre de municipio y no publica coordenada. `geo_precision: municipio`, que
+  es exactamente lo que es.
+- **Dos municipios no casan de nombre entre las dos fuentes.** El Ministerio
+  escribe «Cendea de Olza/Oltza Zendea» y «Sagunto/Sagunt»; el Nomenclátor,
+  «Oltza Zendea» y «Sagunto». Van emparejados **a mano y por escrito**, con su
+  motivo, en vez de adivinados por parecido.
+- **Ninguna cifra de empleo**, prohibida en el esquema como en las otras dos
+  capas donde aparecía: es previsión del solicitante y nadie la comprueba
+  después.
+- **Las demás convocatorias del PERTE siguen fuera** —VEC sección A, Chip, ERHA—
+  mientras no publiquen su listado con municipio. No es desinterés: es la regla
+  de entrada.
+
+---
+
 ## datos-v2026.08.14 — La subasta que España ganó y no firmó
 
 Ninguna capa nueva. Entra **una fuente** —los resultados de la subasta IF24 del

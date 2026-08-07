@@ -13,11 +13,11 @@ aparece como hueco, no como relleno.
 > primaria sostiene un dato confirmado** — y la validación automática lo
 > comprueba en cada cambio.
 
-**Estado:** **doce capas publicadas**, release `datos-v2026.08.14`, visor
+**Estado:** **trece capas publicadas**, release `datos-v2026.08.15`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
 (nuclear, gas y regasificación, interconexiones eléctricas, generación por
 provincia, producción de hidrógeno); conectividad (centros de datos, red de hidrógeno); y el tablero
-(límites y soberanía, espacios marítimos). Las demás ramas están **declaradas y
+(límites y soberanía, espacios marítimos, PERTE acotado). Las demás ramas están **declaradas y
 vacías**, que es su forma de decir la verdad.
 
 Falta una sola cosa para publicar: el **mapa base propio**. Mientras tanto el
@@ -63,7 +63,7 @@ app/                el visor, y la página «Método» que lo explica
 referencia/         la demo v4, canon de interacción
 ```
 
-Las doce capas con datos, por si sirve de índice:
+Las trece capas con datos, por si sirve de índice:
 
 | Capa | Clase | Qué registra |
 |---|---|---|
@@ -77,6 +77,7 @@ Las doce capas con datos, por si sirve de índice:
 | `hidrogeno-produccion` | verificada | Las siete plantas de electrólisis de la lista de la Unión |
 | `centros-datos` | verificada | Los centros que un acto administrativo nombra, sitúa y dimensiona |
 | `hidrogeno-red` | verificada | Los cinco proyectos de hidrógeno de la lista de la Unión, y sus compresoras |
+| `perte` | verificada | Los 57 planes de inversión del PERTE VEC que su listado sitúa por municipio |
 | `limites-soberania` | verificada | Ocho territorios, con quién administra y quién reclama |
 | `espacios-maritimos` | verificada | Las aguas sin delimitar, la plataforma continental y el monte Tropic |
 
