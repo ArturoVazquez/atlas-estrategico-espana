@@ -32,6 +32,33 @@ que no sabe está afirmando que lo sabe todo.
 
 ---
 
+## datos-v2026.08.19 — La cabecera del manifiesto decía ser de otra release
+
+Corrección sin cambios en los datos. **Ninguna capa se toca**; lo que se arregla
+es lo que el manifiesto decía de sí mismo.
+
+### Corregido
+
+- `manifest.json` — la cabecera se había quedado tres releases atrás:
+  `schema_version` decía **1.18.0** con el contrato en la **1.21.0**, y `release`
+  decía **2026.08.15** estando ya en la 08.18. El campo `_estado` era peor:
+  hablaba de «doce capas con datos y siete en preparación» cuando son **dieciséis
+  y tres**. En un fichero cuyo propio comentario dice que un manifiesto que
+  anunciara capas inexistentes «sería la primera mentira del atlas, y sería sobre
+  sí mismo», esa era justo la avería que no podía tener.
+- `app/preparar-datos.mjs` — **guarda nueva**: compara la release que el
+  manifiesto declara con la etiqueta que está sirviendo y **avisa** si no cuadran.
+  No rompe, porque el dato servido es el de la etiqueta y está bien; lo que está
+  mal es la cabecera, y eso se corrige, no se bloquea.
+
+**De dónde salió el fallo:** de actualizar la entrada de cada capa una a una y
+nunca la cabecera, tres releases seguidas. Es la tercera vez en el mismo día que
+la lección se repite —la herramienta que ya tiene los dos números delante es la
+que debe notar que no coinciden—, después del `Content-Type` de un HEAD en
+`vigilar.py` y del «ningún municipio» en `consultar.py`.
+
+---
+
 ## datos-v2026.08.18 — El agua embalsada no es el vaso, es lo que hay dentro
 
 Entra **`agua-embalsada`**, la decimosexta capa. **308 embalses** con su capacidad
