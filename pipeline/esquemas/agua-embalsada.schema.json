@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.eltercioviejo.com/esquemas/agua-embalsada.schema.json",
+  "title": "Extensión de capa · agua-embalsada",
+  "description": "CONTRATO-DATOS.md §10. SEGUNDA PASADA sobre el mismo documento que ya pasó nucleo.schema.json (§7.1). Publica el AGUA, no el vaso: capacidad y reserva de cada embalse según el Boletín Hidrológico Semanal del MITECO. El shapefile del inventario de presas del SNCZI está tras un CAPTCHA y resultó no ser el dato que la capa necesitaba.",
+
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Point",
+                "description": "El topónimo del embalse en el Nomenclátor del IGN. El Boletín Hidrológico NO lleva coordenadas: es una base alfanumérica, y la geometría se cose por nombre. Por eso `geo_precision` es `paraje` y cada punto se verifica contra la demarcación que el Boletín le atribuye."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["demarcacion", "capacidad_hm3", "fecha_dato"],
+            "properties": {
+              "demarcacion": {
+                "type": "string",
+                "minLength": 1,
+                "description": "La demarcación hidrográfica que declara el Boletín. NO es adorno: es la llave con la que se verifica la geometría, preguntando al servicio del propio Ministerio en qué cuenca cae el punto. Un nombre de embalse no es único en España."
+              },
+              "capacidad_hm3": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Capacidad total del embalse en hectómetros cúbicos. Es el dato de DOTACIÓN —lo que el territorio puede almacenar— y apenas cambia."
+              },
+              "agua_actual_hm3": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Agua embalsada en la fecha del dato. Se publica el cero cuando lo hay, porque significa algo y omitirlo lo haría indistinguible de un dato que falta."
+              },
+              "fecha_dato": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "description": "La semana a la que corresponde la lectura, no la fecha de captura. Obligatoria: una reserva sin fecha no significa nada, y en esta base hay embalses cuyo último parte es de 2003."
+              },
+              "hidroelectrico": {
+                "type": "boolean",
+                "description": "Si el Boletín lo marca como de uso hidroeléctrico (`ELECTRICO_FLAG`). Es del propio parte, no una deducción del atlas."
+              },
+
+              "porcentaje_llenado": {
+                "not": {},
+                "description": "PROHIBIDO por DERIVADO, igual que `activo` en R7. Sale de dividir `agua_actual_hm3` entre `capacidad_hm3`, así que escribirlo sería la doble fuente de verdad que D3 descartó: el día que una de las dos cifras se corrija, el porcentaje escrito a mano mentiría. Lo calcula quien lo pinte."
+              },
+              "superficie_ha": {
+                "not": {},
+                "description": "PROHIBIDO. La superficie del vaso está en el shapefile del SNCZI, que esta capa NO usa —está tras un CAPTCHA— y que además mide el vaso lleno, no el agua que hay. Publicarla aquí mezclaría dos fuentes que dicen cosas distintas."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

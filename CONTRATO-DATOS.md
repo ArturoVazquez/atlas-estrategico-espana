@@ -1,6 +1,6 @@
 # CONTRATO DE DATOS — Atlas Estratégico de España
 
-**Versión del contrato:** 1.20.0 · **Fecha:** 2026-08-07
+**Versión del contrato:** 1.21.0 · **Fecha:** 2026-08-07
 **Ámbito:** todo dato publicado por el atlas. Este documento es la fuente de verdad;
 el código se adapta al contrato, nunca al revés.
 
@@ -425,6 +425,7 @@ estado son dos fuentes de verdad que acaban contradiciéndose.
 | `hidrogeno-red` *(1.16)* | `fase` | `fase == "produccion"` (el tramo, la compresora o la caverna prestan servicio). Hoy **ninguno de los diez**: la red entera está en tramitación, y eso es lo que el filtro debe enseñar. |
 | `perte` *(1.18)* | — | **no aplica**. Un plan de inversión subvencionado no es una instalación: es dinero comprometido sobre un expediente. Preguntarle si está «en explotación» es preguntarle a la clase de objeto equivocada, como a una provincia o a un espacio marítimo. |
 | `hidrogeno-produccion` *(1.17)* | `fase` | `fase == "produccion"` (la planta electroliza hoy). Hoy **ninguna de las siete**. Ojo con la palabra: aquí `produccion` es la fase del expediente, no «producir hidrógeno» en abstracto — una planta con todos los permisos y sin construir sigue sin producir nada. |
+| `agua-embalsada` *(1.21)* | — | **no aplica**. Un embalse no es una instalación que se explote ni se deje de explotar: es una reserva. La pregunta del filtro es de otra clase de objeto, como con las provincias y el tablero. Lo que varía —cuánta agua tiene— va en un campo con su fecha, no en un booleano. |
 | `idioma` *(1.19)* | — | **no aplica**, y es el caso más claro de todos. El registro es un **Estado** o una **organización internacional**, y lo que se publica de él es una norma vigente. Un idioma oficial no está «en explotación»: ni siquiera es una cosa que se explote. Devuelve `null`, como las provincias y el tablero. |
 | `generacion-electrica-provincia` *(1.14)* | — | **no aplica**. El registro no es una instalación: es una **provincia**, y a un territorio no se le pregunta si está en explotación. Lo que generó no la pone «en explotación» ni la deja fuera: la pregunta es de otra clase de objeto. Devuelve `null`, y por eso el filtro no esconde ni una sola de las 52. |
 
@@ -825,6 +826,9 @@ distinguen mejor citando el artículo que clasificándolo.
 - *generacion-electrica-provincia* *(1.14)*: `eolica` · `solar_fv` · `solar_termica` ·
   `hidraulica` · `nuclear` · `combustibles` · `cogeneracion` · `mareomotriz` —
   la **tecnología dominante** de la provincia
+- *agua-embalsada* *(1.21)*: `embalse` — **un solo valor**: el Boletín no
+  clasifica los embalses, y sacar una clase del uso o del tamaño sería
+  interpretar. Lo que los distingue va en campos
 - *cables-submarinos*: `aterrizaje` · `trazado` — **`trazado` se queda sin
   usar** *(1.20)*, y no es olvido: el recorrido de un cable submarino no tiene
   fuente con licencia compatible (TeleGeography es CC BY-NC-SA). Lo que sí
@@ -1348,8 +1352,46 @@ tecnologías en **producción neta**, cada una con su `__v`/`__f`: `nuclear_gwh`
 > publican: citar de memoria un artículo que no se ha podido leer sería
 > exactamente lo que esta capa existe para no hacer.
 
-*(Capas futuras —agua embalsada— entran por §8 con su
-apartado aquí y su esquema en `pipeline/esquemas/`.)*
+**agua-embalsada** *(1.21)* (`dotacion`, puntos, verificado): `demarcacion` (✔) ·
+`capacidad_hm3` (✔, +`__v`,`__f`) · `agua_actual_hm3` (+`__v`,`__f`) ·
+`fecha_dato` (✔) · `hidroelectrico` · `claves[]`
+
+> **Publica el AGUA, no el vaso**, y esa distinción es toda la capa. La ruta
+> obvia —el shapefile del Inventario de Presas y Embalses del SNCZI— está tras un
+> **ALTCHA**, un CAPTCHA de prueba de trabajo que el Ministerio puso a propósito y
+> que no se salta. Cinco vías más se probaron y fallaron (URLs viejas a 404, no
+> hay WFS de embalses, el ArcGIS REST del Ministerio no sirve esa capa, el PDF
+> resumen agrega por cuenca). **La sexta fue mirar mejor la pregunta:** «agua
+> embalsada» no es la geometría del vaso, es el agua que hay dentro, y eso el
+> MITECO lo publica en abierto y sin formulario en el histórico del **Boletín
+> Hidrológico Semanal** — 719.725 partes semanales desde 1988.
+>
+> **La base no lleva coordenadas**, así que la geometría se cose por nombre contra
+> el Nomenclátor del IGN, y de ahí sale la disciplina de esta capa. Un nombre de
+> embalse **no es único en España**, de modo que un emparejamiento por nombre
+> —aunque salga uno solo— puede estar señalando el embalse equivocado. Cada punto
+> se verifica preguntando al servicio del propio Ministerio **en qué demarcación
+> cae**, y se compara con la que declara el Boletín. El que no cuadra no se
+> publica.
+>
+> **La normalización de nombres es de cuatro lenguas, y las reglas salieron de
+> mirar el nomenclátor, no de suponerlo:** nueve prefijos —`Embalse`, `Pantà`,
+> `Presa`, `Pantano`, `Encoro`, `Balsa`, `Charca`, `Embassament`, `Bassa`— y el
+> sufijo vasco **`urtegia`** con su genitivo (`Añarbeko urtegia` → Añarbe). Más el
+> artículo pospuesto (`Barca, La`), que es la lección que dejó `perte`.
+>
+> **`porcentaje_llenado` está prohibido en el esquema por DERIVADO**, igual que
+> `activo` en R7: sale de dividir las dos cifras que la capa ya publica, y
+> escribirlo sería la doble fuente de verdad que D3 descartó. `superficie_ha`
+> también, porque ese dato vive en el shapefile que esta capa no usa y mide el
+> vaso lleno, no el agua.
+>
+> **Hay embalses cuyo último parte es de 2003.** No son actuales: van a
+> `estado_registro: historico`, que es la regla de que nada se borra aplicada a
+> una serie temporal que dejó de alimentarse.
+
+*(Capas futuras entran por §8 con su apartado aquí y su esquema en
+`pipeline/esquemas/`.)*
 
 ---
 
@@ -1458,6 +1500,7 @@ comprueba.)*
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **1.21.0** | 2026-08-07 | **Aditiva.** Nace `agua-embalsada` (§10), y nace **por una pregunta mejor formulada**. La ruta obvia —el shapefile del Inventario de Presas y Embalses del SNCZI— está tras un **ALTCHA**, un CAPTCHA de prueba de trabajo que el Ministerio puso a propósito y que no se salta; y otras cinco vías fallaron (URLs viejas a 404, no hay WFS de embalses, el ArcGIS REST del Ministerio no sirve esa capa, el PDF resumen agrega por cuenca). **La sexta fue darse cuenta de que el shapefile no era el dato:** «agua embalsada» no es la geometría del vaso, es el agua que hay dentro, y eso el MITECO lo publica en abierto y sin formulario en el histórico del **Boletín Hidrológico Semanal** — 719.725 partes semanales desde 1988. Se publican **308 embalses de los 401** del Boletín, el **86 % de la capacidad embalsada de España**, y los 93 restantes se declaran uno a uno en el manifiesto. La base **no lleva coordenadas**: la geometría se cose por nombre contra el Nomenclátor del IGN, con una normalización de **cuatro lenguas** —nueve prefijos (`Embalse`, `Pantà`, `Presa`, `Pantano`, `Encoro`, `Balsa`, `Charca`, `Embassament`, `Bassa`) y el sufijo vasco `urtegia` con su genitivo— y **cada punto se verifica** preguntando al servicio del propio Ministerio en qué demarcación cae. Esa vuelta cazó seis emparejamientos que casaban de nombre y señalaban un embalse de otra cuenca, entre ellos un «San Lorenzo» del Ebro que era el de Tenerife. §6.5 le da su fila: `activo` **no aplica**, porque un embalse es una reserva y no una instalación que se explote. El esquema prohíbe `porcentaje_llenado` **por derivado**, igual que R7 con `activo`: sale de dividir las dos cifras que la capa ya publica, y escribirlo sería la doble fuente de verdad que D3 descartó. |
 | **1.20.0** | 2026-08-07 | **Aditiva.** Nace `cables-submarinos` (§10), y nace **distinta de su propio boceto**: el contrato la imaginaba `mixta`, con `sistemas[]`, `destinos[]` y un trazado que dibujar. Las fuentes obligan a otra cosa. **El recorrido de un cable submarino no tiene fuente compatible** —TeleGeography es CC BY-NC-SA, vetada por `datos/LICENCIA-DATOS.md`— y lo que sí publica una fuente primaria es **dónde toca tierra**, porque ocupar dominio público marítimo-terrestre exige un acto administrativo. Un registro por **aterrizaje**, en puntos, con los arrays convertidos en campos planos; la categoría `trazado` (§9) queda declarada y **sin usar**. La acotación no la elige el gusto: los actos de Costas cubren TODO cable que ocupe el dominio, incluidos uno atado al puente de Txatxarramendi y dos que cruzan las rías del Bidasoa y de Oriñón, así que **entra el que une territorios separados por mar** y no el cruce de una ría. Y un cable que atraviesa aguas españolas **sin aterrizar aquí no entra**: lo decidió el Europe India Gateway, 15.000 km por Galicia, el Estrecho y Alborán que tocan tierra en **Gibraltar** (BOE-A-2010-2040) — se archiva, se cita y se queda fuera, como la subasta IF24. `sistema` **admite hueco a propósito**: un acto de Costas autoriza una ocupación, no bautiza un cable, y el expediente de Santander no nombra el sistema; poner ahí un nombre de la prensa sería justo lo que la capa evita, así que va con fuente `tipo: hueco` y R4 lo baja a `parcial`. §6.5 le da su fila, con el aviso de que la `fase` es la del cable y no la de la playa. |
 | **1.19.0** | 2026-08-07 | **Aditiva.** Nace `idioma` (§10), la última casilla del horizonte y **la primera capa `analisis` del atlas**. Nace además cambiada de significado por una licencia: «El idioma como activo» pedía demolingüística, y la del español la publica el Instituto Cervantes bajo un aviso legal que dice que el acceso «no otorga a los usuarios ningún derecho» —sin conjunto de datos en `datos.gob.es`—, así que republicarla bajo CC BY 4.0 es lo que `datos/LICENCIA-DATOS.md` prohíbe. Tercer muro de licencia del atlas, tras el ShareAlike de la CNMC y el NonCommercial de TeleGeography. §6.1 gana la enmienda que faltaba, y no discute autoridad sino **copia**: **un texto legal no tiene dueño** —art. 13 del TRLPI, que excluye de la propiedad intelectual las disposiciones legales y los actos de los organismos públicos—, así que constituciones y tratados se archivan enteros y se republican sin permiso. La capa pasa a cartografiar el **ESTATUTO** del idioma, y desmiente el mapa de un solo color: **México no declara idioma oficial** (es «lengua nacional» por ley, a la par que las indígenas) y **Argentina, Chile y Uruguay no nombran la lengua**. §9 estrena `estatuto`, **nueve valores** porque hay nueve arquitecturas distintas y ninguna se inventó de antemano. Nace `geo_precision: pais` (§5, §6.6), hermano de `municipio` una escala más arriba y **fuera de R9** por lo mismo: el objeto es el Estado entero y el punto solo existe para poder pinchar el registro; se rechaza con él la tentación de los polígonos de países, que habrían metido al atlas en cada disputa fronteriza del planeta. Y nace **§6.7**, la sección que define por fin qué sella `analisis`: **marca la TESIS, no rebaja la prueba** — reverso exacto de `ilustrativo` (R5), que baja el listón de la evidencia y no toca la interpretación. Declarado sin adorno: §6.7 es **doctrina sin CI**, porque `validar.py` no comprueba nada sobre `analisis` ni `debate_url`. |
 | **1.18.0** | 2026-08-06 | **Aditiva.** Nace `perte` (§10), y con ella se decide qué acota la palabra «acotado» que la capa arrastraba desde la demo: **acota lo que un documento público sitúa**. Se descartan por el camino la lista de los 100 mayores perceptores del PRTR (obligatoria por el art. 25 bis del Reglamento MRR, y **sin ubicación**) y el mapa del PRTR de MITECO (un Power BI incrustado: no hay conjunto de datos que citar). Queda el listado de la Propuesta de Resolución Definitiva del **PERTE VEC — Sección B 2024**, que trae **provincia y municipio fila a fila**. §6.1 gana la tercera enmienda de su familia: **una propuesta de resolución es documento oficial y no es el acto** — sostiene un confirmado sobre lo que PROPONE, no sobre la concesión, y el matiz va dentro del nombre de los campos (`subvencion_propuesta`) porque un asterisco no lo lee nadie. Con un aviso que no es de esta capa sino de cualquiera: **hay documentos oficiales que no son una tabla aunque lo parezcan**. Este es un registro por comisiones de verificación donde una aparición posterior REVISA a la anterior; contar filas da 61 y los expedientes vigentes son 57. Lo demuestran sus propios TOTALES, que cuadran al céntimo en las seis comisiones. §6.5 le da su fila: `activo` **no aplica**, porque un plan de inversión es dinero comprometido, no una instalación. §9, un vocabulario de un solo valor (`plan_inversion`). |

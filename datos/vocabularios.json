@@ -252,6 +252,12 @@
       { "valor": "zona", "etiqueta": "Zona de recurso" }
     ],
 
+    "_agua-embalsada": "Un solo valor, como `recurso-eolico` y `plan_inversion`. El Boletín Hidrológico no clasifica los embalses, y sacar una clase del uso o del tamaño sería interpretar. Lo que los distingue —cuánta agua cabe y cuánta hay— va en campos.",
+    "agua-embalsada": [
+      { "valor": "embalse", "etiqueta": "Embalse", "color": "#4A6C7A",
+        "def": "Un embalse del parte semanal del Ministerio: su capacidad y el agua que tenía en la fecha del dato. El registro es el AGUA, no la presa ni el vaso." }
+    ],
+
     "_idioma": "Dos clases de SUJETO, no dos grados de la misma cosa: un Estado se da a sí mismo su norma lingüística; una organización internacional la recibe de un tratado que firman otros.",
     "idioma": [
       { "valor": "estado", "etiqueta": "Estado", "color": "#7A6A4F",
