@@ -217,6 +217,22 @@ const ROTULOS = {
   // atlas. Son dos campos distintos por eso mismo — reusar el nombre habría
   // hecho que la ficha imprimiese «declarada» sobre un número que nadie declaró.
   longitud_medida_km: "Longitud medida por el atlas (km)",
+  // La rama del transporte.
+  puerto: "Puerto de interés general",
+  autoridad_portuaria: "Autoridad Portuaria",
+  darsena: "Dársena",
+  // «Acto» y no «tipo»: es el nombre del acto administrativo que fija la
+  // delimitación, va verbatim y el atlas NO lo interpreta (contrato 1.25).
+  acto_delimitacion: "Acto que fija la delimitación",
+  fecha_acto: "Fecha del acto",
+  // Declarada, como en `minerales-derechos`: el número lo pone la fuente.
+  superficie_declarada_m2: "Superficie declarada (m²)",
+  nodo_urbano: "Nodo urbano",
+  aeropuerto: "Aeropuerto",
+  puerto_maritimo: "Puerto marítimo",
+  puerto_interior: "Puerto interior",
+  terminal_ff_carretera: "Terminal ferrocarril-carretera",
+  codigo_linea: "Código de línea (Adif)",
 };
 
 function rotularCampo(clave) {
