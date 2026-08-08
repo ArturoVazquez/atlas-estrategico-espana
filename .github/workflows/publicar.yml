@@ -1,0 +1,82 @@
+# Publica el visor en GitHub Pages, en cada empuje a `main`.
+#
+# Dos cosas de este repositorio que un workflow de Pages genérico rompe, y por
+# eso este no es genérico:
+#
+#   1. `preparar-datos.mjs` copia los datos DESDE LA ETIQUETA de release, no
+#      desde el árbol de trabajo (contrato §8: «la app no lee ficheros vivos»).
+#      Un `checkout` normal trae un solo commit y NINGUNA etiqueta, así que el
+#      build fallaría diciendo que la release no existe. De ahí `fetch-depth: 0`.
+#
+#   2. El visor usa rutas ABSOLUTAS (`/datos`, `/src/…`), así que solo funciona
+#      servido en la RAÍZ de un dominio. La URL de proyecto de GitHub
+#      (`…github.io/atlas-estrategico-espana/`) daría 404 en todo. El fichero
+#      `app/public/CNAME` fija el dominio propio, que es donde esto se sirve.
+#
+# No valida nada: de eso ya se encarga `validar.yml` en el mismo empuje. Que el
+# contrato pase o no pase es asunto suyo, no de la publicación.
+
+name: Publicar el visor
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Lo mínimo que Pages necesita, y ni un permiso más.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si se empuja dos veces seguidas, que gane el último y no compitan por el
+# despliegue. No se cancela el que ya está en vuelo: un despliegue a medias
+# dejaría el sitio inconsistente.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # las etiquetas: sin ellas no hay release que servir
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      # `npm ci` y no `npm install`: reproduce el lockfile exacto.
+      - run: npm ci
+        working-directory: app
+
+      - run: npm run build
+        working-directory: app
+
+      # Que el sitio publicado sirva la release que dice servir, comprobado
+      # aquí y no en el navegador de alguien.
+      - name: La release construida es la que declara `app/release.json`
+        run: |
+          ESPERADA=$(node -p "require('./app/release.json').etiqueta")
+          SERVIDA=$(node -p "'datos-v' + require('./app/public/datos/manifest.json').release")
+          echo "declarada: $ESPERADA · servida: $SERVIDA"
+          test "$ESPERADA" = "$SERVIDA"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
+        uses: actions/deploy-pages@v4
