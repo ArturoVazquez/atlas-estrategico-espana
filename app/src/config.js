@@ -10,16 +10,29 @@
  * OpenStreetMap bajo ODbL— en almacenamiento propio. El navegador lo lee con
  * range requests: no hay servidor de teselas que mantener.
  *
- * `VITE_BASEMAP` permite apuntar a otro sitio sin tocar código. Mientras el
- * bucket definitivo no exista, cae al bucket de DEMOSTRACIÓN de Protomaps, que
- * sirve el planeta entero (137 GB) y NO es para producción: es de ellos, no
- * responde de nada y puede desaparecer sin avisar. Está aquí para poder
- * desarrollar y verificar, no para publicar.
+ * **Desde el 2026-08-08 ese fichero existe** y vive en `ArturoVazquez/atlas-basemap`,
+ * servido por GitHub Pages, que hace las dos cosas que un PMTiles necesita:
+ * responde `206 Partial Content` con `Accept-Ranges` y manda
+ * `Access-Control-Allow-Origin: *`. Comprobado contra el fichero real, no supuesto.
+ *
+ * **Se corta en z10 por un límite y por una razón.** El límite: GitHub BLOQUEA
+ * cualquier fichero de más de 100 MiB, y el extracto pesa 85 MB a z10, 182 a z11
+ * y 488 a z12 — solo el primero entra. La razón: el dato del atlas es `paraje` en
+ * el mejor caso, y un fondo nítido hasta ver el tejado invita a leer el punto como
+ * si estuviera medido al metro. Al pasar de z10 MapLibre estira las teselas y el
+ * fondo se vuelve blando, y esa blandura dice la verdad sobre la precisión.
+ *
+ * `VITE_BASEMAP` sigue permitiendo apuntar a otro sitio sin tocar código: el día
+ * que haya alojamiento sin ese tope, se regenera con otro `--maxzoom` y se cambia
+ * la variable. El bucket de DEMOSTRACIÓN de Protomaps queda solo como red de
+ * seguridad, y el visor lo delata en rojo si alguna vez vuelve a usarse: es de
+ * ellos, sirve el planeta entero y no responde de nada.
  */
 
 const DEMO = "https://demo-bucket.protomaps.com/v4.pmtiles";
+const PROPIO = "https://arturovazquez.github.io/atlas-basemap/atlas-basemap.pmtiles";
 
-export const BASEMAP = import.meta.env.VITE_BASEMAP || DEMO;
+export const BASEMAP = import.meta.env.VITE_BASEMAP || PROPIO;
 
 export const BASEMAP_ES_DEMO = BASEMAP === DEMO;
 

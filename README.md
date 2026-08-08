@@ -25,10 +25,12 @@ jurídico del idioma). **Ya no queda ninguna rama declarada y vacía**, lo
 que no quiere decir que no falte nada: lo que falta va declarado registro a
 registro y en el changelog.
 
-Falta una sola cosa para publicar: el **mapa base propio**. Mientras tanto el
-visor tira de un depósito de demostración ajeno y **lo advierte en su propio
-pie**, porque publicar así contradiría el motivo por el que se decidió
-autoalojarlo.
+El **mapa base es propio** desde el 2026-08-08: un fichero PMTiles de 81 MiB con
+Iberia, Baleares, Canarias y el norte del Magreb, en
+[su propio repositorio](https://github.com/ArturoVazquez/atlas-basemap). El visor
+no depende del servicio de teselas de nadie — que es la misma razón por la que
+existe `fuentes/`. Llega hasta **zoom 10**: más allá el fondo se vuelve blando, y
+esa blandura dice la verdad sobre un dato que es `paraje` en el mejor caso.
 
 ---
 

@@ -81,7 +81,16 @@ comprueba que falle **por la regla violada y por ninguna otra**.
 **Hecho cuando:** la colección valida en CI, cada `confirmado` tiene primaria
 archivada, y los huecos existen como huecos, no como rellenos.
 
-## F2 · Visor MapLibre (el salto de potencia) — CONSTRUIDO, falta el basemap
+## F2 · Visor MapLibre (el salto de potencia) — ✅ HECHA (2026-08-08)
+
+> **Lo último que le faltaba, el mapa base propio, está puesto**:
+> `atlas-basemap.pmtiles`, 81 MiB, en `ArturoVazquez/atlas-basemap` servido por
+> GitHub Pages. Probado de punta a punta pidiendo teselas reales por HTTPS en las
+> cuatro esquinas del recuadro —Tenerife, Barcelona, Ceuta y Tánger—, no dando por
+> hecho que funcionaría. Se corta en **z10** por dos motivos que no hay que
+> confundir: GitHub **bloquea** ficheros de más de 100 MiB (z11 son 182 MB), y la
+> doctrina de precisión prefiere un fondo que se ablande antes de fingir el metro.
+> Ver `app/BASEMAP.md`.
 
 > **El criterio de hecho de esta fase estaba mal escrito, y se corrige aquí.**
 > Decía «mismo contenido» que la v4. Eso es imposible sin romper la regla
