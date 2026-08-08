@@ -215,7 +215,29 @@ se descarta con motivo y en su lugar entra `minerales-derechos`.
 **Con eso no queda nada abierto salvo lo que no puede hacer Claude:** el
 extracto PMTiles y su bucket, que es lo único que separa a F2 de estar cerrada.
 
-## F4 · Despliegue e integración editorial
+## F4 · Despliegue e integración editorial — ✅ HECHA (2026-08-08)
+
+> **`https://atlas.eltercioviejo.com` sirve el atlas**, con certificado de Let's
+> Encrypt y HTTP redirigiendo a HTTPS. Publica GitHub Pages desde
+> `.github/workflows/publicar.yml` en cada empuje a `main`; el DNS es un CNAME de
+> `atlas` a `arturovazquez.github.io` en Hostinger, sin tocar los registros del
+> foro. El hilo de La hacienda, abierto.
+>
+> **Dos trampas que costaron rato y volverán.**
+>
+> **La primera, del enlace.** Un enlace escrito SIN `https://` dentro del foro no
+> sale del foro: se lee como ruta propia, así que `atlas.eltercioviejo.com` acaba
+> en `www.eltercioviejo.com/atlas.eltercioviejo.com` — un 404 que, con sesión
+> abierta, deja al miembro en su propia página. Parece que el atlas está roto y
+> lo que está mal es el enlace. En el foro, la dirección va **entera**.
+>
+> **La segunda, del certificado.** GitHub lo emite solo al ver el DNS… salvo
+> cuando no. Estuvo **55 minutos en `None`** con el DNS correcto —las cuatro IPv4
+> y las cuatro IPv6 de Pages— y **sin ningún CAA** que lo impidiera, que es la
+> causa que hay que descartar primero. Lo destrabó **retirar el dominio y volver
+> a declararlo**: la petición del certificado se reinicia y entra en segundos. Y
+> ojo con el orden — pedir `https_enforced` antes de que exista el certificado
+> devuelve un 404 «The certificate does not exist yet», que no es lo que parece.
 
 - Deploy estático + CNAME `atlas.eltercioviejo.com` (DNS en Hostinger).
 - ~~Página "Método" pública: doctrina, contrato enlazado, cómo se corrige un
