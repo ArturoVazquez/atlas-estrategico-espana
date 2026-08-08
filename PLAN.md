@@ -775,3 +775,101 @@ lista de la Unión vigente lo recoge como proyecto 9.1.4, «Interconector de
 hidrógeno España-Francia (BarMar)», junto con el interconector con Portugal
 (9.1.2) y las infraestructuras interiores de los dos países. La fuente está
 archivada en esta tanda.
+
+---
+
+## Horizonte: de atlas publicado a web de referencia (2026-08-08)
+
+Con F0–F4 cerradas, esto no es una fase con criterio de hecho: es el **orden de
+prioridades** acordado el 2026-08-08 para el salto siguiente. Cada tanda que se
+emprenda de aquí saldrá con su plan propio, como siempre.
+
+**El diagnóstico se hizo mirando el visor, no suponiendo.** Hoy ninguna capa ni
+ficha tiene dirección propia (el visor no guarda estado en la URL), el HTML no
+lleva Open Graph ni sitemap —lo único que un buscador puede leer del atlas son
+dos `<meta description>`, porque el mapa es un canvas—, y los GeoJSON se sirven
+en `/datos/` sin que ninguna puerta del visor lleve a ellos ni exista un «cómo
+citar». En una frase: el atlas ya tiene lo que casi nadie tiene —verificabilidad
+con dientes en CI— y le falta lo recíproco: **que otros puedan encontrarlo,
+enlazarlo y citarlo**. Una web de referencia es, literalmente, una web a la que
+los demás se refieren.
+
+Nada de lo que sigue rompe doctrina: todo sigue estático, sin cuentas, sin
+generar datos, y la estética sobria no se toca.
+
+### Imprescindible — sin esto no puede ser referencia
+
+1. **Enlaces permanentes** (`?capa=nuclear&id=almaraz-1`): que una ficha
+   concreta tenga dirección y el visor la abra centrada con la ficha
+   desplegada. Es el requisito definitorio — hoy quien quiera señalar un
+   registro solo puede enlazar la portada y decir «busca tú». Sin backend:
+   estado en la URL.
+2. **Encontrabilidad mínima**: Open Graph + Twitter card (hoy un enlace
+   compartido sale sin imagen ni título), `sitemap.xml`, `robots.txt`,
+   canonical. La tarea más barata de la lista.
+3. **Descargar y citar a un clic**: botón «Descargar GeoJSON (CC BY 4.0)» por
+   capa —el fichero ya se sirve, falta la puerta— y una sección «Cómo citar
+   este atlas» en Método. Es la recíproca de `fuentes/PROCEDENCIA.md`: se exige
+   la fórmula de atribución de cada emisor y no se dice la propia.
+4. **Cadencia visible y sostenida**: que la release no se pare y que cada capa
+   enseñe su «datos a fecha de» sin abrir la ficha. `agua-embalsada` publica
+   reserva, que caduca en semanas — un dato viejo a la vista desacredita más
+   rápido que un hueco declarado.
+
+### Muy importante — lo que lo convierte en el sitio al que se llega
+
+5. **Fichas como páginas HTML pre-renderizadas** en el build, desde la release
+   (una por registro, o al menos una por capa). Es lo que hace que quien busca
+   «mina Aguablanca fuente» *llegue* al atlas: hoy es imposible, el contenido
+   solo existe dentro del canvas. Vite ya es multipágina; convierte los
+   enlaces permanentes del punto 1 en páginas citables de verdad.
+6. **Buscador** en el visor (cliente puro, sobre manifiesto + registros):
+   encontrar «Sagunto» sin saber en qué capa vive.
+7. **Las capas ya apuntadas arriba**, por valor/esfuerzo: **refinerías** y
+   **almacenamiento subterráneo de gas** primero (BOE acto por acto, patrón
+   probado tres veces — y Castor es una historia que este atlas cuenta mejor
+   que nadie), luego **bases de utilización conjunta** y **estaciones de
+   espacio profundo** (convenios en el BOE), y **desaladoras** e **ICTS** al
+   final, porque no tienen inventario único.
+8. **Novedades suscribibles**: el changelog visible en la web (el MD ya
+   existe) y un feed **RSS/Atom por release**. La gente de referencia no
+   vuelve a mirar: se suscribe.
+9. **Pasada de móvil** sobre el visor real: la prensa y las redes llegan desde
+   el teléfono.
+
+### Deseable — lo que consolida la autoridad
+
+10. **DOI por release** (Zenodo, gratuito): citabilidad académica. El ritual
+    de release ya existe; solo se añade el depósito.
+11. **Mapa incrustable** (iframe con atribución fija): cada medio que lo
+    incruste es un enlace entrante permanente.
+12. **Exportar la vista como imagen** con atribución, para compartir sin
+    captura chapucera.
+13. **La historia visible**: `estado_registro` ya distingue `vigente` /
+    `historico` — un filtro que lo enseñe y, en la ficha, qué decía antes. Los
+    datos ya lo guardan; falta contarlo.
+14. **Método en inglés** (una sola página): la audiencia analista europea
+    existe y el método es el argumento. El atlas entero no se traduce.
+
+### Futuro — cuando haya señales que lo pidan
+
+15. **Series temporales**: el histórico de embalses desde 1988 (719.725
+    filas) ya está archivado; la generación por provincia acumulará años.
+    Pasar de «estado» a «evolución» es otra clase de producto y merece su
+    decisión.
+16. **Guardia del BOE**: un vigía que **avise** —jamás escriba— cuando salga
+    un acto que toque una capa: la resolución de Almaraz, una concesión
+    nueva. Encaja con la doctrina: el pipeline vigila, la persona firma.
+17. **Pipeline de expedientes de cambio (D7)** — ya aparcado hasta que haya
+    señales reales.
+18. **Teselas vectoriales de los propios datos** si los GeoJSON crecen
+    (ferrocarril ya pesa); generadas en build, sigue sin backend.
+19. **Canal de corrección sin GitHub**: hoy corregir exige cuenta de GitHub;
+    si llega público general hará falta otra puerta — y es decisión de
+    producto, porque la interpretación vive en El Tercio y El Tercio es
+    privado.
+
+**El orden:** los puntos 1–3 son una sola tanda corta y multiplican el valor de
+todo lo demás — ninguna capa nueva sirve de referencia si no se puede enlazar.
+Después el 5, que es el salto grande de encontrabilidad, con las capas nuevas
+(7) intercaladas, que son las que dan motivo para volver.
