@@ -14,7 +14,7 @@ aparece como hueco, no como relleno.
 > comprueba en cada cambio.
 
 **Estado:** **veintidós capas publicadas** y ninguna rama en gris, release
-`datos-v2026.08.23`, visor
+`datos-v2026.08.25`, visor
 construido. Minerales críticos (proyectos, dominios y derechos); energía
 (nuclear, gas y regasificación, interconexiones eléctricas, tendido de alta
 tensión, parques eólicos, plantas solares, generación por
